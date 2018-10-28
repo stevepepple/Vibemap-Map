@@ -1,0 +1,27 @@
+{
+  "name": "basic",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "react-scripts start"
+  },
+  "devDependencies": {
+    "react-scripts": "^1.0.10"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "lodash.merge": "^4.6.1",
+    "mapbox-gl": "^0.50",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.5.0",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2",
+    "semantic-ui-react": "^0.83.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
