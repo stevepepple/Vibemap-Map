@@ -7,9 +7,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "devDependencies": {
-    "react-scripts": "^1.0.10"
-  },
   "dependencies": {
     "lodash": "^4.17.11",
     "lodash.merge": "^4.6.1",
