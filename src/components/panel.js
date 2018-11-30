@@ -2,79 +2,62 @@ import React, { Component } from 'react'
 import { Button, Checkbox, Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
 let Panel = class Panel extends Component {
-  state = { visible: false }
+  state = { visible: true }
 
   handleHideClick = () => this.setState({ visible: false })
   handleShowClick = () => this.setState({ visible: true })
   handleSidebarHide = () => this.setState({ visible: false })
+
+  componentWillMount() {
+    console.log("props: ", this.props)
+  }
+
+  // this.props.callbackFromParent(listInfo)
+  handleCheckbox = (el, event) => {
+    console.log("Checkbox changed: ", event)
+    this.props.handleLayers(event.value, event.checked)
+  }
 
   render() {
     const { visible } = this.state
 
     return (
       <div>
-        <Button.Group>
-          <Button disabled={visible} onClick={this.handleShowClick}>
-            Show sidebar
-          </Button>
-          <Button disabled={!visible} onClick={this.handleHideClick}>
-            Hide sidebar
-          </Button>
-        </Button.Group>
-
-        <Sidebar.Pushable as={Segment}>
-          <Sidebar
-            as={Menu}
-            animation='overlay'
-            icon='labeled'
-            inverted
-            onHide={this.handleSidebarHide}
-            vertical
-            visible={visible}
-            width='thin'
-          >
-            <Menu.Item as='a'>
-              <Icon name='home' />
-              Home
-            </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='gamepad' />
-              Games
-            </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='camera' />
-              Channels
-            </Menu.Item>
-
-            <div>
-              <Checkbox
-                label='Show Places'
-                onCheck={this.handleCheckbox}
-                checked={this.state.places.isLayerChecked}
-                value='places'
-              />
-              <Checkbox
-                label='Show Events'
-                onCheck={this.handleCheckbox}
-                checked={this.state.events.isLayerChecked}
-                value='events'
-              />
-              <Checkbox
-                label='Show clusters'
-                onCheck={this.handleCheckbox}
-                checked={this.state.clusters.isLayerChecked}
-                value='clusters'
-              />
-            </div>
-          </Sidebar>
-
-          <Sidebar.Pusher>
-            <Segment basic>
-              <Header as='h3'>Application Content</Header>
-              <Image src='/images/wireframe/paragraph.png' />
-            </Segment>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
+        <Sidebar
+          as={Menu}
+          animation='overlay'
+          direction='left'
+          icon='labeled'
+          onHide={this.handleSidebarHide}
+          vertical
+          width='thin'
+          visible={this.state.visible}
+        >
+          <Menu.Item as='places'>
+            <Checkbox
+              label='Show Places'
+              onChange={this.handleCheckbox}
+              checked={this.props.state.places.isLayerChecked}
+              value='places'
+            />
+          </Menu.Item>
+          <Menu.Item as='events'>
+            <Checkbox
+              label='Show Events'
+              onChange={this.handleCheckbox}
+              checked={this.props.state.events.isLayerChecked}
+              value='events'
+            />
+          </Menu.Item>
+          <Menu.Item as='clusters'>
+            <Checkbox
+              label='Show clusters'
+              onChange={this.handleCheckbox}
+              checked={this.props.state.clusters.isLayerChecked}
+              value='clusters'
+            />
+          </Menu.Item>
+        </Sidebar>
       </div>
     )
   }

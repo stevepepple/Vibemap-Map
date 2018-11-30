@@ -8,7 +8,7 @@ module.exports = {
       12, ['*', 1, ['to-number', ['get', 'rating']]],
       18, ['*', 10, ['to-number', ['get', 'rating']]]],
 
-      'circle-color': 'rgb(121, 76, 138)',
+      'circle-color': '#BA3BAD',
       'circle-stroke-color': 'white',
       'circle-stroke-width': {
         stops: [
@@ -20,6 +20,34 @@ module.exports = {
 
       'circle-stroke-opacity': {
         stops: [[10, 0.0], [12, 0.4], [13, 0.6], [18, 1.0]] }
+    },
+    places_heatmap: {
+      'heatmap-radius' : [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+          8, 4,
+          10, 14,
+          12, 18
+      ],
+      'heatmap-opacity': [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+          8, 0.8,
+          14, 0.4
+      ],
+      "heatmap-color": [
+        "interpolate",
+        ["linear"],
+        ["heatmap-density"],
+          0, 'rgba(0,255,255, 0)',
+          0.2, 'rgba(227,255,207, 0.4)',
+          0.3, '#ffff80',
+          0.6, '#d6a983',
+          0.8, '#9d6697',
+          1, '#603583'
+        ]
     },
     events_circle: {
       // increase the radius of the circle as the zoom level and dbh value increases

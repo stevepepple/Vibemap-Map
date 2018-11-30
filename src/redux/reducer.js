@@ -43,6 +43,16 @@ const initialState: State = {
   events_data,
   places_data,
   options,
+  places: {
+    isLayerChecked: true
+  },
+  events: {
+    isLayerChecked: true
+  },
+  clusters: {
+    isLayerChecked: false
+  },
+  sidebar_visible: true,
   active: options[0]
 };
 
