@@ -28,6 +28,7 @@ db.once("open", () => console.log("Mongo DB  is connected."));
 const Event = mongoose.model('Event', config.event_schema);
 
 router.get("/hello", (req, res) => {
+    console.log('Responding to request...');
     return res.json({ success: true, data: { hello : 'hello' } });
 });
 
