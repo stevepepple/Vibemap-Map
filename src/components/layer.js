@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import mapboxgl from 'mapbox-gl'
 
 export default class Layer extends React.Component {
 
@@ -39,10 +40,19 @@ export default class Layer extends React.Component {
       type,
       layout,
       paint: paint
-    }, before)
+    },before)
+
+    let marker = new mapboxgl.Marker()
+      .setLngLat([-122.40612019999999, 37.7842682])
+      .addTo(map);
+
+    console.log('map: ', map)
 
     if(!isLayerChecked) map.setLayoutProperty(layerId, 'visibility', 'none')
   }
+
+
+
 
   componentWillReceiveProps(nextProps) {
     const { map } = this.context
