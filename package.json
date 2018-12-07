@@ -2,7 +2,8 @@
   "name": "hotspots",
   "version": "0.0.1",
   "scripts": {
-    "start": "concurrently \"node src/lib/server.js\" \"react-scripts start\"",
+    "start": "node src/lib/server.js",
+    "both": "concurrently \"node src/lib/server.js\" \"react-scripts start\"",
     "start:dev": "concurrently \"nodemon src/lib/server.js\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
