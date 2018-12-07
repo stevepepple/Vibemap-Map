@@ -9,6 +9,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@turf/turf": "^5.1.6",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
     "cors": "^2.8.5",
@@ -25,6 +26,7 @@
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
+    "react-tabs": "^2.3.0",
     "redux": "^3.7.2",
     "semantic-ui-react": "^0.83.0"
   },
