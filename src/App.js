@@ -19,7 +19,7 @@ class App extends Component {
           <div>
             <Menu pointing>
               <Menu.Item>
-                <Link to="/events">Events</Link>
+                <Link to="/events">Nearby Events</Link>
               </Menu.Item>
             </Menu>
             
