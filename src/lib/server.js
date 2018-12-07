@@ -13,7 +13,7 @@ const config = require('../config');
 require('dotenv').config();
 
 // env variables
-const PORT = process.env.SERVER_PORT;
+const PORT = process.env.PORT || 8000;
 
 console.log(process.env.DATABASE)
 
