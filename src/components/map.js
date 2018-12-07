@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 
+// TODO: pass from config
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw';
 
 let Map = class Map extends React.Component {
@@ -16,12 +17,13 @@ let Map = class Map extends React.Component {
   })
 
   constructor(props) {
-    super(props);
+    super(props);    
+
     this.state = {
-      lng: -122.2708464,
-      lat: 37.805308,
-      zoom: 13,
-      bearing: 28,
+      lat: props.lat !== 'undefined' !== null ? props.lat: 37.805308,
+      lng: props.lng !== 'undefined' ? props.lng : -122.2708464,
+      zoom: typeof props.zoom !== 'undefined' ? props.zoom : 13,
+      bearing: typeof props.bearing !== 'undefined' ? props.bearing : 28,
       map: null,
       value: 'all',
       show_events: true,
@@ -33,7 +35,6 @@ let Map = class Map extends React.Component {
 
   componentDidUpdate() {
     console.log(this.state.map)
-
   }
 
   componentDidMount() {
@@ -54,7 +55,6 @@ let Map = class Map extends React.Component {
         positionOptions: { enableHighAccuracy: true },
         trackUserLocation: true
       }));
-
 
       /*
       // Show Places
@@ -127,7 +127,7 @@ let Map = class Map extends React.Component {
     const { children } = this.props
     const { map } = this.state
     return (
-      <div className='Map' ref={(x) => { this.mapContainer = x }} className='absolute top right left bottom'>
+      <div className='map' ref={(x) => { this.mapContainer = x }} className='left'>
         { map && children }
       </div>
     );
