@@ -15,7 +15,8 @@ export default class Layer extends React.Component {
   }
 
   static contextTypes = {
-    map: PropTypes.object,
+    map: PropTypes.object
+  }
 
   componentWillMount() {
     const { map } = this.context
