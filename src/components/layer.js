@@ -16,7 +16,6 @@ export default class Layer extends React.Component {
 
   static contextTypes = {
     map: PropTypes.object,
-  }
 
   componentWillMount() {
     const { map } = this.context
@@ -46,13 +45,9 @@ export default class Layer extends React.Component {
       .setLngLat([-122.40612019999999, 37.7842682])
       .addTo(map);
 
-    console.log('map: ', map)
 
     if(!isLayerChecked) map.setLayoutProperty(layerId, 'visibility', 'none')
   }
-
-
-
 
   componentWillReceiveProps(nextProps) {
     const { map } = this.context

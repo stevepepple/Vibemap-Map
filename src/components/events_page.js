@@ -66,11 +66,9 @@ class EventsPage extends Component {
     }
 
     render() {
-        //const items = this.state.data.map((data) => <li key={data.name}>{data.name} {data.properties.likes}</li>);
         
         return (
-            <div>
-                
+            <div>                
 
                 <h2>Happening Near You</h2>
                 
@@ -88,9 +86,7 @@ class EventsPage extends Component {
                     <TabPanel>
                         <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} />
                     </TabPanel>
-
                 </Tabs>
-
                 
             </div>
  
