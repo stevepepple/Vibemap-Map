@@ -3,8 +3,7 @@ import EventsPage from './components/events_page';
 import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 import { Menu } from 'semantic-ui-react'
 
-import './App.scss';
-
+import './App.css';
 
 class App extends Component {
   state = { activeItem: 'home' }
