@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
+import moment from 'moment';
+
 
 const descriptionStyle = {
     position: 'relative',
@@ -13,6 +15,8 @@ class EventCard extends Component {
     render() {
 
         let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);
+        let date = moment(this.props.content.date)
+        let start = this.props.content.start_time
 
         return (
             <div>
@@ -21,7 +25,7 @@ class EventCard extends Component {
                     <Card.Content>
                         <Card.Header>{this.props.content.title}</Card.Header>
                         <Card.Meta>
-                            <span className='date'>{this.props.content.date}</span>
+                            <span className='date'>{date.format('dddd')} {start}</span>
                         </Card.Meta>
                         <Card.Description style={descriptionStyle}>{this.props.content.description}</Card.Description>
                     </Card.Content>
