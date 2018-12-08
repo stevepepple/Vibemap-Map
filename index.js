@@ -2,18 +2,20 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const moment = require('moment');
+const path = require('path');
+
 
 const app = express();
 const router = express.Router();
 
 // Local config
 // TODO: This needs to move to a common repo
-const config = require('../config');
+const config = require('./src/config');
 
 require('dotenv').config();
 
 // env variables
-const PORT = process.env.SERVER_PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 console.log(process.env.DATABASE)
 
@@ -26,6 +28,14 @@ let db = mongoose.connection;
 db.once("open", () => console.log("Mongo DB  is connected."));
 
 const Event = mongoose.model('Event', config.event_schema);
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname + '/build/index.html'));
+});
 
 router.get("/hello", (req, res) => {
     console.log('Responding to request...');
