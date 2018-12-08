@@ -2,12 +2,13 @@
   "name": "hotspots",
   "version": "0.0.1",
   "scripts": {
-    "start": "node src/lib/server.js",
-    "both": "concurrently \"node src/lib/server.js\" \"react-scripts start\"",
+    "start": "node index.js",
+    "both": "\"node src/lib/server.js\" \"react-scripts start\"",
     "start:dev": "concurrently \"nodemon src/lib/server.js\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@turf/turf": "^5.1.6",
@@ -21,6 +22,7 @@
     "moment": "^2.22.2",
     "mongoose": "^5.3.14",
     "node-sass": "^4.10.0",
+    "path": "^0.12.7",
     "prop-types": "^15.5.10",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
