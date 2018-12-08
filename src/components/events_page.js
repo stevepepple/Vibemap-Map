@@ -11,7 +11,7 @@ import EventCard from './event_card.js'
 import EventsList from './events_list.js';
 import EventsMap from './events_map.js';
 
-import '../styles/events_page.scss';
+import '../styles/events_page.css';
 
 
 class EventsPage extends Component {
@@ -44,7 +44,7 @@ class EventsPage extends Component {
         let query = querystring.stringify({
             lat: this.state.lat,
             lon: this.state.lon,
-            distance: 1.5
+            distance: 2.0
         });
 
         fetch("/api/events?" + query)
