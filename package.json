@@ -1,37 +1,19 @@
 {
-  "name": "hotspots",
+  "name": "hotspots-server",
   "version": "0.0.1",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "both": "\"node src/lib/server.js\" \"react-scripts start\"",
-    "start:dev": "concurrently \"nodemon src/lib/server.js\" \"react-scripts start\"",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "start:dev": "concurrently \"nodemon src/lib/server.js\" \"react-scripts start\""
   },
   "dependencies": {
-    "@turf/turf": "^5.1.6",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "dotenv": "^6.1.0",
-    "lodash": "^4.17.11",
-    "lodash.merge": "^4.6.1",
-    "mapbox-gl": "^0.50",
     "moment": "^2.22.2",
     "mongoose": "^5.3.14",
-    "node-sass": "^4.10.0",
     "path": "^0.12.7",
-    "prop-types": "^15.5.10",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-redux": "^5.0.5",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.1",
-    "react-tabs": "^2.3.0",
-    "redux": "^3.7.2",
-    "semantic-ui-react": "^0.83.0",
     "yarn": "^1.12.3"
   },
   "eslintConfig": {
@@ -40,7 +22,6 @@
   "engines": {
     "node": "10.x"
   },
-  "proxy": "http://localhost:3000",
   "browserslist": [
     ">0.2%",
     "not dead",

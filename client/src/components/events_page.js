@@ -47,6 +47,8 @@ class EventsPage extends Component {
             distance: 2.0
         });
 
+        console.log('Fetching this: ', '/api/events?' + query);
+
         fetch("/api/events?" + query)
             .catch(err => console.error(err))
             .then(data => data.json())
