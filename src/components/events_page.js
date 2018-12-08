@@ -51,8 +51,9 @@ class EventsPage extends Component {
             .catch(err => console.error(err))
             .then(data => data.json())
             .then(res => {
+                console.log('API response: ', this.state.data)
                 this.setState({ data: res.data })
-                console.log(this.state.data)
+            
             });
     }
 

@@ -33,7 +33,7 @@ class EventCard extends Component {
                         <a>
                             <Icon name='user' />
                             {this.props.content.likes} People
-      </a>
+                        </a>
                     </Card.Content>
                 </Card>
             </div>
