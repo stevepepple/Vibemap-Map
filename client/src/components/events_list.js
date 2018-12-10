@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Dropdown, GridColumn, Tab } from 'semantic-ui-react'
+import { Grid, Dimmer, Dropdown, GridColumn, Loader, Segment, Tab } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
 
 import EventCard from './event_card.js'
@@ -31,9 +31,12 @@ class EventsList extends Component {
                         </Grid.Row>
                     </Grid>
                 ) : (
-                        <span>No results yet</span>
+                    <Dimmer active inverted>
+                        <Loader inverted>
+                        <h3>Have you ever stopped to smell the roses near Grand Avenue?</h3>
+                        </Loader>
+                    </Dimmer>
                     )}
-                List will go here.
             </div>
         );
     }
