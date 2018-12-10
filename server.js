@@ -39,7 +39,7 @@ app.get('/api/events', (req, res) => {
 
     // TODO: pass number of days as an argument
     let now = moment();
-    let tomorrow = moment().add(2, 'days');
+    let tomorrow = moment().add(5, 'days');
 
     let lat = req.query.lat;
     let lon = req.query.lon;
