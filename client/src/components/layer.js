@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 
-export default class Layer extends React.Component {
+class Layer extends React.Component {
 
   static propTypes = {
     id: PropTypes.string,
@@ -79,3 +79,6 @@ export default class Layer extends React.Component {
     return null
   }
 }
+
+export default Layer;
+

@@ -1,6 +1,9 @@
 import React from 'react'
+import ReactDom from 'react-dom'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
+import Tooltip from './map/tooltip'
+
 
 // TODO: pass from config
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw';
@@ -48,6 +51,12 @@ let Map = class Map extends React.Component {
       zoom: zoom
     });
 
+    this.tooltipContainer = document.createElement('div');
+
+    const tooltip = new mapboxgl.Marker(this.tooltipContainer, {
+      offset: [-120, 0]
+    }).setLngLat([0, 0]).addTo(this.map);
+
     this.map.on('load', () => {
       this.setState({ map: this.map })
       this.map.addControl(new mapboxgl.NavigationControl());
@@ -56,51 +65,13 @@ let Map = class Map extends React.Component {
         trackUserLocation: true
       }));
 
-      /*
-      // Show Places
-      this.map.addLayer({
-          id: 'places-2',
-          type: 'circle',
-          source: 'places_source',
-          'layout': { 'visibility': this.state.show_places ? 'visible' : 'none' },
-          minzoom: 10,
-          paint: {
-            'circle-radius': [
-            'interpolate',
-            ['exponential', 3],
-            ["zoom"],
-            3, ['*', 0.5, ['to-number', ['get', 'rating']]],
-            12, ['*', 1, ['to-number', ['get', 'rating']]],
-            18, ['*', 10, ['to-number', ['get', 'rating']]]],
-
-            'circle-color': 'rgb(121, 76, 138)',
-            'circle-stroke-color': 'white',
-            'circle-stroke-width': {
-              stops: [
-              [12, 0.5],
-              [18, 4.0]] },
-
-            'circle-opacity': {
-              stops: [[10, 0.0], [12, 0.4], [13, 0.6], [18, 1.0]] },
-
-            'circle-stroke-opacity': {
-              stops: [[10, 0.0], [12, 0.4], [13, 0.6], [18, 1.0]] } }
-        });
-        */
-
-      /*
-      this.map.addSource('countries', {
-        type: 'geojson',
-        data: this.props.data
+    this.map.on('mousemove', (e) => {
+        const features = this.map.queryRenderedFeatures(e.point);
+        tooltip.setLngLat(e.lngLat);
+        this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+        this.setTooltip(features);
       });
 
-      // TODO: this will be the hotspots
-      this.map.addLayer({
-        id: 'countries',
-        type: 'fill',
-        source: 'countries'
-      }, 'country-label-lg'); // ID metches `mapbox/streets-v9`
-      */
     });
 
   }
@@ -114,6 +85,22 @@ let Map = class Map extends React.Component {
     //map.setFilter('places', filter);
     this.map.setFilter('places-2', filter);
   }
+
+  setTooltip(features) {
+    if (features.length) {
+      ReactDom.render(
+        React.createElement(
+          Tooltip, {
+            features
+          }
+        ),
+        this.tooltipContainer
+      );
+    } else {
+      this.tooltipContainer.innerHTML = '';
+    }
+  }
+
 
   setFill() {
     const { property, stops } = this.props.active;
