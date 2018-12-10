@@ -30,7 +30,7 @@ class EventsMap extends Component {
             <div>
             { has_data? (
                     <div className = 'map_container' >
-                        <Map lat={this.props.lat} lng={this.props.lng} bearing={0} zoom={14}>
+                        <Map lat={this.props.lat} lng={this.props.lng} bearing={0} zoom={13}>
                             <Source id='events' data={this.state.geojson} layer='events'>
                                 <Markers
                                     data={this.state.geojson}

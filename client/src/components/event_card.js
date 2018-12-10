@@ -17,13 +17,19 @@ class EventCard extends Component {
         let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);
         let date = moment(this.props.content.date)
         let start = this.props.content.start_time
+        let title = this.props.content.title;
+        // TODO: Move to server side
+        if (title) {
+            title = title.split(' | ')
+            title = title[0]            
+        }
 
         return (
             <div>
                 <Card fluid>
                     <Image src={this.props.content.image} />
                     <Card.Content>
-                        <Card.Header><a href={this.props.link}>{this.props.content.title}</a></Card.Header>
+                        <Card.Header><a href={this.props.link}>{title}</a></Card.Header>
                         <Card.Meta>
                             <span className='date'>{date.format('dddd')} {start}</span>
                         </Card.Meta>
