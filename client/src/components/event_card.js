@@ -23,7 +23,7 @@ class EventCard extends Component {
                 <Card fluid>
                     <Image src={this.props.content.image} />
                     <Card.Content>
-                        <Card.Header>{this.props.content.title}</Card.Header>
+                        <Card.Header><a href={this.props.link}>{this.props.content.title}</a></Card.Header>
                         <Card.Meta>
                             <span className='date'>{date.format('dddd')} {start}</span>
                         </Card.Meta>
