@@ -7,6 +7,10 @@ import Source from './source'
 import Layer from './layer'
 import Styles from '../styles/map_styles.js'
 import Markers from './markers.js';
+//import Geocoder from "@mapbox/react-geocoder";
+
+// TODO: load from common .env
+import * as Constants from '../constants.js'
 
 class EventsMap extends Component {
 
@@ -17,27 +21,35 @@ class EventsMap extends Component {
     componentDidMount(){
         let geojson = turf.featureCollection(this.props.data);
 
-        console.log('geojson: ', geojson, this.props.data)
         this.setState({ geojson: geojson })
     }
+
+    componentWillReceiveProps(){
+        let geojson = turf.featureCollection(this.props.data);
+
+        this.setState({ geojson: geojson })
+    }
+
+    onSelect = function() {
+        console.log('Geocoding result: ')
+    }
+
+    mapRef = React.createRef();
 
     render() {
 
         let has_data = this.props.data.length > 0;
-        console.log('Has data? ', has_data)
 
         return (
             <div>
             { has_data? (
-                    <div className = 'map_container' >
-                        <Map lat={this.props.lat} lng={this.props.lng} bearing={0} zoom={13}>
-                            <Source id='events' data={this.state.geojson} layer='events'>
-                                <Markers
-                                    data={this.state.geojson}
-                                />
-                            </Source>
-
-                        </Map>
+                <div className = 'map_container' >
+                    
+                    <Map ref={this.mapRef} lat={this.props.lat} lng={this.props.lng} bearing={0} zoom={13} show_geocoder={true}>
+                        <Source id='events' data={this.state.geojson} layer='events'>
+                            <Markers data={this.state.geojson} />
+                        </Source>
+                    </Map>
                 </div>
                 ) : (
                 <span> Loading Map</span>
@@ -49,7 +61,7 @@ class EventsMap extends Component {
 }
 
 EventsMap.propTypes = {
-    data: PropTypes.array.isRequired,
+    data: PropTypes.array,
     lat: PropTypes.number,
     lng: PropTypes.number,
     bearing: PropTypes.number,

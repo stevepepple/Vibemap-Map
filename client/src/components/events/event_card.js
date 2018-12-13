@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
 import moment from 'moment';
-
-
 const descriptionStyle = {
     position: 'relative',
     height: '6.6em', /* exactly three lines */

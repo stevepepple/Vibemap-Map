@@ -1,8 +1,37 @@
+/* Container */
 .content {
+    /*
     padding-left: 14vmin;
     padding-right: 14vmin;
+    */
 }
 
+/* Top Nav and Controls */
+.navigation {
+    position: absolute;
+    top: 0;
+    left: 15vmin;
+    padding: 1vmin;
+}
+
+/* List */
+.ui.items {
+    height: 90vh;
+    overflow: auto; 
+}
+
+.ui.items .item .content .date {
+    font-size: 1.1em;
+    color: #999;
+    padding-bottom: 0.4em;
+}
+
+.ui.items .item .content .header {
+    font-size: 1.2em;
+}
+
+
+/* Map */
 .map_container, .mapboxgl-map {
     border: red;
     width: 100%;

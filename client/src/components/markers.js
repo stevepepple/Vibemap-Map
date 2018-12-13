@@ -5,7 +5,6 @@ import mapboxgl from 'mapbox-gl'
 export default class Markers extends React.Component {
 
   static propTypes = {
-    data: PropTypes.object,
     before: PropTypes.string
   }
 

@@ -1,27 +1,37 @@
 import React, { Component } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import { Menu, Dropdown } from 'semantic-ui-react'
+import { Menu, Dropdown, Grid } from 'semantic-ui-react'
 import querystring from 'querystring';
 
 
 import helpers from '../helpers.js'
 
-import EventCard from './event_card.js'
-import EventsList from './events_list.js';
+import EventsList from './events/events_list.js';
 import EventsMap from './events_map.js';
+import EventModal from './events/modal.js';
+
+import Navigation from './events/navigation.js';
 
 import '../styles/events_page.css';
 
 
 class EventsPage extends Component {
 
-    state = {
-        data: [],
-        items: [],
-        lat: 37.79535238155009,
-        lon: -122.2823644705406,
-        intervalIsSet: false
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            data: [],
+            top_event: [],
+            items: [],
+            lat: 37.79535238155009,
+            lon: -122.2823644705406,
+            current_item: null,
+            detail_shown: false,
+            intervalIsSet: false
+        }
+
+        this.showDetails = this.showDetails.bind(this);
     }
      
     componentDidMount() {
@@ -50,13 +60,24 @@ class EventsPage extends Component {
         console.log('Fetching this: ', '/api/events?' + query);
 
         fetch("/api/events?" + query)
-            .catch(err => console.error(err))
             .then(data => data.json())
             .then(res => {
                 console.log('API response: ', this.state.data)
                 this.setState({ data: res.data })
-            
+            }, (error)=> {
+                console.log(error)
             });
+    }
+
+    // Get the current data item and display it
+    showDetails = function (id, event) {
+
+        let current_item = this.state.data.filter(item => item._id == id);
+        current_item = current_item[0];
+
+        console.log('current_item: ', current_item)
+
+        this.setState({ current_item: current_item, detail_shown : true });
     }
 
     // never let a process live forever 
@@ -69,30 +90,27 @@ class EventsPage extends Component {
     }
 
     render() {
+
+        // Don't render until the data has loaded
+        if (this.state.data.length == 0) { return 'There is no data. There might be an error.' }
         
         return (
             <div>                
+                <Navigation/>                
+                
+                {/* TODO: Move to controls form: <Dropdown placeholder='All Events' /> */}
 
-                <h2>Happening Near You</h2>
-                
-                {/* <Dropdown placeholder='All Events' /> */}
-                
-                <Tabs selectedTabClassName='active'>
-                    <TabList className='ui menu secondary'>
-                        <Tab className='item'>List</Tab>
-                        <Tab className='item'>Map</Tab>
-                    </TabList>
-
-                    <TabPanel>
-                        <EventsList data={this.state.data} />
-                    </TabPanel>
-                    <TabPanel>
-                        <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} />
-                    </TabPanel>
-                </Tabs>
-                
+                {/* 16 column grid */}
+                <Grid>
+                    <Grid.Column width={7}>
+                        <EventsList data={this.state.data} onclick={this.showDetails} />
+                    </Grid.Column>                    
+                    <Grid.Column width={9}>
+                        <EventModal data={this.state.current_item} show={this.state.detail_shown} />
+                        <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} />                                       
+                    </Grid.Column>
+                </Grid> 
             </div>
- 
         );
     }
 }
