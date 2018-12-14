@@ -30,8 +30,8 @@ class App extends Component {
               </Dropdown>
             </Menu>
             
-            <Route exact path="/events" component={EventsPage} />
-            <Route exact path="/places" component={PlacesMap} />
+            <Route path="/events" component={EventsPage} />
+            <Route path="/places" component={PlacesMap} />
           </div>
         </Router>
         
