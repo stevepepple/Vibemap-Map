@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { Grid, Dimmer, GridColumn, Item, Loader, Segment, Tab } from 'semantic-ui-react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 import ListItem from './list_item.js'
+
 
 class EventsList extends Component {
     render() {

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import { Grid, Dimmer, Dropdown, GridColumn, Loader, Segment, Tab } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
 
-import EventCard from './event_card.js'
+import Card from './item_card.js'
 
 class EventsList extends Component {
 
@@ -27,7 +28,7 @@ class EventsList extends Component {
                 this.setState({ top_event : top_event });
             }
 
-            items = this.props.data.map((event) => <Grid.Column><EventCard link={event.properties.link} content={event.properties} /></Grid.Column>);
+            items = this.props.data.map((event) => <Grid.Column><Card link={event.properties.link} content={event.properties} /></Grid.Column>);
         }
 
         return (
@@ -36,7 +37,7 @@ class EventsList extends Component {
                 {has_items ? (
                     <Grid stackable columns={2}>
                         <Grid.Row>
-                            <EventCard link={top_event.properties.link} content={top_event.properties} />
+                            <Card link={top_event.properties.link} content={top_event.properties} />
                         </Grid.Row>
                         <Grid.Row>
                             {items}
