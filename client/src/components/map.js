@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 import Tooltip from './map/tooltip'
 
+
 // TODO: pass from config
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw';
 
@@ -35,10 +36,6 @@ let Map = class Map extends React.Component {
     this.updateParent = this.updateParent.bind(this)
   }
 
-  componentDidUpdate() {
-    console.log(this.state.map)
-  }
-
   componentDidMount() {
     const { lng, lat, bearing, zoom } = this.state;
 
@@ -65,17 +62,23 @@ let Map = class Map extends React.Component {
       }));
 
 
-    this.map.on('mousemove', (e) => {
-        /*
-        const features = this.map.queryRenderedFeatures(e.point);
-        tooltip.setLngLat(e.lngLat);
-        this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-        this.setTooltip(features);
-        */
+    this.map.on('dragend', (e) => {
+      let position = this.map.getCenter();
+      if (this.props.onMapChange) {
+        this.props.onMapChange(position)
+      }
       });
-
     });
+  }
 
+  componentWillReceiveProps(nextProps){
+    if (this.props.lat != nextProps.lat) {
+      this.map.setCenter([nextProps.lng, nextProps.lat])
+    }
+  }
+
+  componentWillUnmount() {
+    this.map.remove();
   }
 
   updateParent(field) {

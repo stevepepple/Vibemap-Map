@@ -1,8 +1,19 @@
 import React from 'react'
+import shallowCompare from 'react-addons-shallow-compare'; // ES6
+
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 
 export default class Markers extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      markers : [],
+      map: null
+    }
+  }
 
   static propTypes = {
     before: PropTypes.string
@@ -16,20 +27,31 @@ export default class Markers extends React.Component {
   componentWillMount() {
     const { map } = this.context
 
-    /*
-    map.addLayer({
-      id: layerId,
-      source: sourceId,
-      type,
-      layout,
-      paint: paint
-    },before)
-    */
     let features = this.props.data.features;
+
+    
     this.addMarkers(features, map)
+  }
 
-    console.log('map: ', map)
+  componentDidUpdate() {
+  }
 
+  shouldComponentUpdate(nextProps, nextState) {
+
+    let update = shallowCompare(this, nextProps, nextState);
+    return update;
+    
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { map } = this.context
+
+    let update = shallowCompare(this.props, nextProps)
+
+    if (update) {
+      this.removeMarkers(map)
+      this.addMarkers(nextProps.data.features, map);
+    }
   }
   
   addMarkers(features, map) {
@@ -60,25 +82,29 @@ export default class Markers extends React.Component {
 
         el.append(img);
 
-
         el.addEventListener('click', function () {
             window.alert(feature.properties.description);
         });
 
         // add marker to map
-        new mapboxgl.Marker(el)
+        return new mapboxgl.Marker(el)
             .setLngLat(feature.geometry.coordinates)
             .addTo(map);
       });
+
+      this.setState({ markers : markers})
+  }
+
+  removeMarkers(map) {
+    this.state.markers.forEach(marker => {
+      marker.remove();
+    });
   }
 
   componentWillUnmount() {
-    const { map } = this.context
-    const { id, sourceId } = this.props
-    const layerId = `${sourceId}-${id}`
+    
+    this.removeMarkers();
 
-    // TODO: clean up markers
-    map.removeLayer(layerId)
   }
 
   render() {

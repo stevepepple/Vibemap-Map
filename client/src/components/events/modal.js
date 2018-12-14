@@ -28,7 +28,9 @@ class EventModal extends Component {
 
     componentWillReceiveProps = function(props) {
         this.setState({ show: props.show })
-
+        if (props.data == null) {
+            return false;
+        }
         // Compose Directions Link
         // API instructions are here: https://citymapper.com/tools/1053/launch-citymapper-for-directions
         let content = props.data.properties;
@@ -52,6 +54,7 @@ class EventModal extends Component {
 
         if (this.props.data == null) { return null }
 
+        console.log('Modal props: ', this.props.data)
         let content = this.props.data.properties;
 
         /*

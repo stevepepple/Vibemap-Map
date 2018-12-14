@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import { Grid } from 'semantic-ui-react'
+
 import PropTypes from 'prop-types';
+
+import LocationSearchInput from '../map/search'
 
 class Navigation extends Component {
     constructor(props) {
         super(props);
-
-
-
     }
 
     componentWillMount() {
@@ -18,10 +19,6 @@ class Navigation extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
 
     }
 
@@ -41,8 +38,16 @@ class Navigation extends Component {
         return (
             <div>
                 <div className='navigation'>
-                    <h3>Happening Near You</h3>
-                    <LocationSearch/>
+                    <Grid>
+                        <Grid.Column width={3}>
+                            <h3 className="header">Happening Near You</h3>
+                        </Grid.Column>
+                        <Grid.Column width={3}>
+                            <LocationSearchInput setPosition={this.props.setPosition} />
+                        </Grid.Column>
+                    </Grid>
+                    
+
                 </div>
             </div>
         );
@@ -50,7 +55,7 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-
+    setPosition: PropTypes.function
 };
 
 export default Navigation;

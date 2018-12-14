@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as turf from '@turf/turf'
+import debounce from 'lodash'
 
 import Map from './map.js'
 import Source from './source'
 import Layer from './layer'
 import Styles from '../styles/map_styles.js'
 import Markers from './markers.js';
+
 //import Geocoder from "@mapbox/react-geocoder";
 
 // TODO: load from common .env
@@ -14,8 +16,12 @@ import * as Constants from '../constants.js'
 
 class EventsMap extends Component {
 
-    state = {
-        geojson: [],
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            geojson: []
+        }
     }
 
     componentDidMount(){
@@ -24,14 +30,18 @@ class EventsMap extends Component {
         this.setState({ geojson: geojson })
     }
 
-    componentWillReceiveProps(){
-        let geojson = turf.featureCollection(this.props.data);
+    componentWillReceiveProps(nextProps){
+        let geojson = turf.featureCollection(nextProps.data);
 
         this.setState({ geojson: geojson })
     }
 
     onSelect = function() {
         console.log('Geocoding result: ')
+    }
+
+    onMapChange = (position, props) => {
+        this.props.setPosition(position.lat, position.lng)        
     }
 
     mapRef = React.createRef();
@@ -43,12 +53,9 @@ class EventsMap extends Component {
         return (
             <div>
             { has_data? (
-                <div className = 'map_container' >
-                    
-                    <Map ref={this.mapRef} lat={this.props.lat} lng={this.props.lng} bearing={0} zoom={13} show_geocoder={true}>
-                        <Source id='events' data={this.state.geojson} layer='events'>
-                            <Markers data={this.state.geojson} />
-                        </Source>
+                <div className = 'map_container'>
+                    <Map ref={this.mapRef} lat={this.props.lat} lng={this.props.lng} onMapChange={this.onMapChange} bearing={0} zoom={13} show_geocoder={true}>
+                        <Markers data={this.state.geojson} />
                     </Map>
                 </div>
                 ) : (
@@ -65,7 +72,8 @@ EventsMap.propTypes = {
     lat: PropTypes.number,
     lng: PropTypes.number,
     bearing: PropTypes.number,
-    zoom: PropTypes.number
+    zoom: PropTypes.number,
+    setPosition: PropTypes.function
 };
 
 export default EventsMap;

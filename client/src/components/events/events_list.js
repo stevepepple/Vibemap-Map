@@ -19,13 +19,9 @@ class EventsList extends Component {
 
         return (
             <div>
-                <Grid stackable columns={2}>
-                    <Grid.Row>
-                        <Item.Group divided relaxed>
-                            {items}
-                        </Item.Group>
-                    </Grid.Row>
-                </Grid>
+                <Item.Group divided relaxed>
+                    {items}
+                </Item.Group>
              </div>
         );
     }

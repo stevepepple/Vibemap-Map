@@ -46,7 +46,6 @@ class Layer extends React.Component {
       .setLngLat([-122.40612019999999, 37.7842682])
       .addTo(map);
 
-
     if(!isLayerChecked) map.setLayoutProperty(layerId, 'visibility', 'none')
   }
 
@@ -72,6 +71,8 @@ class Layer extends React.Component {
     const { map } = this.context
     const { id, sourceId } = this.props
     const layerId = `${sourceId}-${id}`
+
+    console.log('!!! Remove: ', sourceId, id)
     map.removeLayer(layerId)
   }
 

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import { Menu, Dropdown, Grid } from 'semantic-ui-react'
+import { Button, Dimmer, Grid, Loader } from 'semantic-ui-react'
 import querystring from 'querystring';
 
-
 import helpers from '../helpers.js'
+import * as Constants from '../constants.js'
 
 import EventsList from './events/events_list.js';
+import EventsCards from './events/events_cards.js';
 import EventsMap from './events_map.js';
 import EventModal from './events/modal.js';
-
 import Navigation from './events/navigation.js';
 
 import '../styles/events_page.css';
@@ -28,14 +29,26 @@ class EventsPage extends Component {
             lon: -122.2823644705406,
             current_item: null,
             detail_shown: false,
-            intervalIsSet: false
+            intervalIsSet: false,
+            timedOut: false,
+            width: window.innerWidth,
         }
 
         this.showDetails = this.showDetails.bind(this);
+        this.setPosition = this.setPosition.bind(this);
+
     }
      
-    componentDidMount() {
+    componentWillMount() {
 
+        this.getPosition();
+        
+        // Handle scree resizing
+        window.addEventListener('resize', this.handleWindowSizeChange);
+
+    }
+
+    getPosition = function() {
         // Users geo location from HTML 5 util
         helpers.getPosition()
             .then((position) => {
@@ -49,7 +62,23 @@ class EventsPage extends Component {
             })
     }
 
-    showEvents = function (position) {
+    setPosition(lat, lon) {
+        this.setState({ lat : lat, lon : lon})
+
+        console.log('UPdated Position: ', this.state)
+        this.showEvents()
+    }
+
+    handleWindowSizeChange = () => {
+        this.setState({ width: window.innerWidth });
+        console.log('window width: ', this.state.width)
+
+    };
+
+    showEvents(position) {
+
+        this.state.data.pop()
+        this.setState({ data : this.state.data })
         
         let query = querystring.stringify({
             lat: this.state.lat,
@@ -57,14 +86,20 @@ class EventsPage extends Component {
             distance: 2.0
         });
 
-        console.log('Fetching this: ', '/api/events?' + query);
+        this.setState({ timedOut: false})
+        
+        let timeout = setTimeout(() => {
+            this.setState({ timedOut: true })
+        }, Constants.TIMEOUT)
 
+        console.log('Fetching this: ', '/api/events?' + query);
         fetch("/api/events?" + query)
             .then(data => data.json())
             .then(res => {
                 console.log('API response: ', this.state.data)
-                this.setState({ data: res.data })
-            }, (error)=> {
+                clearTimeout(timeout);
+                this.setState({ data: res.data, timedOut : false })
+            }, (error) => {
                 console.log(error)
             });
     }
@@ -80,6 +115,11 @@ class EventsPage extends Component {
         this.setState({ current_item: current_item, detail_shown : true });
     }
 
+    restart() {
+        
+        this.setState({ data : [] })
+    }
+
     // never let a process live forever 
     // always kill a process everytime we are done using it
     componentWillUnmount() {
@@ -91,27 +131,67 @@ class EventsPage extends Component {
 
     render() {
 
-        // Don't render until the data has loaded
-        if (this.state.data.length == 0) { return 'There is no data. There might be an error.' }
-        
-        return (
-            <div>                
-                <Navigation/>                
-                
-                {/* TODO: Move to controls form: <Dropdown placeholder='All Events' /> */}
+        const { width } = this.state;
+        const isMobile = width <= 700;
 
-                {/* 16 column grid */}
-                <Grid>
-                    <Grid.Column width={7}>
-                        <EventsList data={this.state.data} onclick={this.showDetails} />
-                    </Grid.Column>                    
-                    <Grid.Column width={9}>
-                        <EventModal data={this.state.current_item} show={this.state.detail_shown} />
-                        <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} />                                       
-                    </Grid.Column>
-                </Grid> 
-            </div>
-        );
+        // Don't render until the data has loaded
+        // TODO: Handle error versus no results
+        if (this.state.data.length == 0) {
+            if (this.state.timedOut) {
+                return (
+                <div className='empty_state'>
+                    <p>No data. There might be an error.</p>
+                        <Button secondary onClick={() => { window.location.reload() }}>Reload</Button>
+                </div>)             
+            } else {
+                return (
+                    <div className='empty_state'>
+                        <Dimmer active inverted><Loader inverted><h3>Have you ever stopped to smell the roses near Grand Avenue?</h3></Loader></Dimmer>
+                    </div>
+                )
+            }
+ 
+        }
+
+        // Adaptive view for mobile users
+        if (isMobile) {
+            return (
+                <div>
+                    <Navigation setPosition={this.setPosition} />
+
+                    <Tabs selectedTabClassName='active'>
+                        <TabList className='ui menu secondary'>
+                            <Tab className='item'>List</Tab>
+                            <Tab className='item'>Map</Tab>
+                        </TabList>
+
+                        <TabPanel>
+                            <EventsCards data={this.state.data} />
+                        </TabPanel>
+                        <TabPanel>
+                            <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} />
+                        </TabPanel>
+                    </Tabs>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <Navigation setPosition={this.setPosition} />
+
+                    {/* 16 column grid */}
+                    <Grid>
+                        <Grid.Column width={7}>
+                            <EventsList data={this.state.data} onclick={this.showDetails} />
+                        </Grid.Column>
+                        <Grid.Column width={9}>
+                            <EventModal data={this.state.current_item} show={this.state.detail_shown} />
+                            <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} setPosition={this.setPosition} />
+                        </Grid.Column>
+                    </Grid>
+                </div>
+            );
+        }
     }
 }
 
