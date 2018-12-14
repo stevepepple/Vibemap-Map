@@ -37,25 +37,35 @@ class Navigation extends Component {
     render() {
         return (
             <div>
-                <div className='navigation'>
-                    <Grid>
-                        <Grid.Column width={3}>
-                            <h3 className="header">Happening Near You</h3>
-                        </Grid.Column>
-                        <Grid.Column width={3}>
-                            <LocationSearchInput setPosition={this.props.setPosition} />
-                        </Grid.Column>
-                    </Grid>
-                    
+                {this.props.isMobile? (
+                    <div className='navigation mobile'>
+                        <h3 className="header">Happening Near You</h3>
+                        <LocationSearchInput className='mobile search' setPosition={this.props.setPosition} />
+                    </div>
 
-                </div>
+                ) : (
+
+                    <div className='navigation'>
+                        <Grid stackable verticalAlign='middle'>
+                            <Grid.Column width={5}>
+                                <h3 className="header">Happening Near You</h3>
+                            </Grid.Column>
+                            <Grid.Column width={3}>
+                            <LocationSearchInput setPosition={this.props.setPosition} />
+                            </Grid.Column>
+                        </Grid>
+                    </div >
+                )}
+
+
             </div>
         );
     }
 }
 
 Navigation.propTypes = {
-    setPosition: PropTypes.function
+    setPosition: PropTypes.function,
+    isMobile : PropTypes.bool
 };
 
 export default Navigation;

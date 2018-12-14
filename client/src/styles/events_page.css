@@ -6,6 +6,9 @@
     */
 }
 
+.collapsed.row.stretched { margin: 0 1rem; }
+.collapsed.row.stretched .column { padding: 0; }
+
 .empty_state {
     text-align: center;
     font-size: 1.5em;
@@ -27,8 +30,20 @@
     width: 85vmin;
 }
 
-.navigation .header {
-    float: left;
+.navigation.mobile {
+    position: relative;
+    left: 0;
+    width: auto;
+}
+
+.mobile .ui.search {
+    position: fixed;
+    top: 2vmin;
+    right: 2vmin;
+}
+
+.mobile .header {
+    text-align: center
 }
 
 /* List */
@@ -37,14 +52,28 @@
     overflow: auto; 
 }
 
+.ui.items .item {
+    padding: 1.5em !important;
+}
+
 .ui.items .item .content .date {
     font-size: 1.1em;
     color: #999;
+    padding: 0.2em;
     padding-bottom: 0.4em;
 }
 
 .ui.items .item .content .header {
     font-size: 1.2em;
+}
+
+.ui.items .image {
+    height: 12vmin;
+    width: 12vmin;
+}
+
+.ui.items .image img {
+    height: 80%;
 }
 
 
@@ -72,15 +101,12 @@
    border-radius: 10vmin;
    overflow:hidden;
    border: solid 1px #CCC;
-   /*
-   width: 2vmin !important;
-   height: 2vmin !important;
-   */
    opacity: 0.8;
 }
 
 /* Round style photos */
-.marker img {
-   object-fit: cover;
+.marker img, 
+.ui.items .image img {
+    object-fit: cover;
 }
 

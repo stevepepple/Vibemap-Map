@@ -31,6 +31,7 @@ class EventModal extends Component {
         if (props.data == null) {
             return false;
         }
+        // TODO: Move to it's own module
         // Compose Directions Link
         // API instructions are here: https://citymapper.com/tools/1053/launch-citymapper-for-directions
         let content = props.data.properties;
@@ -55,20 +56,11 @@ class EventModal extends Component {
         if (this.props.data == null) { return null }
 
         console.log('Modal props: ', this.props.data)
-        let content = this.props.data.properties;
+        let content = this.props.data.properties
+        let date = moment(content.date)
+        let categories = content.categories.map((category) => <span className={category}>{category}</span>);
+        console.log('categories: ', categories)
 
-        /*
-        let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);
-        let date = moment(this.props.content.date)
-        let start = this.props.content.start_time
-        let title = this.props.content.title;
-
-        // TODO: Move to server side
-        if (title) {
-            title = title.split(' | ')
-            title = title[0]            
-        }
-        */
 
         return (
             <Modal
@@ -76,15 +68,20 @@ class EventModal extends Component {
                 onClose={this.handleClose}
                 closeIcon
             >
-                <Modal.Header>Event Details</Modal.Header>
-                <Modal.Content image>
-                    <Image wrapped size='medium' src='/images/avatar/large/rachel.png' />
+                <Modal.Header>{date.format('dddd')} {content.start_time} - {content.venue}</Modal.Header>
+                <Modal.Content>
                     <Modal.Description>
                         <Header>{content.title}</Header>
-                        <p>We've found the following gravatar image associated with your e-mail address.</p>
-                        <p>Is it okay to use this photo?</p>
+                        {categories}
 
+                        <Image size='medium' src={content.image} />
 
+                        <p>{content.description}</p>
+                        <a className='ui button primary' href={content.link} target='_blank'> Check it out</a>
+                        <p className='small'>Event from {content.source}</p>
+                        
+                        <h3>Getting There</h3>
+                        <p>This place is nearby and easy to get to. Click here for directions.</p>
                         <a className='ui button primary' href={this.state.directions} target='_blank'> Get Directions</a>
                     </Modal.Description>
                 </Modal.Content>

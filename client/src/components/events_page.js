@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import { Button, Dimmer, Grid, Loader } from 'semantic-ui-react'
+import { Button, Dimmer, Grid, Icon, Loader } from 'semantic-ui-react'
 import querystring from 'querystring';
 
 import helpers from '../helpers.js'
@@ -9,6 +10,7 @@ import * as Constants from '../constants.js'
 
 import EventsList from './events/events_list.js';
 import EventsCards from './events/events_cards.js';
+import EventDetails from './events/event_details.js';
 import EventsMap from './events_map.js';
 import EventModal from './events/modal.js';
 import Navigation from './events/navigation.js';
@@ -107,10 +109,10 @@ class EventsPage extends Component {
     // Get the current data item and display it
     showDetails = function (id, event) {
 
+        this.props.history.push('/events/?id=' + id )
+
         let current_item = this.state.data.filter(item => item._id == id);
         current_item = current_item[0];
-
-        console.log('current_item: ', current_item)
 
         this.setState({ current_item: current_item, detail_shown : true });
     }
@@ -157,16 +159,17 @@ class EventsPage extends Component {
         if (isMobile) {
             return (
                 <div>
-                    <Navigation setPosition={this.setPosition} />
+                    <Navigation setPosition={this.setPosition} isMobile={isMobile} />
 
                     <Tabs selectedTabClassName='active'>
                         <TabList className='ui menu secondary'>
-                            <Tab className='item'>List</Tab>
+                            <Tab className='item'><Icon name='list ul' />List</Tab>
                             <Tab className='item'>Map</Tab>
                         </TabList>
 
                         <TabPanel>
-                            <EventsCards data={this.state.data} />
+                            <EventsCards data={this.state.data} onclick={this.showDetails} />
+                            <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item} />} />
                         </TabPanel>
                         <TabPanel>
                             <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} />
@@ -181,13 +184,25 @@ class EventsPage extends Component {
 
                     {/* 16 column grid */}
                     <Grid>
-                        <Grid.Column width={7}>
-                            <EventsList data={this.state.data} onclick={this.showDetails} />
-                        </Grid.Column>
-                        <Grid.Column width={9}>
-                            <EventModal data={this.state.current_item} show={this.state.detail_shown} />
-                            <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} setPosition={this.setPosition} />
-                        </Grid.Column>
+                        <Grid.Row stretched className='collapsed'>
+                            <Grid.Column width={7}>
+
+                                {
+                                    /* TODO: Refactor into component */
+                                    this.state.details_shown ? (
+                                        <EventDetails />
+                                     ) : (
+                                        <EventsList data={this.state.data} onclick={this.showDetails} />
+                                    )
+                                }
+                                    
+                                {/* <EventsList data={this.state.data} onclick={this.showDetails} /> */}
+                            </Grid.Column>
+                            <Grid.Column width={9}>
+                                <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item}/>} />
+                                <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} setPosition={this.setPosition} />
+                            </Grid.Column>
+                        </Grid.Row>
                     </Grid>
                 </div>
             );

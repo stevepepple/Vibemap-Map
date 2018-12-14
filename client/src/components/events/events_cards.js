@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 import { Grid, Dimmer, Dropdown, GridColumn, Loader, Segment, Tab } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
 
@@ -28,7 +27,7 @@ class EventsList extends Component {
                 this.setState({ top_event : top_event });
             }
 
-            items = this.props.data.map((event) => <Grid.Column><Card link={event.properties.link} content={event.properties} /></Grid.Column>);
+            items = this.props.data.map((event) => <Grid.Column><Card key={event._id} id={event._id} link={event.properties.link} content={event.properties} onclick={this.props.onclick} /></Grid.Column>);
         }
 
         return (
@@ -37,7 +36,7 @@ class EventsList extends Component {
                 {has_items ? (
                     <Grid stackable columns={2}>
                         <Grid.Row>
-                            <Card link={top_event.properties.link} content={top_event.properties} />
+                            <Card key={top_event._id} id={top_event._id} link={top_event.properties.link} content={top_event.properties} onclick={this.props.onclick} />
                         </Grid.Row>
                         <Grid.Row>
                             {items}
@@ -56,7 +55,8 @@ class EventsList extends Component {
 }
 
 EventsList.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array,
+    onclick: PropTypes.func
 };
 
 export default EventsList;
