@@ -13,10 +13,7 @@ class PlaceCards extends Component {
                 
                 <Grid columns={2} columns='equal'>  
                     <Grid.Column width={8}>
-                    {/*
-    <PlaceNearby lat={this.props.lat} lon={this.props.lon} category='restuarant'/>
-
-                    */}
+                        <PlaceNearby lat={this.props.lat} lon={this.props.lon} category='restuarant'/>
                     </Grid.Column>
                     <Grid.Column width={8}>
                         {/*
