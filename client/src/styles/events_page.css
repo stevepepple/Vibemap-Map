@@ -13,11 +13,9 @@
     text-align: center;
     font-size: 1.5em;
     margin-top: 20vmin;
-
 }
 
-/* Top Nav and Controls */
-
+/* Top Nav and Controls */  
 .menu {
     padding: 2vmin;
 }
@@ -25,8 +23,8 @@
 .navigation {
     position: absolute;
     top: 0;
-    left: 15vmin;
-    padding: 1vmin;
+    left: 18vmin;
+    padding: 2vmin;
     width: 85vmin;
 }
 
@@ -47,13 +45,16 @@
 }
 
 /* List */
+.list_details {
+    border-right: solid 1px #999999;
+}
 .ui.items {
     height: 90vh;
     overflow: auto; 
 }
 
 .ui.items .item {
-    padding: 1.5em !important;
+    padding: 1em !important;
 }
 
 .ui.items .item .content .date {
@@ -68,14 +69,44 @@
 }
 
 .ui.items .image {
-    height: 12vmin;
+    height: 10vmin;
     width: 12vmin;
+    margin-top: 2vmin !important;
 }
 
 .ui.items .image img {
-    height: 80%;
+    height: 12vmin;
+        object-fit: cover;
+
 }
 
+.details {
+    padding: 2vmin;
+}
+
+.details .full_description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.place_cards {
+    position: fixed; 
+    bottom: 4vmin;
+    padding: 2vmin;
+    width: 52%;
+}
+
+.place_cards .grid {
+    padding: 1vmin;
+}
+
+.place_cards .segment {
+    margin-left: 2vmin;
+}
+
+.nearby_place {
+    min-width: 30vmin;
+}
 
 /* Map */
 .map_container, .mapboxgl-map {
