@@ -72,8 +72,23 @@ let Map = class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (this.props.lat != nextProps.lat) {
-      this.map.setCenter([nextProps.lng, nextProps.lat])
+    console.log('Map received propts: ', nextProps)
+    if (this.props.lat != nextProps.lat || this.props.zoom || nextProps.zoom) {
+      //this.map.setCenter([nextProps.lng, nextProps.lat]);
+
+      // TODO: make this a prop options?
+      this.map.flyTo({
+        // These options control the ending camera position: centered at
+        // the target, at zoom level 9, and north up.
+        center: [nextProps.lng, nextProps.lat],
+        zoom: nextProps.zoom,
+        speed: 0.8, // make the flying slow
+        curve: 1, // change the speed at which it zooms out
+        easing: function (t) {
+          return t;
+        }
+      });
+      
     }
   }
 
