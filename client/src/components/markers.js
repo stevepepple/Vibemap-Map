@@ -56,8 +56,13 @@ export default class Markers extends React.Component {
   
   addMarkers(features, map) {
 
+      let boundClick = this.props.onclick.bind(this);
+
+
       let markers = features.map((feature) => {
 
+        //TODO: write a reusable util function for geojson feature to object.
+        let id = feature.properties.id;
         let src = feature.properties.image;
         let likes = feature.properties.likes;
         let link = feature.properties.link;
@@ -83,7 +88,7 @@ export default class Markers extends React.Component {
         el.append(img);
 
         el.addEventListener('click', function () {
-            window.alert(feature.properties.description);
+          boundClick(id);
         });
 
         // add marker to map
