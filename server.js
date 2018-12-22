@@ -38,8 +38,9 @@ app.get('/api/events', (req, res) => {
     console.log('Routing with request ...', req.query);
 
     // TODO: pass number of days as an argument
-    let now = moment();
-    let tomorrow = moment().add(5, 'days');
+    let day_start = moment();
+    console.log('Number of days: ', req.query.num_days)
+    let day_end = moment().add(req.query.num_days, 'days');
 
     let lat = req.query.lat;
     let lon = req.query.lon;
@@ -55,8 +56,8 @@ app.get('/api/events', (req, res) => {
             }
         },
         'properties.date': {
-            '$gte': now,
-            '$lte': tomorrow
+            '$gte': day_start,
+            '$lte': day_end
         }
     }).sort('properties.likes');
 
