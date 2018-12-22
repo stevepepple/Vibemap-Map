@@ -58,7 +58,7 @@ class EventModal extends Component {
         console.log('Modal props: ', this.props.data)
         let content = this.props.data.properties
         let date = moment(content.date)
-        let categories = content.categories.map((category) => <span className={category}>{category}</span>);
+        let categories = content.categories.map((category) => <span className={'pink image label ' + category}>{category}</span>);
         console.log('categories: ', categories)
 
 

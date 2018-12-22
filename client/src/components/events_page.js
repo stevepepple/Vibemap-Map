@@ -117,6 +117,8 @@ class EventsPage extends Component {
     // Get the current data item and display it
     showDetails = function (id, event) {
 
+        console.log('SHow details for: ', id)
+
         this.props.history.push('/events/?id=' + id )
 
         let current_item = this.state.data.filter(item => item._id == id);

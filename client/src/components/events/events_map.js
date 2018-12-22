@@ -3,16 +3,16 @@ import PropTypes from 'prop-types'
 import * as turf from '@turf/turf'
 import debounce from 'lodash'
 
-import Map from './map.js'
-import Source from './source'
-import Layer from './layer'
-import Styles from '../styles/map_styles.js'
-import Markers from './markers.js';
+import Map from '../map.js'
+import Source from '../source'
+import Layer from '../layer'
+import Styles from '../../styles/map_styles.js'
+import Markers from '../markers.js';
 
 //import Geocoder from "@mapbox/react-geocoder";
 
 // TODO: load from common .env
-import * as Constants from '../constants.js'
+import * as Constants from '../../constants.js'
 
 class EventsMap extends Component {
 
@@ -54,8 +54,8 @@ class EventsMap extends Component {
             <div>
             { has_data? (
                 <div className = 'map_container'>
-                    <Map ref={this.mapRef} lat={this.props.lat} lng={this.props.lng} onMapChange={this.onMapChange} bearing={0} zoom={13} show_geocoder={true}>
-                        <Markers data={this.state.geojson} />
+                    <Map ref={this.mapRef} lat={this.props.lat} lng={this.props.lng} zoom={this.props.zoom} onMapChange={this.onMapChange} bearing={0} show_geocoder={true}>
+                        <Markers data={this.state.geojson} onclick={this.props.onclick} />
                     </Map>
                 </div>
                 ) : (

@@ -20,11 +20,9 @@ class EventsList extends Component {
         }
 
         return (
-            <div>
-                <Item.Group divided relaxed>
-                    {items}
-                </Item.Group>
-             </div>
+            <Item.Group divided relaxed className='events_list'>
+                {items}
+            </Item.Group>
         );
     }
 }
