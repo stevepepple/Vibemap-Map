@@ -11,9 +11,10 @@ import * as Constants from '../constants.js'
 import EventsList from './events/events_list.js';
 import EventsCards from './events/events_cards.js';
 import EventDetails from './events/event_details.js';
-import EventsMap from './events_map.js';
+import EventsMap from './events/events_map.js';
 import EventModal from './events/modal.js';
 import Navigation from './events/navigation.js';
+import PlaceCards from './places/place_cards.js';
 
 import '../styles/events_page.css';
 
@@ -30,14 +31,16 @@ class EventsPage extends Component {
             lat: 37.79535238155009,
             lon: -122.2823644705406,
             current_item: null,
-            detail_shown: false,
+            details_shown: false,
             intervalIsSet: false,
             timedOut: false,
             width: window.innerWidth,
         }
 
         this.showDetails = this.showDetails.bind(this);
+        this.clearDetails = this.clearDetails.bind(this);
         this.setPosition = this.setPosition.bind(this);
+        this.setDistance = this.setDistance.bind(this);
 
     }
      
@@ -71,6 +74,10 @@ class EventsPage extends Component {
         this.showEvents()
     }
 
+    setDistance(distance) {
+        this.setState({ distance : distance })
+    }
+
     handleWindowSizeChange = () => {
         this.setState({ width: window.innerWidth });
         console.log('window width: ', this.state.width)
@@ -85,7 +92,8 @@ class EventsPage extends Component {
         let query = querystring.stringify({
             lat: this.state.lat,
             lon: this.state.lon,
-            distance: 2.0
+            distance: 2.5,
+            num_days: 1
         });
 
         this.setState({ timedOut: false})
@@ -114,7 +122,16 @@ class EventsPage extends Component {
         let current_item = this.state.data.filter(item => item._id == id);
         current_item = current_item[0];
 
-        this.setState({ current_item: current_item, detail_shown : true });
+        let lon = current_item.geometry.coordinates[0];
+        let lat = current_item.geometry.coordinates[1];
+
+        this.setState({ current_item: current_item, details_shown : true, lat : lat, lon : lon });
+    }
+
+    clearDetails = function() {
+        this.props.history.replace('/events/')
+
+        this.setState({ current_item : null, details_shown : false })
     }
 
     restart() {
@@ -152,14 +169,13 @@ class EventsPage extends Component {
                     </div>
                 )
             }
- 
         }
 
         // Adaptive view for mobile users
         if (isMobile) {
             return (
                 <div>
-                    <Navigation setPosition={this.setPosition} isMobile={isMobile} />
+                    <Navigation setPosition={this.setPosition} setDistance={this.setDistance} isMobile={isMobile} />
 
                     <Tabs selectedTabClassName='active'>
                         <TabList className='ui menu secondary'>
@@ -169,10 +185,10 @@ class EventsPage extends Component {
 
                         <TabPanel>
                             <EventsCards data={this.state.data} onclick={this.showDetails} />
-                            <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item} />} />
+                            {/* <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item} />} /> */}
                         </TabPanel>
                         <TabPanel>
-                            <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} />
+                            <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} zoom={this.state.details_shown ? 17 : 13} />
                         </TabPanel>
                     </Tabs>
                 </div>
@@ -185,12 +201,11 @@ class EventsPage extends Component {
                     {/* 16 column grid */}
                     <Grid>
                         <Grid.Row stretched className='collapsed'>
-                            <Grid.Column width={7}>
-
+                            <Grid.Column width={7} className='list_details'>
                                 {
                                     /* TODO: Refactor into component */
-                                    this.state.details_shown ? (
-                                        <EventDetails />
+                                    this.state.details_shown? (
+                                        <EventDetails data={this.state.current_item} clearDetails={this.clearDetails} />
                                      ) : (
                                         <EventsList data={this.state.data} onclick={this.showDetails} />
                                     )
@@ -199,8 +214,16 @@ class EventsPage extends Component {
                                 {/* <EventsList data={this.state.data} onclick={this.showDetails} /> */}
                             </Grid.Column>
                             <Grid.Column width={9}>
-                                <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item}/>} />
-                                <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} setPosition={this.setPosition} />
+                                {/* <EventModal data={this.state.current_item} show={false} details={<EventDetails data={this.state.current_item_item}/>} /> */}
+                                <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} zoom={this.state.details_shown ? 17 : 13} setPosition={this.setPosition} onclick={this.showDetails} />
+                                {
+                                    /* TODO: Refactor into component */
+                                    this.state.details_shown ? (
+                                        <PlaceCards lat={this.state.lat} lon={this.state.lon} />
+                                    ) : (
+                                        null
+                                    )
+                                }
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
