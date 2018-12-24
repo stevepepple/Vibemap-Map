@@ -16,10 +16,13 @@ import EventModal from './events/modal.js';
 import Navigation from './events/navigation.js';
 import PlaceCards from './places/place_cards.js';
 
+/* REDUX STUFF */
+import { connect } from 'react-redux'
+import * as actions from '../redux/actions';
+
 import '../styles/events_page.css';
 
-
-class EventsPage extends Component {
+class Page extends Component {
 
     constructor(props) {
         super(props);
@@ -34,6 +37,7 @@ class EventsPage extends Component {
             details_shown: false,
             intervalIsSet: false,
             timedOut: false,
+            name: 'Steve',
             width: window.innerWidth,
         }
 
@@ -51,6 +55,8 @@ class EventsPage extends Component {
         // Handle scree resizing
         window.addEventListener('resize', this.handleWindowSizeChange);
 
+        this.props.setName('Amanda')
+
     }
 
     getPosition = function() {
@@ -58,6 +64,8 @@ class EventsPage extends Component {
         helpers.getPosition()
             .then((position) => {
                 if (position) {
+                    let location = { lat: position.coords.latitude, lon: position.coords.longitude } 
+                    this.props.setCurrentLocation(location)
                     this.setState({
                         lat: position.coords.latitude,
                         lon: position.coords.longitude
@@ -93,7 +101,7 @@ class EventsPage extends Component {
             lat: this.state.lat,
             lon: this.state.lon,
             distance: 2.5,
-            num_days: 1
+            num_days: 5
         });
 
         this.setState({ timedOut: false})
@@ -190,7 +198,7 @@ class EventsPage extends Component {
                             {/* <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item} />} /> */}
                         </TabPanel>
                         <TabPanel>
-                            <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} zoom={this.state.details_shown ? 17 : 13} />
+                            <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} zoom={this.state.details_shown ? 15 : 13} />
                         </TabPanel>
                     </Tabs>
                 </div>
@@ -217,7 +225,7 @@ class EventsPage extends Component {
                             </Grid.Column>
                             <Grid.Column width={9}>
                                 {/* <EventModal data={this.state.current_item} show={false} details={<EventDetails data={this.state.current_item_item}/>} /> */}
-                                <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} zoom={this.state.details_shown ? 17 : 13} setPosition={this.setPosition} onclick={this.showDetails} />
+                                <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} zoom={this.state.details_shown ? 15 : 13} setPosition={this.setPosition} onclick={this.showDetails} />
                                 {
                                     /* TODO: Refactor into component */
                                     this.state.details_shown ? (
@@ -234,5 +242,18 @@ class EventsPage extends Component {
         }
     }
 }
+
+// AppContainer.js
+const mapStateToProps = state => ({
+    geod: state.geod,
+    currentLocation: state.currentLocation,
+    name: state.name
+});
+
+const EventsPage = connect(
+    mapStateToProps,
+    // Or actions
+    actions
+)(Page);
 
 export default EventsPage;
