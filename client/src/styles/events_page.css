@@ -75,9 +75,7 @@
 }
 
 .ui.items .image img {
-    height: 12vmin;
-        object-fit: cover;
-
+    height: 10vmin !important;
 }
 
 .details {
@@ -87,6 +85,10 @@
 .details .full_description {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.details .eta {
+    padding-left: 1vmin;
 }
 
 .place_cards {
@@ -108,7 +110,15 @@
     min-width: 30vmin;
 }
 
-/* Map */
+.place_cards .segment {
+    border: solid 3px #C123E8;
+    /* TODO: Move to SASS */
+    -webkit-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
+    -moz-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
+    box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
+}
+
+/*Map */
 .map_container, .mapboxgl-map {
     border: red;
     width: 100%;
@@ -127,14 +137,42 @@
 }
 
 .marker {
-   -webkit-border-radius: 20px;
-   -moz-border-radius: 20px;
-   border-radius: 10vmin;
-   overflow:hidden;
-   border: solid 1px #CCC;
-   opacity: 0.8;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    background: #3831AB;
+    border: solid 2px #3831AB;
+    border-radius: 10vmin;
+    cursor: pointer;
+    overflow:hidden;
+    opacity: 0.8;
+    -webkit-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
+    -moz-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
+    box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
 }
 
+.marker.place {
+    background: #C123E8;
+    border: solid 2px #C123E8;
+ 
+}
+
+.marker.popular {
+    z-index: 10;
+}
+
+.marker img {
+    visibility: hidden;
+}
+
+.marker:hover {
+    width: 5vmin !important;
+    height: 5vmin !important;
+}
+
+.marker.popular img,
+.marker:hover img { 
+    visibility: visible;
+}
 /* Round style photos */
 .marker img, 
 .ui.items .image img {
