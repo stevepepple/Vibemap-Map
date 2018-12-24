@@ -28,7 +28,7 @@ const helpers = {
                     ll: latlon,
                     query: query,
                     v: '20180323',
-                    limit: 1
+                    limit: 20
                 }
             }, function (err, res, body) {
                 if (err) {
