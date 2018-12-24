@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Header, Modal, Image } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
-import querystring from 'querystring';
 import moment from 'moment';
 
 class EventModal extends Component {
@@ -31,24 +30,6 @@ class EventModal extends Component {
         if (props.data == null) {
             return false;
         }
-        // TODO: Move to it's own module
-        // Compose Directions Link
-        // API instructions are here: https://citymapper.com/tools/1053/launch-citymapper-for-directions
-        let content = props.data.properties;
-        let api = 'https://citymapper.com/directions/'
-        let lon = props.data.geometry.coordinates[0];
-        let lat = props.data.geometry.coordinates[1];        
-        
-        let query = querystring.stringify({
-            arriveby: content.date,
-            endcoord: lat + ',' + lon,
-            startaddress: content.address,
-            endname: content.venue,
-            set_region : 'us-sf',
-        });
-
-        let url = api + '?' + query;
-        this.setState({ directions : url })
     }
 
     render() {
