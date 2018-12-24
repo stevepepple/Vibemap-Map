@@ -1,6 +1,6 @@
 import { createStore } from 'redux'
-import { reducer } from './reducer'
+import { reducers } from './reducer'
 
-const store = createStore(reducer);
-
+const store = createStore(reducers);
+console.log('State of the store: ', store.getState())
 export { store };

@@ -1,70 +1,64 @@
-import * as Constants from '../constants'
+import { combineReducers } from 'redux';
+import GeoJSON from 'geojson';
 
-/* Redux is used in complex applications when multiple
- * components require knowledge of the same state of data.
- */
+// reducer takes state and action (in our a javascript object) as parameters
+// then returns a state
 
-const places_data = []
-const events_data = []
+export const current_location = (state = {}, action) => {
+  if (action.type == 'SET_CURRENT_LOCATION') {
+    state = action.location
+  }
+  return state
+} 
 
-const options = [{
-  name: 'Population',
-  description: 'Estimated total population',
-  property: 'pop_est',
-  stops: [
-    [0, '#f8d5cc'],
-    [1000000, '#f4bfb6'],
-    [5000000, '#f1a8a5'],
-    [10000000, '#ee8f9a'],
-    [50000000, '#ec739b'],
-    [100000000, '#dd5ca8'],
-    [250000000, '#c44cc0'],
-    [500000000, '#9f43d7'],
-    [1000000000, '#6e40e6']
-  ]
-}, {
-  name: 'GDP',
-  description: 'Estimate total GDP in millions of dollars',
-  property: 'gdp_md_est',
-  stops: [
-    [0, '#f8d5cc'],
-    [1000, '#f4bfb6'],
-    [5000, '#f1a8a5'],
-    [10000, '#ee8f9a'],
-    [50000, '#ec739b'],
-    [100000, '#dd5ca8'],
-    [250000, '#c44cc0'],
-    [5000000, '#9f43d7'],
-    [10000000, '#6e40e6']
-  ]
-}]
+export const nearby_places = (state = [], action) => {
+  if (action.type == 'SET_NEARBY_PLACES') {
+    let data = [];
 
-const initialState: State = {
-  events_data,
-  places_data,
-  options,
-  places: {
-    isLayerChecked: true
-  },
-  events: {
-    isLayerChecked: true
-  },
-  clusters: {
-    isLayerChecked: false
-  },
-  sidebar_visible: true,
-  active: options[0]
-};
+    action.places.map((place) => {
+      place = place.venue
+      place.lat = place.location.lat
+      place.lng = place.location.lng
+      data.push(place)
+    })
 
-function reducer(state = initialState, action) {
+    let places = GeoJSON.parse(data, { Point: ['lat', 'lng'] });
+    console.log('Nearby Places :', places)
+
+    state = places
+  }
+  return state
+}
+
+// TODO: Remove; This is just a test
+export const name = (state = 'Steve', action) => {
+  
   switch (action.type) {
-    case Constants.SET_ACTIVE_OPTION:
-      return Object.assign({}, state, {
-        active: action.option
-      });
+    case 'SET_NAME':
+      return action.name;
+    case 'REMOVE_NAME':
+      return null;
     default:
       return state;
   }
 }
 
-export { reducer, initialState };
+export const geod = (state = {}, action) => {
+
+  switch (action.type) {
+    case 'ACTIVATE_GEOD':
+      return action.geod;
+    case 'CLOSE_GEOD':
+      return {};
+    default:
+      return state;
+  }
+
+};
+
+export const reducers = combineReducers({
+  geod,
+  current_location,
+  name,
+  nearby_places
+});
