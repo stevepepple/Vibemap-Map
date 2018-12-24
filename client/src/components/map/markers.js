@@ -28,9 +28,11 @@ export default class Markers extends React.Component {
     const { map } = this.context
 
     let features = this.props.data.features;
+    console.log('marker features: ', this.props)
 
-    
-    this.addMarkers(features, map)
+    if (features != null && features.length > 0) {
+      this.addMarkers(features, map)
+    }
   }
 
   componentDidUpdate() {
@@ -48,7 +50,7 @@ export default class Markers extends React.Component {
 
     let update = shallowCompare(this.props, nextProps)
 
-    if (update) {
+    if (update && nextProps.data.features) {
       this.removeMarkers(map)
       this.addMarkers(nextProps.data.features, map);
     }
@@ -58,7 +60,6 @@ export default class Markers extends React.Component {
 
       let boundClick = this.props.onclick.bind(this, this.props.id);
 
-
       let markers = features.map((feature) => {
 
         //TODO: write a reusable util function for geojson feature to object.
@@ -66,7 +67,7 @@ export default class Markers extends React.Component {
         let src = feature.properties.image;
         let likes = feature.properties.likes;
         let link = feature.properties.link;
-        let size = 30 + (0.08 * likes);
+        let size = 40 + (0.08 * likes);
 
         let img = document.createElement('img');
         img.setAttribute('width', '100%');
@@ -74,10 +75,20 @@ export default class Markers extends React.Component {
         img.setAttribute('rel', src);
 
         var el = document.createElement('div');
-        el.className = 'marker';
-        //el.style.backgroundImage = 'url(' + src +')';
-        el.style.width = size + 'px';
-        el.style.height = size + 'px';
+        el.className = 'marker ';
+        el.title = feature.name;
+
+        if(this.props.type === 'places') { el.className = el.className + 'place '}
+
+        if (likes > 2) {
+          el.className = el.className + 'popular '
+          el.style.width = size + 'px';
+          el.style.height = size + 'px';
+
+        } else {
+          el.style.width = '1.2vmin';
+          el.style.height = '1.2vmin';
+        }
 
         var downloadingImage = new Image();
         downloadingImage.src = src;
