@@ -3,6 +3,10 @@ import { Image, Item, Placeholder, Segment, Transition} from 'semantic-ui-react'
 
 import helpers from '../../helpers.js'
 
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions';
+
+
 class PlaceNearby extends Component {
 
         constructor(props) {
@@ -21,12 +25,28 @@ class PlaceNearby extends Component {
         // First place
         helpers.searchFoursquare(this.props.category, this.props.lat.toString() + ',' + this.props.lon.toString())
             .catch((err) => console.log(err))
-            .then((results) => helpers.topFoursquareResult(results))
+            .then((results) => this.setTopandNearBy(results))
+            //Set State then, get top
             .then((result) => this.setState({ result: result }))
     }
 
     componentWillReceiveProps(newProps) {
  
+    }
+
+    setTopandNearBy(results) {
+        let places = results.response.groups[0].items
+
+        helpers.topFoursquareResult(results)
+            .then((result) => {
+                /* TODO: this can be cleaner */
+                result.likes = 10;
+                this.setState({ result: result })
+                places.push(this.state.result)
+
+            })
+
+        this.props.setNearbyPlaces(places)
     }
 
     render() {
@@ -75,7 +95,6 @@ class PlaceNearby extends Component {
                             <Item.Header as='a'>{this.state.result.name}</Item.Header>
                             <Item.Meta>{tip}</Item.Meta>
                             <Item.Extra>{hours}</Item.Extra>
-
                         </Item.Content>
                     </Item>
                 </Transition.Group>
@@ -85,4 +104,11 @@ class PlaceNearby extends Component {
     }
 }
 
-export default PlaceNearby;
+const mapStateToProps = state => {
+    console.log('State from store? ', state)
+    return {
+        nearby_places: state.nearby_places
+    }
+};
+
+export default connect(mapStateToProps, actions)(PlaceNearby);

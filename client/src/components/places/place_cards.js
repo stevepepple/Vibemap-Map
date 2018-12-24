@@ -4,7 +4,6 @@ import { Grid, Image, Segment } from 'semantic-ui-react'
 
 import PlaceNearby from './place_nearby'
 
-
 class PlaceCards extends Component {
 
     render() {
@@ -13,7 +12,9 @@ class PlaceCards extends Component {
                 
                 <Grid columns={2} columns='equal'>  
                     <Grid.Column width={8}>
+                        
                         <PlaceNearby lat={this.props.lat} lon={this.props.lon} category='restuarant'/>
+                        
                     </Grid.Column>
                     <Grid.Column width={8}>
                         {/*

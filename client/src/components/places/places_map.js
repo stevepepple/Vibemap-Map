@@ -5,10 +5,9 @@ import { store } from '../../redux/store'
 
 import helpers from '../../helpers.js'
 
-
 import Map from '../map'
-import Source from '../source'
-import Layer from '../layer'
+import Source from '../map/source'
+import Layer from '../map/layer'
 
 import { Button, Checkbox, Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
