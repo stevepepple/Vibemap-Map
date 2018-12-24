@@ -41,6 +41,7 @@ class Navigation extends Component {
                     <div className='navigation mobile'>
                         <h3 className="header">Happening Near You</h3>
                         <LocationSearchInput className='mobile search' setPosition={this.props.setPosition} />
+                        
                     </div>
 
                 ) : (
