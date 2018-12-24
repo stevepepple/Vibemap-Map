@@ -1,8 +1,10 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const moment = require('moment');
-const path = require('path');
+const express = require('express')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const moment = require('moment')
+const path = require('path')
+const request = require('request')
+const querystring = require('querystring');
 
 
 const app = express();
@@ -12,7 +14,6 @@ const app = express();
 const config = require('./config');
 
 require('dotenv').config();
-
 
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
@@ -32,6 +33,26 @@ app.get('/api/hello', (req, res) => {
     console.log('Responding to request...');
     return res.json({ success: true, data: { hello : 'hello' } });
 });
+
+app.get('/api/directions', (req, res) => {
+
+    let url = 'https://developer.citymapper.com/api/1/traveltime/?' + querystring.stringify(req.query)
+
+    console.log(url)
+    request(url, function (error, response, body) {
+        console.log('error:', error); // Print the error if one occurred and handle it
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        //res.send(body)
+        if (response.statusCode == '200' && error == null) {
+            return res.json({ success: true, data: JSON.parse(body) });
+        } else {
+            console.log(error)
+            return res.json({ success: false, data: { error } });
+        }
+    });
+
+});
+
 
 app.get('/api/events', (req, res) => {
 
