@@ -59,14 +59,16 @@ app.get('/api/events', (req, res) => {
     console.log('Routing with request ...', req.query);
 
     // TODO: pass number of days as an argument
-    let day_start = moment();
-    console.log('Number of days: ', req.query.num_days)
-    let day_end = moment().add(req.query.num_days, 'days');
+    let day_start = moment().subtract('1days').startOf('day');
+
+    console.log('Search query: ', req.query)
+    let day_end = moment().add(req.query.days, 'days');
 
     let lat = req.query.lat;
     let lon = req.query.lon;
     let distance = req.query.distance * config.meters_per_mile;
 
+    // This is just the query
     let query_and_sort_by_likes = Event.find({
         'geometry': {
             $nearSphere: {
@@ -81,6 +83,18 @@ app.get('/api/events', (req, res) => {
             '$lte': day_end
         }
     }).sort('properties.likes');
+
+    let query_by_recuring = Event.find({
+        'geometry': {
+            $nearSphere: {
+                $geometry: {
+                    type: "Point", coordinates: [lon, lat]
+                },
+                $maxDistance: distance
+            }
+        },
+        'properties.recurs': { $ne: null }
+    })
 
     query_and_sort_by_likes
         .then(function (results, err) {
