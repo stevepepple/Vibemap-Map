@@ -44,42 +44,40 @@ class LocationSearchInput extends React.Component {
                 onSelect={this.handleSelect}
             >
                 {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                    <div>
-                        <div className="ui search">
-                            <div className="ui icon input">
-                                <input className='ui search prompt' type="text" tabIndex="0" autoComplete="off"
-                                    {...getInputProps({
-                                        placeholder: 'Search Places ...',
-                                        className: 'location-search-input',
-                                    })}
-                                />
-                                <i aria-hidden="true" className="search icon"></i>
-                            </div>
-
-                            <div className={"results transition autocomplete-dropdown-container " + (this.state.address.length > 1 ? 'visible' : '')}>
-                                {loading && <div className='ui'>Loading...</div>}
-                                {suggestions.map(suggestion => {
-                                    const className = suggestion.active
-                                        ? 'suggestion-item--active'
-                                        : 'suggestion-item';
-                                    // inline style for demonstration purpose
-                                    const style = suggestion.active
-                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                                    return (
-                                        <div
-                                            {...getSuggestionItemProps(suggestion, {
-                                                className,
-                                                style,
-                                            })}
-                                        >
-                                            <span>{suggestion.description}</span>
-                                        </div>
-                                    );
+                    <div className="ui search">
+                        <div className="ui icon input">
+                            <input className='ui search prompt' type="text" tabIndex="0" autoComplete="off"
+                                {...getInputProps({
+                                    placeholder: 'Search Places ...',
+                                    className: 'location-search-input',
                                 })}
-                            </div>
-
+                            />
+                            <i aria-hidden="true" className="search icon"></i>
                         </div>
+
+                        <div className={"results transition autocomplete-dropdown-container " + (this.state.address.length > 1 ? 'visible' : '')}>
+                            {loading && <div className='ui'>Loading...</div>}
+                            {suggestions.map(suggestion => {
+                                const className = suggestion.active
+                                    ? 'suggestion-item--active'
+                                    : 'suggestion-item';
+                                // inline style for demonstration purpose
+                                const style = suggestion.active
+                                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                return (
+                                    <div
+                                        {...getSuggestionItemProps(suggestion, {
+                                            className,
+                                            style,
+                                        })}
+                                    >
+                                        <span>{suggestion.description}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
                     </div>
                 )}
             </PlacesAutocomplete>

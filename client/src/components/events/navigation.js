@@ -38,18 +38,18 @@ class Navigation extends Component {
                             <Grid.Column width={5}>
                                 <h3 className="header">Happening Near You</h3>
                             </Grid.Column>
-                            <Grid.Column width={3}>
+                            <Grid.Column width={10}>
                                 {/* TODO: replace location input with search able dropdown */}
                                 <LocationSearchInput setPosition={this.props.setPosition} />
                                 <Dropdown 
                                     button
                                     className='icon'
-                                    floating
-                                    icon='calendar' 
-                                    selection
+                                    compact
+                                    icon='calendar'
+                                    labeled 
                                     onChange={this.handleDaysChange} 
                                     options={this.state.options} 
-                                    value={this.props.days}
+                                    text={this.state.options.find(obj => obj.value == this.props.days).text}
                                 />
 
                             </Grid.Column>

@@ -34,6 +34,11 @@
     width: auto;
 }
 
+/* TODO: is there a cleaner way to do this with Semantic */
+.ui.search {
+    float:left;
+}
+
 .mobile .ui.search {
     position: fixed;
     top: 2vmin;

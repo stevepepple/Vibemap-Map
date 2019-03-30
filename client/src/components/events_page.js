@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { Button, Dimmer, Grid, Icon, Loader } from 'semantic-ui-react'
@@ -33,6 +32,8 @@ class Page extends Component {
             items: [],
             lat: 37.79535238155009,
             lon: -122.2823644705406,
+            days: 3,
+            distance: 2.5,
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
@@ -45,7 +46,7 @@ class Page extends Component {
         this.clearDetails = this.clearDetails.bind(this);
         this.setPosition = this.setPosition.bind(this);
         this.setDistance = this.setDistance.bind(this);
-
+        this.setDays = this.setDays.bind(this);
     }
      
     componentWillMount() {
@@ -78,12 +79,16 @@ class Page extends Component {
     setPosition(lat, lon) {
         this.setState({ lat : lat, lon : lon})
 
-        console.log('UPdated Position: ', this.state)
         this.showEvents()
     }
 
     setDistance(distance) {
         this.setState({ distance : distance })
+    }
+
+    setDays(days) {
+        this.setState({ days: days.value })
+        this.showEvents()
     }
 
     handleWindowSizeChange = () => {
@@ -100,8 +105,8 @@ class Page extends Component {
         let query = querystring.stringify({
             lat: this.state.lat,
             lon: this.state.lon,
-            distance: 2.5,
-            num_days: 5
+            distance: this.state.distance,
+            days: this.state.days
         });
 
         this.setState({ timedOut: false})
@@ -145,7 +150,6 @@ class Page extends Component {
     }
 
     restart() {
-        
         this.setState({ data : [] })
     }
 
@@ -185,7 +189,7 @@ class Page extends Component {
         if (isMobile) {
             return (
                 <div>
-                    <Navigation setPosition={this.setPosition} setDistance={this.setDistance} isMobile={isMobile} />
+                    <Navigation setPosition={this.setPosition} setDays={this.setDays} days={this.state.days} setDistance={this.setDistance} isMobile={isMobile} />
 
                     <Tabs selectedTabClassName='active'>
                         <TabList className='ui menu secondary'>
@@ -206,7 +210,7 @@ class Page extends Component {
         } else {
             return (
                 <div>
-                    <Navigation setPosition={this.setPosition} />
+                    <Navigation setPosition={this.setPosition} setDays={this.setDays} days={this.state.days} />
 
                     {/* 16 column grid */}
                     <Grid>
