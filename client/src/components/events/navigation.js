@@ -1,38 +1,26 @@
 import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react'
+import { Grid, Dropdown } from 'semantic-ui-react'
 
 import PropTypes from 'prop-types';
 
 import LocationSearchInput from '../map/search'
 
+import { connect } from 'react-redux'
+
 class Navigation extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            options: [
+                { key: 'one', text: '1 day', value: '1' },
+                { key: 'two', text: '2 days', value: '2' },
+                { key: 'three', text: '3 days', value: '3' }
+            ]
+        }
     }
 
-    componentWillMount() {
-
-    }
-
-    componentDidMount() {
-
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-
-    }
-
-    componentWillUnmount() {
-
-    }
+    handleDaysChange = (e, { value }) => this.props.setDays({ value })
 
     render() {
         return (
@@ -40,8 +28,7 @@ class Navigation extends Component {
                 {this.props.isMobile? (
                     <div className='navigation mobile'>
                         <h3 className="header">Happening Near You</h3>
-                        <LocationSearchInput className='mobile search' setPosition={this.props.setPosition} />
-                        
+                        <LocationSearchInput className='mobile search' setPosition={this.props.setPosition} />     
                     </div>
 
                 ) : (
@@ -52,7 +39,19 @@ class Navigation extends Component {
                                 <h3 className="header">Happening Near You</h3>
                             </Grid.Column>
                             <Grid.Column width={3}>
-                            <LocationSearchInput setPosition={this.props.setPosition} />
+                                {/* TODO: replace location input with search able dropdown */}
+                                <LocationSearchInput setPosition={this.props.setPosition} />
+                                <Dropdown 
+                                    button
+                                    className='icon'
+                                    floating
+                                    icon='calendar' 
+                                    selection
+                                    onChange={this.handleDaysChange} 
+                                    options={this.state.options} 
+                                    value={this.props.days}
+                                />
+
                             </Grid.Column>
                         </Grid>
                     </div >
@@ -66,7 +65,15 @@ class Navigation extends Component {
 
 Navigation.propTypes = {
     setPosition: PropTypes.function,
+    setDays: PropTypes.function,
     isMobile : PropTypes.bool
 };
 
-export default Navigation;
+const mapStateToProps = state => {
+    console.log('store to navigation: ', state)
+    return {
+        nearby_places: state.nearby_places
+    }
+}
+
+export default connect(mapStateToProps)(Navigation);
