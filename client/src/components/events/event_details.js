@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Header, Image } from 'semantic-ui-react'
+import { Button, Header, Image, Label } from 'semantic-ui-react'
 import Directions from '../places/directions'
 
 import moment from 'moment';
@@ -35,7 +35,7 @@ class EventDetails extends Component {
 
         let content = this.props.data.properties;
         let date = moment(content.date)
-        let categories = content.categories.map((category) => <span className={'pink image label ' + category}>{category}</span>);
+        let categories = content.categories.map((category) => <Label className={'pink image label ' + category}>{category}</Label>);
 
         return (
             <div className='details'>
