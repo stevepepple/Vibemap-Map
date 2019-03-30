@@ -41,7 +41,7 @@ let Map = class Map extends React.Component {
 
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/stevepepple/cjpk6due60uyh2sr2j8p8dppo',
+      style: 'mapbox://styles/stevepepple/cjpk3ts1c0skb2rs52w658p07',
       center: [lng, lat],
       bearing: bearing,
       zoom: zoom
