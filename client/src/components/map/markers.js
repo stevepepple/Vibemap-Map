@@ -58,8 +58,6 @@ export default class Markers extends React.Component {
   
   addMarkers(features, map) {
 
-      let boundClick = this.props.onclick.bind(this, this.props.id);
-
       let markers = features.map((feature) => {
 
         //TODO: write a reusable util function for geojson feature to object.
@@ -68,20 +66,20 @@ export default class Markers extends React.Component {
         let likes = feature.properties.likes;
         let link = feature.properties.link;
         let size = 40 + (0.08 * likes);
-
+        
         let img = document.createElement('img');
         img.setAttribute('width', '100%');
         img.setAttribute('height', '100%');
         img.setAttribute('rel', src);
 
         var el = document.createElement('div');
-        el.className = 'marker ';
+        el.className = 'marker';
         el.title = feature.name;
 
         if(this.props.type === 'places') { el.className = el.className + 'place '}
 
         if (likes > 2) {
-          el.className = el.className + 'popular '
+          el.className = el.className + ' popular '
           el.style.width = size + 'px';
           el.style.height = size + 'px';
 
@@ -100,13 +98,17 @@ export default class Markers extends React.Component {
 
         el.addEventListener('click', function (event) {
           console.log('Clicked Marker', id, event)
-          boundClick(id);
+          
+          //let boundClick = this.props.onclick.bind(this);
+          //boundClick(id);
         });
 
-        // add marker to map
-        return new mapboxgl.Marker(el)
-            .setLngLat(feature.geometry.coordinates)
-            .addTo(map);
+        // add marker to map        
+        let marker = new mapboxgl.Marker(el)
+          .setLngLat(feature.geometry.coordinates)
+          .addTo(map);
+           
+        return marker;
       });
 
       this.setState({ markers : markers})
