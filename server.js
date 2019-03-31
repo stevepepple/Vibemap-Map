@@ -67,6 +67,7 @@ app.get('/api/events', (req, res) => {
     let lat = req.query.lat;
     let lon = req.query.lon;
     let distance = req.query.distance * config.meters_per_mile;
+    let activity = req.query.activity;
 
     // This is just the query
     let query_and_sort_by_likes = Event.find({
@@ -78,10 +79,13 @@ app.get('/api/events', (req, res) => {
                 $maxDistance: distance
             }
         },
-        'properties.date': {
-            '$gte': day_start,
-            '$lte': day_end
-        }
+        'properties.categories': { $all: activity },
+        'properties.categories': { $in: activity },
+        $or: [
+            { 'properties.date': { '$gte': day_start, '$lte': day_end } },
+            // TODO: include recuring in a smart way { 'properties.recurs': { $ne: null }}
+        ] 
+        
     }).sort('properties.likes');
 
     let query_by_recuring = Event.find({
@@ -98,12 +102,12 @@ app.get('/api/events', (req, res) => {
 
     query_and_sort_by_likes
         .then(function (results, err) {
-            console.log('Got places!');
+            console.log('Got places!', results.length);
 
             results = results.reverse();
 
             results.forEach(result => {
-                console.log(result.properties.title, result.properties.source, result.properties.likes);
+                console.log(result.properties.title, result.properties.source, result.properties.likes, result.properties.categories);
             });
 
             return res.json({ success: true, data: results });
