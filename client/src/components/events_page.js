@@ -32,7 +32,8 @@ class Page extends Component {
             items: [],
             lat: 37.79535238155009,
             lon: -122.2823644705406,
-            days: 3,
+            days: 14,
+            activity: ['art', 'arts', 'comedy', 'community', 'free', 'local', 'recurs', 'urban'],
             distance: 2.5,
             current_item: null,
             details_shown: false,
@@ -46,6 +47,7 @@ class Page extends Component {
         this.clearDetails = this.clearDetails.bind(this);
         this.setPosition = this.setPosition.bind(this);
         this.setDistance = this.setDistance.bind(this);
+        this.setActivity = this.setActivity.bind(this);
         this.setDays = this.setDays.bind(this);
     }
      
@@ -86,15 +88,17 @@ class Page extends Component {
         this.setState({ distance : distance })
     }
 
+    setActivity(activity) {
+        this.setState({ activity: activity.value }, this.showEvents)
+    }
+
     setDays(days) {
-        this.setState({ days: days.value })
-        this.showEvents()
+        this.setState({ days: days.value }, this.showEvents)
     }
 
     handleWindowSizeChange = () => {
         this.setState({ width: window.innerWidth });
         console.log('window width: ', this.state.width)
-
     };
 
     showEvents(position) {
@@ -106,8 +110,11 @@ class Page extends Component {
             lat: this.state.lat,
             lon: this.state.lon,
             distance: this.state.distance,
+            activity: this.state.activity,
             days: this.state.days
         });
+
+        console.log('Querying with this: ', query, this.state.activity)
 
         this.setState({ timedOut: false})
         
@@ -167,8 +174,10 @@ class Page extends Component {
         const { width } = this.state;
         const isMobile = width <= 700;
 
+        let navigation = <Navigation setPosition = { this.setPosition } setDays = { this.setDays } setActivity = { this.setActivity } days = { this.state.days } activity = { this.state.activity } setDistance = { this.setDistance } isMobile = { isMobile } />
+
         // Don't render until the data has loaded
-        // TODO: Handle error versus no results
+        // TODO: Handle error versus no results versus still loading
         if (this.state.data.length == 0) {
             if (this.state.timedOut) {
                 return (
@@ -179,9 +188,14 @@ class Page extends Component {
             } else {
                 return (
                     <div className='empty_state'>
-                        <Dimmer active inverted><Loader inverted><h3>Have you ever stopped to smell the roses near Grand Avenue?</h3></Loader></Dimmer>
+                        <Dimmer active inverted>
+                            <Loader inverted><h3>Have you ever stopped to smell the roses near Grand Avenue?</h3></Loader>
+                            <br/>
+                            <Button secondary onClick={() => { window.location.reload() }}>Reload</Button>
+                        </Dimmer>
                     </div>
                 )
+             
             }
         }
 
@@ -189,7 +203,7 @@ class Page extends Component {
         if (isMobile) {
             return (
                 <div>
-                    <Navigation setPosition={this.setPosition} setDays={this.setDays} days={this.state.days} setDistance={this.setDistance} isMobile={isMobile} />
+                    {navigation}                
 
                     <Tabs selectedTabClassName='active'>
                         <TabList className='ui menu secondary'>
@@ -198,6 +212,10 @@ class Page extends Component {
                         </TabList>
 
                         <TabPanel>
+                            if (this.state.data.length == 0) {
+                                <div>No results</div>
+                            }
+
                             <EventsCards data={this.state.data} onclick={this.showDetails} />
                             {/* <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item} />} /> */}
                         </TabPanel>
@@ -210,7 +228,7 @@ class Page extends Component {
         } else {
             return (
                 <div>
-                    <Navigation setPosition={this.setPosition} setDays={this.setDays} days={this.state.days} />
+                    {navigation}
 
                     {/* 16 column grid */}
                     <Grid>
