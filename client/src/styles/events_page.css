@@ -23,9 +23,9 @@
 .navigation {
     position: absolute;
     top: 0;
-    left: 18vmin;
+    left: 12vmin;
     padding: 2vmin;
-    width: 85vmin;
+    width: 100vmin;
 }
 
 .navigation.mobile {
