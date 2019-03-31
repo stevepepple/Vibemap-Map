@@ -13,14 +13,43 @@ class Navigation extends Component {
 
         this.state = {
             options: [
-                { key: 'one', text: '1 day', value: '1' },
-                { key: 'two', text: '2 days', value: '2' },
-                { key: 'three', text: '3 days', value: '3' }
+                { key: '1', text: '1 day', value: '1' },
+                { key: '2', text: '2 days', value: '2' },
+                { key: '3', text: '3 days', value: '3' },
+                { key: '14', text: '2 weeks', value: '14' }
+            ],
+            activty_categories: [
+                { key: 'all', text: 'All', value: ['art', 'arts', 'books', 'comedy', 'community', 'culture', 'free', 'health', 'local', 'nightlife', 'recurs', 'romance', 'urban']},
+                { key: 'eating', text: 'Eating', value: ['food', 'restuarant'] },
+                { key: 'drinking', text: 'Drinking', value: ['drinking', 'drinks'] },
+                { key: 'laughing', text: 'Laughing', value: ['comedy'] },
+                { key: 'stories', text: 'Telling Stories', value: ['storytelling', 'comedy']},
+                { key: 'arts', text: 'Arts', value: ['arts', 'craft', 'performance'] },
+                { key: 'games', text: 'Games & Sports', value: ['games', 'sports'] },
+                { key: 'learning', text: 'Learning', value: ['learning', 'education'] },
+                { key: 'immersive', text: 'Immersive', value: ['immersive'] },
+                { key: 'music', text: 'Music', value: ['music'] },
+                { key: 'outdoors', text: 'Outdoors', value: ['outdoors'] },
+                { key: 'spirtual', text: 'Spirtual', value: ['spirtual'] }
+            ],
+            vibe_categories : [
+                { key: 'community', text: 'Community', value: ['community'] },
+                { key: 'family', text: 'Family', value: ['family'] },
+                { key: 'festive', text: 'Festive', value: ['festive'] },
+                { key: 'funny', text: 'Funny', value: ['funny'] },
+                { key: 'romantic', text: 'Romantic', value: ['romantic'] }
+
             ]
         }
     }
 
     handleDaysChange = (e, { value }) => this.props.setDays({ value })
+
+    handleActivityChange = (e, { value }) => {
+        console.log('CHanged activty: ', value)
+        this.props.setActivity({ value })
+    }
+
 
     render() {
         return (
@@ -35,21 +64,28 @@ class Navigation extends Component {
 
                     <div className='navigation'>
                         <Grid stackable verticalAlign='middle'>
-                            <Grid.Column width={5}>
-                                <h3 className="header">Happening Near You</h3>
-                            </Grid.Column>
-                            <Grid.Column width={10}>
-                                {/* TODO: replace location input with search able dropdown */}
+                            <Grid.Column width={6}>
                                 <LocationSearchInput setPosition={this.props.setPosition} />
-                                <Dropdown 
+                                <Dropdown
                                     button
                                     className='icon'
                                     compact
                                     icon='calendar'
-                                    labeled 
-                                    onChange={this.handleDaysChange} 
-                                    options={this.state.options} 
+                                    labeled
+                                    onChange={this.handleDaysChange}
+                                    options={this.state.options}
                                     text={this.state.options.find(obj => obj.value == this.props.days).text}
+                                />
+                            </Grid.Column>
+                            <Grid.Column width={9}>
+                                {/* TODO: replace location input with search able dropdown */}
+                                
+                                <Dropdown
+                                    placeholder='Activty'                                
+                                    search
+                                    selection
+                                    onChange={this.handleActivityChange}
+                                    options={this.state.activty_categories}
                                 />
 
                             </Grid.Column>
