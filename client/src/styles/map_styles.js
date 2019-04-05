@@ -120,28 +120,37 @@ module.exports = {
         "interpolate",
         ["linear"],
         ["zoom"],
-          8, 4,
-          10, 14,
-          12, 18
+          8, 2,
+          10, 10,
+          18, 100
       ],
       'heatmap-opacity': [
         "interpolate",
         ["linear"],
         ["zoom"],
-          8, 0.8,
-          14, 0.4
+          8, 0.4,
+          14, 0.3
       ],
+      'heatmap-intensity': 0.5,
       "heatmap-color": [
         "interpolate",
         ["linear"],
         ["heatmap-density"],
-          0, 'rgba(0,255,255, 0)',
-          0.2, 'rgba(227,255,207, 0.4)',
-          0.3, '#ffff80',
-          0.6, '#d6a983',
-          0.8, '#9d6697',
-          1, '#603583'
-        ]
+        0.05,
+        "hsla(240, 80%, 94%, 0)",
+        0.15,
+        "hsla(252, 91%, 44%, 0.4)",
+        0.2,
+        "hsla(179, 100%, 50%, 0.6)",
+        0.5,
+        "hsl(76, 100%, 50%)",
+        0.7,
+        "hsl(47, 88%, 50%)",
+        0.95,
+        "hsl(34, 100%, 50%)",
+        0.99,
+        "hsl(324, 88%, 53%)"
+      ]
     },
     events_circle: {
       // increase the radius of the circle as the zoom level and dbh value increases
@@ -149,8 +158,8 @@ module.exports = {
         'base': 3,
         'stops': [[8, 4], [18, 20]] },
 
-        'circle-color': '#4F94CD',
-        'circle-stroke-color': '#2D43B4',
+        'circle-color': '#C650CC',
+        'circle-stroke-color': '#CC9423',
         'circle-stroke-width': 0.6,
         'circle-opacity': 0.2,
         'circle-translate': [-2, -2]
