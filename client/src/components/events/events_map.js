@@ -21,20 +21,30 @@ class EventsMap extends Component {
         super(props);
 
         this.state = {
-            geojson: []
+            geojson: [],
+            places_geojson : []
         }
     }
 
     componentDidMount(){
-        let geojson = turf.featureCollection(this.props.data);
-
+        let geojson = turf.featureCollection(this.props.data)
         this.setState({ geojson: geojson })
+
+        console.log('Loading map with this event data: ', geojson)
+
+        let places_geojson = turf.featureCollection(this.props.places_data);
+
+        this.setState({ places_geojson: places_geojson })
     }
 
     componentWillReceiveProps(nextProps){
         let geojson = turf.featureCollection(nextProps.data);
 
         this.setState({ geojson: geojson })
+
+        let places_geojson = turf.featureCollection(nextProps.places_data);
+
+        this.setState({ places_geojson: places_geojson })
     }
 
     onSelect = function() {
@@ -50,14 +60,33 @@ class EventsMap extends Component {
     render() {
 
         let has_data = this.props.data.length > 0;
+        let zoom_level = Constants.zoom_levels[this.props.zoom]
 
         return (
             <div>
             { has_data? (
                 <div className = 'map_container'>
+            
                     <Map ref={this.mapRef} lat={this.props.lat} lng={this.props.lng} zoom={this.props.zoom} onMapChange={this.onMapChange} bearing={0} show_geocoder={true}>
+                        <Source id='places' data={this.state.places_geojson} layer='places'>
+                            <Layer
+                                id='heat'
+                                type='heatmap'
+                                paint={Styles.places_heatmap}
+                                isLayerChecked={true}
+                            />
+
+                            <Layer
+                                id='circles'
+                                type='circle'
+                                paint={Styles.events_circle}
+                                isLayerChecked={true}
+                            />
+                        </Source>
+
                         <Markers type='events' data={this.state.geojson} onclick={this.props.onclick} zoom={this.props.zoom}/>
                         <Markers type='places' data={this.props.nearby_places} onclick={this.props.onclick} zoom={this.props.zoom} />
+                        
                         {/*
                             <Source id='places' data={this.props.nearby_places} layer='places'>
                                 <Layer
