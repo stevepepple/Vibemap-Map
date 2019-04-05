@@ -69,25 +69,38 @@ let Map = class Map extends React.Component {
       }
       });
     });
+
+    this.map.on('move', (e) => {
+      this.setState({
+        lng: lng.toFixed(4),
+        lat: lat.toFixed(4),
+        zoom: this.map.getZoom().toFixed(0)
+      });
+    });
+
   }
 
   componentWillReceiveProps(nextProps){
-    console.log('Map received propts: ', nextProps)
-    if (this.props.lat != nextProps.lat || this.props.zoom || nextProps.zoom) {
+    
+    if (this.props.lat !== nextProps.lat || this.props.zoom !== nextProps.zoom) {
       //this.map.setCenter([nextProps.lng, nextProps.lat]);
 
       // TODO: make this a prop options?
+      console.log('Fly to this: ', nextProps.lng, nextProps.lat)
+      
+      /* TODO: fix this for both maps */
       this.map.flyTo({
         // These options control the ending camera position: centered at
         // the target, at zoom level 9, and north up.
         center: [nextProps.lng, nextProps.lat],
         zoom: nextProps.zoom,
-        speed: 0.8, // make the flying slow
+        speed: 1.0, // make the flying slow
         curve: 1, // change the speed at which it zooms out
         easing: function (t) {
           return t;
         }
       });
+      
       
     }
   }
@@ -120,7 +133,6 @@ let Map = class Map extends React.Component {
       this.tooltipContainer.innerHTML = '';
     }
   }
-
 
   setFill() {
     const { property, stops } = this.props.active;
