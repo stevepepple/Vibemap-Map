@@ -65,7 +65,7 @@ export default class Markers extends React.Component {
         let src = feature.properties.image;
         let likes = feature.properties.likes;
         let link = feature.properties.link;
-        let size = 40 + (0.08 * likes);
+        let size = 40 + (0.18 * likes);
         
         let img = document.createElement('img');
         img.setAttribute('width', '100%');
