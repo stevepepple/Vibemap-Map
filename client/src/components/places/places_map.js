@@ -44,10 +44,12 @@ class PlacesMap extends React.Component {
         helpers.getPosition()
             .then((position) => {
                 if (position) {
+                    /*
                     this.setState({
                         lat: position.coords.latitude,
                         lon: position.coords.longitude
                     });
+                    */
                 }
             }).then(() => {
                 // Load places data to state
@@ -76,19 +78,23 @@ class PlacesMap extends React.Component {
                 <div>
                     <Map lat={this.state.lat} lng={this.state.lon} >
                         <Source id='places' data={this.state.places_data} layer='places'>
+                             
                             <Layer
                                 id='places'
                                 type='circle'
                                 paint={Styles.places_circle}
                                 isLayerChecked={this.state.places.isLayerChecked}
                             />
+                            
                             <Layer
                                 id='heat'
                                 type='heatmap'
                                 paint={Styles.places_heatmap}
                                 isLayerChecked={this.state.heat.isLayerChecked}
                             />
+                            
                         </Source>
+                        
                         <Source id='events' data={this.state.events_data} layer='events'>
                             <Layer
                                 id='events'
@@ -97,8 +103,9 @@ class PlacesMap extends React.Component {
                                 isLayerChecked={this.state.events.isLayerChecked}
                             />
                         </Source>
+                        
                     </Map>
-                    {/* TODO: move to component and handle state with redux */} 
+                    {/* TODO: move to component and handle state with redux */}
                     <Sidebar
                         as={Menu}
                         animation='push'
@@ -106,7 +113,7 @@ class PlacesMap extends React.Component {
                         icon='labeled'
                         onHide={this.handleSidebarHide}
                         vertical
-                        width='medium'
+                        width='wide'
                         visible={this.state.sidebar_visible}
                     >
                         <Menu.Item as='places'>

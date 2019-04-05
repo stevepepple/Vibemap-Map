@@ -96,23 +96,30 @@ config.event_schema = {
     }
 };
 
-/*
-{
-    "title": "Make: Monthly Artist Happy Hour & Local Vendors | Dogpatch",
-        "link": "https://sf.funcheap.com/make-monthly-artist-happy-hour-local-vendors-dogpatch-2/",
-        "source": "fun_cheap",
-        "date": "Thursday, December 20, 2018",
-        "address": "2569 Third Street San Francisco",
-        "price": "Cost: $8*",
-        "venue": "",
-        "start_time": "6:00 pm",
-        "end_time": "9:30 pm",
-        "likes": 1,
-        "image": "https://cdn.funcheap.com/wp-content/uploads/2018/09/Screen-Shot-2018-09-17-at-2.54.31-PM-563x206.png",
-        "image_source": "Museum of Craft and Design",
-        "description": "Submitted by the Event OrganizerDesign your night at Make. On the third Thursday of each month, collaborate with artists and makers, explore unique themes and rethink materials through creative design projects. Enjoy hands-on art activities and crafts, artist-led happy hours, films, tours, performances and much more. Each month features a different experience and projects.Make: Monthly Artist Happy Hour & Local Vendors\nEvery 3rd Thursday | 6 pm to 9:30 pm\nMuseum of Craft and Design, 2569 Third St, San Francisco\nAdults $8, Students/Senior $6Cash bar for guests over 21 and complimentary drink tickets for MCD members; ID is required. Space and supplies are limited; some events may require a nominal materials fee.",
-        "more_details": "Submitted by the Event OrganizerMake: Monthly Artist Happy Hour & Local Vendors\nEvery 3rd Thursday | 6 pm to 9:30 pm\nMuseum of Craft and Design, 2569 Third St, San Francisco\nAdults $8, Students/Senior $6"
+config.place_schema = {
+    id: String,
+    name: String,
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true,
+            index: '2dsphere'
+        }
+    },
+    // TODO: Add additional attributes like hours, rating, etc. 
+    properties: {
+        id: String,
+        name: String,
+        description: String,
+        categories: [{ type: String }],
+        address: String,
+        neighborhood: String
+    }
 }
-*/
 
 module.exports = config;
