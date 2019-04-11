@@ -28,7 +28,21 @@ export default class Source extends React.Component {
   componentWillUnmount() {
     const { map } = this.context
     const { id } = this.props
-    map.removeSource(id)
+
+    // TODO: Diagnose a better way to check if there are already sources
+    try {
+      map.removeSource(id)
+    } catch (error) {
+      console.log('Problem removing layer source: ', error)
+    }  
+      
+    
+  }
+
+  // Update source from props
+  componentWillReceiveProps(nextProps) {
+    const { map } = this.context
+    map.getSource(nextProps.id).setData(nextProps.data);
   }
 
   render() {

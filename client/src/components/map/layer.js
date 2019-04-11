@@ -50,10 +50,11 @@ class Layer extends React.Component {
       paint: paint
     })
 
-
+    /* TODO: Remove as this was just for testing 
     let marker = new mapboxgl.Marker()
       .setLngLat([-122.40612019999999, 37.7842682])
       .addTo(map);
+    */
 
     if(!isLayerChecked) map.setLayoutProperty(layerId, 'visibility', 'none')
   }
@@ -82,7 +83,12 @@ class Layer extends React.Component {
     const layerId = `${sourceId}-${id}`
 
     console.log('!!! Remove: ', sourceId, id)
-    map.removeLayer(layerId)
+    try {
+      map.removeLayer(layerId)  
+    } catch (error) {
+      console.log("Problem trying to remove layer: ", error)
+    }
+    
   }
 
   render() {
