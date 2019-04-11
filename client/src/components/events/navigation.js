@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Grid, Dropdown } from 'semantic-ui-react'
+import { Grid, Dropdown, Form } from 'semantic-ui-react'
 
 import PropTypes from 'prop-types';
+import * as Constants from '../../constants.js'
 
 import LocationSearchInput from '../map/search'
 
@@ -18,75 +19,97 @@ class Navigation extends Component {
                 { key: '3', text: '3 days', value: '3' },
                 { key: '14', text: '2 weeks', value: '14' }
             ],
-            activty_categories: [
-                { key: 'all', text: 'All', value: ['art', 'arts', 'books', 'comedy', 'community', 'culture', 'free', 'health', 'local', 'nightlife', 'recurs', 'romance', 'urban']},
-                { key: 'eating', text: 'Eating', value: ['food', 'restuarant'] },
-                { key: 'drinking', text: 'Drinking', value: ['drinking', 'drinks'] },
-                { key: 'laughing', text: 'Laughing', value: ['comedy'] },
-                { key: 'stories', text: 'Telling Stories', value: ['storytelling', 'comedy']},
-                { key: 'arts', text: 'Arts', value: ['arts', 'craft', 'performance'] },
-                { key: 'games', text: 'Games & Sports', value: ['games', 'sports'] },
-                { key: 'learning', text: 'Learning', value: ['learning', 'education'] },
-                { key: 'immersive', text: 'Immersive', value: ['immersive'] },
-                { key: 'music', text: 'Music', value: ['music'] },
-                { key: 'outdoors', text: 'Outdoors', value: ['outdoors'] },
-                { key: 'spirtual', text: 'Spirtual', value: ['spirtual'] }
-            ],
-            vibe_categories : [
-                { key: 'community', text: 'Community', value: ['community'] },
-                { key: 'family', text: 'Family', value: ['family'] },
-                { key: 'festive', text: 'Festive', value: ['festive'] },
-                { key: 'funny', text: 'Funny', value: ['funny'] },
-                { key: 'romantic', text: 'Romantic', value: ['romantic'] }
 
-            ]
+            vibe_options : []
         }
     }
 
-    handleDaysChange = (e, { value }) => this.props.setDays({ value })
-
-    handleActivityChange = (e, { value }) => {
-        console.log('CHanged activty: ', value)
-        this.props.setActivity({ value })
+    componentWillMount() {
+        this.setVibeOptions()
+        // TODO: remove to Redux? 
+        this.setState({ activity_: Constants.activty_categories })
     }
 
+    componentWillReceiveProps = function (props, nextProps) {
+        
+        this.setVibeOptions()
+    }
+
+    setVibeOptions = (props) => {
+        let options = this.props.vibes.map(function (vibe) {
+            return { key: vibe, value: vibe, text: vibe }
+        })
+
+        console.log("Vibes: ", options)
+
+        this.setState({ vibe_options: options })
+
+    }
+    
+    handleDaysChange = (e, { value }) => this.props.setDays({ value })
+
+    handleActivityChange = (event, { value }) => {
+
+        this.props.setActivity({ value })
+
+    }
 
     render() {
+
+
         return (
             <div>
                 {this.props.isMobile? (
                     <div className='navigation mobile'>
                         <h3 className="header">Happening Near You</h3>
-                        <LocationSearchInput className='mobile search' setPosition={this.props.setPosition} />     
+
+                        <LocationSearchInput className='mobile search' setPosition={this.props.setPosition} />
+
+
                     </div>
 
                 ) : (
-
+                    
                     <div className='navigation'>
-                        <Grid stackable verticalAlign='middle'>
-                            <Grid.Column width={6}>
-                                <LocationSearchInput setPosition={this.props.setPosition} />
-                                <Dropdown
-                                    button
-                                    className='icon'
-                                    compact
-                                    icon='calendar'
-                                    labeled
-                                    onChange={this.handleDaysChange}
-                                    options={this.state.options}
-                                    text={this.state.options.find(obj => obj.value == this.props.days).text}
-                                />
+                            <Grid stackable stretched verticalAlign='middle'>
+                            <Grid.Column width={7}>
+                                <Form>
+                                <Form.Group widths='equal'>
+                                    <LocationSearchInput className='mobile search' setPosition={this.props.setPosition} />
+                                    <Dropdown
+                                        button
+                                        className='icon'
+                                        compact
+                                        icon='calendar'
+                                        labeled
+                                        onChange={this.handleDaysChange}
+                                        options={this.state.options}
+                                        text={this.state.options.find(obj => obj.value == this.props.days).text}
+                                    />
+                                </Form.Group>
+                                </Form>
                             </Grid.Column>
                             <Grid.Column width={9}>
                                 {/* TODO: replace location input with search able dropdown */}
-                                
-                                <Dropdown
-                                    placeholder='Activty'                                
-                                    search
-                                    selection
-                                    onChange={this.handleActivityChange}
-                                    options={this.state.activty_categories}
-                                />
+                                <Form><Form.Group>
+                                        <Dropdown
+                                            placeholder='Activty'
+                                            search
+                                            selection
+                                            onChange={this.handleActivityChange}
+                                            options={Constants.activty_categories}
+                                        />
+
+                                        <Dropdown
+                                            placeholder='Vibe'
+                                            fluid
+                                            multiple
+                                            compact
+                                            search
+                                            selection
+                                            options={this.state.vibe_options}
+                                        />
+                                </Form.Group></Form>                                
 
                             </Grid.Column>
                         </Grid>
