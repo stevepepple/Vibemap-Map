@@ -1,3 +1,19 @@
+
+#header {
+    background-color: #811897;
+    background-image: url('./logo.png');
+    background-repeat: no-repeat;
+    background-position: 140px;
+    background-size: 36%;
+    width: 100%;
+    border-radius: 0;
+}
+
+#header .ui.dropdown {
+    background: rgba(0,0,0,0.4);
+    color: #DDDDDD;
+}
+
 /* Container */
 .content {
     /*
@@ -17,15 +33,12 @@
 
 /* Top Nav and Controls */  
 .menu {
-    padding: 2vmin;
+    padding: 1vmin;
 }
 
 .navigation {
-    position: absolute;
     top: 0;
-    left: 12vmin;
     padding: 2vmin;
-    width: 100vmin;
 }
 
 .navigation.mobile {
@@ -77,6 +90,7 @@
     height: 10vmin;
     width: 12vmin;
     margin-top: 2vmin !important;
+    background-color: #DDDDDD;
 }
 
 .ui.items .image img {
@@ -98,8 +112,8 @@
 
 .place_cards {
     position: fixed; 
-    bottom: 4vmin;
-    padding: 2vmin;
+    bottom: 2vmin;
+    padding: 1vmin;
     width: 52%;
 }
 
@@ -170,8 +184,8 @@
 }
 
 .marker:hover {
-    width: 5vmin !important;
-    height: 5vmin !important;
+    width: 8vmin !important;
+    height: 8vmin !important;
 }
 
 .marker.popular img,

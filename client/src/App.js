@@ -17,7 +17,7 @@ class App extends Component {
   
         <Router>
           <div>
-            <Menu pointing>
+            <Menu id="header" pointing>
               <Dropdown button labeled className='icon' icon='list' text='Menu'>
 
                 <Dropdown.Menu>
@@ -29,6 +29,7 @@ class App extends Component {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
+              
             </Menu>
             
             <Route path="/events" component={EventsPage} />
