@@ -35,8 +35,10 @@ const helpers = {
                     reject(err);
                 } else {
                     let results = JSON.parse(body)
+
+                    console.log('detailed response: ', results.response.length)
                     
-                    if (results.response.groups.length == 0) {
+                    if (!results.response == undefined) {
                         reject('No results for search.')
                     } else {
                         console.log('Got Foursquare place...')
@@ -71,10 +73,7 @@ const helpers = {
                     resolve(result.response.venue);
                 }
             });
-        });
-
-        
-        
+        });        
 
     },
 
