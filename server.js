@@ -23,6 +23,8 @@ let db = mongoose.connection;
 db.once("open", () => console.log("Mongo DB  is connected."));
 
 const Event = mongoose.model('Event', config.event_schema);
+const Place = mongoose.model('Place', config.place_schema);
+
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
@@ -56,8 +58,6 @@ app.get('/api/directions', (req, res) => {
 
 app.get('/api/events', (req, res) => {
 
-    console.log('Routing with request ...', req.query);
-
     // TODO: pass number of days as an argument
     let day_start = moment().subtract('1days').startOf('day');
 
@@ -86,7 +86,7 @@ app.get('/api/events', (req, res) => {
             // TODO: include recuring in a smart way { 'properties.recurs': { $ne: null }}
         ] 
         
-    }).sort('properties.likes');
+    }).sort('properties.date');
 
     let query_by_recuring = Event.find({
         'geometry': {
@@ -102,17 +102,57 @@ app.get('/api/events', (req, res) => {
 
     query_and_sort_by_likes
         .then(function (results, err) {
-            console.log('Got places!', results.length);
+            console.log('Got events!', results.length);
 
-            results = results.reverse();
-
+            // TODO: Move Sorting Algorithm to server or data pipeline
             results.forEach(result => {
-                console.log(result.properties.title, result.properties.source, result.properties.likes, result.properties.categories);
+                // console.log(result.properties.title, result.properties.source, result.properties.likes, result.properties.categories);
             });
 
             return res.json({ success: true, data: results });
 
         }); 
+});
+
+app.get('/api/places', (req, res) => {
+
+    console.log('Getting places', req.query);
+
+    let lat = req.query.lat;
+    let lon = req.query.lon;
+    let distance = req.query.distance * config.meters_per_mile;
+    let activity = req.query.activity;
+
+    // This is just the query
+    let query = {
+        'geometry': {
+            $nearSphere: {
+                $geometry: {
+                    type: "Point", coordinates: [lon, lat]
+                },
+                $maxDistance: distance
+            }
+        },
+        'properties.categories': { $all: activity },
+        'properties.categories': { $in: activity }
+    }
+
+    let new_query = { geometry: { $geoWithin: { $centerSphere: [[-122.28615989025315, 37.816508894670264], 0.0003363024865705144] } } }
+    let query_by_location = Place.find(query);
+
+    query_by_location
+        .then(function (results, err) {
+            console.log('Got places!', results);
+
+            /* Print each name
+            results.forEach(place => {
+                console.log(place.name);
+            });
+            */
+
+            return res.json({ success: true, data: results });
+
+        });
 });
 
 app.get('*', (req, res) => {
