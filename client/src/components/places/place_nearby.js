@@ -35,18 +35,22 @@ class PlaceNearby extends Component {
     }
 
     setTopandNearBy(results) {
-        let places = results.response.groups[0].items
+        console.log("top results: ", results)
 
-        helpers.topFoursquareResult(results)
-            .then((result) => {
-                /* TODO: this can be cleaner */
-                result.likes = 10;
-                this.setState({ result: result })
-                places.push(this.state.result)
+        if (results.response.groups) {
+            let places = results.response.groups[0].items
 
-            })
+            helpers.topFoursquareResult(results)
+                .then((result) => {
+                    /* TODO: this can be cleaner */
+                    result.likes = 10;
+                    this.setState({ result: result })
+                    places.push(this.state.result)
 
-        this.props.setNearbyPlaces(places)
+                })
+
+            this.props.setNearbyPlaces(places)
+        }
     }
 
     render() {
@@ -68,8 +72,11 @@ class PlaceNearby extends Component {
             )
         }
 
-        let image = this.state.result.bestPhoto
-        image = image.prefix + '200x200' + image.suffix
+        let image = ""
+        if (this.state.result.photos.count > 0) {
+            image = this.state.result.bestPhoto
+            image = image.prefix + '200x200' + image.suffix
+        }
 
         let hours = null;
 
