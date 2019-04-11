@@ -51,8 +51,10 @@ class EventsMap extends Component {
         console.log('Geocoding result: ')
     }
 
-    onMapChange = (position, props) => {
-        this.props.setPosition(position.lat, position.lng)        
+    onMapChange = (position, zoom, props) => {
+        this.props.setPosition(position.lat, position.lng)
+
+        this.props.setZoom(zoom)
     }
 
     mapRef = React.createRef();
@@ -114,7 +116,8 @@ EventsMap.propTypes = {
     lng: PropTypes.number,
     bearing: PropTypes.number,
     zoom: PropTypes.number,
-    setPosition: PropTypes.function
+    setPosition: PropTypes.function,
+    setZoom: PropTypes.function
 };
 
 const mapStateToProps = state => {
