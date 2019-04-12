@@ -85,8 +85,8 @@ app.get('/api/events', (req, res) => {
             { 'properties.date': { '$gte': day_start, '$lte': day_end } },
             // TODO: include recuring in a smart way { 'properties.recurs': { $ne: null }}
         ] 
-        
-    }).sort('properties.date');
+    // Sort by date and then decending orer of likes
+    }).sort('properties.date').sort({ 'properties.likes' : -1});
 
     let query_by_recuring = Event.find({
         'geometry': {
