@@ -59,7 +59,7 @@ app.get('/api/directions', (req, res) => {
 app.get('/api/events', (req, res) => {
 
     // TODO: pass number of days as an argument
-    let day_start = moment().subtract('1days').startOf('day');
+    let day_start = moment().startOf('day');
     console.log("Day start", day_start)
 
     console.log('Search query: ', req.query)
