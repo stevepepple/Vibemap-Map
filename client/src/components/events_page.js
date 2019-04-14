@@ -34,7 +34,7 @@ class Page extends Component {
             lat: 37.79535238155009,
             lon: -122.2823644705406,
             days: 3,
-            event_categories: ['art', 'arts', 'comedy', 'community', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
+            event_categories: ['', 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             place_categories: ['Other Nightlife', 'Art Gallery', 'Art Museum', 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture'],
             vibe_categoreis: ['adventurous', 'authentic', 'civic', 'creative', 'comedy', 'fun', 'chill', 'cozy', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
             distance: 2.0,
@@ -307,7 +307,7 @@ class Page extends Component {
                             {/* <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item} />} /> */}
                         </TabPanel>
                         <TabPanel>
-                            <EventsMap data={this.state.data} lat={this.state.lat} lng={this.state.lon} setZoom={this.setZoom} zoom={this.state.details_shown ? 16 : 13} />
+                            <EventsMap data={this.state.data} places_data={this.state.places_data} setZoom={this.setZoom} lat={this.state.lat} lng={this.state.lon} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
                         </TabPanel>
                     </Tabs>
                 </div>
