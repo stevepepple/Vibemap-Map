@@ -60,6 +60,7 @@ app.get('/api/events', (req, res) => {
 
     // TODO: pass number of days as an argument
     let day_start = moment().subtract('1days').startOf('day');
+    console.log("Day start", day_start)
 
     console.log('Search query: ', req.query)
     let day_end = moment().add(req.query.days, 'days');
@@ -142,7 +143,7 @@ app.get('/api/places', (req, res) => {
 
     query_by_location
         .then(function (results, err) {
-            console.log('Got places!', results);
+            console.log('Got places!', results.length);
 
             /* Print each name
             results.forEach(place => {
