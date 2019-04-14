@@ -61,7 +61,7 @@ export default class Markers extends React.Component {
       let markers = features.map((feature) => {
 
         //TODO: write a reusable util function for geojson feature to object.
-        let id = feature.id;
+        let id = feature._id;
         let src = feature.properties.image;
         let likes = feature.properties.likes;
         let link = feature.properties.link;
@@ -72,9 +72,11 @@ export default class Markers extends React.Component {
         img.setAttribute('height', '100%');
         img.setAttribute('rel', src);
 
+
         var el = document.createElement('div');
         el.className = 'marker';
         el.title = feature.name;
+        el.setAttribute('data-id', id)
 
         if(this.props.type === 'places') { el.className = el.className + 'place '}
 
@@ -96,11 +98,13 @@ export default class Markers extends React.Component {
 
         el.append(img);
 
+        // Reference to props from outside event handlers
+        let onclick = this.props.onclick; 
+
         el.addEventListener('click', function (event) {
-          console.log('Clicked Marker', id, event)
           
-          //let boundClick = this.props.onclick.bind(this);
-          //boundClick(id);
+          onclick(id)
+          
         });
 
         // add marker to map        
