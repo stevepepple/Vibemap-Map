@@ -52,10 +52,12 @@
     float:left;
 }
 
+.ui .text {
+    font-size: 1.2em;
+}
+
 .mobile .ui.search {
-    position: fixed;
-    top: 2vmin;
-    right: 2vmin;
+    width: 60%;
 }
 
 .mobile .header {
@@ -89,7 +91,7 @@
 .ui.items .image {
     height: 10vmin;
     width: 12vmin;
-    margin-top: 2vmin !important;
+    margin-top: 1vmin !important;
     background-color: #DDDDDD;
 }
 
@@ -139,11 +141,12 @@
 
 /*Map */
 .map_container, .mapboxgl-map {
-    border: red;
     width: 100%;
     height: 90vh;
+    /*
     min-width: 500px;
     min-height: 500px;
+    */
     left:0px;
     padding:0;
 }

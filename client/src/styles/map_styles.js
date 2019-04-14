@@ -9,7 +9,7 @@ module.exports = {
       ["zoom"],
       3, ['*', 0.5, ['to-number', ['get', 'rating']]],
       12, ['*', 1, ['to-number', ['get', 'rating']]],
-      18, ['*', 50, ['to-number', ['get', 'rating']]]],
+      18, ['*', 30, ['to-number', ['get', 'rating']]]],
 
       'circle-color': [
         "case",
@@ -146,7 +146,7 @@ module.exports = {
         "hsl(76, 100%, 50%)",
         0.7,
         "hsl(47, 88%, 50%)",
-        0.95,
+        0.98,
         "hsl(34, 100%, 50%)",
         0.99,
         "hsl(324, 88%, 53%)"
@@ -156,7 +156,7 @@ module.exports = {
       // increase the radius of the circle as the zoom level and dbh value increases
       'circle-radius': {
         'base': 3,
-        'stops': [[8, 4], [18, 20]] },
+        'stops': [[8, 2], [18, 20]] },
 
         'circle-color': '#C650CC',
         'circle-stroke-color': '#CC9423',
