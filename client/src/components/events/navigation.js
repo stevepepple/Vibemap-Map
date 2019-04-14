@@ -8,6 +8,12 @@ import LocationSearchInput from '../map/search'
 
 import { connect } from 'react-redux'
 
+const datePicker = {
+    minWidth: '140px',
+    lineHeight: '2em'
+};
+
+
 class Navigation extends Component {
     constructor(props) {
         super(props);
@@ -56,16 +62,28 @@ class Navigation extends Component {
 
     render() {
 
+        let search = <Form>
+            <Form.Group widths='equal'>
+                <LocationSearchInput className='mobile search' setPosition={this.props.setPosition} />
+                <Dropdown
+                    button
+                    className='icon'
+                    compact
+                    icon='calendar'
+                    labeled
+                    onChange={this.handleDaysChange}
+                    options={this.state.options}
+                    text={this.state.options.find(obj => obj.value == this.props.days).text}
+                    style={datePicker}
+                />
+            </Form.Group>
+        </Form>
 
         return (
             <div>
                 {this.props.isMobile? (
                     <div className='navigation mobile'>
-                        <h3 className="header">Happening Near You</h3>
-
-                        <LocationSearchInput className='mobile search' setPosition={this.props.setPosition} />
-
-
+                        {search}
                     </div>
 
                 ) : (
@@ -73,21 +91,7 @@ class Navigation extends Component {
                     <div className='navigation'>
                             <Grid stackable stretched verticalAlign='middle'>
                             <Grid.Column width={7}>
-                                <Form>
-                                <Form.Group widths='equal'>
-                                    <LocationSearchInput className='mobile search' setPosition={this.props.setPosition} />
-                                    <Dropdown
-                                        button
-                                        className='icon'
-                                        compact
-                                        icon='calendar'
-                                        labeled
-                                        onChange={this.handleDaysChange}
-                                        options={this.state.options}
-                                        text={this.state.options.find(obj => obj.value == this.props.days).text}
-                                    />
-                                </Form.Group>
-                                </Form>
+                                {search}
                             </Grid.Column>
                             <Grid.Column width={9}>
                                 {/* TODO: replace location input with search able dropdown */}

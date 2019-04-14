@@ -19,7 +19,6 @@ class App extends Component {
           <div>
             <Menu id="header" pointing>
               <Dropdown button labeled className='icon' icon='list' text='Menu'>
-
                 <Dropdown.Menu>
                   <Dropdown.Item>
                     <Link to="/events">Nearby Events</Link>
