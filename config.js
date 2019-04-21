@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 var config = {};
 
+config.database = 'mongodb://stevepepple:Hotspot1@ds019101.mlab.com:19101/hotspots'
+
 config.radius_5 = (5 / 3963.2);
 config.meters_per_mile = 1609.34;
 
@@ -115,10 +117,20 @@ config.place_schema = {
     properties: {
         id: String,
         name: String,
+        has_details: Boolean,
         description: String,
         categories: [{ type: String }],
         address: String,
-        neighborhood: String
+        neighborhood: String,
+        contact: mongoose.Schema.Types.Mixed,
+        hours: mongoose.Schema.Types.Mixed,
+        stats: mongoose.Schema.Types.Mixed,
+        beenHere: mongoose.Schema.Types.Mixed,
+        price: mongoose.Schema.Types.Mixed,
+        photos: mongoose.Schema.Types.Mixed,
+        likes: Number,
+        createdAt: String,
+        url: String
     }
 }
 
