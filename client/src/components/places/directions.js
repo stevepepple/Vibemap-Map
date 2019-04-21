@@ -132,7 +132,6 @@ class Directions extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('State from store? ', state)
     return {
         name : state.name,
         start: state.current_location

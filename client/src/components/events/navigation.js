@@ -46,8 +46,6 @@ class Navigation extends Component {
             return { key: vibe, value: vibe, text: vibe }
         })
 
-        console.log("Vibes: ", options)
-
         this.setState({ vibe_options: options })
 
     }
@@ -96,23 +94,23 @@ class Navigation extends Component {
                             <Grid.Column width={9}>
                                 {/* TODO: replace location input with search able dropdown */}
                                 <Form><Form.Group>
-                                        <Dropdown
-                                            placeholder='Activty'
-                                            search
-                                            selection
-                                            onChange={this.handleActivityChange}
-                                            options={Constants.activty_categories}
-                                        />
+                                    <Dropdown
+                                        placeholder='Activty'
+                                        search
+                                        selection
+                                        onChange={this.handleActivityChange}
+                                        options={Constants.activty_categories}
+                                    />
 
-                                        <Dropdown
-                                            placeholder='Vibe'
-                                            fluid
-                                            multiple
-                                            compact
-                                            search
-                                            selection
-                                            options={this.state.vibe_options}
-                                        />
+                                    <Dropdown
+                                        placeholder='Vibe'
+                                        fluid
+                                        multiple                                
+                                        compact
+                                        search
+                                        selection
+                                        options={this.state.vibe_options}
+                                    />
                                 </Form.Group></Form>                                
 
                             </Grid.Column>
@@ -125,12 +123,6 @@ class Navigation extends Component {
         );
     }
 }
-
-Navigation.propTypes = {
-    setPosition: PropTypes.function,
-    setDays: PropTypes.function,
-    isMobile : PropTypes.bool
-};
 
 const mapStateToProps = state => {
     console.log('store to navigation: ', state)

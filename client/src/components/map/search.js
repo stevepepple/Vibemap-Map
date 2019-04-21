@@ -86,9 +86,12 @@ class LocationSearchInput extends React.Component {
         return (
             <Dropdown
                 clearable
+                button
                 fluid
                 search
-                compact
+                className='icon'
+                icon='compass'
+                labeled
                 selection
                 onSearchChange={this.handleSearch}
                 onChange={this.handleSelect}
