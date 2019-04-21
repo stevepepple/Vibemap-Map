@@ -52,6 +52,7 @@ class EventCard extends Component {
 EventCard.propTypes = {
     content: PropTypes.object.isRequired,
     id: PropTypes.string,
+    // eslint-disable-next-line react/no-typos
     onclick: PropTypes.function
 };
 

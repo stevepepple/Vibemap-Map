@@ -2,9 +2,21 @@ import React, { Component } from 'react';
 import { Item, Icon, Image } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import helpers from '../../helpers';
 
-class ListItem extends Component {
+class ListItem extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
+    handleHover(id) {
+        helpers.fireEvent(this.props.id, "focus")
+    }
+
+    onMouseLeave(id) {
+        helpers.fireEvent(this.props.id, "mouseleave")
+    }
 
     render() {
 
@@ -26,7 +38,7 @@ class ListItem extends Component {
             
             <Item onClick={boundClick} key={this.props.id} data-id={content.id}>
                 <Item.Image src={this.props.content.image} size='small' />
-                <Item.Content>
+                <Item.Content onMouseOver={this.handleHover.bind(this, this.props.id)} onMouseLeave={this.onMouseLeave.bind(this, this.props.id)}>
                     <Item.Extra className='date'>{date.format('dddd')} {start}</Item.Extra>
                     <Item.Header>{title}</Item.Header>
                     <Item.Extra>
