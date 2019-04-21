@@ -2,6 +2,13 @@ module.exports = {
     categories: {
       going_out: '#e31a1c'
     },
+
+    lens : {
+      'line-color': '#007AFF',
+      'line-opacity': 0.6,
+      'line-width': 2
+    },
+
     places_circle: {
       'circle-radius': [
       'interpolate',
@@ -120,31 +127,38 @@ module.exports = {
         "interpolate",
         ["linear"],
         ["zoom"],
-          8, 2,
-          10, 10,
-          18, 100
+          8, 1,
+          12, 40,
+          18, 120
       ],
       'heatmap-opacity': [
         "interpolate",
         ["linear"],
         ["zoom"],
-          8, 0.4,
-          14, 0.3
+          8, 0.2,
+          12, 0.3,
+          15, 0.2
       ],
-      'heatmap-intensity': 0.5,
+      'heatmap-intensity': [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+          8, 0.1,
+          20, 0.5
+      ],
       "heatmap-color": [
         "interpolate",
         ["linear"],
         ["heatmap-density"],
-        0.05,
-        "hsla(240, 80%, 94%, 0)",
-        0.15,
-        "hsla(252, 91%, 44%, 0.4)",
         0.2,
-        "hsla(179, 100%, 50%, 0.6)",
+        "hsla(240, 80%, 94%, 0)",
+        0.3,
+        "hsla(252, 91%, 44%, 0.4)",
         0.5,
-        "hsl(76, 100%, 50%)",
+        "hsla(179, 100%, 50%, 0.6)",
         0.7,
+        "hsl(76, 100%, 50%)",
+        0.95,
         "hsl(47, 88%, 50%)",
         0.98,
         "hsl(34, 100%, 50%)",

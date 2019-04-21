@@ -150,6 +150,24 @@
     left:0px;
     padding:0;
 }
+
+.mapboxgl-map:before {
+    content: '';
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    z-index: 10;
+    pointer-events: none;
+
+    -webkit-box-shadow: inset 0px 0px 10px 5px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 10px 5px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 80px 5px rgba(74,98,124,0.70);
+}
+
+
 .map {
     height: 100%;
 }
@@ -159,23 +177,51 @@
 }
 
 .marker {
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    background: #3831AB;
-    border: solid 2px #3831AB;
-    border-radius: 10vmin;
-    cursor: pointer;
+    -webkit-border-radius: 50% 50% 50% 50%;
+    -moz-border-radius: 50% 50% 50% 50%;
+    border-radius: 50% 50% 50% 50%;
+    background: #811897;
+    background-image: url('https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_32.png');
+    background-size: cover;  
+    border: solid 1px #ECC395;
+    cursor: help;
     overflow:hidden;
     opacity: 0.8;
-    -webkit-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
-    -moz-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
-    box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -webkit-box-shadow: 1px 1px 4px 0px rgba(88,157,145,0.55);
+    -moz-box-shadow: 1px 1px 4px 0px rgba(88,157,145,0.55);
+    box-shadow: 1px 1px 4px 0px rgba(88,157,145,0.55);
+}
+
+.marker::after {
+    background-color: red;
+    width: 2vmin;
+    height: 2vmin;
+    top: 10px;
+}
+
+.marker-popup {
+    z-index: 100;
+}
+
+/* TODO: Inherit this from the marker via React */
+.marker-popup .mapboxgl-popup-content {
+    /*
+    background: #3831AB;
+    color: #FFFFFF;
+    */
 }
 
 .marker.place {
     background: #C123E8;
-    border: solid 2px #C123E8;
- 
+    border: solid 2px #C123E8; 
+}
+
+.marker.photo {
+    background: none;
+    border: none; 
+    font-size: 1.4em;
 }
 
 .marker.popular {
@@ -184,11 +230,6 @@
 
 .marker img {
     visibility: hidden;
-}
-
-.marker:hover {
-    width: 8vmin !important;
-    height: 8vmin !important;
 }
 
 .marker.popular img,
