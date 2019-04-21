@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
 import GeoJSON from 'geojson';
+import request from 'request-promise'
+
+import helpers from '../helpers.js'
+
 
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
@@ -15,15 +19,24 @@ export const nearby_places = (state = [], action) => {
   if (action.type == 'SET_NEARBY_PLACES') {
     let data = [];
 
-    action.places.map((place) => {
-      place = place.venue
-      place.lat = place.location.lat
-      place.lng = place.location.lng
-      data.push(place)
-    })
+    console.log('SET NEARBY PLACES ', action.places)
 
-    let places = GeoJSON.parse(data, { Point: ['lat', 'lng'] });
-    console.log('Nearby Places :', places)
+
+    let places = GeoJSON.parse(action.places, { Point: ['latitude', 'longitude'] });
+    console.log('Nearby Places to GEOJSON :', places)
+
+    places.features.forEach(venue => {
+
+        request.post('http://localhost:5000/api/places', {form: venue}, 
+            function(err,httpResponse,body){ 
+                if (err) {
+                    console.log(err);
+                } else {
+                    //console.log('Saved venue: ', body)
+                }
+        })
+        
+    });
 
     state = places
   }
