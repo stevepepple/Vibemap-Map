@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const moment = require('moment')
@@ -6,8 +7,9 @@ const path = require('path')
 const request = require('request')
 const querystring = require('querystring');
 
+const app = express()
+app.use(cors())
 
-const app = express();
 
 // Local config
 // TODO: This needs to move to a common repo
@@ -29,11 +31,19 @@ const Place = mongoose.model('Place', config.place_schema);
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.use(express.static(path.join(__dirname, 'client/build')));
-//app.use(bodyParser.json());
+
+// Handle posts
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.get('/api/hello', (req, res) => {
     console.log('Responding to request...');
     return res.json({ success: true, data: { hello : 'hello' } });
+});
+
+app.get('/api/save', (req, res) => {
+    console.log('Responding to request...');
+    return res.json({ success: true, data: config });
 });
 
 app.get('/api/directions', (req, res) => {
@@ -55,7 +65,6 @@ app.get('/api/directions', (req, res) => {
 
 });
 
-
 app.get('/api/events', (req, res) => {
 
     // TODO: pass number of days as an argument
@@ -70,6 +79,10 @@ app.get('/api/events', (req, res) => {
     let distance = req.query.distance * config.meters_per_mile;
     let activity = req.query.activity;
 
+    let activity_reg_ex = activity.map(function(category){
+        return new RegExp(category);
+    })
+
     // This is just the query
     let query_and_sort_by_likes = Event.find({
         'geometry': {
@@ -80,8 +93,8 @@ app.get('/api/events', (req, res) => {
                 $maxDistance: distance
             }
         },
-        'properties.categories': { $all: activity },
-        'properties.categories': { $in: activity },
+        'properties.categories': { $all: activity_reg_ex },
+        'properties.categories': { $in: activity_reg_ex },
         $or: [
             { 'properties.date': { '$gte': day_start, '$lte': day_end } },
             // TODO: include recuring in a smart way { 'properties.recurs': { $ne: null }}
@@ -154,6 +167,29 @@ app.get('/api/places', (req, res) => {
             return res.json({ success: true, data: results });
 
         });
+});
+
+app.post('/api/places', function(req, res) {
+    
+    let place = req.body
+    place.id = place.properties.id;
+    console.log('Posted places to be saved: ', place.id, place.properties.name)
+
+    Place.findOneAndUpdate(
+        { 'id' : place.id }, // find a document with that filter
+        place, // document to insert when nothing was found
+        { upsert: true, new: true, runValidators: true }, // options
+        function (err, doc) { // callback
+            if (err) {
+                // handle error
+                console.log('Error saving to Mongo: ', err)
+                return res.json({ success: false, data: 'Error saving to database.' });
+            } else {
+                // handle document
+                return res.json({ success: true, data: 'Saved to database: ' + doc });
+            }
+        }
+    )
 });
 
 app.get('*', (req, res) => {
