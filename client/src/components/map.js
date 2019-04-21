@@ -86,9 +86,6 @@ let Map = class Map extends React.Component {
     
     if (this.props.lat !== nextProps.lat || this.props.zoom !== nextProps.zoom) {
       //this.map.setCenter([nextProps.lng, nextProps.lat]);
-
-      // TODO: make this a prop options?
-      console.log('Fly to this: ', nextProps.lng, nextProps.lat)
       
       /* TODO: fix this for both maps */
       this.map.flyTo({
@@ -96,11 +93,8 @@ let Map = class Map extends React.Component {
         // the target, at zoom level 9, and north up.
         center: [nextProps.lng, nextProps.lat],
         zoom: nextProps.zoom,
-        speed: 1.0, // make the flying slow
-        curve: 1, // change the speed at which it zooms out
-        easing: function (t) {
-          return t;
-        }
+        speed: 2.0, // make the flying slow
+        curve: 1 // change the speed at which it zooms out
       });
       
       

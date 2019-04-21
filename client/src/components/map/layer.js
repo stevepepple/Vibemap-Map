@@ -42,14 +42,6 @@ class Layer extends React.Component {
       paint: paint
     }, before)
 
-    map.addLayer({
-      id: layerId,
-      source: sourceId,
-      type,
-      layout,
-      paint: paint
-    })
-
     /* TODO: Remove as this was just for testing 
     let marker = new mapboxgl.Marker()
       .setLngLat([-122.40612019999999, 37.7842682])
