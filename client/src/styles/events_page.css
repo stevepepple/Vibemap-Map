@@ -39,6 +39,8 @@
 .navigation {
     top: 0;
     padding: 2vmin;
+    position: relative;
+    z-index: 20;
 }
 
 .navigation.mobile {
