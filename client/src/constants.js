@@ -2,6 +2,8 @@ export const SET_ACTIVE_OPTION = 'SET_ACTIVE_OPTION'
 
 export const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw'
 
+export const DATABASE = 'mongodb://stevepepple:Hotspot1@ds019101.mlab.com:19101/hotspots'
+
 export const TIMEOUT = 8000;
 
 export const FOURSQUARE_CLIENT_ID = 'MFA1H1MN4RRH33TLXVTMD22NI5YASHPM10WV0HFZQCKW0TA0'
@@ -9,6 +11,10 @@ export const FOURSQUARE_CLIENT_ID = 'MFA1H1MN4RRH33TLXVTMD22NI5YASHPM10WV0HFZQCK
 export const FOURSQUARE_SECRET = '2UX3X1FMXUJHRJ3GII2QNBELJ3UEU2HOOQ3X4KG2LRWIMCN5'
 
 export const CITY_MAPPER_SECRET = '6a401321dd665074dfbb9331b16dc02b'
+
+export const METERS_PER_MILE = 1609.34
+
+export const PURPLE = '#811897'
 
 export const zoom_levels = {
     0: '1:500 M ~ world',
@@ -36,105 +42,52 @@ export const zoom_levels = {
 
 /* TODO: Move to react Store? */
 export const activty_categories = [
+    // Going Out
     { key: 'all', value: 'all', text: 'All Activities', categories: ['art', 'arts', 'books', 'comedy', 'community', 'culture', 'free', 'health', 'local', 'nightlife', 'recurs', 'romance', 'urban'] },
-    { key: 'food', value: 'food', text: 'Eating', categories: ['food', 'restuarant'] },
-    { key: 'drinking', value: 'drinking', text: 'Drinking', categories: ['drinking', 'drinks'] },
-    { key: 'arts', value: 'arts', text: 'Arts', categories: ['art', 'arts', 'craft', 'dance', 'performance'] },
-    { key: 'music', value: 'music', text: 'Music', categories: ['music'] },
+    // Eating
+    { key: 'food', value: 'food', text: 'Eating', label: { color: 'pink', icon: 'food', circular: true }, categories: ['food', 'restuarant'] },
+    // Drinking
+    { key: 'drinking', value: 'drinking', text: 'Drinking', label: { color: 'pink', icon: 'glass martini', circular: true }, categories: ['drinking', 'drinks'] },
+    // Music
+    { key: 'music', value: 'music', text: 'Music', label: { color: 'violet', icon: 'music', circular: true }, categories: ['music'] },
+    // Shopping
+    { key: 'shopping', value: 'shopping', text: 'Shopping', label: { color: 'blue', icon: 'shopping bag', circular: true }, categories: ['shopping'] },
+    // Arts
+    { key: 'arts', value: 'arts', text: 'Arts', label: { color: 'teal', icon: 'food', circular: true }, categories: ['art', 'arts', 'craft', 'dance', 'performance'] },
+    // Outdoors
+    { key: 'outdoors', value: 'outdoors', text: 'Outdoors', label: { color: 'green', icon: 'tree', circular: true }, categories: ['outdoors'] },
+    
+    // Culture
     { key: 'comedy', value: 'comedy', text: 'Stories & Laughing', categories: ['comedy', 'storytelling'] },
     { key: 'games', value: 'games', text: 'Games & Sports', categories: ['games', 'sports'] },
+    // Learning and Classes
     { key: 'learning', value: 'learning', text: 'Learning', categories: ['learning', 'education'] },
+    // TODO: make these vibes? 
     { key: 'immersive', value: 'immersive', text: 'Immersive', categories: ['immersive'] },
-    { key: 'outdoors', value: 'outdoors', text: 'Outdoors', categories: ['outdoors'] },
     { key: 'spirtual', value: 'spirtual', text: 'Spirtual', categories: ['spirtual'] }
 ]
 
+// Groupings for All Place Categories
 export const place_categories = [
-    {
-        'name': 'Arts',
-        'key': 'arts',
-        'categories': [
-            {
-                'id': '4bf58dd8d48988d1e2931735',
-                'name': 'Art Gallery',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/artgallery_',
-                    'suffix': '.png'
-                },
-                'categories': []
-            },
-            {
-                'id': '4bf58dd8d48988d18f941735',
-                'name': 'Art Museum',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/museum_art_',
-                    'suffix': '.png'
-                },
-                'categories': []
-            },
-            {
-                'id': '4bf58dd8d48988d1f2931735',
-                'name': 'Performing Arts Venue',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_',
-                    'suffix': '.png'
-                }
-            },
-            {
-                'id': '4bf58dd8d48988d134941735',
-                'name': 'Dance Studio',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_dancestudio_',
-                    'suffix': '.png'
-                }
-            },
-            {
-                'id': '507c8c4091d498d9fc8c67a9',
-                'name': 'Public Art',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
-                'categories': []
-            },
-            {
-                'id': '52e81612bcbc57f1066b79ed',
-                'name': 'Outdoor Sculpture',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/sculpture_',
-                    'suffix': '.png'
-                },
-                'categories': []
-            },
-            {
-                'id': '52e81612bcbc57f1066b79ee',
-                'name': 'Street Art',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
-                'categories': []
-            }
-        ]
-    },
-    {
-        'name' : 'Comdey',
-        'key': 'comedy',
-        'categories': [
-            {
-                'id': '4bf58dd8d48988d18e941735',
-                'name': 'Comedy Club',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/comedyclub_',
-                    'suffix': '.png'
-                },
-                'categories': []
-            }
-        ]
-    },
+    { key: 'all', value: 'all', text: 'All Activities', categories: ['Arts & Entertainment', 'Food', 'Bar'] },
+    { key: 'food', value: 'food', text: 'Eating', categories: ['Food'] },
+    { key: 'drinking', value: 'drinking', text: 'Drinking', categories: ['Bar', 'Brewery', 'Lounge'] },
+    { key: 'shopping', value: 'shopping', text: 'Shopping', categories: ['Shop & Service'] },
+    { key: 'arts', value: 'arts', text: 'Arts', categories: ['Arts & Entertainment'] },
+    { key: 'music', value: 'music', text: 'Music', categories: ['Music Venue', 'Performing Arts Venue', 'Nightclub', 'Concert Hall', 'Music Festival', 'Music Schools', 'Music Stores', 'Country Dance Club', 'Dance Studio', 'Salsa Club', 'Samba School', 'Recording Studios', 'Bar'] },
+    { key: 'comedy', value: 'comedy', text: 'Stories & Laughing', categories: ['Comedy Club', 'Bar', 'Nightclub'] },
+    { key: 'games', value: 'games', text: 'Games & Sports', categories: ['Outdoors & Recreation'] },
+    { key: 'learning', value: 'learning', text: 'Learning', categories: ['College & University'] },
+    { key: 'immersive', value: 'immersive', text: 'Immersive', categories: ['Arts & Entertainment'] },
+    { key: 'outdoors', value: 'outdoors', text: 'Outdoors', categories: ['Outdoors & Recreation', 'Zoo'] },
+    { key: 'spirtual', value: 'spirtual', text: 'Spirtual', categories: ['spirtual'] }
+]
+
+export const all_categories = [
     {
         'id': '4d4b7104d754a06370d81259',
         'name': 'Arts & Entertainment',
+        'key': 'arts',
         'icon': {
             'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
             'suffix': '.png'
@@ -205,6 +158,7 @@ export const place_categories = [
             },
             {
                 'id': '4bf58dd8d48988d18e941735',
+                'key' : 'comedy',
                 'name': 'Comedy Club',
                 'icon': {
                     'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/comedyclub_',
