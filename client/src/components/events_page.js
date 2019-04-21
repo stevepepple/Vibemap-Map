@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { Button, Dimmer, Grid, Header, Icon, Loader } from 'semantic-ui-react'
 import querystring from 'querystring';
+import moment from 'moment';
 
 import helpers from '../helpers.js'
 import * as Constants from '../constants.js'
@@ -34,15 +35,19 @@ class Page extends Component {
             lat: 37.79535238155009,
             lon: -122.2823644705406,
             days: 3,
-            event_categories: ['', 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
-            place_categories: ['Other Nightlife', 'Art Gallery', 'Art Museum', 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture'],
+            event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
+            // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
+            // If evening include 'Nightlife Spot'
+            place_categories: ['Arts & Entertainment', 'Food'],
             vibe_categoreis: ['adventurous', 'authentic', 'civic', 'creative', 'comedy', 'fun', 'chill', 'cozy', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
-            distance: 2.0,
+            distance: 2.2,
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
+            loading: true,
             timedOut: false,
             name: 'Steve',
+            time_of_day: 'morning',
             width: window.innerWidth,
             zoom: 13
         }
@@ -58,30 +63,23 @@ class Page extends Component {
      
     componentWillMount() {
 
-        this.getPosition();        
+        this.getPosition();
+
+        let time_of_day = helpers.getTimeOfDay(moment());
+
         // Handle scree resizing
         window.addEventListener('resize', this.handleWindowSizeChange);
 
         // TODO: remove to Redux? 
-        this.setState({ activity_options : Constants.activty_categories })
+        this.setState({ activity_options : Constants.activty_categories, time_of_day : time_of_day })
 
-        let place_types = ['food', 'nightlife', 'shops']
-
-        let all_categories = []
-    
-        // Concatanate the default set of categories. 
-        place_types.map(function(type){
-            let current = Constants.place_categories.find(item => item.key === type)
-            
-            let next_batch = current.categories.map(function (category) {
-                return category.name;
-            })
-
-            all_categories = all_categories.concat(next_batch);
-        })
-
-        this.setState({ place_categories: all_categories })
+        // Concatanate the default set of categories.
+        // Search for all categories that match the current selection and concatenate them
+        let current = Constants.place_categories.find(item => item.key === 'all')
+        let combined_categories = helpers.findPlaceCategoriess(current.categories);
         
+        this.setState({ place_categories: combined_categories })
+                
     }
 
     getPosition = function() {
@@ -120,26 +118,18 @@ class Page extends Component {
 
         let event_categories = Constants.activty_categories.find(item => item.key === activity.value)
 
-        // Place have nest categories; He's an good enough way to get those.
-        let place_category = Constants.place_categories.find(item => item.key === activity.value);
-        let place_categories = []
-        console.log("Place categories: ", place_category)
+        console.log("Searching for these events: ", event_categories)
 
-        if (place_category === undefined) {
-            place_categories = this.state.place_categories
-        } else {
-            place_categories = place_category.categories.map(function (category) {
-                console.log('Sub category', category)
-                return category.name;
-            })
-        }
-        
-        console.log("Current place categeories: ", place_categories)
+        // Places have nest categories; Here's an good enough way to get those.
 
-        this.setState({ event_categories: event_categories.categories, place_categories: place_categories }, function() {
+        // Concatanate the default set of categories.
+        // Search for all categories that match the current selection and concatenate them
+        let current_categories = Constants.place_categories.find(item => item.key === activity.value)
+        let combined_categories = helpers.findPlaceCategoriess(current_categories.categories);
+
+        this.setState({ event_categories: event_categories.categories, place_categories: combined_categories }, function() {
 
             this.showEvents()
-
             this.showPlaces()
         })
     }
@@ -159,8 +149,9 @@ class Page extends Component {
     showEvents(position) {
 
         this.state.data.pop()
+        /*
         this.setState({ data : this.state.data })
-        
+        */
         let query = querystring.stringify({
             lat: this.state.lat,
             lon: this.state.lon,
@@ -169,22 +160,19 @@ class Page extends Component {
             days: this.state.days
         });
 
-        console.log('Querying with this: ', query, this.state.activity)
-
         this.setState({ timedOut: false})
         
         let timeout = setTimeout(() => {
             this.setState({ timedOut: true })
         }, Constants.TIMEOUT)
 
-        console.log('Fetching this: ', '/api/events?' + query);
         fetch("/api/events?" + query)
             .then(data => data.json())
             .then(res => {
                 clearTimeout(timeout);
                 console.log('Received this many events: ', res.data.length)
 
-                this.setState({ data: res.data, timedOut : false })
+                this.setState({ data: res.data, loading: false, timedOut : false })
             }, (error) => {
                 console.log(error)
             });
@@ -258,32 +246,10 @@ class Page extends Component {
         const isMobile = width <= 700;
 
         let navigation = <Navigation setPosition={ this.setPosition } setZoom={ this.setZoom } setDays={ this.setDays } setActivity={ this.setActivity } days={ this.state.days } vibes={this.state.vibe_categoreis} activity = { this.state.event_categories } setDistance = { this.setDistance } isMobile = { isMobile } />
+        let events_map = <EventsMap events_data={this.state.data} places_data={this.state.places_data} setZoom={this.setZoom} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
-
-        {/* 
-        if (this.state.data.length == 0) {
-            if (this.state.timedOut) {
-                return (
-                <div className='empty_state'>
-                    <p>No data. There might be an error.</p>
-                        <Button secondary onClick={() => { window.location.reload() }}>Reload</Button>
-                </div>)             
-            } else {
-                return (
-                    <div className='empty_state'>
-                        <Dimmer active inverted>
-                            <Loader inverted><h3>Have you ever stopped to smell the roses near Grand Avenue?</h3></Loader>
-                            <br/>
-                            <Button secondary onClick={() => { window.location.reload() }}>Reload</Button>
-                        </Dimmer>
-                    </div>
-                )
-             
-            }
-        }
-        */}
 
         // Adaptive view for mobile users
         if (isMobile) {
@@ -293,6 +259,7 @@ class Page extends Component {
                     {navigation}                
 
                     <Tabs selectedTabClassName='active'>
+                        
                         <TabList className='ui menu secondary'>
                             <Tab className='item'><Icon name='list ul' />List</Tab>
                             <Tab className='item'>Map</Tab>
@@ -307,7 +274,7 @@ class Page extends Component {
                             {/* <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item} />} /> */}
                         </TabPanel>
                         <TabPanel>
-                            <EventsMap data={this.state.data} places_data={this.state.places_data} setZoom={this.setZoom} lat={this.state.lat} lng={this.state.lon} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
+                            {events_map}
                         </TabPanel>
                     </Tabs>
                 </div>
@@ -334,7 +301,9 @@ class Page extends Component {
                             </Grid.Column>
                             <Grid.Column width={9}>
                                 {/* <EventModal data={this.state.current_item} show={false} details={<EventDetails data={this.state.current_item_item}/>} /> */}
-                                <EventsMap data={this.state.data} places_data={this.state.places_data} setZoom={this.setZoom} lat={this.state.lat} lng={this.state.lon} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
+
+                                {events_map}
+
                                 {
                                     /* TODO: Refactor into component */
                                     this.state.details_shown ? (

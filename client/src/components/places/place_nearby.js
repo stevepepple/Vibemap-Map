@@ -6,7 +6,6 @@ import helpers from '../../helpers.js'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions';
 
-
 class PlaceNearby extends Component {
 
         constructor(props) {
@@ -23,7 +22,11 @@ class PlaceNearby extends Component {
         console.log('PlaceNearby recieved prop', this.props)
 
         // First place
-        helpers.searchFoursquare(this.props.category, this.props.lat.toString() + ',' + this.props.lon.toString())
+        let category = this.props.category;
+        // Morning food breakfast coffee
+        // Evening
+        let query = 'happy hour' //art, fun, bar, food, scenic, community
+        helpers.searchFoursquare(query, this.props.lat.toString() + ',' + this.props.lon.toString())
             .catch((err) => console.log(err))
             .then((results) => this.setTopandNearBy(results))
             //Set State then, get top
@@ -35,21 +38,29 @@ class PlaceNearby extends Component {
     }
 
     setTopandNearBy(results) {
-        console.log("top results: ", results)
 
         if (results.response.groups) {
             let places = results.response.groups[0].items
 
             helpers.topFoursquareResult(results)
-                .then((result) => {
-                    /* TODO: this can be cleaner */
+                .then((places) => {
+                    console.log("All place details: ", typeof places, places.length, places)
+
+                    this.props.setNearbyPlaces(places)
+
+                    //this.props.setNearbyPlaces(results)
+                    /* TODO: this can be cleaner 
+                    results.forEach(places => {
+                        
+                    });
                     result.likes = 10;
                     this.setState({ result: result })
                     places.push(this.state.result)
+                    */
 
                 })
 
-            this.props.setNearbyPlaces(places)
+            
         }
     }
 
@@ -72,10 +83,11 @@ class PlaceNearby extends Component {
             )
         }
 
+        // TODO: move to helper
         let image = ""
         if (this.state.result.photos.count > 0) {
-            image = this.state.result.bestPhoto
-            image = image.prefix + '200x200' + image.suffix
+            image = this.state.result.image;
+            //image = image.prefix + '200x200' + image.suffix
         }
 
         let hours = null;
@@ -84,7 +96,12 @@ class PlaceNearby extends Component {
             hours = this.state.result.hours.richStatus.text;   
         }
 
-        let tip = this.state.result.tips.groups[0].items[0].text
+        let tip = ''
+        if (this.state.result.stats.tipCount > 0) {
+            tip = this.state.result.tips.groups[0].items[0].text
+        } else {
+            tip = 'No tip for this places'
+        }
         /*
         let icon = this.state.result.categories[0].icon;
         icon = icon.prefix + icon.suffix; 
@@ -96,7 +113,7 @@ class PlaceNearby extends Component {
             <Segment className='nearby_place'>
                 <Transition.Group animation='fade up' duration='200'>
                     <Item>
-                        <Item.Image size='tiny' floated left src={image} />
+                        <Item.Image size='tiny' src={image} />
 
                         <Item.Content>
                             <Item.Header as='a'>{this.state.result.name}</Item.Header>
@@ -112,7 +129,6 @@ class PlaceNearby extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('State from store? ', state)
     return {
         nearby_places: state.nearby_places
     }
