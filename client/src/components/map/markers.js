@@ -1,4 +1,6 @@
 import React from 'react'
+import helpers from '../../helpers.js'
+
 import shallowCompare from 'react-addons-shallow-compare'; // ES6
 
 import PropTypes from 'prop-types'
@@ -11,6 +13,7 @@ export default class Markers extends React.Component {
 
     this.state = {
       markers : [],
+      popups: [],
       map: null
     }
   }
@@ -28,7 +31,6 @@ export default class Markers extends React.Component {
     const { map } = this.context
 
     let features = this.props.data.features;
-    console.log('marker features: ', this.props)
 
     if (features != null && features.length > 0) {
       this.addMarkers(features, map)
@@ -57,6 +59,8 @@ export default class Markers extends React.Component {
   }
   
   addMarkers(features, map) {
+      let min_size = 32;
+      let max = helpers.getMax(features, ['properties']['likes'])
 
       let markers = features.map((feature) => {
 
@@ -64,45 +68,117 @@ export default class Markers extends React.Component {
         let id = feature._id;
         let src = feature.properties.image;
         let likes = feature.properties.likes;
+        let vibes = feature.properties.vibes;
+        let name = feature.name ? feature.name : feature.properties.name;
         let link = feature.properties.link;
-        let size = 40 + (0.18 * likes);
-        
+        let size = helpers.scaleMarker(likes, max);
+        let categories = feature.properties.categories;
+
         let img = document.createElement('img');
         img.setAttribute('width', '100%');
         img.setAttribute('height', '100%');
         img.setAttribute('rel', src);
 
-
         var el = document.createElement('div');
         el.className = 'marker';
-        el.title = feature.name;
+        if (categories !== null) {
+          el.className = el.className + ' ' + categories.join(' ')
+        }
+        //el.title = name;
+        el.setAttribute('id', id)
         el.setAttribute('data-id', id)
+        el.setAttribute('data-title', name)
 
-        if(this.props.type === 'places') { el.className = el.className + 'place '}
+
+        el.style.width = size + 'px';
+        el.style.height = size + 'px';
+
+        if(this.props.type === 'places') { 
+          el.className = el.className + ' ' + 'place';
+        }
 
         if (likes > 2) {
           el.className = el.className + ' popular '
-          el.style.width = size + 'px';
-          el.style.height = size + 'px';
-
-        } else {
-          el.style.width = '1.2vmin';
-          el.style.height = '1.2vmin';
         }
 
-        var downloadingImage = new Image();
-        downloadingImage.src = src;
-        downloadingImage.onload = function () {
+        // TODO: figure out a better way to cache image and reduce memory usage
+        // TODO: also load image on hover, if it's note highly ranked
+        let image = new Image();          
+
+        // TODO: Figure out threashold for popularity and rating...
+        if (size > (min_size * 1.8)  ) {
+
+          // TODO: Make this reusable
+          el.className = el.className + ' popular '
+
+          image.src = src;
+
+          el.append(img);
+          image.onload = function () {
             img.src = this.src;
+          }
         }
 
-        el.append(img);
+        // Create a popup, but don't add it to the map yet.
+        let popup = new mapboxgl.Popup({
+          closeButton: false,
+          closeOnClick: true,
+          offset: (size / 2), // shoudl be have the radius
+          className: 'marker-popup'
+        });
 
+        let joined = this.state.popups.concat(popup);
+        this.setState({ popups: joined })
+        
         // Reference to props from outside event handlers
         let onclick = this.props.onclick; 
 
-        el.addEventListener('click', function (event) {
+        // This is triggered by the hover event in the list
+        el.addEventListener('focus', function (event) {
+          popup.setLngLat(feature.geometry.coordinates)
+            .setHTML(name)
+            .addTo(map);
+
+          el.style.width = (size * 1.4) + 'px';
+          el.style.height = (size * 1.4) + 'px';
+
+        })
+
+
+        el.addEventListener('mouseover', function (event) {
           
+          popup.setLngLat(feature.geometry.coordinates)
+            .setHTML(name)
+            .addTo(map);
+            
+          el.style.width = (size * 1.6) + 'px';
+          el.style.height = (size * 1.6) + 'px';
+
+          image.src = src;
+
+          el.append(img);
+          image.onload = function () {
+            img.src = this.src;
+          }
+
+        });
+
+        // Reference outside of event
+        //let removePopups = this.removePopups
+
+        el.addEventListener('mouseleave', function () {
+          console.log("received mouse leave event")
+          map.getCanvas().style.cursor = '';
+          popup.remove();
+          //removePopups();
+
+          el.style.width = size  + 'px'
+          el.style.height = size + 'px'
+
+        });
+
+        el.addEventListener('click', function (event) {
+          // TODO: Handle unintential clicks on map
           onclick(id)
           
         });
@@ -121,6 +197,12 @@ export default class Markers extends React.Component {
   removeMarkers(map) {
     this.state.markers.forEach(marker => {
       marker.remove();
+    });
+  }
+
+  removePopups(map) {
+    this.state.popups.forEach(popup => {
+        popup.remove();
     });
   }
 
