@@ -6,7 +6,6 @@ import { Button, Icon } from 'semantic-ui-react'
 
 // Redux stuff
 import { connect } from 'react-redux';
-import { setName, setCurrentLocation } from '../../redux/reducer';
 
 import * as constants from '../../constants'
 
