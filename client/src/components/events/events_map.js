@@ -29,7 +29,15 @@ class EventsMap extends Component {
             photos_geojson : {"type": "FeatureCollection", "features": [
                 {"type":"Feature","geometry":{"type":"Point","coordinates":[-122.42803,37.758175]},"properties":{"id":2,"name":"Mission Dolores","description":"#dolorespark"}},
                 {"type":"Feature","geometry":{"type":"Point","coordinates":[-122.420595,37.762995]},"properties":{"id":3,"name":"Clarion Alley Street","description":"#clarionalley"}},
-                {"type":"Feature","geometry":{"type":"Point","coordinates":[-122.4948301,37.78670049999999]},"properties":{"id":3,"name":"Eagle Point","description":"#landsend", "link": "https://www.instagram.com/p/BwIEEFwFfOw/?utm_source=ig_embed&amp;utm_medium=loading"}}
+                { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.419262468736, 37.80177696725323] }, "properties": { "id": 3, "name": "Lombard Street", "description": "#lombard" } },
+                {"type":"Feature","geometry":{"type":"Point","coordinates":[-122.4948301,37.78670049999999]},"properties":{"id":3,"name":"Eagle Point","description":"#landsend", "link": "https://www.instagram.com/p/BwIEEFwFfOw/?utm_source=ig_embed&amp;utm_medium=loading"}},
+                { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.16, 37.48] }, "properties": { "id": 3, "name": "Latham Square", "description": "#lathamsquare", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/957dcf72c75a9f46f2d1e5b4c293e9ca/5D389323/t51.2885-15/e35/13743149_538243736374429_1777974829_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } },
+                { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.270276, 37.806056] }, "properties": { "id": 3, "name": "Old Oakland", "description": "#oldoakland", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/386d0a73eed11b147ee421661be863ce/5D43EFAF/t51.2885-15/sh0.08/e35/p640x640/57156404_2867198356624462_4903447287018024385_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } },
+                { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.262863, 37.798538] }, "properties": { "id": 3, "name": "Oakland Museum", "description": "#oaklandmuseum", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/386d0a73eed11b147ee421661be863ce/5D43EFAF/t51.2885-15/sh0.08/e35/p640x640/57156404_2867198356624462_4903447287018024385_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } },
+                { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.278357, 37.794801] }, "properties": { "id": 3, "name": "Jack London Square", "description": "#jacklondon", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/386d0a73eed11b147ee421661be863ce/5D43EFAF/t51.2885-15/sh0.08/e35/p640x640/57156404_2867198356624462_4903447287018024385_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } },
+                { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.260411, 37.808357] }, "properties": { "id": 3, "name": "Children's Fairyland", "description": "#jacklondon", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/386d0a73eed11b147ee421661be863ce/5D43EFAF/t51.2885-15/sh0.08/e35/p640x640/57156404_2867198356624462_4903447287018024385_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } },
+                { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.324526, 37.805267] }, "properties": { "id": 3, "name": "Middle Harbor Shoreline Park", "description": "#jacklondon", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/0a29c867dc9ea7075d6fa658f74d2ff6/5D34ADF3/t51.2885-15/sh0.08/e35/s640x640/46202609_2015403528514585_3719740415001179715_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com 640w,https://scontent-sjc3-1.cdninstagram.com/vp/8d8dbda1e5d7dc14c708ff243e54a04d/5D6ED737/t51.2885-15/sh0.08/e35/s750x750/46202609_2015403528514585_3719740415001179715_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com 750w,https://scontent-sjc3-1.cdninstagram.com/vp/509ffe7aa9e1bc9de717d3950a429fda/5D5A4A49/t51.2885-15/e35/46202609_2015403528514585_3719740415001179715_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } }
+                
             ]}
         }
     }
@@ -46,7 +54,7 @@ class EventsMap extends Component {
     componentWillReceiveProps(nextProps){
         let geojson = turf.featureCollection(nextProps.events_data);
 
-        this.setState({ geojson: geojson })
+        this.setState({ geojson: geojson, zoom : nextProps.zoom })
 
         this.showLens([nextProps.lng, nextProps.lat])
         // TODO: Hack to group event and places heatmap, until the venues database is updated.
@@ -64,6 +72,7 @@ class EventsMap extends Component {
         this.props.setPosition(position.lat, position.lng)
         this.showLens([position.lng, position.lat])
         this.props.setZoom(zoom)
+        this.setState({ zoom })
     }
 
     showLens = (center) => {
@@ -79,6 +88,7 @@ class EventsMap extends Component {
 
     }
 
+    // Iterate through all place categories and create css icons
     createIconStyles = () => {
 
         let classes = {}
@@ -91,7 +101,9 @@ class EventsMap extends Component {
                 classes[class_name] = { backgroundImage: 'url(' + image + ')'}
 
                 if(category.categories) {
+                    
                     category.categories.map(function(sub_category){
+                        image = sub_category.icon.prefix + '32' + sub_category.icon.suffix;
                         let sub_class_name = '.' + sub_category.key;
                         classes[sub_class_name] = { backgroundImage: 'url(' + image + ')'}
 
@@ -100,7 +112,7 @@ class EventsMap extends Component {
             }
         })
 
-        return classes
+        return classes;
     }
 
     mapRef = React.createRef();
@@ -109,18 +121,23 @@ class EventsMap extends Component {
 
         let has_places_data = this.props.events_data.length > 0;
         let has_events_data = this.props.events_data.length > 0;
-        let zoom_level = Constants.zoom_levels[this.props.zoom]
+
+        // Give a sense of scale to each zoom level; rounded to whole integer
+        let zoom_level = Constants.zoom_levels[Math.round(this.state.zoom)]
         
         return (
             <div>
                 <Global
                     styles={this.createIconStyles()}
                 />
-                <div className = 'map_container'>            
+
+                <div className = 'map_container'>
+                    {/* Floating legend */}
+                    <div id='scale'>{this.state.zoom} : {zoom_level} </div>
+                    {/* See Mapbox documentation */}
                     <Map ref={this.mapRef} lat={this.props.lat} lng={this.props.lng} zoom={this.props.zoom} onMapChange={this.onMapChange} bearing={0} show_geocoder={true}>
                         <React.Fragment>
                             {/* TODO: Show loading indicator*/ }
-
                             <Source id='places' data={this.state.places_geojson} layer='places'>
                                 <Layer
                                     id='heat'
@@ -128,7 +145,6 @@ class EventsMap extends Component {
                                     paint={Styles.places_heatmap}
                                     isLayerChecked={true}
                                 />
-                                
                                 <Layer
                                     id='circles'
                                     type='circle'
@@ -153,8 +169,7 @@ class EventsMap extends Component {
                             
                     </Map>
                 </div>
-            </div>
-            
+            </div>   
         );
     }
 }
