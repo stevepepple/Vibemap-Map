@@ -60,7 +60,8 @@ export default class Markers extends React.Component {
   
   addMarkers(features, map) {
       let min_size = 32;
-      let max = helpers.getMax(features, ['properties']['likes'])
+      // Create a scale based uopn the ranking score
+      let max = helpers.getMax(features, 'score')
 
       let markers = features.map((feature) => {
 
@@ -68,11 +69,14 @@ export default class Markers extends React.Component {
         let id = feature._id;
         let src = feature.properties.image;
         let likes = feature.properties.likes;
+        let score = feature.properties.score;
         let vibes = feature.properties.vibes;
         let name = feature.name ? feature.name : feature.properties.name;
         let link = feature.properties.link;
-        let size = helpers.scaleMarker(likes, max);
         let categories = feature.properties.categories;
+
+        // Scale the marker based on score and zoom
+        let size = helpers.scaleMarker(score, max, map.getZoom());
 
         let img = document.createElement('img');
         img.setAttribute('width', '100%');

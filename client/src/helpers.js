@@ -177,12 +177,20 @@ const helpers = {
         return combined;
     },
 
-    scaleMarker: function(score, max) {
+    scaleMarker: function(score, max, zoom) {
         if (!max) { let max = 1000 }
+
+        //TODO: Scale marker to zoom size!
+        let marker_scale = scaleLinear()
+            .domain([8, 20]) // Zoom size
+            .range([10, 40]) // Scale of marker size
+
+        let base_marker = marker_scale(zoom)
+        let max_marker = base_marker * 4;
 
         let scale = scaleLinear()
             .domain([0, max])
-            .range([32, 100]);
+            .range([base_marker, max_marker]);
 
         return scale(score)
     },
@@ -190,7 +198,7 @@ const helpers = {
     getMax: function(items, attribute) {
         let max = 0;
         items.forEach(item => {
-            let value = item['properties']['likes']
+            let value = item['properties'][attribute]
             if (value > max) { 
                 max = value 
             }
