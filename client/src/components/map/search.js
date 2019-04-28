@@ -18,7 +18,8 @@ class LocationSearchInput extends React.Component {
                 { key: 'oakland', text: 'Oakland', coords: [42, -122], value: 'oakland' },
                 { key: 'sf', text: 'San Francisco', coords :[42, -122], value: 'sf' },
                 { key: 'guadalajara', text: 'Guadalajara', coords: [42, -122], value: 'guadalajara' },
-                { key: 'vancouver', text: 'Vancouver', coords: [42, -122], value: 'vancouver' }                
+                { key: 'vancouver', text: 'Vancouver', coords: [42, -122], value: 'vancouver' },
+                { key: 'cairo', text: 'Cairo', coords: [31.233155, 30.042124], value: 'cairo' } 
             ]
         };
     }
@@ -86,7 +87,6 @@ class LocationSearchInput extends React.Component {
         return (
             <Dropdown
                 clearable
-                button
                 fluid
                 search
                 className='icon'
