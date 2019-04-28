@@ -60,9 +60,10 @@ export default class PhotoMarker extends React.Component {
       let markers = features.map((feature) => {
 
         //TODO: write a reusable util function for geojson feature to object.
-        let link = feature.properties.link;
         let id = feature.properties.id;
         let name = feature.properties.name;
+        let link = feature.properties.link;
+        let description = feature.properties.description;
         let size = 80;
         
         var el = document.createElement('div');
@@ -71,6 +72,13 @@ export default class PhotoMarker extends React.Component {
         el.title = name;
         el.setAttribute('data-id', name)
 
+        let popup = new mapboxgl.Popup({
+          closeButton: false,
+          closeOnClick: true,
+          offset: (size / 2), // shoudl be have the radius
+          className: 'marker-popup'
+        });
+
         // Reference to props from outside event handlers
         let onclick = this.props.onclick; 
 
@@ -78,6 +86,23 @@ export default class PhotoMarker extends React.Component {
           
           onclick(id)
           
+        });
+
+        el.addEventListener('mouseover', function (event) {
+
+          var img = document.createElement('img');
+          img.src = link;
+          img.width = 180;
+          img.height = 180;
+
+          let div = document.createElement('div')
+          div.append(description)
+          div.append(document.createElement('br'))
+          div.append(img)
+
+          popup.setLngLat(feature.geometry.coordinates)
+            .setHTML(div.outerHTML)
+            .addTo(map);
         });
 
         // add marker to map        
