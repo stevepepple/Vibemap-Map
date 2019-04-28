@@ -8,6 +8,9 @@ import LocationSearchInput from '../map/search'
 
 import { connect } from 'react-redux'
 
+import '../../styles/navigation.scss';
+
+
 const datePicker = {
     minWidth: '140px',
     lineHeight: '2em'
@@ -20,9 +23,10 @@ class Navigation extends Component {
 
         this.state = {
             options: [
-                { key: '1', text: '1 day', value: '1' },
+                { key: '1', text: 'Today', value: '1' },
                 { key: '2', text: '2 days', value: '2' },
                 { key: '3', text: '3 days', value: '3' },
+                { key: '3', text: 'Week', value: '5' },
                 { key: '14', text: '2 weeks', value: '14' }
             ],
 
@@ -53,8 +57,15 @@ class Navigation extends Component {
     handleDaysChange = (e, { value }) => this.props.setDays({ value })
 
     handleActivityChange = (event, { value }) => {
-
+        this.setState({ current_activity : value })
         this.props.setActivity({ value })
+
+    }
+
+    handleVibeChange = (event, { value }) => {
+
+        //this.props.setActivity({ value })
+        console.log('Vibes: ', value)
 
     }
 
@@ -97,6 +108,8 @@ class Navigation extends Component {
                                     <Dropdown
                                         placeholder='Activty'
                                         search
+                                        className='icon'                                    
+                                        icon='bullseye' // TODO: Map currently selected to icon
                                         selection
                                         onChange={this.handleActivityChange}
                                         options={Constants.activty_categories}
@@ -109,6 +122,8 @@ class Navigation extends Component {
                                         compact
                                         search
                                         selection
+                                        onChange={this.handleVibeChange}
+                                        value={['local']}
                                         options={this.state.vibe_options}
                                     />
                                 </Form.Group></Form>                                
@@ -125,7 +140,6 @@ class Navigation extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('store to navigation: ', state)
     return {
         nearby_places: state.nearby_places
     }
