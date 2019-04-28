@@ -56,7 +56,7 @@ app.get('/api/directions', (req, res) => {
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
         //res.send(body)
         if (response.statusCode == '200' && error == null) {
-            return res.json({ success: true, data: JSON.parse(body) });
+            return res.json({ success: true, data: response });
         } else {
             console.log(error)
             return res.json({ success: false, data: { error } });
@@ -99,8 +99,9 @@ app.get('/api/events', (req, res) => {
             { 'properties.date': { '$gte': day_start, '$lte': day_end } },
             // TODO: include recuring in a smart way { 'properties.recurs': { $ne: null }}
         ] 
-    // Sort by date and then decending orer of likes
-    }).sort('properties.date').sort({ 'properties.likes' : -1});
+    // Sort by date and then decending orer of ranking score (was likes)
+    // TODO: fix sorting on dates, which appear to be inconsistent from the data source
+    }).sort('properties.date').sort({ 'properties.score' : -1});
 
     let query_by_recuring = Event.find({
         'geometry': {
@@ -130,12 +131,12 @@ app.get('/api/events', (req, res) => {
 
 app.get('/api/places', (req, res) => {
 
-    console.log('Getting places', req.query);
-
     let lat = req.query.lat;
     let lon = req.query.lon;
     let distance = req.query.distance * config.meters_per_mile;
     let activity = req.query.activity;
+
+    console.log('Distance: ', distance, ' activity ', JSON.stringify(activity))
 
     // This is just the query
     let query = {
@@ -168,6 +169,43 @@ app.get('/api/places', (req, res) => {
 
         });
 });
+
+app.get('/api/weather', (req, res) => {
+
+    var options = {
+        method: 'GET',
+        url: 'https://openweathermap.org/data/2.5/weather',
+        qs:
+        {
+            appid: 'b6907d289e10d714a6e88b30761fae22',
+            lat: req.query.lat,
+            lon: req.query.lon,
+            units: 'imperial'
+        }
+    };
+
+    request(options, function (error, response, body) {
+        
+        console.log(response.statusCode, body)
+        try {
+            body = JSON.parse(body)
+
+        } catch (error) {
+            error = error;
+        }
+
+        if (response.statusCode == '200' && error == null) {
+            //return res.json({ success: true, data: JSON.parse(body) }); 
+            return res.json({ success: true, data: body  });
+
+        } else {
+            console.log(error)
+            return res.json({ success: false, data: { error } });
+        }
+        
+    });
+    
+})
 
 app.post('/api/places', function(req, res) {
     

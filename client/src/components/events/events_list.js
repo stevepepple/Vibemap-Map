@@ -1,14 +1,28 @@
 import React, { Component } from 'react'
-import { Button, Grid, Dimmer, GridColumn, Icon, Item, Loader, Segment, Tab } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-
+import { Button, Grid, Dimmer, GridColumn, Icon, Item, Loader, Segment, Tab } from 'semantic-ui-react'
 import { Global, css } from '@emotion/core'
 
 import ListItem from './list_item.js'
 import * as Constants from '../../constants.js'
-
+import TimeAndTemp from '../weather/timeAndTemp'
 
 class EventsList extends Component {
+
+    constructor(props) {
+        super(props);
+
+        //this.showDetails = this.showDetails.bind(this);
+        
+    }
+
+    // Pass the list tyep via button.
+    handleButton = (e) => {
+        let type = e.target.getAttribute('value')
+        
+        this.props.handleListType(type)
+    }
+
     render() {
 
         let has_items = this.props.data.length > 0;
@@ -28,17 +42,21 @@ class EventsList extends Component {
                         '.ui.inverted.purple .button': {
                             color: Constants.PURPLE + '!important',
                         },
-                        '.ui.inverted.purple.buttons .active.button' : {
+                        '.ui.inverted.purple.buttons .active.button': {
                             backgroundColor: Constants.PURPLE + '!important',
                             color: '#FFFFFF !important'
                         }
                     }}
                 />
-                <Button.Group inverted > {/* Was color='purple' */}
-                    <Button active ><Icon name='calendar'/>Events</Button>
-                    <Button><Icon name='world'/>Destinations</Button>
-                    <Button><Icon name='gem'/>Hidden Gems</Button>
+
+                <TimeAndTemp />
+
+                <Button.Group inverted onClick={this.handleButton} > {/* Was color='purple' */}
+                    <Button value='events' active><Icon name='calendar' />Events</Button>
+                    <Button value='attractions'><Icon name='world' />Local Attractions</Button>
+                    <Button><Icon name='gem' />Hidden Gems</Button>
                 </Button.Group>
+
                 <Item.Group divided relaxed className='events_list'>
                     {items}
                 </Item.Group>
