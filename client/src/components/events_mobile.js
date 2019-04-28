@@ -11,7 +11,7 @@ import EventCard from './events/event_card.js'
 import EventsList from './events_list.js';
 import EventsMap from './events_map.js';
 
-import '../styles/events_page.css';
+import '../styles/events_page.scss';
 
 
 class EventsPage extends Component {
