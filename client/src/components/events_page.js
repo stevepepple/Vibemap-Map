@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
-import { Button, Dimmer, Grid, Header, Icon, Loader } from 'semantic-ui-react'
 import querystring from 'querystring';
-import moment from 'moment';
+
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Button, Dimmer, Grid, Header, Icon, Loader } from 'semantic-ui-react'
+import { Global, css } from '@emotion/core'
 
 import helpers from '../helpers.js'
 import * as Constants from '../constants.js'
@@ -16,12 +16,14 @@ import EventModal from './events/modal.js'
 import Navigation from './events/navigation.js'
 import PlaceCards from './places/place_cards.js'
 
+
 /* REDUX STUFF */
 import { connect } from 'react-redux'
 import * as actions from '../redux/actions';
 
-import '../styles/events_page.css';
+import '../styles/events_page.scss';
 
+// TODO: Seperate data rendering from layout from UI logic? 
 class Page extends Component {
 
     constructor(props) {
@@ -34,13 +36,13 @@ class Page extends Component {
             items: [],
             lat: 37.79535238155009,
             lon: -122.2823644705406,
-            days: 3,
+            days: 1,
             event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categoreis: ['adventurous', 'authentic', 'civic', 'creative', 'comedy', 'fun', 'chill', 'cozy', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
-            distance: 2.2,
+            vibe_categoreis: ['adventurous', 'authentic', 'civic', 'creative', 'comedy', 'fun', 'chill', 'cozy', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
+            distance: 5.2,
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
@@ -49,13 +51,14 @@ class Page extends Component {
             name: 'Steve',
             time_of_day: 'morning',
             width: window.innerWidth,
-            zoom: 13
+            zoom: 12.3
         }
 
         this.showDetails = this.showDetails.bind(this);
         this.clearDetails = this.clearDetails.bind(this);
         this.setPosition = this.setPosition.bind(this);
         this.setZoom = this.setZoom.bind(this);
+        this.handleListType = this.handleListType.bind(this);
         this.setDistance = this.setDistance.bind(this);
         this.setActivity = this.setActivity.bind(this);
         this.setDays = this.setDays.bind(this);
@@ -65,13 +68,11 @@ class Page extends Component {
 
         this.getPosition();
 
-        let time_of_day = helpers.getTimeOfDay(moment());
-
         // Handle scree resizing
         window.addEventListener('resize', this.handleWindowSizeChange);
 
         // TODO: remove to Redux? 
-        this.setState({ activity_options : Constants.activty_categories, time_of_day : time_of_day })
+        this.setState({ activity_options : Constants.activty_categories })
 
         // Concatanate the default set of categories.
         // Search for all categories that match the current selection and concatenate them
@@ -88,6 +89,8 @@ class Page extends Component {
             .then((position) => {
                 if (position) {
                     let location = { lat: position.coords.latitude, lon: position.coords.longitude } 
+
+                    console.log("Set current location with: ", location)
                     this.props.setCurrentLocation(location)
                     this.setState({
                         lat: position.coords.latitude,
@@ -205,6 +208,15 @@ class Page extends Component {
 
     }
 
+    showAttractions() {
+        let query = 'local' //art, fun, bar, food, scenic, community
+        helpers.searchFoursquare(query, this.state.lat.toString() + ',' + this.state.lon.toString())
+            .catch((err) => console.log(err))
+            .then((results) => console.log('Local results: ', results))
+            //Set State then, get top
+            //.then((result) => this.setState({ result: result }))
+    }
+
     // Get the current data item and display it
     showDetails = function (id, event) {
 
@@ -219,6 +231,16 @@ class Page extends Component {
         let lat = current_item.geometry.coordinates[1];
 
         this.setState({ current_item: current_item, details_shown : true, lat : lat, lon : lon });
+    }
+
+    handleListType = function(type) {
+        console.log('Received this list type: ', type);
+
+        if (type === 'attractions') {
+            this.showAttractions();
+        } else {
+            
+        }
     }
 
     clearDetails = function() {
@@ -290,14 +312,15 @@ class Page extends Component {
                             <Grid.Column width={7} className='list_details'>
                                 {
                                     /* TODO: Refactor into component */
-                                    this.state.details_shown? (
+                                    this.state.details_shown ? (
                                         <EventDetails data={this.state.current_item} clearDetails={this.clearDetails} />
-                                     ) : (
-                                        <EventsList data={this.state.data} onclick={this.showDetails} />
-                                    )
+                                    ) : (
+                                            <EventsList data={this.state.data} type='places' onclick={this.showDetails} handleListType={this.handleListType} />
+                                        )
                                 }
-                                    
+
                                 {/* <EventsList data={this.state.data} onclick={this.showDetails} /> */}
+                                
                             </Grid.Column>
                             <Grid.Column width={9}>
                                 {/* <EventModal data={this.state.current_item} show={false} details={<EventDetails data={this.state.current_item_item}/>} /> */}
@@ -307,6 +330,7 @@ class Page extends Component {
                                 {
                                     /* TODO: Refactor into component */
                                     this.state.details_shown ? (
+                                        // TODO: The are more generally recommendations
                                         <PlaceCards lat={this.state.lat} lon={this.state.lon} />
                                     ) : (
                                         null
