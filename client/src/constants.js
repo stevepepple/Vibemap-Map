@@ -424,6 +424,7 @@ export const all_categories = [
                     {
                         'id': '4bf58dd8d48988d135941735',
                         'name': 'Indie Theater',
+                        'key': 'performance',
                         'icon': {
                             'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_theater_',
                             'suffix': '.png'
@@ -6612,6 +6613,7 @@ export const all_categories = [
                 'name': 'Animal Shelter',
                 'pluralName': 'Animal Shelters',
                 'shortName': 'Animal Shelter',
+                'key': 'animals',
                 'icon': {
                     'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/animalshelter_',
                     'suffix': '.png'
@@ -8036,6 +8038,7 @@ export const all_categories = [
                 'name': 'Bookstore',
                 'pluralName': 'Bookstores',
                 'shortName': 'Bookstore',
+                'key' : 'literature',
                 'icon': {
                     'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/bookstore_',
                     'suffix': '.png'
@@ -8678,7 +8681,7 @@ export const all_categories = [
                     {
                         'id': '53e0feef498e5aac066fd8a9',
                         'name': 'Street Food Gathering',
-                        'pluralName': 'Street Food Gatherings',
+                        'pluralName': 'Street a Gatherings',
                         'shortName': 'Street Food Gathering',
                         'icon': {
                             'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/streetfood_',
