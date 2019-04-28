@@ -26,7 +26,7 @@ class EventDetails extends Component {
     }
 
     componentWillReceiveProps = function(props) {
-        console.log(props)
+    
     }
 
     render() {
@@ -37,16 +37,22 @@ class EventDetails extends Component {
         let date = moment(content.date)
         let categories = content.categories.map((category) => <Label className={'pink image label ' + category}>{category}</Label>);
 
+        console.log(content.vibes)
+
         return (
             <div className='details'>
                 <Button onClick={this.props.clearDetails}>Back</Button>
 
                 <Header>{content.title}</Header>
-                {categories}
 
                 <Image size='medium' src={content.image} />
 
-                <p className='full_description' style={{ 'height': '18vmin'}}>{content.description}</p>
+                <div>
+                    {categories}
+                </div>
+
+                {/* TODO: Render Description at HTML the proper way as stored in Mongo and then as own React component */}
+                <div className='full_description' style={{ 'height': 'auto' }} dangerouslySetInnerHTML={{ __html: content.description }}></div>
                 
                 <a className='ui button primary' href={content.link} target='_blank'> Check it out</a>
                 <p className='small'>Event from {content.source}</p>
