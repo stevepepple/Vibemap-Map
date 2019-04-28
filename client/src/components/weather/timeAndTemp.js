@@ -69,7 +69,6 @@ class TimeAndTemp extends Component {
             paddingTop: '0.2em',
             fontSize: '1.4em',
             color: variables.colorPurple
-
         }
 
         const float = {
@@ -82,7 +81,8 @@ class TimeAndTemp extends Component {
         return (
             <div id='time_and_temp' style={style}>
                 <div style={float}>
-                    <WeatherIcon name='owm' iconId={this.state.icon_id} style={{ fontSize: '2em' }} /> <span>{temp} &#176;</span>
+                    <WeatherIcon name='owm' iconId={this.state.icon_id} style={{ fontSize: '1.8em', marginTop: '-4px' }} /> 
+                    <span style={{ fontSize: '1.4em', paddingLeft: '0.4em'}}>{temp}&#176;</span>
                 </div>
                 <span>Good {this.state.time_of_day}!</span>
                 

@@ -39,6 +39,10 @@ class EventsList extends Component {
             <Segment>
                 <Global
                     styles={{
+                        '.listType' : {
+                            marginLeft: '2% !important',
+                            width: '98%'
+                        },
                         '.ui.inverted.purple .button': {
                             color: Constants.PURPLE + '!important',
                         },
@@ -51,7 +55,7 @@ class EventsList extends Component {
 
                 <TimeAndTemp />
 
-                <Button.Group inverted onClick={this.handleButton} > {/* Was color='purple' */}
+                <Button.Group className='listType' inverted onClick={this.handleButton} > {/* Was color='purple' */}
                     <Button value='events' active><Icon name='calendar' />Events</Button>
                     <Button value='attractions'><Icon name='world' />Local Attractions</Button>
                     <Button><Icon name='gem' />Hidden Gems</Button>
