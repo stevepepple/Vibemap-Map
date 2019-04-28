@@ -1,0 +1,47 @@
+@import 'variables.scss';
+
+
+/* Top Nav and Controls */  
+.menu {
+    padding: 1vmin;
+}
+
+.navigation {
+    top: 0;
+    padding: 1vmin;
+    position: relative;
+    z-index: 20;
+}
+
+.navigation.mobile {
+    position: relative;
+    left: 0;
+    width: auto;
+}
+
+/* TODO: is there a cleaner way to do this with Semantic */
+.ui.search {
+    line-height: 1.6em !important;
+}
+
+.ui.search > .text.default {
+    color: $color-dark-gray !important;
+}
+
+.ui.search .ui.label {
+    font-size: 1.1em;
+}
+
+.ui.search.icon > .icon {
+    float: left;
+    font-size: $icon-size;
+    color: $color-purple;
+}
+
+.ui .text {
+    font-size: 1.2em;
+}
+
+.mobile .ui.search {
+    width: 60%;
+}
