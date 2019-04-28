@@ -139,12 +139,13 @@ module.exports = {
           12, 0.3,
           15, 0.2
       ],
+      // TODO: Scale this on the total number of results vs. size of area...
       'heatmap-intensity': [
         "interpolate",
         ["linear"],
         ["zoom"],
           8, 0.1,
-          20, 0.5
+          20, 0.4
       ],
       "heatmap-color": [
         "interpolate",
@@ -162,7 +163,7 @@ module.exports = {
         "hsl(47, 88%, 50%)",
         0.98,
         "hsl(34, 100%, 50%)",
-        0.99,
+        0.999,
         "hsl(324, 88%, 53%)"
       ]
     },
@@ -170,12 +171,13 @@ module.exports = {
       // increase the radius of the circle as the zoom level and dbh value increases
       'circle-radius': {
         'base': 3,
-        'stops': [[8, 2], [18, 20]] },
-
+        'stops': [[8, 1], [18, 20]] },
         'circle-color': '#C650CC',
         'circle-stroke-color': '#CC9423',
         'circle-stroke-width': 0.6,
-        'circle-opacity': 0.2,
+        'circle-opacity': {
+          'stops': [[8, 0.1], [20, 0.6]]
+        },
         'circle-translate': [-2, -2]
     }
 }
