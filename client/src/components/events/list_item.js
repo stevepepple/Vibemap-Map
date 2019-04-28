@@ -45,7 +45,7 @@ class ListItem extends React.Component {
                         <span className='venue'>{content.venue}</span>                  
                         <span className='interested'>
                             <Icon name='user' />
-                            {this.props.content.likes} People
+                            {content.score} Relevance
                         </span>
                     </Item.Extra>
                 </Item.Content>
