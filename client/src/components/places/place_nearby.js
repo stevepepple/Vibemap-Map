@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import { Image, Item, Placeholder, Segment, Transition} from 'semantic-ui-react'
 
-import helpers from '../../helpers.js'
-
-import { connect } from 'react-redux'
-import * as actions from '../../redux/actions';
-
 class PlaceNearby extends Component {
 
         constructor(props) {
@@ -18,50 +13,8 @@ class PlaceNearby extends Component {
         }
     }
 
-    componentWillMount(){
-        console.log('PlaceNearby recieved prop', this.props)
-
-        // First place
-        let category = this.props.category;
-        // Morning food breakfast coffee
-        // Evening
-        let query = 'happy hour' //art, fun, bar, food, scenic, community
-        helpers.searchFoursquare(query, this.props.lat.toString() + ',' + this.props.lon.toString())
-            .catch((err) => console.log(err))
-            .then((results) => this.setTopandNearBy(results))
-            //Set State then, get top
-            .then((result) => this.setState({ result: result }))
-    }
-
     componentWillReceiveProps(newProps) {
- 
-    }
-
-    setTopandNearBy(results) {
-
-        if (results.response.groups) {
-            let places = results.response.groups[0].items
-
-            helpers.topFoursquareResult(results)
-                .then((places) => {
-                    console.log("All place details: ", typeof places, places.length, places)
-
-                    this.props.setNearbyPlaces(places)
-
-                    //this.props.setNearbyPlaces(results)
-                    /* TODO: this can be cleaner 
-                    results.forEach(places => {
-                        
-                    });
-                    result.likes = 10;
-                    this.setState({ result: result })
-                    places.push(this.state.result)
-                    */
-
-                })
-
-            
-        }
+        this.setState({ result: newProps.result })
     }
 
     render() {
@@ -107,7 +60,6 @@ class PlaceNearby extends Component {
         icon = icon.prefix + icon.suffix; 
         */
 
-
         return (
 
             <Segment className='nearby_place'>
@@ -128,10 +80,4 @@ class PlaceNearby extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        nearby_places: state.nearby_places
-    }
-};
-
-export default connect(mapStateToProps, actions)(PlaceNearby);
+export default PlaceNearby;
