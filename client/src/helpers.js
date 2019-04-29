@@ -107,6 +107,7 @@ const helpers = {
                         place.neighborhood = place.location.neighborhood
                         place.address = place.location.address
                         place.crossStreet = place.location.crossStreet
+                        // TODO: Handle ranking server-side
                         place.url = place.canonicalUrl
                         place.reason = place.reasons.items[0]
 
@@ -124,6 +125,7 @@ const helpers = {
                         });
 
                         place.likes = place.likes.count;
+                        place.score = place.likes;
 
                         all_places.push(place)
                         return(place)                        
