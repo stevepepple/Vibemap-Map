@@ -101,7 +101,9 @@ app.get('/api/events', (req, res) => {
         ] 
     // Sort by date and then decending orer of ranking score (was likes)
     // TODO: fix sorting on dates, which appear to be inconsistent from the data source
-    }).sort('properties.date').sort({ 'properties.score' : -1});
+    })
+    //.sort('properties.date')
+    .sort({ 'properties.score' : -1});
 
     let query_by_recuring = Event.find({
         'geometry': {
@@ -186,7 +188,6 @@ app.get('/api/weather', (req, res) => {
 
     request(options, function (error, response, body) {
         
-        console.log(response.statusCode, body)
         try {
             body = JSON.parse(body)
 
