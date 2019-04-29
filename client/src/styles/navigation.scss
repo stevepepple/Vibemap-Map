@@ -30,12 +30,14 @@
 
 .ui.search .ui.label {
     font-size: 1.1em;
+    padding: 0.6em;
 }
 
 .ui.search.icon > .icon {
     float: left;
     font-size: $icon-size;
     color: $color-purple;
+    margin-left: -0.2em;
 }
 
 .ui .text {
