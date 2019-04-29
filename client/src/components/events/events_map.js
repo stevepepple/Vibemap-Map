@@ -96,7 +96,7 @@ class EventsMap extends Component {
         Constants.all_categories.map(function (category) {
 
             if (category.key) {
-                let image = category.icon.prefix + '32' + category.icon.suffix;
+                let image = category.icon.prefix + '64' + category.icon.suffix;
                 let class_name = '.' + category.key;
                 classes[class_name] = { backgroundImage: 'url(' + image + ')'}
 

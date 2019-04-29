@@ -15,6 +15,7 @@
     "express": "^4.16.4",
     "moment": "^2.22.2",
     "mongoose": "^5.3.14",
+    "nodemon": "^1.18.11",
     "path": "^0.12.7",
     "react-addons-shallow-compare": "^15.6.2",
     "request": "^2.88.0",
