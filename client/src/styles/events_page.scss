@@ -91,6 +91,7 @@
     bottom: 2vmin;
     padding: 1vmin;
     width: 52%;
+    z-index: 10;
 }
 
 .place_cards .grid {
@@ -194,7 +195,7 @@
 }
 
 .marker.place {
-    background: #C123E8;
+    background-color: #C123E8;
     border: solid 2px #C123E8; 
 }
 

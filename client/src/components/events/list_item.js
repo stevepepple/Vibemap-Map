@@ -24,6 +24,7 @@ class ListItem extends React.Component {
         let date = moment(this.props.content.date)
         let start = this.props.content.start_time
         let title = this.props.content.title;
+        let score = Math.round(this.props.content.score)
         // TODO: Move to server side
         if (title) {
             title = title.split(' | ')
@@ -34,6 +35,7 @@ class ListItem extends React.Component {
 
         let boundClick = this.props.onclick.bind(this, this.props.id);
 
+        /* TODO: Can this be made an abtract component for other types of data, i.e. places */
         return (
             
             <Item onClick={boundClick} key={this.props.id} data-id={content.id}>
@@ -45,7 +47,7 @@ class ListItem extends React.Component {
                         <span className='venue'>{content.venue}</span>                  
                         <span className='interested'>
                             <Icon name='user' />
-                            {content.score} Relevance
+                            {score} Relevance
                         </span>
                     </Item.Extra>
                 </Item.Content>

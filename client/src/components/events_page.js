@@ -51,7 +51,7 @@ class Page extends Component {
             name: 'Steve',
             time_of_day: 'morning',
             width: window.innerWidth,
-            zoom: 12.3
+            zoom: 14.3
         }
 
         this.showDetails = this.showDetails.bind(this);
