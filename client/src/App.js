@@ -4,7 +4,7 @@ import PlacesMap from './components/places/places_map';
 import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 import { Icon,Menu, Dropdown } from 'semantic-ui-react'
 
-import './App.css';
+import './styles/App.css';
 
 class App extends Component {
   state = { activeItem: 'home' }
