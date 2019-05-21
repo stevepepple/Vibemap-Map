@@ -7,7 +7,7 @@ import { Button, Icon } from 'semantic-ui-react'
 // Redux stuff
 import { connect } from 'react-redux';
 
-import * as constants from '../../constants'
+import * as constants from '../../constants.js'
 
 
 class Directions extends Component {
