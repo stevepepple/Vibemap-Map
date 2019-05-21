@@ -87,59 +87,42 @@ const helpers = {
 
             places.map((item) => {
                 let place = item.venue
+                console.log("Does this place exist: ", place.name)
                 promises.push(
                     request({
-                        url: 'https://api.foursquare.com/v2/venues/' + place.id,
+                        url: 'http://localhost:5000/api/place_exists',
                         method: 'GET',
                         qs: {
-                            client_id: Constants.FOURSQUARE_CLIENT_ID,
-                            client_secret: Constants.FOURSQUARE_SECRET,
-                            v: '20180323'
+                            id: place.id,
                         }
-                    })
-                    .then(function (parsedBody) {
-                        let result = JSON.parse(parsedBody);
-                        let place = result.response.venue;
-
-                        place.has_details = true
-                        place.latitude = place.location.lat
-                        place.longitude = place.location.lng
-                        place.neighborhood = place.location.neighborhood
-                        place.address = place.location.address
-                        place.crossStreet = place.location.crossStreet
-                        // TODO: Handle ranking server-side
-                        place.url = place.canonicalUrl
-                        place.reason = place.reasons.items[0]
-
-                        if (place.photos.count > 0) {
-                            place.image = place.bestPhoto.prefix + '200x200' + place.bestPhoto.suffix
-                        }
-
-                        delete place.location
-                        delete place.bestPhoto
-                        delete place.colors
-                        delete place.attributes
-
-                        place.categories = place.categories.map(function (category) {
-                            return category.name;
-                        });
-
-                        place.likes = place.likes.count;
-                        place.score = place.likes;
-
-                        all_places.push(place)
-                        return(place)                        
-
-                    })
-                    .catch(function (err) {
-                        reject(err);
                     })
 
                 )
             });
 
             Promise.all(promises).then(function(results) {
-                resolve(all_places, results);
+                let all_places = [];
+
+                // TODO: is there a better, consistent way to handle the batch of responses
+                results.forEach(function(message){
+                    let result = JSON.parse(message);
+
+                    if (result.success === true) {
+                        console.log("Resulting place: ", result.place)
+
+                        // TODO: save to database
+                        request.post('http://localhost:5000/api/places', { form: result.place },
+                            function (err, httpResponse, body) {
+                                if (err) { console.log(err); } 
+                                else { console.log('Saved venue: ', body) }
+                            })
+
+                        all_places.push(result.place)
+                        
+                    }
+                })
+
+                resolve(all_places);
             });
             
         });        

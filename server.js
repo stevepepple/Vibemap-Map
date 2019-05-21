@@ -7,6 +7,8 @@ const path = require('path')
 const request = require('request')
 const querystring = require('querystring');
 
+const foursquare = require('./client/src/services/foursquare')
+
 const app = express()
 app.use(cors())
 
@@ -84,7 +86,7 @@ app.get('/api/events', (req, res) => {
     })
 
     // This is just the query
-    let query_and_sort_by_likes = Event.find({
+    let query = {
         'geometry': {
             $nearSphere: {
                 $geometry: {
@@ -98,10 +100,12 @@ app.get('/api/events', (req, res) => {
         $or: [
             { 'properties.date': { '$gte': day_start, '$lte': day_end } },
             // TODO: include recuring in a smart way { 'properties.recurs': { $ne: null }}
-        ] 
-    // Sort by date and then decending orer of ranking score (was likes)
-    // TODO: fix sorting on dates, which appear to be inconsistent from the data source
-    })
+        ]
+        // Sort by date and then decending orer of ranking score (was likes)
+        // TODO: fix sorting on dates, which appear to be inconsistent from the data source
+    }
+    console.log(JSON.stringify(query))
+    let query_and_sort_by_likes = Event.find(query)
     //.sort('properties.date')
     .sort({ 'properties.score' : -1});
 
@@ -155,7 +159,9 @@ app.get('/api/places', (req, res) => {
     }
 
     let new_query = { geometry: { $geoWithin: { $centerSphere: [[-122.28615989025315, 37.816508894670264], 0.0003363024865705144] } } }
-    let query_by_location = Place.find(query);
+    // TODO: Limit based upon density science or other factors
+    // TODO: Explore ways to improve/optimize the query speed in Mongo
+    let query_by_location = Place.find(query).limit(1000);
 
     query_by_location
         .then(function (results, err) {
@@ -208,15 +214,47 @@ app.get('/api/weather', (req, res) => {
     
 })
 
+app.get('/api/place_exists', (req, res) => {
+    console.log('Responding to request...');
+
+    let id = req.query.id
+    console.log('Do details for this place exist? : ', id)
+    
+    Place.findOne({ id: id, 'properties.has_details': true }).exec(function (err, place) {
+        
+        if (err || place === null) {
+            let message = 'Problem with this place: ' + id;
+            console.log(message)
+            // TODO: Look up with Foursquare API
+            foursquare.getPlaceDetails(id)
+                .then(function(result){
+                    console.log('Got details: ', result.name)
+                    let place = foursquare.placeToGeoJSON(result)                
+                    return res.json({ success: true, place: place });
+                })
+            //return res.json({ success: false, error : message });  
+        } else {
+            console.log(place, err)
+            return res.json({ success: true, place : place });  
+        }
+
+    })
+});
+
 app.post('/api/places', function(req, res) {
     
     let place = req.body
     place.id = place.properties.id;
-    console.log('Posted places to be saved: ', place.id, place.properties.name)
+    //console.log('Posted places to be saved: ', place.id, place.properties.name)
+
+    let new_record = new Place(place);
+    new_record.set('_id', undefined)
+
+    console.log('New record: ', new_record)
 
     Place.findOneAndUpdate(
-        { 'id' : place.id }, // find a document with that filter
-        place, // document to insert when nothing was found
+        { 'id' : new_record.id }, // find a document with that filter
+        new_record, // document to insert when nothing was found
         { upsert: true, new: true, runValidators: true }, // options
         function (err, doc) { // callback
             if (err) {
