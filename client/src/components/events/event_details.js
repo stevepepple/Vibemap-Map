@@ -45,15 +45,18 @@ class EventDetails extends Component {
 
                 <Header>{content.title}</Header>
 
+                <p className='date'>{date.format('dddd Ha')} {content.start}</p>
+
                 <Image size='medium' src={content.image} />
+
+                {/* TODO: Render Description at HTML the proper way as stored in Mongo and then as own React component */}
+                <div className='full_description' style={{ 'height': 'auto' }} dangerouslySetInnerHTML={{ __html: content.description }}></div>
 
                 <div>
                     {categories}
                 </div>
 
-                {/* TODO: Render Description at HTML the proper way as stored in Mongo and then as own React component */}
-                <div className='full_description' style={{ 'height': 'auto' }} dangerouslySetInnerHTML={{ __html: content.description }}></div>
-                
+                <h3>Details & Tickets</h3>
                 <a className='ui button primary' href={content.link} target='_blank'> Check it out</a>
                 <p className='small'>Event from {content.source}</p>
 
