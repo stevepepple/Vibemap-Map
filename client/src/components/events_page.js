@@ -42,7 +42,7 @@ class Page extends Component {
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
             vibe_categoreis: ['adventurous', 'authentic', 'civic', 'creative', 'comedy', 'fun', 'chill', 'cozy', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
-            distance: 5.2,
+            distance: 3.5,
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
@@ -276,27 +276,22 @@ class Page extends Component {
         // Adaptive view for mobile users
         if (isMobile) {
             return (
-                <div>
+                <div className='mobile'>
                     
                     {navigation}                
 
                     <Tabs selectedTabClassName='active'>
                         
                         <TabList className='ui menu secondary'>
+                            <Tab className='item'><Icon name='map ul' />Map</Tab>
                             <Tab className='item'><Icon name='list ul' />List</Tab>
-                            <Tab className='item'>Map</Tab>
                         </TabList>
-
-                        <TabPanel>
-                            if (this.state.data.length == 0) {
-                                <div>No results</div>
-                            }
-
-                            <EventsCards data={this.state.data} onclick={this.showDetails} />
-                            {/* <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item} />} /> */}
-                        </TabPanel>
                         <TabPanel>
                             {events_map}
+                        </TabPanel>
+                        <TabPanel>                    
+                            <EventsCards data={this.state.data} onclick={this.showDetails} />
+                            {/* <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item} />} /> */}
                         </TabPanel>
                     </Tabs>
                 </div>
@@ -315,8 +310,8 @@ class Page extends Component {
                                     this.state.details_shown ? (
                                         <EventDetails data={this.state.current_item} clearDetails={this.clearDetails} />
                                     ) : (
-                                            <EventsList data={this.state.data} type='places' onclick={this.showDetails} handleListType={this.handleListType} />
-                                        )
+                                        <EventsList data={this.state.data} type='places' onclick={this.showDetails} handleListType={this.handleListType} />
+                                    )
                                 }
 
                                 {/* <EventsList data={this.state.data} onclick={this.showDetails} /> */}
