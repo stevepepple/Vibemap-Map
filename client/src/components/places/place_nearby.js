@@ -50,7 +50,8 @@ class PlaceNearby extends Component {
         }
 
         let tip = ''
-        if (this.state.result.stats.tipCount > 0) {
+        console.log('Tips: ', this.state.result.tips)
+        if (this.state.result.tips !== undefined && this.state.result.stats.tipCount > 0 && this.state.result.tips.length > 0) {
             tip = this.state.result.tips.groups[0].items[0].text
         } else {
             tip = 'No tip for this places'

@@ -53,6 +53,8 @@ class PlaceCards extends Component {
 
                     this.props.setNearbyPlaces(places)
                     this.setState({ places })
+
+                    // Save items to the database
                     //this.props.setNearbyPlaces(results)
                     /* TODO: this can be cleaner 
                     results.forEach(places => {
@@ -64,8 +66,6 @@ class PlaceCards extends Component {
                     */
 
                 })
-
-
         }
     }
 
@@ -73,10 +73,9 @@ class PlaceCards extends Component {
         /* TODO: come up with a better way for paginating the results */
         let top, second = null
         if (this.state.places) {
-            top = this.state.places[0]
-            second = this.state.places[1]
+            top = this.state.places[0].properties
+            second = this.state.places[1].properties
         }
-        
 
         console.log('Top place: ', top)
         

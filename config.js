@@ -130,7 +130,8 @@ config.place_schema = {
         photos: mongoose.Schema.Types.Mixed,
         likes: Number,
         createdAt: String,
-        url: String
+        url: String,
+        tips: [{ type: String }],
     }
 }
 
