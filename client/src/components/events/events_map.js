@@ -161,7 +161,9 @@ class EventsMap extends Component {
                                     isLayerChecked={true}
                                 />
                             </Source>
+                            {/* 
                             <Markers type='events' data={this.state.geojson} onclick={this.props.onclick} zoom={this.props.zoom}/>
+                            */}
                             <Markers type='places' data={this.props.nearby_places} onclick={this.props.onclick} zoom={this.props.zoom} />
                             <PhotoMarker type='places' data={this.state.photos_geojson} onclick={this.props.onclick} zoom={this.props.zoom} />
                             
