@@ -42,7 +42,7 @@ class Page extends Component {
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
             vibe_categoreis: ['adventurous', 'authentic', 'civic', 'creative', 'comedy', 'fun', 'chill', 'cozy', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
-            distance: 3.5,
+            distance: 20,
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
@@ -288,6 +288,7 @@ class Page extends Component {
                         </TabList>
                         <TabPanel>
                             {events_map}
+                            <PlaceCards lat={this.state.lat} lon={this.state.lon} />
                         </TabPanel>
                         <TabPanel>                    
                             <EventsCards data={this.state.data} onclick={this.showDetails} />

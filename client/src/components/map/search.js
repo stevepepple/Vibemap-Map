@@ -18,7 +18,7 @@ class LocationSearchInput extends React.Component {
                 { key: 'oakland', text: 'Oakland', coords: [42, -122], value: 'oakland' },
                 { key: 'sf', text: 'San Francisco', coords :[42, -122], value: 'sf' },
                 { key: 'sanjose', text: 'San Jose', coords: [37.3, -121.8], value: 'sanjose' },
-                { key: 'guadalajara', text: 'Guadalajara', coords: [42, -122], value: 'guadalajara' },
+                { key: 'guadalajara', text: 'Guadalajara', coords: [20.67657143973132,-103.34742475872281], value: 'guadalajara' },
                 { key: 'vancouver', text: 'Vancouver', coords: [42, -122], value: 'vancouver' },
                 { key: 'cairo', text: 'Cairo', coords: [31.233155, 30.042124], value: 'cairo' } 
             ]

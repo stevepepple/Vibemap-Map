@@ -153,6 +153,11 @@
     border-radius: 10vmin;
 }
 
+.mobile .map_container #scale {
+    top: unset;
+    bottom: 1.4vmin;
+}
+
 .mapboxgl-canvas {
     position: relative !important;
 }
