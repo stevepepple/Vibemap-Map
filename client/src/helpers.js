@@ -44,6 +44,17 @@ const helpers = {
         return time_of_day;
     },
 
+    matchLists: function(listA, listB ) {
+        let matches = 0;
+        console.log(listA, listB)
+        if (listB.length > 0) {
+            // Count the number of matches between the two lists
+            matches = listA.filter((word) => { return listB.includes(word) }).length
+        }
+
+        return matches;
+    },
+
     searchFoursquare: function (query, latlon) {
         console.log('query and latlon', query, latlon)
         return new Promise(function (resolve, reject) {
@@ -168,10 +179,10 @@ const helpers = {
         //TODO: Scale marker to zoom size!
         let marker_scale = scaleLinear()
             .domain([8, 20]) // Zoom size
-            .range([10, 40]) // Scale of marker size
+            .range([8, 40]) // Scale of marker size
 
         let base_marker = marker_scale(zoom)
-        let max_marker = base_marker * 4;
+        let max_marker = base_marker * 3;
 
         let scale = scaleLinear()
             .domain([0, max])
