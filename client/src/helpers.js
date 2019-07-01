@@ -44,11 +44,10 @@ const helpers = {
         return time_of_day;
     },
 
+    // Counts the number of matches between the two lists and return and integer
     matchLists: function(listA, listB ) {
         let matches = 0;
-        console.log(listA, listB)
         if (listB.length > 0) {
-            // Count the number of matches between the two lists
             matches = listA.filter((word) => { return listB.includes(word) }).length
         }
 

@@ -51,11 +51,7 @@ class Navigation extends Component {
             return { key: vibe, value: vibe, text: vibe }
         })
   
-        console.log("vibe options: ", options)
-        //this.props.setCurrentVibes(options)
-
         this.setState({ vibe_options: options })
-
         // Update redux with the default value
         this.props.setCurrentVibes(this.state.vibes)
 
