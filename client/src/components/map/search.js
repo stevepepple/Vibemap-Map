@@ -17,6 +17,7 @@ class LocationSearchInput extends React.Component {
                 { key: 'nearby', text: 'Nearby', coords: [42, -122], value: 'nearby' },
                 { key: 'oakland', text: 'Oakland', coords: [42, -122], value: 'oakland' },
                 { key: 'sf', text: 'San Francisco', coords :[42, -122], value: 'sf' },
+                { key: 'portland', text: 'Portland', coords: [45.525781, -122.672448], value: 'portland' },
                 { key: 'sanjose', text: 'San Jose', coords: [37.3, -121.8], value: 'sanjose' },
                 { key: 'guadalajara', text: 'Guadalajara', coords: [20.67657143973132,-103.34742475872281], value: 'guadalajara' },
                 { key: 'vancouver', text: 'Vancouver', coords: [42, -122], value: 'vancouver' },
@@ -97,7 +98,7 @@ class LocationSearchInput extends React.Component {
                 onSearchChange={this.handleSearch}
                 onChange={this.handleSelect}
                 options={options}
-                placeholder='Pick a City'
+                placeholder='Near by'
             />
 
             /*
