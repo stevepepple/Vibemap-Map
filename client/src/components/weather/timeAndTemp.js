@@ -50,7 +50,6 @@ class TimeAndTemp extends Component {
         fetch("/api/weather?" + query)
             .then(data => data.json())
             .then(res => {
-                
                 let code = res.data.weather[0].id.toString();
                 let temp = res.data.main.temp;
                 
