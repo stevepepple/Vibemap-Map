@@ -37,28 +37,34 @@ export default class Markers extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
+  componentDidUpdate(nextProps, nextState) {
+    const { map } = this.context
 
     let update = shallowCompare(this, nextProps, nextState);
-    return update;
     
+    if (update) {
+    //  TODO: Do we need a function to update the markers without re-rendering?
+    //  this.updateMarkers(map);
+    }
+
+    return update;
   }
 
+  // TODO: will be deprecated in React 17
   componentWillReceiveProps(nextProps) {
     const { map } = this.context
 
     let update = shallowCompare(this.props, nextProps)
 
+    // Only update if there's a differencce between features. 
     if (update && nextProps.data.features) {
+      // TODO: this is probably not the proper way to handle this.
       this.removeMarkers(map)
-      this.addMarkers(nextProps.data.features, map);
-    }
+      this.addMarkers(nextProps.data.features, map, nextProps.current_vibes);
+    } 
   }
   
-  addMarkers(features, map) {
+  addMarkers(features, map, current_vibes) {
       let min_size = 22;
       // Create a scale based uopn the ranking score
       let max = helpers.getMax(features, 'score')
@@ -70,6 +76,7 @@ export default class Markers extends React.Component {
         let src = feature.properties.image;
         let likes = feature.properties.likes;
         let score = feature.properties.score;
+        let orginal_score = feature.properties.score;
         let vibes = feature.properties.vibes;
         let name = feature.name ? feature.name : feature.properties.name;
         let link = feature.properties.link;
@@ -79,27 +86,36 @@ export default class Markers extends React.Component {
           return category.toLowerCase();
         });
 
-        // Scale the marker based on score and zoom
-        let size = helpers.scaleMarker(score, max, map.getZoom());
-
-        let img = document.createElement('img');
-        img.setAttribute('width', '100%');
-        img.setAttribute('height', '100%');
-        img.setAttribute('rel', src);
+        // Update the size of markers based upon how well it matches the UI filter
+        let match_bonus = 10;
+        let vibe_matches = 0;
+        if(current_vibes) {
+          vibe_matches = helpers.matchLists(vibes, current_vibes)
+        }        
+        let vibe_score = match_bonus * vibe_matches;
+        score = score + vibe_score;
 
         var el = document.createElement('div');
+
+        // Scale the marker based on score and zoom
+        let size = helpers.scaleMarker(score, max, map.getZoom());
+        el.style.width = size + 'px';
+        el.style.height = size + 'px';
+
         el.className = 'marker';
         if (categories !== null) {
           el.className = el.className + ' ' + categories.join(' ')
         }
-        //el.title = name;
+
         el.setAttribute('id', id)
         el.setAttribute('data-id', id)
         el.setAttribute('data-title', name)
 
-
-        el.style.width = size + 'px';
-        el.style.height = size + 'px';
+        // TODO: Only download image for top results?
+        let img = document.createElement('img');
+        img.setAttribute('width', '100%');
+        img.setAttribute('height', '100%');
+        img.setAttribute('rel', src);
 
         if(this.props.type === 'places') { 
           el.className = el.className + ' ' + 'place';
@@ -111,7 +127,14 @@ export default class Markers extends React.Component {
 
         // TODO: figure out a better way to cache image and reduce memory usage
         // TODO: also load image on hover, if it's note highly ranked
-        let image = new Image();          
+        let image = new Image();   
+        
+        let vibe = document.createElement("span");
+
+        // Simply show the last vibe as a label if there are vibes
+        vibe.innerText = (vibes !== undefined && vibes.length > 0) ? '#' + vibes[vibes.length -1] : '';
+        vibe.className = 'vibe'
+        vibe.style.width = size + 'px';
 
         // TODO: Figure out threashold for popularity and rating...
         if (size > (min_size * 1.8)  ) {
@@ -120,7 +143,7 @@ export default class Markers extends React.Component {
           el.className = el.className + ' popular '
 
           image.src = src;
-
+          el.append(vibe);
           el.append(img);
           image.onload = function () {
             img.src = this.src;
@@ -139,7 +162,7 @@ export default class Markers extends React.Component {
         this.setState({ popups: joined })
         
         // Reference to props from outside event handlers
-        let onclick = this.props.onclick; 
+        let onclick = this.props.onclick;
 
         // This is triggered by the hover event in the list
         el.addEventListener('focus', function (event) {
@@ -151,7 +174,6 @@ export default class Markers extends React.Component {
           el.style.height = (size * 1.4) + 'px';
 
         })
-
 
         el.addEventListener('mouseover', function (event) {
           
@@ -170,9 +192,6 @@ export default class Markers extends React.Component {
           }
 
         });
-
-        // Reference outside of event
-        //let removePopups = this.removePopups
 
         el.addEventListener('mouseleave', function () {
           console.log("received mouse leave event")
@@ -199,7 +218,19 @@ export default class Markers extends React.Component {
         return marker;
       });
 
-      this.setState({ markers : markers})
+      this.setState({markers : markers})
+      
+  }
+
+  updateMarkers(map) {
+    let markers = this.state.markers;
+
+    markers.forEach(marker => {
+
+      //console.log(marker._element)
+
+    });
+
   }
 
   removeMarkers(map) {
