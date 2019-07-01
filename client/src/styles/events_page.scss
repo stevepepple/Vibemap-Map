@@ -169,25 +169,37 @@
     background: #811897;
     background-image: url('https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_32.png');
     background-size: cover;  
-    border: solid 1px #ECC395;
+    border: solid 2px #FFFFFF;
     cursor: help;
-    overflow:hidden;
     opacity: 0.8;
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
-    -webkit-box-shadow: 1px 1px 4px 0px rgba(88,157,145,0.55);
-    -moz-box-shadow: 1px 1px 4px 0px rgba(88,157,145,0.55);
-    box-shadow: 1px 1px 4px 0px rgba(88,157,145,0.55);
+    -webkit-box-shadow: $shadow-purple;
+    -moz-box-shadow: $shadow-purple;
+    box-shadow: $shadow-purple;
 }
 
 .marker::after {
-    background-color: red;
     width: 2vmin;
     height: 2vmin;
     top: 10px;
 }
 
 .marker-popup {
+    z-index: 100;
+}
+
+.here {
+    background: #66B5F8;
+    border-radius: 50%;
+    border: solid 1px #FFFFFF;
+    color: #FFFFFF;
+    height: 32px;
+    width: 32px;
+    padding-top: 10px;
+    text-align: center;
+    line-height: 1em;
+    background-color: #0084F4;
     z-index: 100;
 }
 
@@ -208,6 +220,8 @@
     background: none;
     border: none; 
     font-size: 1.4em;
+    width: 1.8em;
+    height: 1.8em;
 }
 
 .marker.popular {
@@ -216,6 +230,22 @@
 
 .marker img {
     visibility: hidden;
+    border-radius: 50%;
+}
+
+.marker.photo img {
+    visibility: visible;
+    width: 2.0em;
+    height: 2.0em;
+}
+
+.marker .vibe {
+    margin-top: -20px;
+    position: fixed;
+    color:  $color-purple;
+    font-weight: 600;
+    text-shadow: 3px 2px 3px rgba(255,255,255,.8);
+    text-align: center;
 }
 
 .marker.popular img,
