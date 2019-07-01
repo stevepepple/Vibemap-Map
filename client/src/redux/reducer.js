@@ -13,15 +13,23 @@ export const current_location = (state = {}, action) => {
     state = action.location
   }
   return state
-} 
+}
+
+export const current_vibes = (state = {}, action) => {
+  if (action.type == 'SET_CURRENT_VIBES') {
+    state = action.vibes
+    console.log("SET CURRENT VIBES: ", action.vibes)
+  }
+  return state
+}
 
 export const nearby_places = (state = [], action) => {
   if (action.type == 'SET_NEARBY_PLACES') {
     let data = [];
 
     console.log('SET NEARBY PLACES ', action.places)
-
-
+    let places = action.places
+    /*
     let places = GeoJSON.parse(action.places, { Point: ['latitude', 'longitude'] });
     console.log('Nearby Places to GEOJSON :', places)
 
@@ -37,6 +45,7 @@ export const nearby_places = (state = [], action) => {
         })
         
     });
+    */
 
     state = places
   }
@@ -72,6 +81,7 @@ export const geod = (state = {}, action) => {
 export const reducers = combineReducers({
   geod,
   current_location,
+  current_vibes,
   name,
   nearby_places
 });

@@ -9,6 +9,11 @@ export const setCurrentLocation = location => ({
   location,
 });
 
+export const setCurrentVibes = vibes => ({
+  type: 'SET_CURRENT_VIBES',
+  vibes,
+});
+
 export const setEventLocation = location => ({
   type: 'SET_EVENT_LOCATION',
   location,
