@@ -128,10 +128,11 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 1,
-          9, 4,
-          10, 8,
-          12, 60,
-          18, 120
+          10, 6,
+          12, 30,
+          13, 50,
+          14, 80,
+          20, 130
       ],
       'heatmap-opacity': [
         "interpolate",
@@ -139,7 +140,7 @@ module.exports = {
         ["zoom"],
           8, 0.2,
           12, 0.3,
-          15, 0.2
+          15, 0.4
       ],
       // TODO: Scale this on the total number of results vs. size of area...
       'heatmap-intensity': [
@@ -147,6 +148,7 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 0.1,
+          14, 0.25,
           20, 0.4
       ],
       "heatmap-color": [
@@ -156,17 +158,15 @@ module.exports = {
         0.2,
         "hsla(240, 80%, 94%, 0)",
         0.3,
-        "hsla(252, 91%, 44%, 0.4)",
-        0.5,
+        "hsla(286, 100%, 50%, 0.2)",
+        0.6,
         "hsla(179, 100%, 50%, 0.6)",
-        0.7,
-        "hsla(76, 100%, 50%, 0.6)",
         0.95,
-        "hsla(47, 88%, 50%, 0.6)",
-        0.98,
-        "hsla(34, 100%, 50%, 0.6)",
-        0.999,
-        "hsla(324, 88%, 53%, 0.8)"
+        "hsla(50, 100%, 50%, 0.9)",
+        /* The pink is too much? */
+        1.2,
+        "hsla(25, 100%, 50%, 0.8)"
+        
       ]
     },
     events_circle: {
