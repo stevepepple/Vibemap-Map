@@ -1,4 +1,4 @@
-React + Redux example of map.
+React & Redux app for Hotspots web and mobile prototype. 
 
 ### Run the client
 The react code for the web and progressive mobile app is in client/src. It's a project 'create-react-app' boilerplate. 
