@@ -21,9 +21,11 @@ import PlaceCards from './places/place_cards.js'
 import { connect } from 'react-redux'
 import * as actions from '../redux/actions';
 
+/* TODO: Break this into styles for each component */
 import '../styles/events_page.scss';
 
 // TODO: Seperate data rendering from layout from UI logic? 
+// TODO: Move to main page component, i.e main.js or index.js
 class Page extends Component {
 
     constructor(props) {
@@ -41,8 +43,8 @@ class Page extends Component {
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categoreis: ['adventurous', 'authentic', 'civic', 'creative', 'comedy', 'fun', 'chill', 'cozy', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
-            distance: 20,
+            vibe_categoreis: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
+            distance: 2.5,
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
@@ -74,9 +76,11 @@ class Page extends Component {
         // TODO: remove to Redux? 
         this.setState({ activity_options : Constants.activty_categories })
 
-        // Concatanate the default set of categories.
+        
         // Search for all categories that match the current selection and concatenate them
         let current = Constants.place_categories.find(item => item.key === 'all')
+        
+        // Concatanate the default set of categories.
         let combined_categories = helpers.findPlaceCategoriess(current.categories);
         
         this.setState({ place_categories: combined_categories })

@@ -7,6 +7,7 @@ import * as Constants from '../../constants.js'
 import LocationSearchInput from '../map/search'
 
 import { connect } from 'react-redux'
+import * as actions from '../../redux/actions';
 
 import '../../styles/navigation.scss';
 
@@ -26,10 +27,10 @@ class Navigation extends Component {
                 { key: '1', text: 'Today', value: '1' },
                 { key: '2', text: '2 days', value: '2' },
                 { key: '3', text: '3 days', value: '3' },
-                { key: '3', text: 'Week', value: '5' },
+                { key: '7', text: 'Week', value: '5' },
                 { key: '14', text: '2 weeks', value: '14' }
             ],
-
+            vibes: ['local'],
             vibe_options : []
         }
     }
@@ -49,8 +50,14 @@ class Navigation extends Component {
         let options = this.props.vibes.map(function (vibe) {
             return { key: vibe, value: vibe, text: vibe }
         })
+  
+        console.log("vibe options: ", options)
+        //this.props.setCurrentVibes(options)
 
         this.setState({ vibe_options: options })
+
+        // Update redux with the default value
+        this.props.setCurrentVibes(this.state.vibes)
 
     }
     
@@ -59,14 +66,13 @@ class Navigation extends Component {
     handleActivityChange = (event, { value }) => {
         this.setState({ current_activity : value })
         this.props.setActivity({ value })
-
     }
 
     handleVibeChange = (event, { value }) => {
-
-        //this.props.setActivity({ value })
-        console.log('Vibes: ', value)
-
+        
+        this.setState({ vibes: value })
+        this.props.setCurrentVibes(value)
+        
     }
 
     render() {
@@ -116,15 +122,17 @@ class Navigation extends Component {
                                     />
 
                                     <Dropdown
-                                        placeholder='Vibe'
+                                        placeholder="What&#39;s your vibe?"
                                         fluid
                                         multiple                                
                                         compact
+                                        label="Vibe"
                                         search
                                         selection
                                         onChange={this.handleVibeChange}
-                                        value={['local']}
+                                        //value={['local']}
                                         options={this.state.vibe_options}
+                                        value={this.state.vibes}
                                     />
                                 </Form.Group></Form>                                
 
@@ -133,7 +141,6 @@ class Navigation extends Component {
                     </div >
                 )}
 
-
             </div>
         );
     }
@@ -141,8 +148,9 @@ class Navigation extends Component {
 
 const mapStateToProps = state => {
     return {
-        nearby_places: state.nearby_places
+        nearby_places: state.nearby_places,
+        currentVibes: state.currentVibes,
     }
 }
 
-export default connect(mapStateToProps)(Navigation);
+export default connect(mapStateToProps, actions)(Navigation);
