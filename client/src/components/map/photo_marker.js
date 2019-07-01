@@ -68,7 +68,7 @@ export default class PhotoMarker extends React.Component {
         
         var el = document.createElement('div');
         el.className = 'marker photo';
-        el.innerHTML = '📷'; 
+        el.innerHTML = '<img src="../images/instagram.png"/>'; 
         el.title = name;
         el.setAttribute('data-id', name)
 
