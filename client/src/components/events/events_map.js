@@ -12,8 +12,6 @@ import Styles from '../../styles/map_styles.js'
 import Markers from '../map/markers.js';
 import PhotoMarker from '../map/photo_marker.js';
 import YouAreHere from '../map/you_are_here.js';
-import ReactMapGL, { Marker } from 'react-map-gl';
-
 
 //import Geocoder from "@mapbox/react-geocoder";
 import { connect } from 'react-redux'
