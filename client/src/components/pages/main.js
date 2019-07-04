@@ -5,24 +5,25 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Dimmer, Grid, Header, Icon, Loader } from 'semantic-ui-react'
 import { Global, css } from '@emotion/core'
 
-import helpers from '../helpers.js'
-import * as Constants from '../constants.js'
+// TODO: move to services
+import helpers from '../../helpers.js'
+import * as Constants from '../../constants.js'
 
-import EventsList from './events/events_list.js'
-import EventsCards from './events/events_cards.js'
-import EventDetails from './events/event_details.js'
-import EventsMap from './events/events_map.js'
-import EventModal from './events/modal.js'
-import Navigation from './events/navigation.js'
-import PlaceCards from './places/place_cards.js'
+import EventsList from '../events/events_list.js'
+import EventsCards from '../events/events_cards.js'
+import EventDetails from '../events/event_details.js'
+import EventsMap from '../events/events_map.js'
+import EventModal from '../events/modal.js'
+import Navigation from '../events/navigation.js'
+import PlaceCards from '../places/place_cards.js'
 
 
 /* REDUX STUFF */
 import { connect } from 'react-redux'
-import * as actions from '../redux/actions';
+import * as actions from '../../redux/actions';
 
 /* TODO: Break this into styles for each component */
-import '../styles/events_page.scss';
+import '../../styles/events_page.scss';
 
 // TODO: Seperate data rendering from layout from UI logic? 
 // TODO: Move to main page component, i.e main.js or index.js
@@ -125,17 +126,13 @@ class Page extends Component {
 
         let event_categories = Constants.activty_categories.find(item => item.key === activity.value)
 
-        console.log("Searching for these events: ", event_categories)
-
         // Places have nest categories; Here's an good enough way to get those.
-
         // Concatanate the default set of categories.
         // Search for all categories that match the current selection and concatenate them
         let current_categories = Constants.place_categories.find(item => item.key === activity.value)
         let combined_categories = helpers.findPlaceCategoriess(current_categories.categories);
 
         this.setState({ event_categories: event_categories.categories, place_categories: combined_categories }, function() {
-
             this.showEvents()
             this.showPlaces()
         })

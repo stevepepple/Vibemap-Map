@@ -9,6 +9,8 @@ The react code for the web and progressive mobile app is in client/src. It's a p
 
     open http://localhost:3000/events
 
+This application used React Router to serve page components. See `components/pages/main.js`. 
+
 ### Run the server
 
     npm install
