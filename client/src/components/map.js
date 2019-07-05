@@ -61,14 +61,23 @@ let Map = class Map extends React.Component {
         trackUserLocation: true
       }));
 
+      // TODO: consolidate duplicate code
+      this.map.on('zoom', () => {
+        let position = this.map.getCenter();
+        let zoom = this.map.getZoom();
 
-    this.map.on('dragend', (e) => {
-      let position = this.map.getCenter();
-      let zoom = this.map.getZoom();
+        if (this.props.onMapChange) {
+          this.props.onMapChange(position, zoom)
+        }
+      })
 
-      if (this.props.onMapChange) {
-        this.props.onMapChange(position, zoom)
-      }
+      this.map.on('dragend', (e) => {
+        let position = this.map.getCenter();
+        let zoom = this.map.getZoom();
+
+        if (this.props.onMapChange) {
+          this.props.onMapChange(position, zoom)
+        }
       });
     });
 
