@@ -57,7 +57,9 @@ class Navigation extends Component {
 
     }
     
-    handleDaysChange = (e, { value }) => this.props.setDays({ value })
+    handleDaysChange = (e, { value }) => {
+        this.props.setDays(value)
+    }
 
     handleActivityChange = (event, { value }) => {
         this.setState({ current_activity : value })
@@ -145,6 +147,10 @@ class Navigation extends Component {
 const mapStateToProps = state => {
     return {
         nearby_places: state.nearby_places,
+        currentLocation: state.currentLocation,
+        currentZoom: state.currentZoom,
+        currentDays: state.currentDays,
+        currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,
     }
 }

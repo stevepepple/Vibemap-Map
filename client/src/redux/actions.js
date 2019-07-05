@@ -9,6 +9,21 @@ export const setCurrentLocation = location => ({
   location,
 });
 
+export const setZoom = zoom => ({
+  type: 'SET_ZOOM',
+  zoom,
+});
+
+export const setDistance = distance => ({
+  type: 'SET_DISTANCE',
+  distance,
+});
+
+export const setDays = days => ({
+  type: 'SET_DAYS',
+  days,
+});
+
 export const setCurrentVibes = vibes => ({
   type: 'SET_CURRENT_VIBES',
   vibes,

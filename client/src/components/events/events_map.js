@@ -15,6 +15,7 @@ import YouAreHere from '../map/you_are_here.js';
 
 //import Geocoder from "@mapbox/react-geocoder";
 import { connect } from 'react-redux'
+import * as actions from '../../redux/actions';
 
 // TODO: load from common .env
 import * as Constants from '../../constants.js'
@@ -76,6 +77,8 @@ class EventsMap extends Component {
     onMapChange = (position, zoom, props) => {
         this.props.setPosition(position.lat, position.lng)
         this.showLens([position.lng, position.lat])
+        
+        console.log("Map changed: ", zoom)
         this.props.setZoom(zoom)
         this.setState({ zoom })
     }
@@ -126,8 +129,10 @@ class EventsMap extends Component {
         let has_places_data = this.props.events_data.length > 0;
         let has_events_data = this.props.events_data.length > 0;
 
+        let zoom_rounded = Math.round(this.props.currentZoom)
+
         // Give a sense of scale to each zoom level; rounded to whole integer
-        let zoom_level = Constants.zoom_levels[Math.round(this.state.zoom)]
+        let zoom_level = Constants.zoom_levels[zoom_rounded]
         
         return (
             <div>
@@ -137,9 +142,9 @@ class EventsMap extends Component {
 
                 <div className = 'map_container'>
                     {/* Floating legend */}
-                    <div id='scale'>{this.state.zoom} : {zoom_level} </div>
+                    <div id='scale'>{zoom_rounded} : {zoom_level} </div>
                     {/* See Mapbox documentation */}
-                    <Map ref={this.mapRef} lat={this.props.lat} lng={this.props.lng} zoom={this.props.zoom} onMapChange={this.onMapChange} bearing={0} show_geocoder={true}>
+                    <Map ref={this.mapRef} lat={this.props.lat} lng={this.props.lng} zoom={this.props.currentZoom} onMapChange={this.onMapChange} bearing={0} show_geocoder={true}>
                         <React.Fragment>
                             
                             {/* TODO: Show loading indicator*/ }
@@ -189,12 +194,17 @@ EventsMap.propTypes = {
     zoom: PropTypes.number
 };
 
+const mapDispatchToProps = dispatch => ({
+    setZoom: zoom => dispatch(actions.setZoom(zoom))
+})
+
 const mapStateToProps = state => {
     console.log('State in events map:', state)
     return {
         nearby_places: state.nearby_places,
-        current_vibes: state.current_vibes,
+        currentVibes: state.currentVibes,
+        currentZoom: state.currentZoom,
     }
 };
 
-export default connect(mapStateToProps)(EventsMap);
+export default connect(mapStateToProps, mapDispatchToProps)(EventsMap);

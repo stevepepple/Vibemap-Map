@@ -94,7 +94,7 @@ class TimeAndTemp extends Component {
 const mapStateToProps = state => {
     //console.log('store to weather: ', state)
     return {
-        location: state.current_location,
+        location: state.currentLocation,
     }
 };
 

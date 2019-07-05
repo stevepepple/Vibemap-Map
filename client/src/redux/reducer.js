@@ -8,14 +8,36 @@ import helpers from '../helpers.js'
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
 
-export const current_location = (state = {}, action) => {
+export const currentLocation = (state = {}, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
     state = action.location
   }
   return state
 }
 
-export const current_vibes = (state = {}, action) => {
+export const currentZoom = (state = {}, action) => {
+  if (action.type == 'SET_ZOOM') {
+    console.log("Setting Redux state with zoom: ", action.zoom)
+    state = action.zoom
+  }
+  return state
+}
+
+// TODO: create a mathematical relationship between zoom and distance
+export const currentDistance = (state = {}, action) => {
+  if (action.type == 'SET_DISTANCE') {
+    state = action.distance
+  }
+  return state
+}
+export const currentDays = (state = {}, action) => {
+  if (action.type == 'SET_DAYS') {
+    state = action.days
+  }
+  return state
+}
+
+export const currentVibes = (state = {}, action) => {
   if (action.type == 'SET_CURRENT_VIBES') {
     state = action.vibes
     console.log("SET CURRENT VIBES: ", action.vibes)
@@ -80,8 +102,11 @@ export const geod = (state = {}, action) => {
 
 export const reducers = combineReducers({
   geod,
-  current_location,
-  current_vibes,
+  currentLocation,
+  currentZoom,
+  currentDistance,
+  currentDays,
+  currentVibes,
   name,
   nearby_places
 });

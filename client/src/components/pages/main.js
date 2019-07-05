@@ -9,14 +9,14 @@ import { Global, css } from '@emotion/core'
 import helpers from '../../helpers.js'
 import * as Constants from '../../constants.js'
 
+// Pages
+import MobilePage from './mobile.js'
+
 import EventsList from '../events/events_list.js'
-import EventsCards from '../events/events_cards.js'
 import EventDetails from '../events/event_details.js'
 import EventsMap from '../events/events_map.js'
-import EventModal from '../events/modal.js'
 import Navigation from '../events/navigation.js'
 import PlaceCards from '../places/place_cards.js'
-
 
 /* REDUX STUFF */
 import { connect } from 'react-redux'
@@ -44,14 +44,13 @@ class Page extends Component {
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categoreis: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
+            vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
             distance: 2.5,
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
             loading: true,
             timedOut: false,
-            name: 'Steve',
             time_of_day: 'morning',
             width: window.innerWidth,
             zoom: 14.3
@@ -60,9 +59,7 @@ class Page extends Component {
         this.showDetails = this.showDetails.bind(this);
         this.clearDetails = this.clearDetails.bind(this);
         this.setPosition = this.setPosition.bind(this);
-        this.setZoom = this.setZoom.bind(this);
         this.handleListType = this.handleListType.bind(this);
-        this.setDistance = this.setDistance.bind(this);
         this.setActivity = this.setActivity.bind(this);
         this.setDays = this.setDays.bind(this);
     }
@@ -76,6 +73,9 @@ class Page extends Component {
 
         // TODO: remove to Redux? 
         this.setState({ activity_options : Constants.activty_categories })
+
+        // TODO: confirm right place to set redux state from defaults. 
+        this.props.setZoom(this.state.zoom)
 
         
         // Search for all categories that match the current selection and concatenate them
@@ -107,6 +107,7 @@ class Page extends Component {
             })
     }
 
+    // TODO: this is replaced by Redux
     setPosition(lat, lon) {
         this.setState({ lat : lat, lon : lon}, function(){
             this.showEvents()
@@ -114,10 +115,7 @@ class Page extends Component {
         })
     }
 
-    setZoom(zoom){
-        this.setState({ zoom: zoom })
-    }
-
+    // TODO: this is replaced by Redux
     setDistance(distance) {
         this.setState({ distance : distance })
     }
@@ -268,35 +266,24 @@ class Page extends Component {
         const { width } = this.state;
         const isMobile = width <= 700;
 
-        let navigation = <Navigation setPosition={ this.setPosition } setZoom={ this.setZoom } setDays={ this.setDays } setActivity={ this.setActivity } days={ this.state.days } vibes={this.state.vibe_categoreis} activity = { this.state.event_categories } setDistance = { this.setDistance } isMobile = { isMobile } />
-        let events_map = <EventsMap events_data={this.state.data} places_data={this.state.places_data} setZoom={this.setZoom} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
+        let navigation = <Navigation 
+            setPosition={ this.setPosition } 
+            setDays={ this.setDays } 
+            setActivity={ this.setActivity } 
+            days={ this.state.days } 
+            vibes={this.state.vibe_categories} 
+            activity = { this.state.event_categories } 
+            isMobile = { isMobile } />
+
+        let events_map = <EventsMap events_data={this.state.data} places_data={this.state.places_data} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
 
         // Adaptive view for mobile users
         if (isMobile) {
-            return (
-                <div className='mobile'>
-                    
-                    {navigation}                
-
-                    <Tabs selectedTabClassName='active'>
-                        
-                        <TabList className='ui menu secondary'>
-                            <Tab className='item'><Icon name='map ul' />Map</Tab>
-                            <Tab className='item'><Icon name='list ul' />List</Tab>
-                        </TabList>
-                        <TabPanel>
-                            {events_map}
-                            <PlaceCards lat={this.state.lat} lon={this.state.lon} />
-                        </TabPanel>
-                        <TabPanel>                    
-                            <EventsCards data={this.state.data} onclick={this.showDetails} />
-                            {/* <EventModal data={this.state.current_item} show={this.state.detail_shown} details={<EventDetails data={this.state.current_item_item} />} /> */}
-                        </TabPanel>
-                    </Tabs>
-                </div>
+            return (                
+                <MobilePage data={this.state.data} places_data={this.state.places_data} lat={this.state.lat} lon={this.state.lon} zoom={this.props.currentZoom} days={this.state.days} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
             )
         } else {
             return (
@@ -346,7 +333,8 @@ class Page extends Component {
 const mapStateToProps = state => ({
     geod: state.geod,
     currentLocation: state.currentLocation,
-    name: state.name
+    currentZoom: state.currentZoom,
+    currentDistance: state.currentDistance
 });
 
 const EventsPage = connect(

@@ -133,7 +133,7 @@ class Directions extends Component {
 const mapStateToProps = state => {
     return {
         name : state.name,
-        start: state.current_location
+        start: state.currentLocation
     }
 };
 
