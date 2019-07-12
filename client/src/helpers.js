@@ -16,7 +16,6 @@ const helpers = {
         return new Promise(function (resolve, reject) {
 
             navigator.geolocation.getCurrentPosition(function (position) {
-                console.log(typeof (position))
                 resolve(position);
             });
 
@@ -47,7 +46,8 @@ const helpers = {
     // Counts the number of matches between the two lists and return and integer
     matchLists: function(listA, listB ) {
         let matches = 0;
-        if (listB.length > 0) {
+        console.log(listA, listB)
+        if (listA.length > 0 && listB.length > 0) {
             matches = listA.filter((word) => { return listB.includes(word) }).length
         }
 
