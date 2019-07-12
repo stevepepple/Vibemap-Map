@@ -52,7 +52,7 @@ class EventsMap extends Component {
 
         let places_geojson = turf.featureCollection(this.props.places_data);
 
-        this.setState({ places_geojson: places_geojson })
+        //this.setState({ places_geojson: places_geojson })
     }
 
     componentWillReceiveProps(nextProps){
@@ -75,11 +75,13 @@ class EventsMap extends Component {
     }
 
     onMapChange = (position, zoom, props) => {
-        this.props.setPosition(position.lat, position.lng)
+        // TODO: how to handle map movement without triggering a new data fetch. 
+        //this.props.setPosition(position.lat, position.lng)
+        // this.props.setZoom(zoom)
         this.showLens([position.lng, position.lat])
         
         console.log("Map changed: ", zoom)
-        this.props.setZoom(zoom)
+        
         this.setState({ zoom })
     }
 
@@ -199,7 +201,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => {
-    console.log('State in events map:', state)
+    //console.log('State in events map:', state)
     return {
         nearby_places: state.nearby_places,
         currentVibes: state.currentVibes,
