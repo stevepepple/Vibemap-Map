@@ -24,7 +24,7 @@ class MobilePage extends Component {
                         <Tab className='item'><Icon name='list ul' />List</Tab>
                     </TabList>
                     <TabPanel>
-                        <EventsMap events_data={this.props.data} places_data={this.props.places_data} setZoom={this.setZoom} lat={this.props.lat} lng={this.props.lon} zoom={this.props.zoom} distance={this.props.distance} zoom={this.props.details_shown ? 16 : this.props.zoom} setPosition={this.setPosition} onclick={this.props.showDetails} />                     
+                        <EventsMap events_data={this.props.data} places_data={this.props.places_data} setZoom={this.setZoom} lat={this.props.lat} lng={this.props.lon} distance={this.props.distance} zoom={this.props.details_shown ? 16 : this.props.zoom} setPosition={this.props.setPosition} onclick={this.props.showDetails} />                     
                         <PlaceCards lat={this.props.lat} lon={this.props.lon} />
                     </TabPanel>
                     <TabPanel>
