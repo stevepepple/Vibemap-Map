@@ -41,11 +41,6 @@ class Navigation extends Component {
         this.setState({ activity_: Constants.activty_categories })
     }
 
-    componentWillReceiveProps = function (props, nextProps) {
-        
-        this.setVibeOptions()
-    }
-
     setVibeOptions = (props) => {
         let options = this.props.vibes.map(function (vibe) {
             return { key: vibe, value: vibe, text: vibe }
@@ -69,9 +64,9 @@ class Navigation extends Component {
     handleVibeChange = (event, { value }) => {
         
         this.setState({ vibes: value })
-        this.props.setCurrentVibes(value)
-        
+        this.props.setCurrentVibes(value)  
     }
+
 
     render() {
 
@@ -154,5 +149,9 @@ const mapStateToProps = state => {
         currentVibes: state.currentVibes,
     }
 }
+
+const mapDispatchToProps = dispatch => ({
+    setLocation: location => dispatch(actions.setCurrentLocation(location))
+})
 
 export default connect(mapStateToProps, actions)(Navigation);
