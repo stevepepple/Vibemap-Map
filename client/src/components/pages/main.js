@@ -66,8 +66,6 @@ class Page extends Component {
      
     componentWillMount() {
 
-        this.getPosition();
-
         // Handle scree resizing
         window.addEventListener('resize', this.handleWindowSizeChange);
 
@@ -76,16 +74,19 @@ class Page extends Component {
 
         // TODO: confirm right place to set redux state from defaults. 
         this.props.setZoom(this.state.zoom)
-
         
         // Search for all categories that match the current selection and concatenate them
+        // TODO: set in Redux? 
         let current = Constants.place_categories.find(item => item.key === 'all')
         
         // Concatanate the default set of categories.
         let combined_categories = helpers.findPlaceCategoriess(current.categories);
         
         this.setState({ place_categories: combined_categories })
-                
+
+        // Get data for the users current location
+        // TODO: Should this be a promise? 
+        this.getPosition();
     }
 
     getPosition = function() {
@@ -109,15 +110,11 @@ class Page extends Component {
 
     // TODO: this is replaced by Redux
     setPosition(lat, lon) {
+        console.log("Setting new position!!!", lat, lon)
         this.setState({ lat : lat, lon : lon}, function(){
             this.showEvents()
             this.showPlaces()
         })
-    }
-
-    // TODO: this is replaced by Redux
-    setDistance(distance) {
-        this.setState({ distance : distance })
     }
 
     setActivity(activity, key) {
