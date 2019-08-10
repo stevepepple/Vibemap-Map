@@ -39,8 +39,8 @@ class EventsMap extends Component {
                 { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.270276, 37.806056] }, "properties": { "id": 3, "name": "Old Oakland", "description": "#oldoakland", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/386d0a73eed11b147ee421661be863ce/5D43EFAF/t51.2885-15/sh0.08/e35/p640x640/57156404_2867198356624462_4903447287018024385_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } },
                 { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.262863, 37.798538] }, "properties": { "id": 3, "name": "Oakland Museum", "description": "#oaklandmuseum", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/386d0a73eed11b147ee421661be863ce/5D43EFAF/t51.2885-15/sh0.08/e35/p640x640/57156404_2867198356624462_4903447287018024385_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } },
                 { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.278357, 37.794801] }, "properties": { "id": 3, "name": "Jack London Square", "description": "#jacklondon", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/386d0a73eed11b147ee421661be863ce/5D43EFAF/t51.2885-15/sh0.08/e35/p640x640/57156404_2867198356624462_4903447287018024385_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } },
-                { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.260411, 37.808357] }, "properties": { "id": 3, "name": "Children's Fairyland", "description": "#jacklondon", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/386d0a73eed11b147ee421661be863ce/5D43EFAF/t51.2885-15/sh0.08/e35/p640x640/57156404_2867198356624462_4903447287018024385_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } },
-                { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.324526, 37.805267] }, "properties": { "id": 3, "name": "Middle Harbor Shoreline Park", "description": "#jacklondon", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/0a29c867dc9ea7075d6fa658f74d2ff6/5D34ADF3/t51.2885-15/sh0.08/e35/s640x640/46202609_2015403528514585_3719740415001179715_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com 640w,https://scontent-sjc3-1.cdninstagram.com/vp/8d8dbda1e5d7dc14c708ff243e54a04d/5D6ED737/t51.2885-15/sh0.08/e35/s750x750/46202609_2015403528514585_3719740415001179715_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com 750w,https://scontent-sjc3-1.cdninstagram.com/vp/509ffe7aa9e1bc9de717d3950a429fda/5D5A4A49/t51.2885-15/e35/46202609_2015403528514585_3719740415001179715_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } }
+                { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.260411, 37.808357] }, "properties": { "id": 3, "name": "Children's Fairyland", "description": "#grandlake", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/a8a144e410bf662d6727a8792147e453/5DE14E60/t51.2885-15/e35/s1080x1080/66769440_1171801839684544_759436189221567567_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } },
+                { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.324526, 37.805267] }, "properties": { "id": 3, "name": "Middle Harbor Shoreline Park", "description": "#shorline", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/0a29c867dc9ea7075d6fa658f74d2ff6/5D34ADF3/t51.2885-15/sh0.08/e35/s640x640/46202609_2015403528514585_3719740415001179715_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com 640w,https://scontent-sjc3-1.cdninstagram.com/vp/8d8dbda1e5d7dc14c708ff243e54a04d/5D6ED737/t51.2885-15/sh0.08/e35/s750x750/46202609_2015403528514585_3719740415001179715_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com 750w,https://scontent-sjc3-1.cdninstagram.com/vp/509ffe7aa9e1bc9de717d3950a429fda/5D5A4A49/t51.2885-15/e35/46202609_2015403528514585_3719740415001179715_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com" } }
                 
             ]}
         }
@@ -150,31 +150,68 @@ class EventsMap extends Component {
                         <React.Fragment>
                             
                             {/* TODO: Show loading indicator*/ }
-                            <Source id='places' data={this.state.places_geojson} layer='places'>
+                            <Source id='places' 
+                                data={this.state.places_geojson} 
+                                layer='places' 
+                                cluster={false} 
+                                clusterMaxZoom={14}
+                                clusterRadius={240}>
+
                                 <Layer
                                     id='heat'
-                                    type='heatmap'
+                                    type='heatmap'   
+                                    filter={["all"]}
                                     paint={Styles.places_heatmap}
                                     isLayerChecked={true}
+                                />           
+
+                                {/*
+                                <Layer
+                                    id='clusters'
+                                    type='circle'
+                                    filter={["has", "point_count"]}
+                                    paint={Styles.places_cluster}
+                                    isLayerChecked={true}
                                 />
+                                */}
+
                                 <Layer
                                     id='circles'
                                     type='circle'
+                                    filter={["all"]}
                                     paint={Styles.events_circle}
                                     isLayerChecked={true}
                                 />
                             </Source>
 
-                            <Source id='lens' data={this.state.lens} layer='lens_shape'>
+                            <Source id='cluster'
+                                data={this.state.geojson}
+                                layer='cluster'
+                                cluster={true}
+                                clusterMaxZoom={14}
+                                clusterRadius={140}>
+                            
+                                <Layer
+                                    id='clusters'
+                                    type='circle'
+                                    filter={["has", "point_count"]}
+                                    paint={Styles.places_cluster}
+                                    isLayerChecked={true}
+                                />
+                                
+                            </Source>
+
+                            <Source id='lens' data={this.state.lens} layer='lens_shape' cluster={false} clusterMaxZoom={14} clusterRadius={120} >
                                 <Layer
                                     id='lens_shape'
                                     type='line'
+                                    filter={["all"]}
                                     paint={Styles.lens}
                                     isLayerChecked={true}
                                 />
                             </Source>
                             
-                            <Markers type='events' data={this.state.geojson} current_vibes={this.props.current_vibes} onclick={this.props.onclick} zoom={this.props.zoom} />
+                            <Markers type='events' data={this.state.geojson} current_vibes={this.props.currentVibes} onclick={this.props.onclick} zoom={this.props.zoom} />
                             <Markers type='places' data={this.props.nearby_places} onclick={this.props.onclick} zoom={this.props.zoom} />
                             <PhotoMarker type='places' data={this.state.photos_geojson} onclick={this.props.onclick} zoom={this.props.zoom} />
                             

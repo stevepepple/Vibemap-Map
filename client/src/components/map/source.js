@@ -8,6 +8,9 @@ export default class Source extends React.Component {
     data: PropTypes.object,
     url: PropTypes.string,
     layer: PropTypes.string,
+    cluster: PropTypes.bool,
+    clusterMaxZoom: PropTypes.number,
+    clusterRadius: PropTypes.number,
     children: PropTypes.node
   }
 
@@ -20,9 +23,12 @@ export default class Source extends React.Component {
     const {
       id,
       data,
+      cluster,
+      clusterMaxZoom,
+      clusterRadius,
       url
     } = this.props
-    map.addSource(id, { type: 'geojson', data: data })
+    map.addSource(id, { type: 'geojson', data: data, cluster: cluster, clusterMaxZoom: clusterMaxZoom, clusterRadius: clusterRadius })
   }
 
   componentWillUnmount() {

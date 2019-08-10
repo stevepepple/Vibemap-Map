@@ -10,6 +10,7 @@ class Layer extends React.Component {
     sourceLayer: PropTypes.string,
     sourceId: PropTypes.string,
     paint: PropTypes.object,
+    filter: PropTypes.array,
     layout: PropTypes.object,
     before: PropTypes.string
   }
@@ -23,6 +24,7 @@ class Layer extends React.Component {
     const {
       id,
       type,
+      filter,
       sourceLayer,
       sourceId,
       layout = {},
@@ -39,6 +41,7 @@ class Layer extends React.Component {
       source: sourceId,
       type,
       layout,
+      filter: filter,
       paint: paint
     }, before)
 

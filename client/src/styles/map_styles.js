@@ -169,6 +169,32 @@ module.exports = {
         
       ]
     },
+    places_cluster: {
+      //   * Blue, 20px circles when point count is less than 100
+      //   * Yellow, 30px circles when point count is between 100 and 750
+      //   * Pink, 40px circles when point count is greater than or equal to 750
+      "circle-color": [
+        "step",
+        ["get", "point_count"],
+        "#51bbd6",
+        100,
+        "#f1f075",
+        750,
+        "#f28cb1"
+      ],
+      'circle-opacity': 0.2,
+      'circle-stroke-color': '#FFFFFF',
+      'circle-stroke-width': 2.4,
+      "circle-radius": [
+        "step",
+        ["get", "point_count"],
+        60,
+        30,
+        120,
+        750,
+        220
+      ]
+    },
     events_circle: {
       // increase the radius of the circle as the zoom level and dbh value increases
       'circle-radius': {
