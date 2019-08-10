@@ -89,7 +89,10 @@ export default class Markers extends React.Component {
         // Update the size of markers based upon how well it matches the UI filter
         let match_bonus = 10;
         let vibe_matches = 0;
-        if(current_vibes) {
+        
+        //console.log("compare vibes: ", vibes, current_vibes)
+        if(vibes && current_vibes) {
+          //console.log('Item\'s vibes: ', vibes)
           vibe_matches = helpers.matchLists(vibes, current_vibes)
         }        
         let vibe_score = match_bonus * vibe_matches;
