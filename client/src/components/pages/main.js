@@ -39,13 +39,13 @@ class Page extends Component {
             items: [],
             lat: 37.79535238155009,
             lon: -122.2823644705406,
-            days: 1,
+            days: 5,
             event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
             vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
-            distance: 2.5,
+            distance: 5.5,
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
@@ -134,6 +134,7 @@ class Page extends Component {
     }
 
     setDays(days) {
+        console.log('Setting days state in main: ', days)
         this.setState({ days: days.value }, function() {
             this.showEvents()
             this.showPlaces()
@@ -145,6 +146,7 @@ class Page extends Component {
         console.log('window width: ', this.state.width)
     };
 
+    //TODO Should all of this logic just flow through an event service and component?
     showEvents(position) {
 
         this.state.data.pop()
@@ -156,7 +158,7 @@ class Page extends Component {
             lon: this.state.lon,
             distance: this.state.distance,
             activity: this.state.event_categories,
-            days: this.state.days
+            days: this.props.currentDays
         });
 
         this.setState({ timedOut: false})
@@ -265,9 +267,9 @@ class Page extends Component {
 
         let navigation = <Navigation 
             setPosition={ this.setPosition } 
-            setDays={ this.setDays } 
+            updateDays={ this.setDays } 
             setActivity={ this.setActivity } 
-            days={ this.state.days } 
+            days={ this.props.currentDays } 
             vibes={this.state.vibe_categories} 
             activity = { this.state.event_categories } 
             isMobile = { isMobile } />
@@ -331,6 +333,7 @@ const mapStateToProps = state => ({
     geod: state.geod,
     currentLocation: state.currentLocation,
     currentZoom: state.currentZoom,
+    currentDays: state.currentDays,
     currentDistance: state.currentDistance
 });
 

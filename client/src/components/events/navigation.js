@@ -53,7 +53,10 @@ class Navigation extends Component {
     }
     
     handleDaysChange = (e, { value }) => {
+        console.log('Days changed in navigations: ', value)
         this.props.setDays(value)
+        // TODO: should need to propagate the value back up like this; Redux props should flow automatically. 
+        this.props.updateDays(value)
     }
 
     handleActivityChange = (event, { value }) => {

@@ -5,11 +5,21 @@ import request from 'request-promise'
 import helpers from '../helpers.js'
 
 
+const uiState = {
+
+}
+
+export function uiReducer(state = uiState, action) {
+  switch(action.type) {
+    
+  }
+}
+
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
-
 export const currentLocation = (state = {}, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
+    console.log("Setting Redux state with Location ", action.location)
     state = action.location
   }
   return state
@@ -30,8 +40,10 @@ export const currentDistance = (state = {}, action) => {
   }
   return state
 }
-export const currentDays = (state = {}, action) => {
+
+export const currentDays = (state = 2, action) => {
   if (action.type == 'SET_DAYS') {
+    console.log('Setting Days ', action)
     state = action.days
   }
   return state

@@ -5,7 +5,7 @@ export default class Source extends React.Component {
 
   static propTypes = {
     id: PropTypes.string,
-    data: PropTypes.object,
+    data: PropTypes.array,
     url: PropTypes.string,
     layer: PropTypes.string,
     cluster: PropTypes.bool,
