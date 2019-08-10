@@ -24,6 +24,10 @@
     line-height: 1.6em !important;
 }
 
+input.search {
+    padding-left: 5vmin;
+}
+
 .ui.search > .text.default {
     color: $color-dark-gray !important;
 }
