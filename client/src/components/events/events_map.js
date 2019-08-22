@@ -179,8 +179,10 @@ class EventsMap extends Component {
                                     id='circles'
                                     type='circle'
                                     filter={["all"]}
-                                    paint={Styles.events_circle}
+                                    paint={Styles.places_circle}
+                                    popupLabel='name'
                                     isLayerChecked={true}
+                                    showPopup={true}
                                 />
                             </Source>
 
@@ -211,8 +213,8 @@ class EventsMap extends Component {
                                 />
                             </Source>
                             
-                            <Markers type='events' data={this.state.geojson} current_vibes={this.props.currentVibes} onclick={this.props.onclick} zoom={this.props.zoom} />
                             <Markers type='places' data={this.props.nearby_places} onclick={this.props.onclick} zoom={this.props.zoom} />
+                            <Markers type='events' data={this.state.geojson} current_vibes={this.props.currentVibes} onclick={this.props.onclick} zoom={this.props.zoom} />
                             <PhotoMarker type='places' data={this.state.photos_geojson} onclick={this.props.onclick} zoom={this.props.zoom} />
                             
                             <YouAreHere lat={this.props.lat} lng={this.props.lng} />
