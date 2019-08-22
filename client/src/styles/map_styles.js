@@ -11,13 +11,13 @@ module.exports = {
 
     places_circle: {
       'circle-radius': [
-      'interpolate',
-      ['exponential', 10],
-      ["zoom"],
-      3, ['*', 0.5, ['to-number', ['get', 'rating']]],
-      12, ['*', 1, ['to-number', ['get', 'rating']]],
-      18, ['*', 30, ['to-number', ['get', 'rating']]]],
-
+        'interpolate',
+        ['exponential', 10],
+        ["zoom"],
+        8, 2,
+        12, 6,
+        20, 14
+      ],
       'circle-color': [
         "case",
         [
@@ -198,8 +198,8 @@ module.exports = {
     events_circle: {
       // increase the radius of the circle as the zoom level and dbh value increases
       'circle-radius': {
-        'base': 3,
-        'stops': [[8, 1], [18, 20]] },
+        'base': 8,
+        'stops': [[8, 4], [18, 20]] },
         'circle-color': '#C650CC',
         'circle-stroke-color': '#CC9423',
         'circle-stroke-width': 0.6,
