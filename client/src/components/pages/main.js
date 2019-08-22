@@ -146,7 +146,8 @@ class Page extends Component {
         console.log('window width: ', this.state.width)
     };
 
-    //TODO Should all of this logic just flow through an event service and component?
+    //TODO: Should all of this logic just flow through an event service and component?
+    //TODO: Yes, Move this to a service tied to redux.
     showEvents(position) {
 
         this.state.data.pop()
