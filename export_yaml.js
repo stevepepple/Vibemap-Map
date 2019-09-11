@@ -430,7 +430,6 @@ const vibe_classifiers = [
 
     // Vibrant
     { input: "vibrant", output: "vibrant" },
-    { input: "vibrant", output: "vibrant" },
     { input: "market", output: "vibrant" },
     { input: "vendor", output: "vibrant" },
 
