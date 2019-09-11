@@ -5,7 +5,11 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 
-const classifiers = [
+// -----------------------------------------------------------
+// Categories
+// -----------------------------------------------------------
+
+const category_classifiers = [
     // Animals
     { input: "animal", output: "animals" },
     { input: "cats", output: "animals" },
@@ -341,9 +345,141 @@ const classifiers = [
     { input: "dance", output: "nightlife" },
 ];
 
-const output = yaml.safeDump(classifiers);
+// -----------------------------------------------------------
+// Vibes
+// -----------------------------------------------------------
 
-fs.writeFile('classifiers.yml', output, (err) => {
+const vibe_classifiers = [
+    // Authentic
+    { input: "real", output: "authentic" },
+
+    // Authentic
+    { input: "adventurous", output: "adventurous" },
+
+    // Civic
+    { input: "school", output: "civic" },
+
+    // Creative
+    { input: "craft", output: "creative" },
+    { input: "colorful", output: "creative" },
+    { input: "creative", output: "creative" },
+    { input: "expressive", output: "creative" },
+
+    // High
+    { input: "high", output: "high" },
+
+    // Fun
+    { input: "laugh", output: "comedy" },
+    { input: "fun", output: "fun" },
+
+    // chill
+    { input: "quiet", output: "chill" },
+
+    // cozy
+    { input: "comfortable", output: "cozy" },
+    { input: "comfy", output: "cozy" },
+
+
+    // Energetic
+    { input: "energy", output: "energetic" },
+
+    // Exclusive & Special
+    { input: "only", output: "exclusive" },
+    { input: "best", output: "exclusive" },
+    { input: "first", output: "exclusive" },
+    { input: "special", output: "exclusive" },
+    { input: "vip", output: "exclusive" },
+
+    // Festive
+    { input: "celebration", output: "festive" },
+    { input: "party", output: "festive" },
+
+    // Free
+    { input: "free", output: "free" },
+    { input: "complimentary", output: "free" },
+
+    // Friendly
+    { input: "friends", output: "friendly" },
+    { input: "together", output: "friendly" },
+    { input: "social", output: "friendly" },
+    { input: "gather", output: "friendly" },
+
+    // Healthy
+    { input: "healthy", output: "healthy" },
+
+
+    // Romantic & Sexual
+    { input: "love", output: "romantic" },
+    { input: "singles", output: "romantic" },
+    { input: "dating", output: "romance" },
+    { input: "relationships", output: "romantic" },
+    { input: "kink", output: "romantic" },
+    { input: "sex", output: "romantic" },
+    { input: "sensually", output: "romantic" },
+    { input: "sexual", output: "romantic" },
+    { input: "singles", output: "romantic" },
+    { input: "single", output: "romantic" },
+    { input: "tantalizing", output: "romantic" },
+
+    // Interactive
+    { input: "hands on", output: "interactive" },
+    { input: "interactive", output: "interactive" },
+
+    // inspired
+    { input: 'inspired', output: 'inspired'},
+
+    // Vibrant
+    { input: "vibrant", output: "vibrant" },
+    { input: "vibrant", output: "vibrant" },
+    { input: "market", output: "vibrant" },
+    { input: "vendor", output: "vibrant" },
+
+    // Local
+
+    // Lively
+    { input: "dance", output: "lively" },
+    { input: "loud", output: "lively" },
+    { input: "chaotic", output: "lively" },
+    { input: "live", output: "lively" },
+
+    // Crazy
+    { input: "spontaneous", output: "crazy" },
+
+
+    // Cool
+    { input: "hip", output: "cool" },
+    { input: "fresh", output: "cool" },
+
+    // Fancy
+
+    // Photogenic
+    { input: "photo", output: "photogenic" },
+    { input: "photos", output: "photogenic" },
+    { input: "selfie", output: "photogenic" },
+
+
+    // Positive
+    { input: "positive", output: "positive" },
+    { input: "positivity", output: "positive" },
+    { input: "fearless", output: "positive" },
+
+
+
+    // Unique
+    { input: "different", output: "unique" },
+    { input: "unorthodox", output: "unique" },
+];
+
+let category_output = yaml.safeDump(category_classifiers);
+
+fs.writeFile('classifiers_categories.yml', category_output, (err) => {
     if (err) throw err;
-    console.log("exported classifiers to classifiers.yml");
+    console.log("exported category classifiers to classifiers_categories.yml");
+});
+
+let vibe_output = yaml.safeDump(vibe_classifiers);
+
+fs.writeFile('classifiers_vibes.yml', vibe_output, (err) => {
+    if (err) throw err;
+    console.log("exported vibe classifiers to classifiers_vibes.yml");
 });
