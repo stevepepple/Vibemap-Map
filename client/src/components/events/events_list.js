@@ -25,6 +25,8 @@ class EventsList extends Component {
 
     render() {
 
+        console.log('this.props.data');
+        console.log(this.props.data);
         let has_items = this.props.data.length > 0;
         let top_item = null;
         let items = null;
