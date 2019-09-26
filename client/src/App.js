@@ -15,6 +15,7 @@ class App extends Component {
     return (
       <div className="App">
   
+        {/* @TODO: Handle URL Params here; Parse query string from React Reouter this.props.location.search */}
         <Router>
           <div>
             <Menu id="header" pointing>
