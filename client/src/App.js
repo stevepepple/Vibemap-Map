@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MainPage from './components/pages/main';
 import PlacesMap from './components/places/places_map';
 import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
-import { Icon,Menu, Dropdown } from 'semantic-ui-react'
+import { Menu, Dropdown } from 'semantic-ui-react'
 
 import './styles/App.css';
 
@@ -15,7 +15,6 @@ class App extends Component {
     return (
       <div className="App">
   
-        {/* @TODO: Handle URL Params here; Parse query string from React Reouter this.props.location.search */}
         <Router>
           <div>
             <Menu id="header" pointing>
