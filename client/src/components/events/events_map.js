@@ -12,6 +12,7 @@ import Styles from '../../styles/map_styles.js'
 import Markers from '../map/markers.js';
 import PhotoMarker from '../map/photo_marker.js';
 import YouAreHere from '../map/you_are_here.js';
+import ZoomLegend from '../map/ZoomLegend';
 
 //import Geocoder from "@mapbox/react-geocoder";
 import { connect } from 'react-redux'
@@ -144,7 +145,8 @@ class EventsMap extends Component {
 
                 <div className = 'map_container'>
                     {/* Floating legend */}
-                    <div id='scale'>{zoom_rounded} : {zoom_level} </div>
+                    <ZoomLegend zoom={this.props.currentZoom} />
+                    
                     {/* See Mapbox documentation */}
                     <Map ref={this.mapRef} lat={this.props.lat} lng={this.props.lng} zoom={this.props.currentZoom} onMapChange={this.onMapChange} bearing={0} show_geocoder={true}>
                         <React.Fragment>
