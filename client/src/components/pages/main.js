@@ -27,6 +27,11 @@ import * as actions from '../../redux/actions';
 import '../../styles/events_page.scss';
 import { isNumber } from 'util';
 
+
+const ApiHeaders = new Headers({
+    'Authorization': 'Token ' + Constants.SYSTEM_TOKEN
+});
+
 // TODO: Seperate data rendering from layout from UI logic? 
 // TODO: Move to main page component, i.e main.js or index.js
 class Page extends Component {
@@ -204,13 +209,14 @@ class Page extends Component {
             this.setState({ timedOut: true })
         }, Constants.TIMEOUT)
 
-        fetch("/api/events?" + query)
+        fetch("/v0.1/events/?" + query, {headers: ApiHeaders})
             .then(data => data.json())
             .then(res => {
                 clearTimeout(timeout);
-                console.log('Received this many events: ', res.data.length)
+                console.log(res);
+                console.log('Received this many events: ', res.results.features.length)
 
-                this.setState({ data: res.data, loading: false, timedOut : false })
+                this.setState({ data: res.results.features, loading: false, timedOut : false })
             }, (error) => {
                 console.log(error)
             });
@@ -231,31 +237,12 @@ class Page extends Component {
             this.setState({ timedOut: true })
         }, Constants.TIMEOUT)
 
-        fetch("/api/places?" + query)
+        fetch("/v0.1/places/?" + query, {headers: ApiHeaders})
             .then(data => data.json())
             .then(res => {
                 clearTimeout(timeout);
-                console.log('Received this many places: ', res.data.length)
-                console.log('First result from database: ', res.data[0])
-
-                //TODO: Cory, where the best place to have the Foursquare query on top of our places
-                this.showAttractions().then(results => {
-                    
-                    results.map(item => {
-                        const itemIndex = res.data.findIndex(obj => obj.id === item.id);
-                        console.log("Found item index? ", itemIndex)
-                        if(itemIndex > 0) {
-                            // TODO: this is very hacky way to show ranking that will be replaces
-                            res.data[itemIndex].rating = item.relevance;
-                            console.log("Updated", res.data[itemIndex])
-                        } else {
-                            console.log(item.name, "is missing from database.")
-                        }                        
-                    })
-
-                    this.setState({ places_data: res.data, timedOut: false })
-
-                });
+                console.log('Received this many places: ', res.results.features.length)
+                this.setState({ places_data: res.results.features, timedOut: false })
             }, (error) => {
                 console.log(error)
             });
@@ -283,7 +270,7 @@ class Page extends Component {
 
         console.log('SHow details for: ', id)
 
-        this.props.history.push('/events/?id=' + id )
+        this.props.history.push('/v0.1/events/' + id + '/')
 
         let current_item = this.state.data.filter(item => item._id == id);
         current_item = current_item[0];
