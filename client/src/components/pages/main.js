@@ -51,8 +51,7 @@ class Page extends Component {
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
             vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
-            distance: 2.5,
-            activity: 'all',
+            distance: 5.5 * 1609.344,
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
@@ -196,9 +195,11 @@ class Page extends Component {
         this.setState({ data : this.state.data })
         */
         let query = querystring.stringify({
-            lat: this.state.lat,
-            lon: this.state.lon,
-            distance: this.state.distance,
+            // lat: this.state.lat,
+            // lon: this.state.lon,
+            point: `${this.state.lon},${this.state.lat}`,
+            // distance: this.state.distance,
+            dist: this.state.distance,
             activity: this.state.event_categories,
             days: this.props.currentDays
         });
@@ -225,10 +226,12 @@ class Page extends Component {
     showPlaces(){
 
         let query = querystring.stringify({
-            lat: this.state.lat,
-            lon: this.state.lon,
-            distance: this.state.distance,
-            activities: this.state.place_categories
+            // lat: this.state.lat,
+            // lon: this.state.lon,
+            point: `${this.state.lon},${this.state.lat}`,
+            // distance: this.state.distance,
+            dist: this.state.distance,
+            activity: this.state.place_categories
         });
 
         this.setState({ timedOut: false })
