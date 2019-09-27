@@ -4,6 +4,7 @@ import querystring from 'querystring';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Dimmer, Grid, Header, Icon, Loader } from 'semantic-ui-react'
 import { Global, css } from '@emotion/core'
+import foursquare from '../../services/foursquare.js'
 
 // TODO: move to services
 import helpers from '../../helpers.js'
@@ -24,6 +25,7 @@ import * as actions from '../../redux/actions';
 
 /* TODO: Break this into styles for each component */
 import '../../styles/events_page.scss';
+import { isNumber } from 'util';
 
 // TODO: Seperate data rendering from layout from UI logic? 
 // TODO: Move to main page component, i.e main.js or index.js
@@ -39,13 +41,13 @@ class Page extends Component {
             items: [],
             lat: 37.79535238155009,
             lon: -122.2823644705406,
-            days: 5,
             event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
             vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
-            distance: 5.5,
+            distance: 2.5,
+            activity: 'all',
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
@@ -53,7 +55,6 @@ class Page extends Component {
             timedOut: false,
             time_of_day: 'morning',
             width: window.innerWidth,
-            zoom: 14.3
         }
 
         this.showDetails = this.showDetails.bind(this);
@@ -71,13 +72,13 @@ class Page extends Component {
 
         // TODO: remove to Redux? 
         this.setState({ activity_options : Constants.activty_categories })
-
-        // TODO: confirm right place to set redux state from defaults. 
-        this.props.setZoom(this.state.zoom)
         
         // Search for all categories that match the current selection and concatenate them
         // TODO: set in Redux? 
         let current = Constants.place_categories.find(item => item.key === 'all')
+
+        this.setStateFromQuery(this.props.location.search)
+
         
         // Concatanate the default set of categories.
         let combined_categories = helpers.findPlaceCategoriess(current.categories);
@@ -87,6 +88,35 @@ class Page extends Component {
         // Get data for the users current location
         // TODO: Should this be a promise? 
         this.getPosition();
+
+    }
+
+    // Take URL params and map to state
+    setStateFromQuery(query) {
+        let params = querystring.parse(query)
+        /*TODO: cases for each param that are validated against available options */
+
+        for (const key in params) {
+            if (params.hasOwnProperty(key)) {
+                const value = params[key];
+                switch (key) {
+                    case "days":
+                        console.log("Got days!!!!", value)
+                        if (Number.isInteger(value)) {
+                            this.setDays(value)
+                        }
+                        break;
+
+                    case "activity":
+                        // TODO: Handle validate if value is note correct
+                        this.setActivity(value)
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     getPosition = function() {
@@ -119,18 +149,25 @@ class Page extends Component {
 
     setActivity(activity, key) {
 
-        let event_categories = Constants.activty_categories.find(item => item.key === activity.value)
+        console.log("!!!Searching for this activity: ", activity)
 
+        let event_categories = Constants.activty_categories.find(item => item.key === activity)
         // Places have nest categories; Here's an good enough way to get those.
         // Concatanate the default set of categories.
         // Search for all categories that match the current selection and concatenate them
-        let current_categories = Constants.place_categories.find(item => item.key === activity.value)
+        let current_categories = Constants.place_categories.find(item => item.key === activity)
         let combined_categories = helpers.findPlaceCategoriess(current_categories.categories);
 
-        this.setState({ event_categories: event_categories.categories, place_categories: combined_categories }, function() {
+        this.setState({ 
+            activity: activity,
+            event_categories: event_categories.categories, 
+            place_categories: combined_categories, 
+        }, function() {
             this.showEvents()
             this.showPlaces()
         })
+
+        
     }
 
     setDays(days) {
@@ -185,7 +222,7 @@ class Page extends Component {
             lat: this.state.lat,
             lon: this.state.lon,
             distance: this.state.distance,
-            activity: this.state.place_categories
+            activities: this.state.place_categories
         });
 
         this.setState({ timedOut: false })
@@ -199,7 +236,26 @@ class Page extends Component {
             .then(res => {
                 clearTimeout(timeout);
                 console.log('Received this many places: ', res.data.length)
-                this.setState({ places_data: res.data, timedOut: false })
+                console.log('First result from database: ', res.data[0])
+
+                //TODO: Cory, where the best place to have the Foursquare query on top of our places
+                this.showAttractions().then(results => {
+                    
+                    results.map(item => {
+                        const itemIndex = res.data.findIndex(obj => obj.id === item.id);
+                        console.log("Found item index? ", itemIndex)
+                        if(itemIndex > 0) {
+                            // TODO: this is very hacky way to show ranking that will be replaces
+                            res.data[itemIndex].rating = item.relevance;
+                            console.log("Updated", res.data[itemIndex])
+                        } else {
+                            console.log(item.name, "is missing from database.")
+                        }                        
+                    })
+
+                    this.setState({ places_data: res.data, timedOut: false })
+
+                });
             }, (error) => {
                 console.log(error)
             });
@@ -207,12 +263,19 @@ class Page extends Component {
     }
 
     showAttractions() {
+        return new Promise((resolve, reject) => {
+        
         let query = 'local' //art, fun, bar, food, scenic, community
-        helpers.searchFoursquare(query, this.state.lat.toString() + ',' + this.state.lon.toString())
+        foursquare.searchFoursquare(query, this.state.lat.toString() + ',' + this.state.lon.toString())
             .catch((err) => console.log(err))
-            .then((results) => console.log('Local results: ', results))
+            .then((results) => {
+                
+                resolve(results)
+            })
+
             //Set State then, get top
             //.then((result) => this.setState({ result: result }))
+        })
     }
 
     // Get the current data item and display it
@@ -271,7 +334,8 @@ class Page extends Component {
             setActivity={ this.setActivity } 
             days={ this.props.currentDays } 
             vibes={this.state.vibe_categories} 
-            activity = { this.state.event_categories } 
+            activities = { this.state.event_categories } 
+            activity={this.state.activity}
             isMobile = { isMobile } />
 
         let events_map = <EventsMap events_data={this.state.data} places_data={this.state.places_data} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
@@ -282,7 +346,7 @@ class Page extends Component {
         // Adaptive view for mobile users
         if (isMobile) {
             return (                
-                <MobilePage data={this.state.data} places_data={this.state.places_data} lat={this.state.lat} lon={this.state.lon} zoom={this.props.currentZoom} days={this.state.days} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
+                <MobilePage data={this.state.data} places_data={this.state.places_data} lat={this.state.lat} lon={this.state.lon} days={this.state.days} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
             )
         } else {
             return (
@@ -331,6 +395,7 @@ class Page extends Component {
 // AppContainer.js
 const mapStateToProps = state => ({
     geod: state.geod,
+    currentCategory: state.currentCategory,
     currentLocation: state.currentLocation,
     currentZoom: state.currentZoom,
     currentDays: state.currentDays,
