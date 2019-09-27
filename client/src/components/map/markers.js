@@ -65,7 +65,8 @@ export default class Markers extends React.Component {
   }
   
   addMarkers(features, map, current_vibes) {
-      let min_size = 22;
+      // TODO: Make minimum image size programic as a lower threshold
+      let min_size = 30;
       // Create a scale based uopn the ranking score
       let max = helpers.getMax(features, 'score')
 
@@ -102,6 +103,7 @@ export default class Markers extends React.Component {
 
         // Scale the marker based on score and zoom
         let size = helpers.scaleMarker(score, max, map.getZoom());
+        //console.log("Marker size: ", size, score, max)
         el.style.width = size + 'px';
         el.style.height = size + 'px';
 
