@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/actions';
 
 import helpers from '../../helpers.js'
+import foursquare from '../../services/foursquare.js'
+
 import PlaceNearby from './place_nearby'
 
 class PlaceCards extends Component {
@@ -30,7 +32,8 @@ class PlaceCards extends Component {
 
         //TODO: Hook this up to the select vibes and cache it to the database
         let query = 'local' //art, fun, bar, food, scenic, community
-        helpers.searchFoursquare(query, this.props.lat.toString() + ',' + this.props.lon.toString())
+        console.log("Foursquare: ", foursquare)
+        foursquare.searchFoursquare(query, this.props.lat.toString() + ',' + this.props.lon.toString())
             .catch((err) => console.log(err))
             .then((results) => this.setTopandNearBy(results))
             //Set State then, get top
