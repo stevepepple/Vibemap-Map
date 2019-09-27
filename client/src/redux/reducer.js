@@ -1,18 +1,25 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 import GeoJSON from 'geojson';
 import request from 'request-promise'
 
 import helpers from '../helpers.js'
+import querystring from 'querystring'
 
-
-const uiState = {
-
-}
 
 export function uiReducer(state = uiState, action) {
   switch(action.type) {
     
   }
+}
+
+// reducer takes state and action (in our a javascript object) as parameters
+// then returns a state
+export const uiState = (state = {}, action) => {
+  if (action.type == 'SET_UI_STATE') {
+    console.log("Setting initial Redux state with: ", action)
+    state = action.state
+  }
+  return state
 }
 
 // reducer takes state and action (in our a javascript object) as parameters
@@ -25,7 +32,7 @@ export const currentLocation = (state = {}, action) => {
   return state
 }
 
-export const currentZoom = (state = {}, action) => {
+export const currentZoom = (state = 14, action) => {
   if (action.type == 'SET_ZOOM') {
     console.log("Setting Redux state with zoom: ", action.zoom)
     state = action.zoom
@@ -41,7 +48,8 @@ export const currentDistance = (state = {}, action) => {
   return state
 }
 
-export const currentDays = (state = 2, action) => {
+// Default state is one day
+export const currentDays = (state = 1, action) => {
   if (action.type == 'SET_DAYS') {
     console.log('Setting Days ', action)
     state = action.days
@@ -120,5 +128,6 @@ export const reducers = combineReducers({
   currentDays,
   currentVibes,
   name,
-  nearby_places
+  nearby_places, 
+  uiState
 });

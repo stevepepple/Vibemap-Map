@@ -1,3 +1,8 @@
+export const setUIState = state => ({
+  type: 'SET_UI_STATE',
+  state,
+});
+
 
 export const activateGeod = geod => ({
   type: 'ACTIVATE_GEOD',
