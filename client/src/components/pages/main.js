@@ -32,6 +32,8 @@ const ApiHeaders = new Headers({
     'Authorization': 'Token ' + Constants.SYSTEM_TOKEN
 });
 
+const ApiUrl = 'https://api.vibemap.com';
+
 // TODO: Seperate data rendering from layout from UI logic? 
 // TODO: Move to main page component, i.e main.js or index.js
 class Page extends Component {
@@ -210,7 +212,7 @@ class Page extends Component {
             this.setState({ timedOut: true })
         }, Constants.TIMEOUT)
 
-        fetch("/v0.1/events/?" + query, {headers: ApiHeaders})
+        fetch(ApiUrl + "/v0.1/events/?" + query, {headers: ApiHeaders})
             .then(data => data.json())
             .then(res => {
                 clearTimeout(timeout);
@@ -240,7 +242,7 @@ class Page extends Component {
             this.setState({ timedOut: true })
         }, Constants.TIMEOUT)
 
-        fetch("/v0.1/places/?" + query, {headers: ApiHeaders})
+        fetch(ApiUrl + "/v0.1/places/?" + query, {headers: ApiHeaders})
             .then(data => data.json())
             .then(res => {
                 clearTimeout(timeout);
