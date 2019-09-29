@@ -39,6 +39,11 @@ export const setEventLocation = location => ({
   location,
 });
 
+export const setEventsData = events_data => ({
+  type: 'SET_EVENTS_DATA',
+  events_data,
+});
+
 export const setNearbyPlaces = places => ({
   type: 'SET_NEARBY_PLACES',
   places,

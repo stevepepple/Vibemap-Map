@@ -94,6 +94,22 @@ export const nearby_places = (state = [], action) => {
   return state
 }
 
+export const eventsData = (state = [], action) => {
+
+  if (action.type == 'SET_EVENTS_DATA') {
+    // TODO: Map and process, but plan to move this logic to API
+    let processed = action.events_data.map(event => {
+      event.properties.score = event.properties.likes
+      return event
+    })
+
+    // Save the processed data to state.
+    state = processed    
+  }
+
+  return state
+}
+
 // TODO: Remove; This is just a test
 export const name = (state = 'Steve', action) => {
   
@@ -128,6 +144,7 @@ export const reducers = combineReducers({
   currentDays,
   currentVibes,
   name,
+  eventsData,
   nearby_places, 
   uiState
 });
