@@ -44,7 +44,6 @@ class Page extends Component {
         super(props);
 
         this.state = {
-            places_data: [],
             top_event: [],
             items: [],
             lat: 37.79535238155009,
@@ -223,31 +222,19 @@ class Page extends Component {
     // TODO: Move to service & reducer
     showPlaces(){
 
-        let query = querystring.stringify({
-            // lat: this.state.lat,
-            // lon: this.state.lon,
-            point: `${this.state.lon},${this.state.lat}`,
-            // distance: this.state.distance,
-            dist: this.state.distance,
-            activity: this.state.place_categories
-        });
+        let point = `${this.state.lon},${this.state.lat}`
 
         this.setState({ timedOut: false })
 
-        let timeout = setTimeout(() => {
-            this.setState({ timedOut: true })
-        }, Constants.TIMEOUT)
-
-        fetch(ApiUrl + "/v0.1/places/?" + query, {headers: ApiHeaders})
-            .then(data => data.json())
-            .then(res => {
-                clearTimeout(timeout);
-                console.log('Received this many places: ', res.results.features.length)
-                this.setState({ places_data: res.results.features, timedOut: false })
+        /* Get nearby places, then set them in the Redux state */
+        /* TODO: package args into spread object? */
+        VibeMap.getPlaces(point, this.state.distance, this.state.event_categories)
+            .then(results => {
+                this.props.setPlacesData(results.data)
+                this.setState({ loading: false, timedOut: false })
             }, (error) => {
                 console.log(error)
-            });
-
+            })
     }
 
     // TODO: This goes away
@@ -315,7 +302,7 @@ class Page extends Component {
             activity={this.state.activity}
             isMobile = { isMobile } />
 
-        let events_map = <EventsMap events_data={this.props.eventsData} places_data={this.state.places_data} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
+        let events_map = <EventsMap events_data={this.props.eventsData} places_data={this.props.placesData} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
@@ -323,7 +310,7 @@ class Page extends Component {
         // Adaptive view for mobile users
         if (isMobile) {
             return (                
-                <MobilePage data={this.props.eventsData} places_data={this.state.places_data} lat={this.state.lat} lon={this.state.lon} days={this.state.days} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
+                <MobilePage data={this.props.eventsData} places_data={this.props.placesData} lat={this.state.lat} lon={this.state.lon} days={this.state.days} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
             )
         } else {
             return (
@@ -377,7 +364,8 @@ const mapStateToProps = state => ({
     currentZoom: state.currentZoom,
     currentDays: state.currentDays,
     currentDistance: state.currentDistance,
-    eventsData: state.eventsData
+    eventsData: state.eventsData,
+    placesData: state.placesData
 });
 
 const EventsPage = connect(

@@ -66,11 +66,12 @@ class EventsMap extends Component {
         console.log('updated props: ', nextProps)
         // TODO: Hack to group event and places heatmap, until the venues database is updated.
         let combined_places = nextProps.places_data.concat(nextProps.events_data)
-        // let places_geojson = turf.featureCollection(combined_places);
-        console.log('combined_places is');
-        console.log(combined_places);
 
-        this.setState({ places_geojson: combined_places })
+        console.clear()
+        console.log("combined_places: ", combined_places)
+        let places_geojson = turf.featureCollection(combined_places);
+
+        this.setState({ places_geojson: places_geojson })
     }
 
     onSelect = function() {
