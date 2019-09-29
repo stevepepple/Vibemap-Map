@@ -131,7 +131,7 @@ class EventsMap extends Component {
 
     render() {
 
-        let has_places_data = this.props.events_data.length > 0;
+        let has_places_data = this.props.places_data.length > 0;
         console.log('has_places_data: ' + has_places_data);
         let has_events_data = this.props.events_data.length > 0;
         console.log('has_events_data: ' + has_events_data);

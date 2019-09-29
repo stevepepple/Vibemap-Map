@@ -19,12 +19,12 @@ class ListItem extends React.Component {
     }
 
     render() {
-
-        let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);
-        let date = moment(this.props.content.date)
+        
+        let title = this.props.content.name;
         let start = this.props.content.start_time
-        let title = this.props.content.title;
+        let date = moment(this.props.content.start_date)
         let score = Math.round(this.props.content.score)
+        let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);
          
         // TODO: Move to server side
         if (title) {
@@ -45,7 +45,7 @@ class ListItem extends React.Component {
         return (
             
             <Item onClick={boundClick} key={this.props.id} data-id={content.id}>
-                <Item.Image src={this.props.content.image} size='small' />
+                <Item.Image src={this.props.content.images[0]} size='small' />
                 <Item.Content onMouseOver={this.handleHover.bind(this, this.props.id)} onMouseLeave={this.onMouseLeave.bind(this, this.props.id)}>
                     <Item.Extra className='date'>{date.format('dddd')} {start}</Item.Extra>
                     <Item.Header>{title}</Item.Header>                

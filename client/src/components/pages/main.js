@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Dimmer, Grid, Header, Icon, Loader } from 'semantic-ui-react'
 import { Global, css } from '@emotion/core'
 import foursquare from '../../services/foursquare.js'
+import VibeMap from '../../services/VibeMap.js'
 
 // TODO: move to services
 import helpers from '../../helpers.js'
@@ -28,6 +29,7 @@ import '../../styles/events_page.scss';
 import { isNumber } from 'util';
 
 
+/* TODO: Move to service */
 const ApiHeaders = new Headers({
     'Authorization': 'Token ' + Constants.SYSTEM_TOKEN
 });
@@ -42,12 +44,12 @@ class Page extends Component {
         super(props);
 
         this.state = {
-            data: [],
             places_data: [],
             top_event: [],
             items: [],
             lat: 37.79535238155009,
             lon: -122.2823644705406,
+            // TODO: set state form YAML
             event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
@@ -97,7 +99,18 @@ class Page extends Component {
 
     }
 
+    // never let a process live forever 
+    // always kill a process everytime we are done using it
+    componentWillUnmount() {
+        if (this.state.intervalIsSet) {
+            clearInterval(this.state.intervalIsSet);
+            this.setState({ intervalIsSet: null });
+        }
+    }
+
+
     // Take URL params and map to state
+    // TODO: Sync the URL state both ways
     setStateFromQuery(query) {
         let params = querystring.parse(query)
         /*TODO: cases for each param that are validated against available options */
@@ -124,7 +137,7 @@ class Page extends Component {
             }
         }
     }
-
+    
     getPosition = function() {
         // Users geo location from HTML 5 util
         helpers.getPosition()
@@ -144,10 +157,11 @@ class Page extends Component {
             })
     }
 
-    // TODO: this is replaced by Redux
+    // TODO: Can this also be replaced by Redux
     setPosition(lat, lon) {
         console.log("Setting new position!!!", lat, lon)
         this.setState({ lat : lat, lon : lon}, function(){
+            // TODO: these should have argument and no side effects
             this.showEvents()
             this.showPlaces()
         })
@@ -172,10 +186,9 @@ class Page extends Component {
             this.showEvents()
             this.showPlaces()
         })
-
-        
     }
 
+    /* TODO: this can be all redux */
     setDays(days) {
         console.log('Setting days state in main: ', days)
         this.setState({ days: days.value }, function() {
@@ -189,42 +202,25 @@ class Page extends Component {
         console.log('window width: ', this.state.width)
     };
 
-    //TODO Should all of this logic just flow through an event service and component?
+    /* TODO: Should all of this logic just flow through an event service and component? */
     showEvents(position) {
 
-        this.state.data.pop()
-        /*
-        this.setState({ data : this.state.data })
-        */
-        let query = querystring.stringify({
-            // lat: this.state.lat,
-            // lon: this.state.lon,
-            point: `${this.state.lon},${this.state.lat}`,
-            // distance: this.state.distance,
-            dist: this.state.distance,
-            activity: this.state.event_categories,
-            days: this.props.currentDays
-        });
-
-        this.setState({ timedOut: false})
-        
-        let timeout = setTimeout(() => {
-            this.setState({ timedOut: true })
-        }, Constants.TIMEOUT)
-
-        fetch(ApiUrl + "/v0.1/events/?" + query, {headers: ApiHeaders})
-            .then(data => data.json())
-            .then(res => {
-                clearTimeout(timeout);
-                console.log(res);
-                console.log('Received this many events: ', res.results.features.length)
-
-                this.setState({ data: res.results.features, loading: false, timedOut : false })
+        let point = `${this.state.lon},${this.state.lat}`
+        this.setState({ timedOut: false})    
+    
+        /* Get current events, then set them in the state */
+        /* TODO: package args into spread object? */
+        VibeMap.getEvents(point, this.state.distance, this.state.event_categories, this.props.currentDays)
+            .then(results => {
+                this.props.setEventsData(results.data)
+                this.setState({ loading: false, timedOut: false })
             }, (error) => {
                 console.log(error)
-            });
+            })
     }
 
+    // Get Ranked Places for the map
+    // TODO: Move to service & reducer
     showPlaces(){
 
         let query = querystring.stringify({
@@ -254,6 +250,7 @@ class Page extends Component {
 
     }
 
+    // TODO: This goes away
     showAttractions() {
         return new Promise((resolve, reject) => {
         
@@ -271,6 +268,7 @@ class Page extends Component {
     }
 
     // Get the current data item and display it
+    // Add details shows state to Redux and sync with mobile + web UI
     showDetails = function (id, event) {
 
         console.log('SHow details for: ', id)
@@ -302,19 +300,6 @@ class Page extends Component {
         this.setState({ current_item : null, details_shown : false })
     }
 
-    restart() {
-        this.setState({ data : [] })
-    }
-
-    // never let a process live forever 
-    // always kill a process everytime we are done using it
-    componentWillUnmount() {
-        if (this.state.intervalIsSet) {
-            clearInterval(this.state.intervalIsSet);
-            this.setState({ intervalIsSet: null });
-        }
-    }
-
     render() {
 
         const { width } = this.state;
@@ -330,7 +315,7 @@ class Page extends Component {
             activity={this.state.activity}
             isMobile = { isMobile } />
 
-        let events_map = <EventsMap events_data={this.state.data} places_data={this.state.places_data} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
+        let events_map = <EventsMap events_data={this.props.eventsData} places_data={this.state.places_data} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
@@ -338,7 +323,7 @@ class Page extends Component {
         // Adaptive view for mobile users
         if (isMobile) {
             return (                
-                <MobilePage data={this.state.data} places_data={this.state.places_data} lat={this.state.lat} lon={this.state.lon} days={this.state.days} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
+                <MobilePage data={this.props.eventsData} places_data={this.state.places_data} lat={this.state.lat} lon={this.state.lon} days={this.state.days} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
             )
         } else {
             return (
@@ -354,7 +339,7 @@ class Page extends Component {
                                     this.state.details_shown ? (
                                         <EventDetails data={this.state.current_item} clearDetails={this.clearDetails} />
                                     ) : (
-                                        <EventsList data={this.state.data} type='places' onclick={this.showDetails} handleListType={this.handleListType} />
+                                        <EventsList data={this.props.eventsData} type='places' onclick={this.showDetails} handleListType={this.handleListType} />
                                     )
                                 }
 
@@ -391,7 +376,8 @@ const mapStateToProps = state => ({
     currentLocation: state.currentLocation,
     currentZoom: state.currentZoom,
     currentDays: state.currentDays,
-    currentDistance: state.currentDistance
+    currentDistance: state.currentDistance,
+    eventsData: state.eventsData
 });
 
 const EventsPage = connect(
