@@ -1,22 +1,18 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+//import Geocoder from "@mapbox/react-geocoder";
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions';
+
 import * as turf from '@turf/turf'
-import debounce from 'lodash'
+import { Global } from '@emotion/core'
+import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Popup } from 'react-map-gl'
 
-import { Global, css } from '@emotion/core'
-
-import Map from '../map.js'
-import Source from '../map/source'
-import Layer from '../map/layer'
+// TODO: Remove these other map sources
 import Styles from '../../styles/map_styles.js'
-import Markers from '../map/markers.js';
 import PhotoMarker from '../map/photo_marker.js';
 import YouAreHere from '../map/you_are_here.js';
 import ZoomLegend from '../map/ZoomLegend';
 
-//import Geocoder from "@mapbox/react-geocoder";
-import { connect } from 'react-redux'
-import * as actions from '../../redux/actions';
 
 // TODO: load from common .env
 import * as Constants from '../../constants.js'
@@ -28,8 +24,8 @@ class EventsMap extends Component {
 
         // TODO: Move to database or it's own repository
         this.state = {
-            geojson: [],
             lens : {"type": "FeatureCollection", "features": []},
+            popupInfo: null,
             photos_geojson : {"type": "FeatureCollection", "features": [
                 { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.428030, 37.758175] }, "properties": { "id": 2, "name": "Mission Dolores", "description": "#dolorespark", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/c07cbc0614f1f96f9ff1e8336b661c4c/5DA48BC6/t51.2885-15/e35/c0.163.1440.1440a/s320x320/61546227_157370168642961_5480952316658836778_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com"}},
                 { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.420595, 37.762995] }, "properties": { "id": 3, "name": "Clarion Alley Street", "description": "#clarionalley", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/859604c1d74a65a490d2a18c537ff093/5DAC007C/t51.2885-15/sh0.08/e35/p640x640/58741888_168172800851438_5323061855820526706_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com"}},
@@ -49,28 +45,28 @@ class EventsMap extends Component {
 
     componentDidMount(){
         let geojson = turf.featureCollection(this.props.events_data)
-        this.setState({ geojson: geojson })
-
-        let places_geojson = turf.featureCollection(this.props.places_data);
-
-        //this.setState({ places_geojson: places_geojson })
+        this.setState({ 
+            geojson: geojson
+         })
     }
 
     componentWillReceiveProps(nextProps){
-        let geojson = turf.featureCollection(nextProps.events_data);
 
-        this.setState({ geojson: geojson, zoom : nextProps.zoom })
+        this.setState({ 
+            viewport: {
+                latitude: this.props.lat,
+                longitude: this.props.lng,
+                zoom: this.props.zoom
+            }
+        })
 
+        // TODO: why is this needed outside a component?
         this.showLens([nextProps.lng, nextProps.lat])
 
-        console.log('updated props: ', nextProps)
-        // TODO: Hack to group event and places heatmap, until the venues database is updated.
+        // TODO: @cory Hack to group event and places heatmap, until the venues database is updated.
         let combined_places = nextProps.places_data.concat(nextProps.events_data)
-
-        console.clear()
-        console.log("combined_places: ", combined_places)
+        // Make it valide geoJSON
         let places_geojson = turf.featureCollection(combined_places);
-
         this.setState({ places_geojson: places_geojson })
     }
 
@@ -78,17 +74,67 @@ class EventsMap extends Component {
         console.log('Geocoding result: ')
     }
 
-    onMapChange = (position, zoom, props) => {
-        // TODO: how to handle map movement without triggering a new data fetch. 
-        //this.props.setPosition(position.lat, position.lng)
-        // this.props.setZoom(zoom)
-        this.showLens([position.lng, position.lat])
+    _onViewportChange = viewport => {
         
-        console.log("Map changed: ", zoom)
+        // Keep Redux in sync with current map
+        if (viewport.latitude > 0) {
+
+            // TODO: @steve Calculate when the user can panned enought that we need to reload data.
+            let location = { lat: viewport.latitude, lon: viewport.longitude }
+            this.props.setCurrentLocation(location)
+            this.props.setZoom(viewport.zoom)
+            
+            //this.showLens([location.lng, location.lat])
+        }
+
+        this.setState({ viewport })
         
-        this.setState({ zoom })
     }
 
+    _getCursor = ({ isHovering, isDragging }) => {
+        //console.log("Hovering: ", isHovering)
+        return isHovering ? 'pointer' : 'default';
+    }
+
+    // Handle clicks & taps
+    _onClick = event => {
+        const feature = event.features && event.features[0];
+
+        // There a layer & feature
+        if (feature && event.features.length > 0) {
+            let first_feature = event.features[0]
+            this.setState({ popupInfo: {
+                name: first_feature.properties.name,
+                latitude: event.lngLat[1],
+                longitude: event.lngLat[0]
+            }})
+        } else {
+            this.setState({ popupInfo: null })
+        }
+    }
+
+    // Show a tooltip marker
+    _renderPopup(event) {
+        const { popupInfo } = this.state;
+
+        return (
+            popupInfo && (
+                <Popup
+                    tipSize={4}
+                    className={'marker-popup'}
+                    offsetTop={-4}
+                    longitude={popupInfo.longitude}
+                    latitude={popupInfo.latitude}
+                    closeOnClick={false}
+                    onClose={() => this.setState({ popupInfo: null })}
+                >
+                    {popupInfo.name}
+                </Popup>
+            )
+        );
+    }
+
+    // TODO: Move to it's own component
     showLens = (center) => {
         let lens = this.state.lens
         let circle_options = { units: 'kilometers'}
@@ -97,7 +143,7 @@ class EventsMap extends Component {
 
         // Add circular lens to the map
         let circle = turf.circle(center, radius_in_kilometers, circle_options)
-        lens.features[0] = circle;
+        lens.features[0] = circle
         this.setState({ lens })
     }
 
@@ -106,17 +152,18 @@ class EventsMap extends Component {
 
         let classes = {}
 
+        // TODO: this goes away or should at the least be a helper function
         Constants.all_categories.map(function (category) {
 
             if (category.key) {
-                let image = category.icon.prefix + '64' + category.icon.suffix;
-                let class_name = '.' + category.key;
+                let image = category.icon.prefix + '64' + category.icon.suffix
+                let class_name = '.' + category.key
                 classes[class_name] = { backgroundImage: 'url(' + image + ')'}
 
                 if(category.categories) {
                     
                     category.categories.map(function(sub_category){
-                        image = sub_category.icon.prefix + '32' + sub_category.icon.suffix;
+                        image = sub_category.icon.prefix + '32' + sub_category.icon.suffix
                         let sub_class_name = '.' + sub_category.key;
                         classes[sub_class_name] = { backgroundImage: 'url(' + image + ')'}
 
@@ -133,16 +180,10 @@ class EventsMap extends Component {
     render() {
 
         let has_places_data = this.props.places_data.length > 0;
-        console.log('has_places_data: ' + has_places_data);
         let has_events_data = this.props.events_data.length > 0;
-        console.log('has_events_data: ' + has_events_data);
 
-        let zoom_rounded = Math.round(this.props.currentZoom)
-
-        // Give a sense of scale to each zoom level; rounded to whole integer
-        let zoom_level = Constants.zoom_levels[zoom_rounded]
-        
         return (
+
             <div>
                 <Global
                     styles={this.createIconStyles()}
@@ -151,97 +192,63 @@ class EventsMap extends Component {
                 <div className = 'map_container'>
                     {/* Floating legend */}
                     <ZoomLegend zoom={this.props.currentZoom} />
+
+                    {/* TODO: Move to it's own class <Map> */}
+                    <ReactMapGL
+                        {...this.state.viewport}
+                        width={'100%'}
+                        height={'100%'}
+                        mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
+                        mapStyle={'mapbox://styles/stevepepple/cjpk3ts1c0skb2rs52w658p07/draft'}
+                        onClick={this._onClick}
+                        getCursor={this._getCursor}
+                        onViewportChange={this._onViewportChange}
+                    >
+                        
                     
-                    {/* See Mapbox documentation */}
-                    <Map ref={this.mapRef} lat={this.props.lat} lng={this.props.lng} zoom={this.props.currentZoom} onMapChange={this.onMapChange} bearing={0} show_geocoder={true}>
-                        <React.Fragment>
-                            
-                            {/* TODO: Show loading indicator*/ }
-                            <Source id='places' 
-                                data={this.state.places_geojson} 
-                                layer='places' 
-                                cluster={false} 
-                                clusterMaxZoom={14}
-                                clusterRadius={240}>
+                        <NavigationControl
+                            showZoom={true}
+                            showCompass={true}
+                        />
+                        <GeolocateControl
+                            style={Styles.geolocateStyle}
+                            positionOptions={{ enableHighAccuracy: true }}
+                            trackUserLocation={true}
+                        />
 
-                                <Layer
-                                    id='heat'
-                                    type='heatmap'   
-                                    filter={["all"]}
-                                    paint={Styles.places_heatmap}
-                                    isLayerChecked={true}
-                                />           
+                        {this._renderPopup()}
 
-                                {/*
-                                <Layer
-                                    id='clusters'
-                                    type='circle'
-                                    filter={["has", "point_count"]}
-                                    paint={Styles.places_cluster}
-                                    isLayerChecked={true}
-                                />
-                                */}
+                        <Source
+                            id='places'
+                            type="geojson"
+                            data={this.state.places_geojson}
+                            cluster={false}>
 
-                                <Layer
-                                    id='circles'
-                                    type='circle'
-                                    filter={["all"]}
-                                    paint={Styles.events_circle}
-                                    isLayerChecked={true}
-                                />
-                            </Source>
+                            <Layer
+                                id='heat'
+                                type='heatmap'
+                                paint={Styles.places_heatmap}
+                                isLayerChecked={true}
+                            />
 
-                            <Source id='cluster'
-                                data={this.state.geojson}
-                                layer='cluster'
-                                cluster={true}
-                                clusterMaxZoom={14}
-                                clusterRadius={140}>
-                            
-                                <Layer
-                                    id='clusters'
-                                    type='circle'
-                                    filter={["has", "point_count"]}
-                                    paint={Styles.places_cluster}
-                                    isLayerChecked={true}
-                                />
-                                
-                            </Source>
-
-                            <Source id='lens' data={this.state.lens} layer='lens_shape' cluster={false} clusterMaxZoom={14} clusterRadius={120} >
-                                <Layer
-                                    id='lens_shape'
-                                    type='line'
-                                    filter={["all"]}
-                                    paint={Styles.lens}
-                                    isLayerChecked={true}
-                                />
-                            </Source>
-                            
-                            <Markers type='events' data={this.state.geojson} current_vibes={this.props.currentVibes} onclick={this.props.onclick} zoom={this.props.zoom} />
-                            <Markers type='places' data={this.props.nearby_places} onclick={this.props.onclick} zoom={this.props.zoom} />
-                            <PhotoMarker type='places' data={this.state.photos_geojson} onclick={this.props.onclick} zoom={this.props.zoom} />
-                            
-                            <YouAreHere lat={this.props.lat} lng={this.props.lng} />
-                        </React.Fragment>
-                            
-                    </Map>
+                            <Layer
+                                id="places"
+                                type="symbol"
+                                layout={Styles.marker_layout}
+                                paint={Styles.marker_paint}
+                            />
+                        </Source>
+                    </ReactMapGL>
+                    
                 </div>
             </div>   
         );
     }
 }
 
-EventsMap.propTypes = {
-    data: PropTypes.array,
-    lat: PropTypes.number,
-    lng: PropTypes.number,
-    bearing: PropTypes.number,
-    zoom: PropTypes.number
-};
-
 const mapDispatchToProps = dispatch => ({
-    setZoom: zoom => dispatch(actions.setZoom(zoom))
+    setZoom: zoom => dispatch(actions.setZoom(zoom)),
+    setCurrentLocation: location => dispatch(actions.setCurrentLocation(location))
 })
 
 const mapStateToProps = state => {
@@ -249,6 +256,7 @@ const mapStateToProps = state => {
     return {
         nearby_places: state.nearby_places,
         currentVibes: state.currentVibes,
+        currentLocation: state.currentLocation,
         currentZoom: state.currentZoom,
     }
 };
