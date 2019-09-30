@@ -33,6 +33,17 @@
     margin-top: 20vmin;
 }
 
+.mapboxgl-ctrl,
+.mapboxgl-ctrl-group {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    width: auto;
+}
+
+.mapboxgl-ctrl-geolocate {
+    width: 40px;
+}
 
 .mobile .header {
     text-align: center
@@ -146,10 +157,10 @@
     position: absolute; 
     background-color: $color-purple;
     color: #FFFFFF;
-    top: 1vmin;
-    right: 4vmin;
+    top: 1.5vmin;
+    right: 5.4vmin;
     z-index: 20;
-    padding: 0.5em;
+    padding: 0.4em;
     border-radius: 10vmin;
 }
 
@@ -169,7 +180,7 @@
     background: #811897;
     background-image: url('https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_64.png');
     background-size: cover;  
-    border: solid 2px #FFFFFF;
+    border: solid 1.5px #FFFFFF;
     cursor: help;
     opacity: 0.8;
     transform: rotate(-45deg);

@@ -1,13 +1,7 @@
 import request from 'request-promise'
 import * as Constants from './constants.js'
 
-import moment from 'moment'
-import mongoose from 'mongoose'
-
-import { scaleLinear } from 'd3-scale'
-
-let config = {}
-let place_schema = {}
+import { scaleLinear, scalePow } from 'd3-scale'
 
 const helpers = {
 
@@ -52,37 +46,6 @@ const helpers = {
         }
 
         return matches;
-    },
-
-    searchFoursquare: function (query, latlon) {
-        console.log('query and latlon', query, latlon)
-        return new Promise(function (resolve, reject) {
-
-            request({
-                url: 'https://api.foursquare.com/v2/venues/explore',
-                method: 'GET',
-                qs: {
-                    client_id: Constants.FOURSQUARE_CLIENT_ID,
-                    client_secret: Constants.FOURSQUARE_SECRET,
-                    ll: latlon,
-                    query: query,
-                    // TODO: update based upon map radius 
-                    radius: 750,
-                    v: '20180323',
-                    limit: 10
-                }
-            }).then(function (body) {
-                let results = JSON.parse(body)
-                    
-                if (!results.response == undefined) {
-                    reject('No results for search.')
-                } else {
-                    console.log('Got Foursquare place...', results.response)
-                    resolve(results);
-                }
-            })
-            
-        });
     },
 
     topFoursquareResult: function(results) {
@@ -176,14 +139,14 @@ const helpers = {
         if (!max) { let max = 1000 }
 
         //TODO: Scale marker to zoom size!
-        let marker_scale = scaleLinear()
-            .domain([8, 20]) // Zoom size
-            .range([8, 40]) // Scale of marker size
+        let marker_scale = scalePow(0.2)
+            .domain([10, 20]) // Zoom size
+            .range([2, 40]) // Scale of marker size
 
         let base_marker = marker_scale(zoom)
         let max_marker = base_marker * 3;
 
-        let scale = scaleLinear()
+        let scale = scalePow(1)
             .domain([0, max])
             .range([base_marker, max_marker]);
 
@@ -201,6 +164,34 @@ const helpers = {
 
         return max;
 
+    },
+
+    /* global setTimeout, clearTimeout */
+    /* eslint-disable consistent-this, func-names */
+    debounce: function(func, delay) {
+        let _this;
+        let _arguments;
+        let timeout;
+
+
+        const executeNow = () => {
+            timeout = null;
+            return func.apply(_this, _arguments);
+
+        };
+
+        console.log(_this, _arguments)
+
+
+        return function () {
+            _this = this;
+            _arguments = arguments;
+
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(executeNow, delay);
+        };
     },
 
     itemExists: function (name) {

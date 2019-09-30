@@ -37,8 +37,6 @@ class Navigation extends Component {
 
     componentWillMount() {
         this.setVibeOptions()
-        // TODO: remove to Redux? 
-        this.setState({ activity_: Constants.activty_categories })
     }
 
     setVibeOptions = (props) => {
@@ -61,15 +59,13 @@ class Navigation extends Component {
 
     handleActivityChange = (event, { value }) => {
         this.setState({ current_activity : value })
-        this.props.setActivity({ value })
+        this.props.setActivity(value)
     }
 
     handleVibeChange = (event, { value }) => {
-        
         this.setState({ vibes: value })
         this.props.setCurrentVibes(value)  
     }
-
 
     render() {
 
@@ -115,6 +111,7 @@ class Navigation extends Component {
                                         selection
                                         onChange={this.handleActivityChange}
                                         options={Constants.activty_categories}
+                                        value={this.props.activity}
                                     />
 
                                     <Dropdown

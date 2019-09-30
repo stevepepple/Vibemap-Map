@@ -15,7 +15,51 @@ module.exports = {
         return geojson;
     },
 
-	getPlaceDetails(id) {
+    // TODO: Move to services or API
+    searchFoursquare: function (query, latlon) {
+        console.log('query and latlon', query, latlon)
+        return new Promise(function (resolve, reject) {
+
+            request({
+                url: 'https://api.foursquare.com/v2/venues/explore',
+                method: 'GET',
+                qs: {
+                    client_id: FOURSQUARE_CLIENT_ID,
+                    client_secret: FOURSQUARE_SECRET,
+                    ll: latlon,
+                    query: query,
+                    // TODO: Only do top picks if the user has not entered a query
+                    section: 'topPicks',
+                    // TODO: update based upon map radius 
+                    radius: 750,
+                    v: '20180323',
+                    limit: 50
+                }
+            }).then(function (body) {
+                let results = JSON.parse(body)
+                console.log(results)
+
+                if (!results.response == undefined) {
+                    reject('No results for search.')
+                } else {
+                    
+                    let items = results.response.groups[0].items;
+                    let length = items.length                    
+
+                    let ranked_items = items.map((item, index) => {
+                        // Make the relevace 1 - 10 based on number of results
+                        item.venue.relevance = (length / (length - index)) * 10;
+                        return item.venue;
+                    })
+                    
+                    resolve(ranked_items);
+                }
+            })
+
+        });
+    },
+
+    getPlaceDetails(id) {
 		return new Promise((resolve, reject) => {
             request({
                 url: 'https://api.foursquare.com/v2/venues/' + id,
@@ -67,5 +111,4 @@ module.exports = {
 		});
     }
     
-    
-};
+}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MainPage from './components/pages/main';
 import PlacesMap from './components/places/places_map';
 import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
-import { Icon,Menu, Dropdown } from 'semantic-ui-react'
+import { Menu, Dropdown } from 'semantic-ui-react'
 
 import './styles/App.css';
 

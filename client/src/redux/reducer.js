@@ -1,13 +1,4 @@
-import { combineReducers } from 'redux';
-import GeoJSON from 'geojson';
-import request from 'request-promise'
-
-import helpers from '../helpers.js'
-
-
-const uiState = {
-
-}
+import { combineReducers } from 'redux'
 
 export function uiReducer(state = uiState, action) {
   switch(action.type) {
@@ -17,17 +8,25 @@ export function uiReducer(state = uiState, action) {
 
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
+export const uiState = (state = {}, action) => {
+  if (action.type == 'SET_UI_STATE') {
+    console.log("Setting initial Redux state with: ", action)
+    state = action.state
+  }
+  return state
+}
+
+// reducer takes state and action (in our a javascript object) as parameters
+// then returns a state
 export const currentLocation = (state = {}, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
-    console.log("Setting Redux state with Location ", action.location)
     state = action.location
   }
   return state
 }
 
-export const currentZoom = (state = {}, action) => {
+export const currentZoom = (state = 14, action) => {
   if (action.type == 'SET_ZOOM') {
-    console.log("Setting Redux state with zoom: ", action.zoom)
     state = action.zoom
   }
   return state
@@ -41,7 +40,8 @@ export const currentDistance = (state = {}, action) => {
   return state
 }
 
-export const currentDays = (state = 2, action) => {
+// Default state is one day
+export const currentDays = (state = 1, action) => {
   if (action.type == 'SET_DAYS') {
     console.log('Setting Days ', action)
     state = action.days
@@ -86,6 +86,41 @@ export const nearby_places = (state = [], action) => {
   return state
 }
 
+export const eventsData = (state = [], action) => {
+
+  if (action.type == 'SET_EVENTS_DATA') {
+    // TODO: Map and process, but plan to move this logic to API
+    let processed = action.events_data.map(event => {
+      event.properties.score = event.properties.likes
+      return event
+    })
+
+    // Save the processed data to state.
+    state = processed    
+  }
+
+  return state
+}
+
+export const placesData = (state = [], action) => {
+
+  if (action.type == 'SET_PLACES_DATA') {
+    // TODO: Map and process, but plan to moe this logic to API
+    let processed = action.places_data.map(place => {
+      // TODO: Score places with more categories higher
+      //console.log("categories: ", place.properties.categories)
+      place.properties.categories = place.properties.categories.shift();
+      //event.properties.score = event.properties.likes
+      return place
+    })
+
+    // Save the processed data to state.
+    state = processed
+  }
+
+  return state
+}
+
 // TODO: Remove; This is just a test
 export const name = (state = 'Steve', action) => {
   
@@ -120,5 +155,8 @@ export const reducers = combineReducers({
   currentDays,
   currentVibes,
   name,
-  nearby_places
+  eventsData,
+  nearby_places,
+  placesData,
+  uiState
 });

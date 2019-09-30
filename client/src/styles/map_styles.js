@@ -9,15 +9,24 @@ module.exports = {
       'line-width': 2
     },
 
+    geolocateStyle : {
+      position: 'absolute',
+      right: 3,
+      top: "8em",
+      margin: 10,
+      width: 30
+    },
+
+    // TODO: this style is not used? 
     places_circle: {
       'circle-radius': [
-        'interpolate',
-        ['exponential', 10],
-        ["zoom"],
-        8, 2,
-        12, 6,
-        20, 14
-      ],
+      'interpolate',
+      ['exponential', 10],
+      ["zoom"],
+      3, ['*', 4, ['to-number', ['get', 'rating']]],
+      12, ['*', 20, ['to-number', ['get', 'rating']]],
+      18, ['*', 30, ['to-number', ['get', 'rating']]]],
+
       'circle-color': [
         "case",
         [
@@ -122,6 +131,35 @@ module.exports = {
       'circle-stroke-opacity': {
         stops: [[10, 0.0], [12, 0.4], [13, 0.6], [18, 1.0]] }
     },
+ 
+    marker_layout :  {
+      "visibility": "visible",
+      "text-field": ["to-string", ["get", "name"]],
+      "text-allow-overlap" : true,
+      "text-offset": [0, -2],
+      "icon-image": [
+        "step",
+        ["zoom"],
+        ["to-string", ["get", "categories"]],
+        22,
+        ["to-string", ["get", "categories"]]
+      ],
+      "text-size": 10,
+      "icon-size": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        0,
+        0.1,
+        22,
+        1.4
+      ]
+    },
+
+    marker_paint: { 
+      "text-opacity": ["step", ["zoom"], 0, 16, 1, 22, 1]
+    },
+
     places_heatmap: {
       'heatmap-radius' : [
         "interpolate",
@@ -169,6 +207,7 @@ module.exports = {
         
       ]
     },
+
     places_cluster: {
       //   * Blue, 20px circles when point count is less than 100
       //   * Yellow, 30px circles when point count is between 100 and 750
@@ -185,16 +224,17 @@ module.exports = {
       'circle-opacity': 0.2,
       'circle-stroke-color': '#FFFFFF',
       'circle-stroke-width': 2.4,
-      "circle-radius": [
-        "step",
-        ["get", "point_count"],
-        60,
-        30,
-        120,
-        750,
-        220
-      ]
+      'circle-radius': {
+        property: 'point_count',
+        type: 'interval',
+        stops: [
+          [0, 60],
+          [100, 80],
+          [750, 160]
+        ]
+      } 
     },
+
     events_circle: {
       // increase the radius of the circle as the zoom level and dbh value increases
       'circle-radius': {
@@ -202,7 +242,7 @@ module.exports = {
         'stops': [[8, 4], [18, 20]] },
         'circle-color': '#C650CC',
         'circle-stroke-color': '#CC9423',
-        'circle-stroke-width': 0.6,
+        'circle-stroke-width': 0.4,
         'circle-opacity': {
           'stops': [[8, 0.1], [20, 0.6]]
         },

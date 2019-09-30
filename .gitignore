@@ -3,3 +3,9 @@
 /node_modules
 /client/node_modules
 /client/build
+
+.idea/
+
+.DS_Store
+client/src/styles/icons/
+app_certificate

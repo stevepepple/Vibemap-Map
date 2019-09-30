@@ -99,7 +99,7 @@ class PlacesMap extends React.Component {
                             <Layer
                                 id='events'
                                 type='circle'
-                                paint={Styles.events_circle}
+                                paint={Styles.places_circle}
                                 isLayerChecked={this.state.events.isLayerChecked}
                             />
                         </Source>

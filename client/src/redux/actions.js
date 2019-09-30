@@ -1,3 +1,8 @@
+export const setUIState = state => ({
+  type: 'SET_UI_STATE',
+  state,
+});
+
 
 export const activateGeod = geod => ({
   type: 'ACTIVATE_GEOD',
@@ -32,6 +37,16 @@ export const setCurrentVibes = vibes => ({
 export const setEventLocation = location => ({
   type: 'SET_EVENT_LOCATION',
   location,
+});
+
+export const setEventsData = events_data => ({
+  type: 'SET_EVENTS_DATA',
+  events_data,
+});
+
+export const setPlacesData = places_data => ({
+  type: 'SET_PLACES_DATA',
+  places_data,
 });
 
 export const setNearbyPlaces = places => ({

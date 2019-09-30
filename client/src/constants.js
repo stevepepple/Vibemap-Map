@@ -12,6 +12,9 @@ export const FOURSQUARE_SECRET = '2UX3X1FMXUJHRJ3GII2QNBELJ3UEU2HOOQ3X4KG2LRWIMC
 
 export const CITY_MAPPER_SECRET = '6a401321dd665074dfbb9331b16dc02b'
 
+// Token for connecting to GeoDjango API
+export const SYSTEM_TOKEN = 'f486868802f2083ab6a75e2932717ca97a4d298c';
+
 export const METERS_PER_MILE = 1609.34
 
 export const PURPLE = '#811897'
