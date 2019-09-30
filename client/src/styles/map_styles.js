@@ -9,6 +9,14 @@ module.exports = {
       'line-width': 2
     },
 
+    geolocateStyle : {
+      position: 'absolute',
+      right: 3,
+      top: "8em",
+      margin: 10,
+      width: 30
+    },
+
     // TODO: this style is not used? 
     places_circle: {
       'circle-radius': [
@@ -123,6 +131,35 @@ module.exports = {
       'circle-stroke-opacity': {
         stops: [[10, 0.0], [12, 0.4], [13, 0.6], [18, 1.0]] }
     },
+ 
+    marker_layout :  {
+      "visibility": "visible",
+      "text-field": ["to-string", ["get", "name"]],
+      "text-allow-overlap" : true,
+      "text-offset": [0, -2],
+      "icon-image": [
+        "step",
+        ["zoom"],
+        ["to-string", ["get", "categories"]],
+        22,
+        ["to-string", ["get", "categories"]]
+      ],
+      "text-size": 10,
+      "icon-size": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        0,
+        0.1,
+        22,
+        1.4
+      ]
+    },
+
+    marker_paint: { 
+      "text-opacity": ["step", ["zoom"], 0, 16, 1, 22, 1]
+    },
+
     places_heatmap: {
       'heatmap-radius' : [
         "interpolate",
@@ -170,6 +207,7 @@ module.exports = {
         
       ]
     },
+
     places_cluster: {
       //   * Blue, 20px circles when point count is less than 100
       //   * Yellow, 30px circles when point count is between 100 and 750
@@ -196,6 +234,7 @@ module.exports = {
         ]
       } 
     },
+
     events_circle: {
       // increase the radius of the circle as the zoom level and dbh value increases
       'circle-radius': {
