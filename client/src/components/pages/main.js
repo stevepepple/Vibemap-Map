@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import querystring from 'querystring';
 
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Button, Dimmer, Grid, Header, Icon, Loader } from 'semantic-ui-react'
-import { Global, css } from '@emotion/core'
+import { Grid } from 'semantic-ui-react'
+//TODO: Move to API
 import foursquare from '../../services/foursquare.js'
 import VibeMap from '../../services/VibeMap.js'
 
@@ -26,15 +25,7 @@ import * as actions from '../../redux/actions';
 
 /* TODO: Break this into styles for each component */
 import '../../styles/events_page.scss';
-import { isNumber } from 'util';
 
-
-/* TODO: Move to service */
-const ApiHeaders = new Headers({
-    'Authorization': 'Token ' + Constants.SYSTEM_TOKEN
-});
-
-const ApiUrl = 'https://api.vibemap.com';
 
 // TODO: Seperate data rendering from layout from UI logic? 
 // TODO: Move to main page component, i.e main.js or index.js
@@ -85,7 +76,6 @@ class Page extends Component {
         let current = Constants.place_categories.find(item => item.key === 'all')
 
         this.setStateFromQuery(this.props.location.search)
-
         
         // Concatanate the default set of categories.
         let combined_categories = helpers.findPlaceCategoriess(current.categories);
@@ -95,6 +85,10 @@ class Page extends Component {
         // Get data for the users current location
         // TODO: Should this be a promise? 
         this.getPosition();
+
+    }
+
+    componentDidMount() {
 
     }
 
@@ -302,7 +296,7 @@ class Page extends Component {
             activity={this.state.activity}
             isMobile = { isMobile } />
 
-        let events_map = <EventsMap events_data={this.props.eventsData} places_data={this.props.placesData} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.state.zoom} setPosition={this.setPosition} onclick={this.showDetails} />
+        let events_map = <EventsMap events_data={this.props.eventsData} places_data={this.props.placesData} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.props.currentZoom} setPosition={this.setPosition} onclick={this.showDetails} />
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
