@@ -1,10 +1,4 @@
 import { combineReducers } from 'redux'
-import GeoJSON from 'geojson';
-import request from 'request-promise'
-
-import helpers from '../helpers.js'
-import querystring from 'querystring'
-
 
 export function uiReducer(state = uiState, action) {
   switch(action.type) {
@@ -26,7 +20,6 @@ export const uiState = (state = {}, action) => {
 // then returns a state
 export const currentLocation = (state = {}, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
-    console.log("Setting Redux state with Location ", action.location)
     state = action.location
   }
   return state
@@ -34,7 +27,6 @@ export const currentLocation = (state = {}, action) => {
 
 export const currentZoom = (state = 14, action) => {
   if (action.type == 'SET_ZOOM') {
-    console.log("Setting Redux state with zoom: ", action.zoom)
     state = action.zoom
   }
   return state
@@ -113,8 +105,11 @@ export const eventsData = (state = [], action) => {
 export const placesData = (state = [], action) => {
 
   if (action.type == 'SET_PLACES_DATA') {
-    // TODO: Map and process, but plan to move this logic to API
+    // TODO: Map and process, but plan to moe this logic to API
     let processed = action.places_data.map(place => {
+      // TODO: Score places with more categories higher
+      //console.log("categories: ", place.properties.categories)
+      place.properties.categories = place.properties.categories.shift();
       //event.properties.score = event.properties.likes
       return place
     })
