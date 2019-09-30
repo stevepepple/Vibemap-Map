@@ -12,7 +12,9 @@ class Layer extends React.Component {
     paint: PropTypes.object,
     filter: PropTypes.array,
     layout: PropTypes.object,
-    before: PropTypes.string
+    before: PropTypes.string,
+    popupLabel: PropTypes.string,
+    showPopup: PropTypes.bool
   }
 
   static contextTypes = {
@@ -44,6 +46,26 @@ class Layer extends React.Component {
       filter: filter,
       paint: paint
     }, before)
+
+    let popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false
+    });
+
+    if (this.props.showPopup) {
+      let popupLabel = this.props.popupLabel;
+
+      map.on('mouseenter', layerId, function (event) {
+        console.log('marker properties: ', event.features[0]['properties'])
+        let coordinates = event.features[0].geometry.coordinates.slice();
+        let label = event.features[0]['properties'][popupLabel]
+
+        popup.setLngLat(coordinates)
+          .setHTML(label)
+          .addTo(map);
+      });      
+    }
+
 
     /* TODO: Remove as this was just for testing 
     let marker = new mapboxgl.Marker()

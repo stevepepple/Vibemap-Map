@@ -238,8 +238,8 @@ module.exports = {
     events_circle: {
       // increase the radius of the circle as the zoom level and dbh value increases
       'circle-radius': {
-        'base': 3,
-        'stops': [[8, 1], [18, 20]] },
+        'base': 8,
+        'stops': [[8, 4], [18, 20]] },
         'circle-color': '#C650CC',
         'circle-stroke-color': '#CC9423',
         'circle-stroke-width': 0.4,

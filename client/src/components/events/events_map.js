@@ -191,6 +191,7 @@ class EventsMap extends Component {
 
                 <div className = 'map_container'>
                     {/* Floating legend */}
+
                     <ZoomLegend zoom={this.props.currentZoom} />
 
                     {/* TODO: Move to it's own class <Map> */}
@@ -239,7 +240,7 @@ class EventsMap extends Component {
                             />
                         </Source>
                     </ReactMapGL>
-                    
+
                 </div>
             </div>   
         );
