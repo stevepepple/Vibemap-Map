@@ -1,7 +1,6 @@
 const Constants = require('../constants');
 const querystring = require('querystring');
 
-
 const ApiHeaders = new Headers({
     'Authorization': 'Token ' + Constants.SYSTEM_TOKEN
 });
@@ -65,8 +64,8 @@ module.exports = {
                     clearTimeout(timeout);
                     
                     //console.clear()
-                    console.log('Received this many places: ', res.results.features.length)
-                    console.log(res.results.features);
+                    //console.log('Received this many places: ', res.results.features.length)
+                    //console.log(res.results.features);
 
                     resolve({ data: res.results.features, loading: false, timedOut: false })
                     
