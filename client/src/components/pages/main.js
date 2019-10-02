@@ -17,7 +17,7 @@ import EventsList from '../events/events_list.js'
 import EventDetails from '../events/event_details.js'
 import EventsMap from '../events/events_map.js'
 import Navigation from '../events/navigation.js'
-import PlaceCards from '../places/place_cards.js'
+//import PlaceCards from '../places/place_cards.js'
 
 /* REDUX STUFF */
 import { connect } from 'react-redux'
@@ -65,9 +65,6 @@ class Page extends Component {
      
     componentWillMount() {
 
-        // Handle scree resizing
-        window.addEventListener('resize', this.handleWindowSizeChange);
-
         // TODO: remove to Redux? 
         this.setState({ activity_options : Constants.activty_categories })
         
@@ -82,14 +79,15 @@ class Page extends Component {
         
         this.setState({ place_categories: combined_categories })
 
+    }
+
+    componentDidMount() {
         // Get data for the users current location
         // TODO: Should this be a promise? 
         this.getPosition();
 
-    }
-
-    componentDidMount() {
-
+        // Handle scree resizing
+        window.addEventListener('resize', this.handleWindowSizeChange);
     }
 
     // never let a process live forever 
@@ -252,17 +250,20 @@ class Page extends Component {
     // Add details shows state to Redux and sync with mobile + web UI
     showDetails = function (id, event) {
 
-        console.log('SHow details for: ', id)
+        console.log('SHow details for: ', id)        
 
-        this.props.history.push('/v0.1/events/' + id + '/')
+        // TODO: Call this API; but store state in URL a different way
+        //this.props.history.push('/v0.1/events/' + id + '/')
 
-        let current_item = this.state.data.filter(item => item._id == id);
+        /*
+        let current_item = this.state.data.filter(item => item.id == id);
         current_item = current_item[0];
 
         let lon = current_item.geometry.coordinates[0];
         let lat = current_item.geometry.coordinates[1];
-
-        this.setState({ current_item: current_item, details_shown : true, lat : lat, lon : lon });
+        this.setState({ current_item: current_item, details_shown : true, lat : lat, lon : lon });        
+        */
+        this.setState({ details_shown: true, current_item : id })
     }
 
     handleListType = function(type) {
@@ -318,7 +319,7 @@ class Page extends Component {
                                 {
                                     /* TODO: Refactor into component */
                                     this.state.details_shown ? (
-                                        <EventDetails data={this.state.current_item} clearDetails={this.clearDetails} />
+                                        <EventDetails id={this.state.current_item} clearDetails={this.clearDetails} />
                                     ) : (
                                         <EventsList data={this.props.eventsData} type='places' onclick={this.showDetails} handleListType={this.handleListType} />
                                     )
@@ -332,15 +333,14 @@ class Page extends Component {
 
                                 {events_map}
 
-                                {
-                                    /* TODO: Refactor into component */
+                                {/* TODO: Refactor into component 
                                     this.state.details_shown ? (
                                         // TODO: The are more generally recommendations
                                         <PlaceCards lat={this.state.lat} lon={this.state.lon} />
                                     ) : (
                                         null
                                     )
-                                }
+                                */}
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>

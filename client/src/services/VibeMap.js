@@ -45,6 +45,20 @@ module.exports = {
         });    
     },
 
+    getEventDetails: function(id){
+        return new Promise(function (resolve, reject) {
+            fetch(ApiUrl + "/v0.1/events/" + id, { headers: ApiHeaders })
+                .then(data => data.json())
+                .then(result => {
+                    clearTimeout(timeout);
+                    resolve({ data: result, loading: false, timedOut: false })
+
+                }, (error) => {
+                    console.log(error)
+                })
+        })
+    },
+
     // TODO: Include a way to query by time of day
     getPlaces: function (point, distance, activity) {
 
