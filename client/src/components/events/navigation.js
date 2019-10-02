@@ -80,7 +80,7 @@ class Navigation extends Component {
                     labeled
                     onChange={this.handleDaysChange}
                     options={this.state.options}
-                    text={this.state.options.find(obj => obj.value == this.props.days).text}
+                    text={this.state.options.find(obj => obj.value == this.props.currentDays).text}
                     style={datePicker}
                 />
             </Form.Group>
