@@ -35,7 +35,6 @@ class EventDetails extends Component {
         if (this.state.details_data == null) { return 'No data for the component.' }
 
         let content = this.state.details_data.properties;
-        console.log("content: ", content)
         let date = moment(content.date)
         let categories = content.categories.map((category) => <Label className={'pink image label ' + category}>{category}</Label>);
 
