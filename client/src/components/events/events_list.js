@@ -30,7 +30,10 @@ class EventsList extends Component {
         let items = null;
 
         if (has_items) {
-            items = this.props.data.map((event) => <ListItem key={event._id} id={event._id} link={event.properties.link} onclick={this.props.onclick} content={event.properties} />);
+            items = this.props.data.map((event) => {
+                return <ListItem key={event.id} id={event.id} link={event.properties.link} onclick={this.props.onclick} content={event.properties} />
+            })
+            
         } else {
             return <Dimmer active inverted><Loader inverted><h3>Have you ever stopped to smell the roses near Grand Avenue?</h3></Loader></Dimmer>
         }
