@@ -28,7 +28,8 @@ module.exports = {
                 // distance: this.state.distance,
                 dist: distance,
                 activity: activity,
-                days: days
+                days: days,
+                per_page: 200
             });
 
             fetch(ApiUrl + "/v0.1/events/?" + query, { headers: ApiHeaders })
