@@ -18,7 +18,7 @@ export const uiState = (state = {}, action) => {
 
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
-export const currentLocation = (state = {}, action) => {
+export const currentLocation = (state = { lat: 37.79535238155009, lon: -122.2823644705406 }, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
     state = action.location
   }
