@@ -3,13 +3,17 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Icon } from 'semantic-ui-react'
 import 'react-tabs/style/react-tabs.css';
 
+/* REDUX STUFF */
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions';
+
 // Components
 import Navigation from '../events/navigation.js'
 import EventsMap from '../events/events_map.js'
 import EventsCards from '../events/events_cards.js'
-import PlaceCards from '../places/place_cards.js'
+import MobileList from '../places/mobile_list'
 
-class MobilePage extends Component {
+class Mobile extends Component {
 
     render() {
     
@@ -24,8 +28,9 @@ class MobilePage extends Component {
                         <Tab className='item'><Icon name='list ul' />List</Tab>
                     </TabList>
                     <TabPanel>
-                        <EventsMap events_data={this.props.data} places_data={this.props.places_data} setZoom={this.setZoom} lat={this.props.lat} lng={this.props.lon} distance={this.props.distance} zoom={this.props.details_shown ? 16 : this.props.zoom} setPosition={this.props.setPosition} onclick={this.props.showDetails} />                     
-                        <PlaceCards lat={this.props.lat} lon={this.props.lon} />
+
+                        <EventsMap events_data={this.props.eventsData} places_data={this.props.placesData} setZoom={this.setZoom} lat={this.props.lat} lng={this.props.lon} distance={this.props.distance} zoom={this.props.details_shown ? 16 : this.props.currentZoom} setPosition={this.props.setPosition} onclick={this.props.onclick} />                     
+                        <MobileList data={this.props.eventsData} type='places' onclick={this.props.onclick} handleListType={this.handleListType}/>
                     </TabPanel>
                     <TabPanel>
                         <EventsCards data={this.props.data} onclick={this.props.showDetails} />
@@ -38,5 +43,22 @@ class MobilePage extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    geod: state.geod,
+    currentCategory: state.currentCategory,
+    currentLocation: state.currentLocation,
+    currentZoom: state.currentZoom,
+    currentDays: state.currentDays,
+    currentDistance: state.currentDistance,
+    eventsData: state.eventsData,
+    placesData: state.placesData
+});
+
+const MobilePage = connect(
+    mapStateToProps,
+    // Or actions
+    actions
+)(Mobile);
 
 export default MobilePage;

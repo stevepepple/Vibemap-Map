@@ -5,19 +5,20 @@ import * as actions from '../../redux/actions';
 
 import * as turf from '@turf/turf'
 import { Global } from '@emotion/core'
-import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Popup } from 'react-map-gl'
+import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup } from 'react-map-gl'
 
 // TODO: Remove these other map sources
 import Styles from '../../styles/map_styles.js'
-import PhotoMarker from '../map/photo_marker.js';
-import YouAreHere from '../map/you_are_here.js';
-import ZoomLegend from '../map/ZoomLegend';
-
+import Markers from '../map/markers'
+import PhotoMarker from '../map/photo_marker.js'
+import YouAreHere from '../map/you_are_here.js'
+import ZoomLegend from '../map/ZoomLegend'
 
 // TODO: load from common .env
 import * as Constants from '../../constants.js'
 
-class EventsMap extends Component {
+
+class EventsMap extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -26,6 +27,7 @@ class EventsMap extends Component {
         this.state = {
             lens : {"type": "FeatureCollection", "features": []},
             popupInfo: null,
+            has_data: false,
             photos_geojson : {"type": "FeatureCollection", "features": [
                 { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.428030, 37.758175] }, "properties": { "id": 2, "name": "Mission Dolores", "description": "#dolorespark", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/c07cbc0614f1f96f9ff1e8336b661c4c/5DA48BC6/t51.2885-15/e35/c0.163.1440.1440a/s320x320/61546227_157370168642961_5480952316658836778_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com"}},
                 { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-122.420595, 37.762995] }, "properties": { "id": 3, "name": "Clarion Alley Street", "description": "#clarionalley", "link": "https://scontent-sjc3-1.cdninstagram.com/vp/859604c1d74a65a490d2a18c537ff093/5DAC007C/t51.2885-15/sh0.08/e35/p640x640/58741888_168172800851438_5323061855820526706_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com"}},
@@ -45,8 +47,9 @@ class EventsMap extends Component {
 
     componentDidMount(){
         let geojson = turf.featureCollection(this.props.events_data)
+        let has_data = this.props.events_data.length > 0
         this.setState({ 
-            geojson: geojson
+            events_geojson: geojson
          })
     }
 
@@ -63,11 +66,21 @@ class EventsMap extends Component {
         // TODO: why is this needed outside a component?
         this.showLens([nextProps.lng, nextProps.lat])
 
+        let has_data = this.props.events_data.length > 0
+
         // TODO: @cory Hack to group event and places heatmap, until the venues database is updated.
         let combined_places = nextProps.places_data.concat(nextProps.events_data)
         // Make it valide geoJSON
+        // TODO: make valid GeoJSON in Redux?
         let places_geojson = turf.featureCollection(combined_places);
-        this.setState({ places_geojson: places_geojson })
+        let events_geojson = turf.featureCollection(nextProps.events_data);
+        
+    
+        this.setState({ 
+            places_geojson: places_geojson,
+            events_geojson: events_geojson,
+            has_data: has_data
+        })
     }
 
     onSelect = function() {
@@ -77,8 +90,8 @@ class EventsMap extends Component {
     _onViewportChange = viewport => {
         
         // Keep Redux in sync with current map
-        if (viewport.latitude > 0) {
-
+        if (viewport.latitude > 10) {
+            //console.log(viewport)
             // TODO: @steve Calculate when the user can panned enought that we need to reload data.
             let location = { lat: viewport.latitude, lon: viewport.longitude }
             this.props.setCurrentLocation(location)
@@ -93,7 +106,7 @@ class EventsMap extends Component {
 
     _getCursor = ({ isHovering, isDragging }) => {
         //console.log("Hovering: ", isHovering)
-        return isHovering ? 'pointer' : 'default';
+        //return isHovering ? 'pointer' : 'default';
     }
 
     // Handle clicks & taps
@@ -114,6 +127,7 @@ class EventsMap extends Component {
     }
 
     // Show a tooltip marker
+    // TODO: make this its own component?
     _renderPopup(event) {
         const { popupInfo } = this.state;
 
@@ -179,8 +193,8 @@ class EventsMap extends Component {
 
     render() {
 
-        let has_places_data = this.props.places_data.length > 0;
-        let has_events_data = this.props.events_data.length > 0;
+        let has_places_data = this.props.places_data.length > 0
+        let has_events_data = this.props.events_data.length > 0
 
         return (
 
@@ -205,7 +219,6 @@ class EventsMap extends Component {
                         getCursor={this._getCursor}
                         onViewportChange={this._onViewportChange}
                     >
-                        
                     
                         <NavigationControl
                             showZoom={true}
@@ -216,8 +229,6 @@ class EventsMap extends Component {
                             positionOptions={{ enableHighAccuracy: true }}
                             trackUserLocation={true}
                         />
-
-                        {this._renderPopup()}
 
                         <Source
                             id='places'
@@ -238,7 +249,24 @@ class EventsMap extends Component {
                                 layout={Styles.marker_layout}
                                 paint={Styles.marker_paint}
                             />
+
+
                         </Source>
+
+                        <Markers data={this.props.events_data} currentVibes={this.props.currentVibes} zoom={this.props.currentZoom} />
+
+                        {this._renderPopup()}
+
+                        <Source
+                            id='events'
+                            type="geojson"
+                            data={this.state.events_geojson}
+                            cluster={false}>
+
+                            
+
+                        </Source>
+
                     </ReactMapGL>
 
                 </div>

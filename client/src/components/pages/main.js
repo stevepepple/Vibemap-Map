@@ -305,7 +305,7 @@ class Page extends Component {
         // Adaptive view for mobile users
         if (isMobile) {
             return (                
-                <MobilePage data={this.props.eventsData} places_data={this.props.placesData} lat={this.state.lat} lon={this.state.lon} days={this.state.days} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
+                <MobilePage data={this.props.eventsData} onclick={this.showDetails} places_data={this.props.placesData} lat={this.state.lat} lon={this.state.lon} days={this.state.days} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
             )
         } else {
             return (

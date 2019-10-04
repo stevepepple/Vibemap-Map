@@ -1,6 +1,10 @@
 import React from 'react';
 import { Search, Dropdown } from 'semantic-ui-react'
 
+/* REDUX STUFF */
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions';
+
 import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
@@ -152,4 +156,13 @@ class LocationSearchInput extends React.Component {
     }
 }
 
-export default LocationSearchInput;
+const mapStateToProps = state => ({
+    geod: state.geod,
+    currentLocation: state.currentLocation
+});
+
+const mapDispatchToProps = dispatch => ({
+    setLocation: location => dispatch(actions.setCurrentLocation(location))
+})
+
+export default connect(mapStateToProps, actions)(LocationSearchInput);

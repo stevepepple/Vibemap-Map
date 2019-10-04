@@ -160,6 +160,7 @@ module.exports = {
       "text-opacity": ["step", ["zoom"], 0, 16, 1, 22, 1]
     },
 
+
     places_heatmap: {
       'heatmap-radius' : [
         "interpolate",
