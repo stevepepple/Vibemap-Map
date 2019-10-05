@@ -16,6 +16,7 @@ class Markers extends Component {
             markers: [],
             has_features: false
         }
+
     }
 
     componentWillMount() {
@@ -81,7 +82,10 @@ class Markers extends Component {
             if (categories !== null) {
                 feature.className = feature.className + ' ' + categories.join(' ')
             }
-            if (likes > 2) {
+
+            
+            if (feature.score > 10) {
+                //console.log("!!! marker score: ", feature.score)
                 feature.className = feature.className + ' popular '
             }
 
@@ -89,6 +93,12 @@ class Markers extends Component {
         })
 
         return scored_markers;
+    }
+
+    // TODO: this is a realy nice way to handle it; make a help funcition?
+    handleOnMouseOver(e, feature) {
+        
+        this.props.showPopup(feature.properties.name, feature.geometry.coordinates[1], feature.geometry.coordinates[0])
     }
 
     render() {
@@ -100,7 +110,7 @@ class Markers extends Component {
             // TODO: @cory this
             markers = this.state.markers.map(feature => 
                 <Marker key={feature.id} longitude={feature.geometry.coordinates[0]} latitude={feature.geometry.coordinates[1]}>
-                    <div className={"marker"} style={{ height: feature.height, width: feature.width}}>
+                    <div className={feature.className} onMouseOver={((e) => this.handleOnMouseOver(e, feature))} style={{ height: feature.height, width: feature.width}}>
                         <img src={feature.properties.images[0]} height={'100%'} width={'100%'} />    
                     </div>                    
                 </Marker>

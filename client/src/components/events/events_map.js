@@ -43,6 +43,8 @@ class EventsMap extends React.PureComponent {
                 
             ]}
         }
+
+        this.showPopup = this.showPopup.bind(this);
     }
 
     componentDidMount(){
@@ -90,6 +92,7 @@ class EventsMap extends React.PureComponent {
     _onViewportChange = viewport => {
         
         // Keep Redux in sync with current map
+        /*
         if (viewport.latitude > 10) {
             //console.log(viewport)
             // TODO: @steve Calculate when the user can panned enought that we need to reload data.
@@ -99,6 +102,7 @@ class EventsMap extends React.PureComponent {
             
             //this.showLens([location.lng, location.lat])
         }
+        */
 
         this.setState({ viewport })
         
@@ -109,43 +113,34 @@ class EventsMap extends React.PureComponent {
         //return isHovering ? 'pointer' : 'default';
     }
 
-    // Handle clicks & taps
     _onClick = event => {
+
+    }
+
+    // Handle clicks & taps
+    _onHover = event => {
         const feature = event.features && event.features[0];
 
         // There a layer & feature
         if (feature && event.features.length > 0) {
             let first_feature = event.features[0]
-            this.setState({ popupInfo: {
-                name: first_feature.properties.name,
-                latitude: event.lngLat[1],
-                longitude: event.lngLat[0]
-            }})
+            if (first_feature.properties.name && first_feature.properties.name.length > 0) {
+                this.showPopup(first_feature.properties.name, event.lngLat[1], event.lngLat[0])
+            }
+            
         } else {
             this.setState({ popupInfo: null })
         }
     }
 
-    // Show a tooltip marker
-    // TODO: make this its own component?
-    _renderPopup(event) {
-        const { popupInfo } = this.state;
-
-        return (
-            popupInfo && (
-                <Popup
-                    tipSize={4}
-                    className={'marker-popup'}
-                    offsetTop={-4}
-                    longitude={popupInfo.longitude}
-                    latitude={popupInfo.latitude}
-                    closeOnClick={false}
-                    onClose={() => this.setState({ popupInfo: null })}
-                >
-                    {popupInfo.name}
-                </Popup>
-            )
-        );
+    showPopup(name, latitude, longitude){
+        this.setState({
+            popupInfo: {
+                name: name,
+                latitude: latitude,
+                longitude: longitude
+            }
+        })
     }
 
     // TODO: Move to it's own component
@@ -216,6 +211,7 @@ class EventsMap extends React.PureComponent {
                         mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
                         mapStyle={'mapbox://styles/stevepepple/cjpk3ts1c0skb2rs52w658p07/draft'}
                         onClick={this._onClick}
+                        onHover={this._onHover}
                         getCursor={this._getCursor}
                         onViewportChange={this._onViewportChange}
                     >
@@ -229,7 +225,7 @@ class EventsMap extends React.PureComponent {
                             positionOptions={{ enableHighAccuracy: true }}
                             trackUserLocation={true}
                         />
-
+            
                         <Source
                             id='places'
                             type="geojson"
@@ -250,12 +246,27 @@ class EventsMap extends React.PureComponent {
                                 paint={Styles.marker_paint}
                             />
 
-
                         </Source>
 
-                        <Markers data={this.props.events_data} currentVibes={this.props.currentVibes} zoom={this.props.currentZoom} />
+                        {this.state.popupInfo &&
+                            <Popup
+                                tipSize={4}
+                                className={'marker-popup'}
+                                offsetTop={-4}
+                                longitude={this.state.popupInfo.longitude}
+                                latitude={this.state.popupInfo.latitude}
+                                closeOnClick={false}
+                                onClose={() => this.setState({ popupInfo: null })}
+                            >
+                                {this.state.popupInfo.name}
+                            </Popup>
+                        }            
 
-                        {this._renderPopup()}
+                        <Markers 
+                            data={this.props.events_data} 
+                            currentVibes={this.props.currentVibes} 
+                            zoom={this.props.currentZoom}
+                            showPopup={this.showPopup} />
 
                         <Source
                             id='events'

@@ -141,7 +141,7 @@ const helpers = {
         //TODO: Scale marker to zoom size!
         let marker_scale = scalePow(0.2)
             .domain([10, 20]) // Zoom size
-            .range([2, 40]) // Scale of marker size
+            .range([8, 60]) // Scale of marker size
 
         let base_marker = marker_scale(zoom)
         let max_marker = base_marker * 3;

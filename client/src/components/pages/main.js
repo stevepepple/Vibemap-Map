@@ -64,6 +64,7 @@ class Page extends Component {
     }
      
     componentWillMount() {
+        console.log("Mounting main page...")
 
         // TODO: remove to Redux? 
         this.setState({ activity_options : Constants.activty_categories })
@@ -71,12 +72,11 @@ class Page extends Component {
         // Search for all categories that match the current selection and concatenate them
         // TODO: set in Redux? 
         let current = Constants.place_categories.find(item => item.key === 'all')
-
-        this.setStateFromQuery(this.props.location.search)
         
         // Concatanate the default set of categories.
         let combined_categories = helpers.findPlaceCategoriess(current.categories);
-        
+
+        this.setStateFromQuery(this.props.location.search)
         this.setState({ place_categories: combined_categories })
 
     }
@@ -195,6 +195,8 @@ class Page extends Component {
 
     /* TODO: Should all of this logic just flow through an event service and component? */
     showEvents(position) {
+
+        console.log("In show events...")
 
         let point = `${this.state.lon},${this.state.lat}`
         this.setState({ timedOut: false})    

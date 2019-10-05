@@ -29,6 +29,7 @@ module.exports = {
                 dist: distance,
                 activity: activity,
                 days: days,
+                ordering: "score",
                 per_page: 200
             });
 
