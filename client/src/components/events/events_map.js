@@ -92,17 +92,20 @@ class EventsMap extends React.PureComponent {
     _onViewportChange = viewport => {
         
         // Keep Redux in sync with current map
-        /*
-        if (viewport.latitude > 10) {
-            //console.log(viewport)
-            // TODO: @steve Calculate when the user can panned enought that we need to reload data.
-            let location = { lat: viewport.latitude, lon: viewport.longitude }
-            this.props.setCurrentLocation(location)
+        if (viewport.zoom > 2 && Math.abs(viewport.zoom - this.props.currentZoom) >= 1 ) {
+            console.log("View port vs state: ", viewport.zoom, this.props.currentZoom)
             this.props.setZoom(viewport.zoom)
-            
-            //this.showLens([location.lng, location.lat])
         }
-        */
+
+        // If the user pans by more than 2 kilometers, update the map
+        let new_location = turf.point([viewport.longitude, viewport.latitude])
+        let original_location = turf.point([this.props.currentLocation.lon, this.props.currentLocation.lat])
+        let distance = turf.distance(original_location, new_location)
+
+        if (distance > 2) {
+            this.props.setCurrentLocation({ lat: viewport.latitude, lon: viewport.longitude })
+            this.props.setPosition(viewport.latitude, viewport.longitude)
+        }
 
         this.setState({ viewport })
         
@@ -111,6 +114,8 @@ class EventsMap extends React.PureComponent {
     _getCursor = ({ isHovering, isDragging }) => {
         //console.log("Hovering: ", isHovering)
         //return isHovering ? 'pointer' : 'default';
+
+        console.log(isDragging)
     }
 
     _onClick = event => {
@@ -157,6 +162,7 @@ class EventsMap extends React.PureComponent {
     }
 
     // Iterate through all place categories and create css icons
+    // TODO: this can be done in Mapbox studio once as vectors.
     createIconStyles = () => {
 
         let classes = {}
@@ -210,9 +216,9 @@ class EventsMap extends React.PureComponent {
                         height={'100%'}
                         mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
                         mapStyle={'mapbox://styles/stevepepple/cjpk3ts1c0skb2rs52w658p07/draft'}
-                        onClick={this._onClick}
+                        //onClick={this._onClick}
+                        //getCursor={this._getCursor}
                         onHover={this._onHover}
-                        getCursor={this._getCursor}
                         onViewportChange={this._onViewportChange}
                     >
                     

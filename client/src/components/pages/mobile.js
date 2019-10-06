@@ -29,7 +29,7 @@ class Mobile extends Component {
                     </TabList>
                     <TabPanel>
 
-                        <EventsMap events_data={this.props.eventsData} places_data={this.props.placesData} setZoom={this.setZoom} lat={this.props.lat} lng={this.props.lon} distance={this.props.distance} zoom={this.props.details_shown ? 16 : this.props.currentZoom} setPosition={this.props.setPosition} onclick={this.props.onclick} />                     
+                        <EventsMap events_data={this.props.eventsData} places_data={this.props.placesData} lat={this.props.lat} lng={this.props.lon} distance={this.props.distance} zoom={this.props.details_shown ? 16 : this.props.currentZoom} setPosition={this.props.setPosition} onclick={this.props.onclick} />                     
                         <MobileList data={this.props.eventsData} type='places' onclick={this.props.onclick} handleListType={this.handleListType}/>
                     </TabPanel>
                     <TabPanel>

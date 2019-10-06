@@ -30,7 +30,9 @@ class EventsList extends Component {
         let items = null;
 
         if (has_items) {
-            items = this.props.data.map((event) => {
+            // TODO: @cory, sorting should happen on the server. 
+            let sorted = this.props.data.sort((a, b) => (a.properties.score > b.properties.score) ? -1 : 1)
+            items = sorted.map((event) => {
                 return <ListItem key={event.id} id={event.id} link={event.properties.link} onclick={this.props.onclick} content={event.properties} />
             })
             

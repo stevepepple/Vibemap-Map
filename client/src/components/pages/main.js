@@ -45,7 +45,7 @@ class Page extends Component {
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
             vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
-            distance: 5.5 * 1609.344,
+            distance: 2 * 1609.344,
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
@@ -200,6 +200,7 @@ class Page extends Component {
 
         let point = `${this.state.lon},${this.state.lat}`
         this.setState({ timedOut: false})    
+
     
         /* Get current events, then set them in the state */
         /* TODO: package args into spread object? */
