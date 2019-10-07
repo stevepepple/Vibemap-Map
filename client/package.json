@@ -8,7 +8,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.17",
+    "@emotion/core": "^10.0.21",
     "@turf/turf": "^5.1.6",
     "a11y-react-emoji": "^1.1.1",
     "d3-scale": "^3.1.0",
@@ -22,8 +22,8 @@
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
-    "react": "^16.10.1",
-    "react-dom": "^16.10.1",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
     "react-fast-compare": "^2.0.4",
     "react-icons-weather": "^1.0.5",
     "react-map-gl": "^5.1.0-alpha.1",
