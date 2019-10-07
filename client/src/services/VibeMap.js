@@ -19,12 +19,11 @@ module.exports = {
         console.log(arg)
     },
 
-    getEvents: function(point, distance, activity, days, start) {
+    getEvents: function(point, distance, activity, days, search_term) {
 
         let day_start = moment().startOf('day').format("YYYY-MM-DD HH:MM");
         let day_end = moment().add(days, 'days').format("YYYY-MM-DD HH:MM");
         console.log("Date range: ", day_start, day_end)
-
 
         return new Promise(function (resolve, reject) {
             let query = querystring.stringify({
@@ -34,10 +33,11 @@ module.exports = {
                 // distance: this.state.distance,
                 dist: distance,
                 activity: activity,
-                days: days,
+                days: days,                
                 ordering: "score",
                 start_date_after: day_start,
                 end_date_before: day_end,
+                search: search_term,
                 per_page: 100
             });
 

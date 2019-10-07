@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Button, Grid, Dimmer, GridColumn, Icon, Item, Loader, Segment, Tab } from 'semantic-ui-react'
+
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions'
+
+import { Dimmer, Input, Item, Loader, Segment } from 'semantic-ui-react'
 import { Global, css } from '@emotion/core'
 
 import ListItem from './list_item.js'
@@ -9,18 +12,18 @@ import TimeAndTemp from '../weather/timeAndTemp'
 
 class EventsList extends Component {
 
-    constructor(props) {
-        super(props);
-
-        //this.showDetails = this.showDetails.bind(this);
-        
-    }
-
     // Pass the list tyep via button.
     handleButton = (e) => {
         let type = e.target.getAttribute('value')
         
         this.props.handleListType(type)
+    }
+
+    onChange = (e, { value }) => {
+        
+        if (value.length > 2) {
+            this.props.setSearchTerm(value)
+        }
     }
 
     render() {
@@ -60,12 +63,8 @@ class EventsList extends Component {
 
                 <TimeAndTemp />
 
-                <Button.Group className='listType' inverted onClick={this.handleButton} > {/* Was color='purple' */}
-                    <Button value='events' active><Icon name='calendar' />Events</Button>
-                    <Button value='attractions'><Icon name='world' />Local Attractions</Button>
-                    <Button><Icon name='gem' />Hidden Gems</Button>
-                </Button.Group>
-
+                <Input placeholder='Search...' onChange={this.onChange} />
+                            
                 <Item.Group divided relaxed className='events_list'>
                     {items}
                 </Item.Group>
@@ -74,9 +73,10 @@ class EventsList extends Component {
     }
 }
 
-EventsList.propTypes = {
-    data: PropTypes.array,
-    onclick: PropTypes.func
-};
+const mapStateToProps = state => {
+    return {
+        searchTerm: state.searchTerm
+    }
+}
 
-export default EventsList;
+export default connect(mapStateToProps, actions)(EventsList);
