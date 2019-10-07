@@ -48,25 +48,22 @@ class EventsMap extends React.PureComponent {
     }
 
     componentDidMount(){
-        let geojson = turf.featureCollection(this.props.events_data)
-        let has_data = this.props.events_data.length > 0
-        this.setState({ 
-            events_geojson: geojson
-         })
+    
     }
 
+    // TODO: Move to componentWillUPdate
     componentWillReceiveProps(nextProps){
 
         this.setState({ 
             viewport: {
-                latitude: this.props.lat,
-                longitude: this.props.lng,
+                latitude: nextProps.currentLocation.latitude,
+                longitude: nextProps.currentLocation.longitude,
                 zoom: this.props.zoom
             }
         })
 
         // TODO: why is this needed outside a component?
-        this.showLens([nextProps.lng, nextProps.lat])
+        this.showLens([nextProps.currentLocation.longitude, nextProps.currentLocation.latitude])
 
         let has_data = this.props.events_data.length > 0
 
@@ -93,18 +90,22 @@ class EventsMap extends React.PureComponent {
         
         // Keep Redux in sync with current map
         if (viewport.zoom > 2 && Math.abs(viewport.zoom - this.props.currentZoom) >= 1 ) {
-            console.log("View port vs state: ", viewport.zoom, this.props.currentZoom)
             this.props.setZoom(viewport.zoom)
         }
 
         // If the user pans by more than 2 kilometers, update the map
         let new_location = turf.point([viewport.longitude, viewport.latitude])
-        let original_location = turf.point([this.props.currentLocation.lon, this.props.currentLocation.lat])
+        let original_location = turf.point([this.props.currentLocation.longitude, this.props.currentLocation.latitude])
         let distance = turf.distance(original_location, new_location)
 
+
+        // TODO: there's still a problem in how the new and old values sync...
+        // Need to throttle and take the last, most recent value
         if (distance > 2) {
-            this.props.setCurrentLocation({ lat: viewport.latitude, lon: viewport.longitude })
-            this.props.setPosition(viewport.latitude, viewport.longitude)
+            console.log("New location: ", viewport.latitude)
+            this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
+            // TODO: What the write way to trigger chaged map and data from Redux.
+            //this.props.setPosition(viewport.latitude, viewport.longitude)
         }
 
         this.setState({ viewport })
@@ -122,7 +123,6 @@ class EventsMap extends React.PureComponent {
 
     }
 
-    // Handle clicks & taps
     _onHover = event => {
         const feature = event.features && event.features[0];
 
@@ -250,7 +250,9 @@ class EventsMap extends React.PureComponent {
                                 type="symbol"
                                 layout={Styles.marker_layout}
                                 paint={Styles.marker_paint}
-                            />
+                            >
+
+                            </Layer>
 
                         </Source>
 
@@ -294,7 +296,7 @@ class EventsMap extends React.PureComponent {
 
 const mapDispatchToProps = dispatch => ({
     setZoom: zoom => dispatch(actions.setZoom(zoom)),
-    setCurrentLocation: location => dispatch(actions.setCurrentLocation(location))
+    setCurrentLocation: location => dispatch(actions.setCurrentLocation(location)),
 })
 
 const mapStateToProps = state => {

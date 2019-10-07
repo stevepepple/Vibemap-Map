@@ -7,7 +7,7 @@ import * as Constants from '../../constants.js'
 import LocationSearchInput from '../map/search'
 
 import { connect } from 'react-redux'
-import * as actions from '../../redux/actions';
+import * as actions from '../../redux/actions'
 
 import '../../styles/navigation.scss';
 
@@ -54,7 +54,7 @@ class Navigation extends Component {
         console.log('Days changed in navigations: ', value)
         this.props.setDays(value)
         // TODO: should need to propagate the value back up like this; Redux props should flow automatically. 
-        this.props.updateDays(value)
+        this.props.setDays(value)
     }
 
     handleActivityChange = (event, { value }) => {
