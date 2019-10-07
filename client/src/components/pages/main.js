@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import querystring from 'querystring';
+import isEqual from 'react-fast-compare'
 
 import { Grid } from 'semantic-ui-react'
 //TODO: Move to API
@@ -12,7 +14,6 @@ import * as Constants from '../../constants.js'
 
 // Pages
 import MobilePage from './mobile.js'
-
 import EventsList from '../events/events_list.js'
 import EventDetails from '../events/event_details.js'
 import EventsMap from '../events/events_map.js'
@@ -25,7 +26,6 @@ import * as actions from '../../redux/actions';
 
 /* TODO: Break this into styles for each component */
 import '../../styles/events_page.scss';
-
 
 // TODO: Seperate data rendering from layout from UI logic? 
 // TODO: Move to main page component, i.e main.js or index.js
@@ -57,10 +57,8 @@ class Page extends Component {
 
         this.showDetails = this.showDetails.bind(this);
         this.clearDetails = this.clearDetails.bind(this);
-        this.setPosition = this.setPosition.bind(this);
         this.handleListType = this.handleListType.bind(this);
         this.setActivity = this.setActivity.bind(this);
-        this.setDays = this.setDays.bind(this);
     }
      
     componentWillMount() {
@@ -82,12 +80,25 @@ class Page extends Component {
     }
 
     componentDidMount() {
+        
         // Get data for the users current location
-        // TODO: Should this be a promise? 
         this.getPosition();
 
         // Handle scree resizing
         window.addEventListener('resize', this.handleWindowSizeChange);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+    
+        // TODO: should be a switch statement
+        if (prevProps.searchTerm !== this.props.searchTerm) {
+            this.showEvents()
+        }
+
+        if (!isEqual(prevProps.currentLocation, this.props.currentLocation)) {
+            this.showEvents()
+            this.showPlaces()
+        }        
     }
 
     // never let a process live forever 
@@ -113,7 +124,7 @@ class Page extends Component {
                     case "days":
                         console.log("Got days!!!!", value)
                         if (Number.isInteger(value)) {
-                            this.setDays(value)
+                            this.props.setDays(value)
                         }
                         break;
 
@@ -134,30 +145,17 @@ class Page extends Component {
         helpers.getPosition()
             .then((position) => {
                 if (position) {
-                    let location = { lat: position.coords.latitude, lon: position.coords.longitude } 
-
-                    console.log("Set current location with: ", location)
+                    // Set global state with user's location
+                    let location = { latitude: position.coords.latitude, longitude: position.coords.longitude } 
                     this.props.setCurrentLocation(location)
-                    this.setState({
-                        lat: position.coords.latitude,
-                        lon: position.coords.longitude
-                    });
                 }
+                // TODO: this should be updated in componentWillUpdate
                 this.showEvents()
                 this.showPlaces()
             })
     }
 
-    // TODO: Can this also be replaced by Redux
-    setPosition(lat, lon) {
-        console.log("Setting new position!!!", lat, lon)
-        this.setState({ lat : lat, lon : lon}, function(){
-            // TODO: these should have argument and no side effects
-            this.showEvents()
-            this.showPlaces()
-        })
-    }
-
+    // TODO: set via Redux
     setActivity(activity, key) {
 
         console.log("!!!Searching for this activity: ", activity)
@@ -179,32 +177,23 @@ class Page extends Component {
         })
     }
 
-    /* TODO: this can be all redux */
-    setDays(days) {
-        console.log('Setting days state in main: ', days)
-        this.setState({ days: days.value }, function() {
-            this.showEvents()
-            this.showPlaces()
-        })
-    }
-
     handleWindowSizeChange = () => {
         this.setState({ width: window.innerWidth })
         console.log('window width: ', this.state.width)
     };
 
     /* TODO: Should all of this logic just flow through an event service and component? */
+    // Change to getPlaces
     showEvents(position) {
 
         console.log("In show events...")
 
-        let point = `${this.state.lon},${this.state.lat}`
+        let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
         this.setState({ timedOut: false})    
-
     
         /* Get current events, then set them in the state */
         /* TODO: package args into spread object? */
-        VibeMap.getEvents(point, this.state.distance, this.state.event_categories, this.props.currentDays)
+        VibeMap.getEvents(point, this.state.distance, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
             .then(results => {
                 this.props.setEventsData(results.data)
                 this.setState({ loading: false, timedOut: false })
@@ -217,7 +206,7 @@ class Page extends Component {
     // TODO: Move to service & reducer
     showPlaces(){
 
-        let point = `${this.state.lon},${this.state.lat}`
+        let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
 
         this.setState({ timedOut: false })
 
@@ -230,23 +219,6 @@ class Page extends Component {
             }, (error) => {
                 console.log(error)
             })
-    }
-
-    // TODO: This goes away
-    showAttractions() {
-        return new Promise((resolve, reject) => {
-        
-        let query = 'local' //art, fun, bar, food, scenic, community
-        foursquare.searchFoursquare(query, this.state.lat.toString() + ',' + this.state.lon.toString())
-            .catch((err) => console.log(err))
-            .then((results) => {
-                
-                resolve(results)
-            })
-
-            //Set State then, get top
-            //.then((result) => this.setState({ result: result }))
-        })
     }
 
     // Get the current data item and display it
@@ -290,9 +262,8 @@ class Page extends Component {
         const { width } = this.state;
         const isMobile = width <= 700;
 
+        // TODO: best practice is to make this a fun? 
         let navigation = <Navigation 
-            setPosition={ this.setPosition } 
-            updateDays={ this.setDays } 
             setActivity={ this.setActivity } 
             days={ this.props.currentDays } 
             vibes={this.state.vibe_categories} 
@@ -300,7 +271,7 @@ class Page extends Component {
             activity={this.state.activity}
             isMobile = { isMobile } />
 
-        let events_map = <EventsMap events_data={this.props.eventsData} places_data={this.props.placesData} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.props.currentZoom} setPosition={this.setPosition} onclick={this.showDetails} />
+        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.props.currentZoom} setPosition={this.setPosition} onclick={this.showDetails} />
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
@@ -353,7 +324,6 @@ class Page extends Component {
     }
 }
 
-// AppContainer.js
 const mapStateToProps = state => ({
     geod: state.geod,
     currentCategory: state.currentCategory,
@@ -362,7 +332,8 @@ const mapStateToProps = state => ({
     currentDays: state.currentDays,
     currentDistance: state.currentDistance,
     eventsData: state.eventsData,
-    placesData: state.placesData
+    placesData: state.placesData,
+    searchTerm: state.searchTerm
 });
 
 const EventsPage = connect(
