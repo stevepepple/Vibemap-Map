@@ -28,7 +28,11 @@ class LocationSearchInput extends React.Component {
                 { key: 'vancouver', text: 'Vancouver', coords: [42, -122], value: 'vancouver' },
                 { key: 'cairo', text: 'Cairo', coords: [31.233155, 30.042124], value: 'cairo' } 
             ]
-        };
+        }
+
+        this.handleSearch = this.handleSearch.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSelect = this.handleSelect.bind(this)
     }
 
     handleSearch = (e, { searchQuery }) => {
@@ -80,7 +84,9 @@ class LocationSearchInput extends React.Component {
                 
             })
             .then(best => {
-                this.props.setPosition(this.state.best.lat, this.state.best.lng)
+                //this.props.setPosition(this.state.best.lat, this.state.best.lng)
+                this.props.setCurrentLocation({ latitude: this.state.best.lat, longitude: this.state.best.lng })
+
                 console.log('Success', this.state.best)
             })
             .catch(error => console.error('Error', error));
@@ -89,6 +95,7 @@ class LocationSearchInput extends React.Component {
     render() {
 
         // TODO: How to add a divider between new results and other cities
+        // TODO: load list from the API and store in Redux
         let options = this.state.locations.concat(this.state.results)
 
         return (

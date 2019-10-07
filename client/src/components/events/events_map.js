@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-//import Geocoder from "@mapbox/react-geocoder";
+//import Geocoder from "@mapbox/react-geocoder"
 import { connect } from 'react-redux'
-import * as actions from '../../redux/actions';
+import * as actions from '../../redux/actions'
 
 import * as turf from '@turf/turf'
 import { Global } from '@emotion/core'
@@ -16,7 +16,6 @@ import ZoomLegend from '../map/ZoomLegend'
 
 // TODO: load from common .env
 import * as Constants from '../../constants.js'
-
 
 class EventsMap extends React.PureComponent {
 
@@ -43,13 +42,14 @@ class EventsMap extends React.PureComponent {
                 
             ]}
         }
-
-        this.showPopup = this.showPopup.bind(this);
+        
+        this._onClick = this._onClick.bind(this)
+        this._onHover = this._onHover.bind(this)
+        //this._getCursor = this._getCursor.bind(this)
+        this.showPopup = this.showPopup.bind(this)
+        this._onViewportChange = this._onViewportChange.bind(this)
     }
 
-    componentDidMount(){
-    
-    }
 
     // TODO: Move to componentWillUPdate
     componentWillReceiveProps(nextProps){
@@ -72,18 +72,13 @@ class EventsMap extends React.PureComponent {
         // Make it valide geoJSON
         // TODO: make valid GeoJSON in Redux?
         let places_geojson = turf.featureCollection(combined_places);
-        let events_geojson = turf.featureCollection(nextProps.events_data);
-        
+        let events_geojson = turf.featureCollection(nextProps.events_data);    
     
         this.setState({ 
             places_geojson: places_geojson,
             events_geojson: events_geojson,
             has_data: has_data
         })
-    }
-
-    onSelect = function() {
-        console.log('Geocoding result: ')
     }
 
     _onViewportChange = viewport => {
@@ -110,13 +105,6 @@ class EventsMap extends React.PureComponent {
 
         this.setState({ viewport })
         
-    }
-
-    _getCursor = ({ isHovering, isDragging }) => {
-        //console.log("Hovering: ", isHovering)
-        //return isHovering ? 'pointer' : 'default';
-
-        console.log(isDragging)
     }
 
     _onClick = event => {
@@ -226,6 +214,7 @@ class EventsMap extends React.PureComponent {
                             showZoom={true}
                             showCompass={true}
                         />
+
                         <GeolocateControl
                             style={Styles.geolocateStyle}
                             positionOptions={{ enableHighAccuracy: true }}
@@ -256,6 +245,7 @@ class EventsMap extends React.PureComponent {
 
                         </Source>
 
+                        {/* Only render popup if it's not null */}  
                         {this.state.popupInfo &&
                             <Popup
                                 tipSize={4}
@@ -281,16 +271,13 @@ class EventsMap extends React.PureComponent {
                             type="geojson"
                             data={this.state.events_geojson}
                             cluster={false}>
-
-                            
-
                         </Source>
 
                     </ReactMapGL>
 
                 </div>
             </div>   
-        );
+        )
     }
 }
 
@@ -307,6 +294,6 @@ const mapStateToProps = state => {
         currentLocation: state.currentLocation,
         currentZoom: state.currentZoom,
     }
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventsMap);

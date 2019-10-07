@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import helpers from '../../helpers.js'
 
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
@@ -6,11 +6,10 @@ import isEqual from 'react-fast-compare'
 
 import Styles from '../../styles/map_styles.js'
 
-
 class Markers extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             markers: [],
@@ -63,22 +62,22 @@ class Markers extends Component {
             })
 
             // Update the size of markers based upon how well it matches the UI filter
-            let match_bonus = 10;
-            let vibe_matches = 0;
+            let match_bonus = 10
+            let vibe_matches = 0
 
             //console.log("compare vibes: ", vibes, current_vibes)
             if (vibes && this.props.currentVibes) {
                 //console.log('Item\'s vibes: ', vibes)
                 vibe_matches = helpers.matchLists(vibes, this.props.currentVibes)
             }
-            let vibe_score = match_bonus * vibe_matches;
+            let vibe_score = match_bonus * vibe_matches
             
             feature.score = score + vibe_score
-            feature.size = helpers.scaleMarker(score, max, this.props.zoom);
-            feature.width = feature.size + 'px';
-            feature.height = feature.size + 'px';
+            feature.size = helpers.scaleMarker(score, max, this.props.zoom)
+            feature.width = feature.size + 'px'
+            feature.height = feature.size + 'px'
 
-            feature.className = 'marker';
+            feature.className = 'marker'
             if (categories !== null) {
                 feature.className = feature.className + ' ' + categories.join(' ')
             }
@@ -92,7 +91,7 @@ class Markers extends Component {
             return feature
         })
 
-        return scored_markers;
+        return scored_markers
     }
 
     // TODO: this is a realy nice way to handle it; make a help funcition?
@@ -119,7 +118,7 @@ class Markers extends Component {
 
         return (
             markers
-        );
+        )
     }
 }
 

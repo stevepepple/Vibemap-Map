@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import React, { Component } from 'react'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import { Icon } from 'semantic-ui-react'
-import 'react-tabs/style/react-tabs.css';
+import 'react-tabs/style/react-tabs.css'
 
 /* REDUX STUFF */
 import { connect } from 'react-redux'
-import * as actions from '../../redux/actions';
+import * as actions from '../../redux/actions'
 
 // Components
 import Navigation from '../events/navigation.js'
@@ -29,7 +29,7 @@ class Mobile extends Component {
                     </TabList>
                     <TabPanel>
 
-                        <EventsMap events_data={this.props.eventsData} places_data={this.props.placesData} lat={this.props.lat} lng={this.props.lon} distance={this.props.distance} zoom={this.props.details_shown ? 16 : this.props.currentZoom} setPosition={this.props.setPosition} onclick={this.props.onclick} />                     
+                        <EventsMap events_data={this.props.eventsData} places_data={this.props.placesData} latitude={this.props.latitude} longitude={this.props.longitude} distance={this.props.distance} zoom={this.props.details_shown ? 16 : this.props.currentZoom} setPosition={this.props.setPosition} onclick={this.props.onclick} />                     
                         <MobileList data={this.props.eventsData} type='places' onclick={this.props.onclick} handleListType={this.handleListType}/>
                     </TabPanel>
                     <TabPanel>

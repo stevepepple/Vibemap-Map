@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import querystring from 'querystring';
+import querystring from 'querystring'
 import isEqual from 'react-fast-compare'
 
 import { Grid } from 'semantic-ui-react'
@@ -22,17 +22,17 @@ import Navigation from '../events/navigation.js'
 
 /* REDUX STUFF */
 import { connect } from 'react-redux'
-import * as actions from '../../redux/actions';
+import * as actions from '../../redux/actions'
 
 /* TODO: Break this into styles for each component */
-import '../../styles/events_page.scss';
+import '../../styles/events_page.scss'
 
 // TODO: Seperate data rendering from layout from UI logic? 
 // TODO: Move to main page component, i.e main.js or index.js
 class Page extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             top_event: [],
@@ -67,8 +67,8 @@ class Page extends Component {
     }
      
     componentWillMount() {
+        
         console.log("Mounting main page...")
-
         // TODO: remove to Redux? 
         this.setState({ activity_options : Constants.activty_categories })
         
@@ -76,8 +76,8 @@ class Page extends Component {
         // TODO: set in Redux? 
         let current = Constants.place_categories.find(item => item.key === 'all')
         
-        // Concatanate the default set of categories.
-        let combined_categories = helpers.findPlaceCategoriess(current.categories);
+        // Concatanate the default set of categories
+        let combined_categories = helpers.findPlaceCategoriess(current.categories)
 
         this.setStateFromQuery(this.props.location.search)
         this.setState({ place_categories: combined_categories })
@@ -97,7 +97,7 @@ class Page extends Component {
         })
 
         // Handle scree resizing
-        window.addEventListener('resize', this.handleWindowSizeChange);
+        window.addEventListener('resize', this.handleWindowSizeChange)
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -117,8 +117,8 @@ class Page extends Component {
     // always kill a process everytime we are done using it
     componentWillUnmount() {
         if (this.state.intervalIsSet) {
-            clearInterval(this.state.intervalIsSet);
-            this.setState({ intervalIsSet: null });
+            clearInterval(this.state.intervalIsSet)
+            this.setState({ intervalIsSet: null })
         }
     }
 
@@ -130,22 +130,22 @@ class Page extends Component {
 
         for (const key in params) {
             if (params.hasOwnProperty(key)) {
-                const value = params[key];
+                const value = params[key]
                 switch (key) {
                     case "days":
                         console.log("Got days!!!!", value)
                         if (Number.isInteger(value)) {
                             this.props.setDays(value)
                         }
-                        break;
+                        break
 
                     case "activity":
                         // TODO: Handle validate if value is note correct
                         this.setActivity(value)
-                        break;
+                        break
 
                     default:
-                        break;
+                        break
                 }
             }
         }
@@ -159,7 +159,7 @@ class Page extends Component {
         // Concatanate the default set of categories.
         // Search for all categories that match the current selection and concatenate them
         let current_categories = Constants.place_categories.find(item => item.key === activity)
-        let combined_categories = helpers.findPlaceCategoriess(current_categories.categories);
+        let combined_categories = helpers.findPlaceCategoriess(current_categories.categories)
 
         this.setState({ 
             activity: activity,
@@ -173,7 +173,7 @@ class Page extends Component {
 
     handleWindowSizeChange = () => {
         this.setState({ width: window.innerWidth })
-    };
+    }
 
     /* TODO: Should all of this logic just flow through an event service and component? */
     // Change to getPlaces
@@ -231,8 +231,8 @@ class Page extends Component {
 
     render() {
 
-        const { width } = this.state;
-        const isMobile = width <= 700;
+        const { width } = this.state
+        const isMobile = width <= 700
 
         // TODO: best practice is to make this a func? 
         let navigation = <Navigation 
@@ -291,7 +291,7 @@ class Page extends Component {
                         </Grid.Row>
                     </Grid>
                 </div>
-            );
+            )
         }
     }
 }
@@ -306,12 +306,12 @@ const mapStateToProps = state => ({
     eventsData: state.eventsData,
     placesData: state.placesData,
     searchTerm: state.searchTerm
-});
+})
 
 const EventsPage = connect(
     mapStateToProps,
     // Or actions
     actions
-)(Page);
+)(Page)
 
-export default EventsPage;
+export default EventsPage

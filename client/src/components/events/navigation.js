@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Grid, Dropdown, Form } from 'semantic-ui-react'
 
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import * as Constants from '../../constants.js'
 
 import LocationSearchInput from '../map/search'
@@ -9,18 +9,17 @@ import LocationSearchInput from '../map/search'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
-import '../../styles/navigation.scss';
+import '../../styles/navigation.scss'
 
 
 const datePicker = {
     minWidth: '140px',
     lineHeight: '2em'
-};
-
+}
 
 class Navigation extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             options: [
@@ -71,7 +70,7 @@ class Navigation extends Component {
 
         let search = <Form>
             <Form.Group widths='equal'>
-                <LocationSearchInput className='mobile search' setPosition={this.props.setPosition} />
+                <LocationSearchInput className='mobile search'/>
                 <Dropdown
                     button
                     className='icon'
@@ -135,7 +134,7 @@ class Navigation extends Component {
                 )}
 
             </div>
-        );
+        )
     }
 }
 
@@ -154,4 +153,4 @@ const mapDispatchToProps = dispatch => ({
     setLocation: location => dispatch(actions.setCurrentLocation(location))
 })
 
-export default connect(mapStateToProps, actions)(Navigation);
+export default connect(mapStateToProps, actions)(Navigation)
