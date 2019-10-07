@@ -37,8 +37,6 @@ class Page extends Component {
         this.state = {
             top_event: [],
             items: [],
-            lat: 37.79535238155009,
-            lon: -122.2823644705406,
             // TODO: set state form YAML
             event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
@@ -55,10 +53,17 @@ class Page extends Component {
             width: window.innerWidth,
         }
 
-        this.showDetails = this.showDetails.bind(this);
-        this.clearDetails = this.clearDetails.bind(this);
-        this.handleListType = this.handleListType.bind(this);
-        this.setActivity = this.setActivity.bind(this);
+        // THIS is an optimization to instantiate these func just once
+        this.setStateFromQuery = this.setStateFromQuery.bind(this)
+        this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this)
+        this.fetchEvents = this.fetchEvents.bind(this)
+        this.fetchPlaces = this.fetchPlaces.bind(this)
+        // TODO: move to Redux and pull default activities from YAML
+        this.setActivity = this.setActivity.bind(this)
+        // TODO: move to Redux
+        this.showDetails = this.showDetails.bind(this)
+        this.showDetails = this.showDetails.bind(this)
+        this.clearDetails = this.clearDetails.bind(this)
     }
      
     componentWillMount() {
@@ -81,8 +86,15 @@ class Page extends Component {
 
     componentDidMount() {
         
-        // Get data for the users current location
-        this.getPosition();
+        // Set global state with user's location
+        helpers.getPosition()
+            .then((position) => {
+                if (position) {
+                    this.props.setCurrentLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude })
+                } else {
+                    // TODO: what if the user disallows location
+                }
+        })
 
         // Handle scree resizing
         window.addEventListener('resize', this.handleWindowSizeChange);
@@ -92,12 +104,12 @@ class Page extends Component {
     
         // TODO: should be a switch statement
         if (prevProps.searchTerm !== this.props.searchTerm) {
-            this.showEvents()
+            this.fetchEvents()
         }
 
         if (!isEqual(prevProps.currentLocation, this.props.currentLocation)) {
-            this.showEvents()
-            this.showPlaces()
+            this.fetchEvents()
+            this.fetchPlaces()
         }        
     }
 
@@ -109,7 +121,6 @@ class Page extends Component {
             this.setState({ intervalIsSet: null });
         }
     }
-
 
     // Take URL params and map to state
     // TODO: Sync the URL state both ways
@@ -139,26 +150,9 @@ class Page extends Component {
             }
         }
     }
-    
-    getPosition = function() {
-        // Users geo location from HTML 5 util
-        helpers.getPosition()
-            .then((position) => {
-                if (position) {
-                    // Set global state with user's location
-                    let location = { latitude: position.coords.latitude, longitude: position.coords.longitude } 
-                    this.props.setCurrentLocation(location)
-                }
-                // TODO: this should be updated in componentWillUpdate
-                this.showEvents()
-                this.showPlaces()
-            })
-    }
 
     // TODO: set via Redux
     setActivity(activity, key) {
-
-        console.log("!!!Searching for this activity: ", activity)
 
         let event_categories = Constants.activty_categories.find(item => item.key === activity)
         // Places have nest categories; Here's an good enough way to get those.
@@ -172,21 +166,18 @@ class Page extends Component {
             event_categories: event_categories.categories, 
             place_categories: combined_categories, 
         }, function() {
-            this.showEvents()
-            this.showPlaces()
+            this.fetchEvents()
+            this.fetchPlaces()
         })
     }
 
     handleWindowSizeChange = () => {
         this.setState({ width: window.innerWidth })
-        console.log('window width: ', this.state.width)
     };
 
     /* TODO: Should all of this logic just flow through an event service and component? */
     // Change to getPlaces
-    showEvents(position) {
-
-        console.log("In show events...")
+    fetchEvents(position) {
 
         let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
         this.setState({ timedOut: false})    
@@ -204,7 +195,7 @@ class Page extends Component {
 
     // Get Ranked Places for the map
     // TODO: Move to service & reducer
-    showPlaces(){
+    fetchPlaces(){
 
         let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
 
@@ -229,26 +220,7 @@ class Page extends Component {
 
         // TODO: Call this API; but store state in URL a different way
         //this.props.history.push('/v0.1/events/' + id + '/')
-
-        /*
-        let current_item = this.state.data.filter(item => item.id == id);
-        current_item = current_item[0];
-
-        let lon = current_item.geometry.coordinates[0];
-        let lat = current_item.geometry.coordinates[1];
-        this.setState({ current_item: current_item, details_shown : true, lat : lat, lon : lon });        
-        */
         this.setState({ details_shown: true, current_item : id })
-    }
-
-    handleListType = function(type) {
-        console.log('Received this list type: ', type);
-
-        if (type === 'attractions') {
-            this.showAttractions();
-        } else {
-            
-        }
     }
 
     clearDetails = function() {
@@ -262,7 +234,7 @@ class Page extends Component {
         const { width } = this.state;
         const isMobile = width <= 700;
 
-        // TODO: best practice is to make this a fun? 
+        // TODO: best practice is to make this a func? 
         let navigation = <Navigation 
             setActivity={ this.setActivity } 
             days={ this.props.currentDays } 
@@ -271,7 +243,7 @@ class Page extends Component {
             activity={this.state.activity}
             isMobile = { isMobile } />
 
-        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} lat={this.state.lat} lng={this.state.lon} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.props.currentZoom} setPosition={this.setPosition} onclick={this.showDetails} />
+        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.props.currentZoom} setPosition={this.setPosition} onclick={this.showDetails} />
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
@@ -279,7 +251,7 @@ class Page extends Component {
         // Adaptive view for mobile users
         if (isMobile) {
             return (                
-                <MobilePage data={this.props.eventsData} onclick={this.showDetails} places_data={this.props.placesData} lat={this.state.lat} lon={this.state.lon} days={this.state.days} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
+                <MobilePage data={this.props.eventsData} onclick={this.showDetails} places_data={this.props.placesData} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
             )
         } else {
             return (
@@ -295,7 +267,7 @@ class Page extends Component {
                                     this.state.details_shown ? (
                                         <EventDetails id={this.state.current_item} clearDetails={this.clearDetails} />
                                     ) : (
-                                        <EventsList data={this.props.eventsData} type='places' onclick={this.showDetails} handleListType={this.handleListType} />
+                                        <EventsList data={this.props.eventsData} type='places' onclick={this.showDetails} />
                                     )
                                 }
 

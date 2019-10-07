@@ -12,13 +12,6 @@ import TimeAndTemp from '../weather/timeAndTemp'
 
 class EventsList extends Component {
 
-    // Pass the list tyep via button.
-    handleButton = (e) => {
-        let type = e.target.getAttribute('value')
-        
-        this.props.handleListType(type)
-    }
-
     onChange = (e, { value }) => {
         
         if (value.length > 2) {
