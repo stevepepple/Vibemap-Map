@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import MainPage from './components/pages/main';
-import PlacesMap from './components/places/places_map';
 import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 import { Menu, Dropdown } from 'semantic-ui-react'
 
@@ -31,8 +30,8 @@ class App extends Component {
               
             </Menu>
             
-            <Route path="/events" component={MainPage} />
-            <Route path="/places" component={PlacesMap} />
+            <Route path="/" component={MainPage} />
+        
           </div>
         </Router>
         
