@@ -63,7 +63,7 @@ class EventsList extends Component {
 
                 <TimeAndTemp />
 
-                <Input placeholder='Search...' onChange={this.onChange} />
+                <Input fluid placeholder='Search...' icon='search' iconPosition='left' onChange={this.onChange} />
                             
                 <Item.Group divided relaxed className='events_list'>
                     {items}
