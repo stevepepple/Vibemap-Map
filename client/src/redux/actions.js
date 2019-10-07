@@ -29,6 +29,11 @@ export const setDays = days => ({
   days,
 });
 
+export const setSearchTerm = term => ({
+  type: 'SET_SEARCH_TERM',
+  term,
+});
+
 export const setCurrentVibes = vibes => ({
   type: 'SET_CURRENT_VIBES',
   vibes,

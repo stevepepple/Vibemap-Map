@@ -18,7 +18,7 @@ export const uiState = (state = {}, action) => {
 
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
-export const currentLocation = (state = { lat: 37.79535238155009, lon: -122.2823644705406 }, action) => {
+export const currentLocation = (state = { latitude: 37.79535238155009, longitude: -122.2823644705406 }, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
     state = action.location
   }
@@ -45,6 +45,15 @@ export const currentDays = (state = 1, action) => {
   if (action.type == 'SET_DAYS') {
     console.log('Setting Days ', action)
     state = action.days
+  }
+  return state
+}
+
+// Default state is one day
+export const searchTerm = (state = "", action) => {
+  if (action.type == 'SET_SEARCH_TERM') {
+    console.log('Setting search ', action)
+    state = action.term
   }
   return state
 }
@@ -158,5 +167,6 @@ export const reducers = combineReducers({
   eventsData,
   nearby_places,
   placesData,
+  searchTerm,
   uiState
 });
