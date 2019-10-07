@@ -27,7 +27,7 @@ class ListItem extends React.Component {
         let date = moment(this.props.content.start_date)
         let score = Math.round(this.props.content.score)
         let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);
-         
+
 
         let content = this.props.content;
         
@@ -41,7 +41,17 @@ class ListItem extends React.Component {
         /* TODO: Can this be made an abtract component for other types of data, i.e. places */
         return (
             
-            <List.Item className={'mobileListItem'} onClick={boundClick} key={this.props.id} data-id={content.id}>
+            <List.Item className={'mobileListItem'} 
+                onClick={boundClick} 
+                key={this.props.id} 
+                data-id={content.id}
+                style={{ 
+                    flex: '0 0 auto',
+                    height: '30vmin',
+                    verticalAlign: 'top',
+                    scrollSnapAlign: 'center',
+                    width: '100%'
+            }}>
                 <Image src={this.props.content.images[0]} size='small' />
                 <List.Content onMouseOver={this.handleHover.bind(this, this.props.id)} onMouseLeave={this.onMouseLeave.bind(this, this.props.id)}>
                     <List.Header textAlign='left'>{title}</List.Header>                

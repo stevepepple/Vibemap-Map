@@ -53,10 +53,6 @@
     display:none;
 }
 
-.mobile .header {
-    text-align: center
-}
-
 .mobile #scale {
     display: hidden;
 }
@@ -68,9 +64,16 @@
     z-index: 10;
 }
 
+/*
 .mobile .mobileListItem {
     height: 30vmin;
     width: 98vw;
+    vertical-align: top;
+}
+*/
+
+.mobileList::-webkit-scrollbar { 
+    display: none;  // Safari and Chrome
 }
 
 .mobile .mobileListItem .content {

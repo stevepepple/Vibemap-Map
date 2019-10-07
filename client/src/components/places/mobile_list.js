@@ -26,7 +26,9 @@ class MobileList extends Component {
         let items = null;
 
         if (has_items) {
-            items = this.props.data.map((event) => {
+            // TODO: @cory, sorting should happen on the server. 
+            let sorted = this.props.data.sort((a, b) => (a.properties.score > b.properties.score) ? -1 : 1)
+            items = sorted.map((event) => {
                 return <MobileListItem key={event.id} id={event.id} link={event.properties.link} onclick={this.props.onclick} content={event.properties} />
             })
             
@@ -42,14 +44,18 @@ class MobileList extends Component {
                             position: 'absolute',
                             bottom: '20px',
                             height: '180px',
-                            width: '92%',
-                            overflowY: 'hidden',
-                            overflowX: 'scroll'
+                            
+                            
                         },
                         '.mobileList' : {
+                            display: 'flex !important',
+                            flexDirection: 'row',
+                            flexWrap: 'nowrap',
+                            overflowY: 'hidden',
+                            overflowX: 'scroll',
+                            scrollSnapType: 'x mandatory',
                             background: '#FFFFFF',
-                            minWidth: '12000px',
-                            width: 'auto'
+                            width: '94vw',
                         }
                     }}
                 />
