@@ -43,7 +43,7 @@ class Page extends Component {
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
             vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
-            distance: 2 * 1609.344,
+            // TODO: handle conversion math in VibeMap
             current_item: null,
             details_shown: false,
             intervalIsSet: false,
@@ -110,7 +110,12 @@ class Page extends Component {
         if (!isEqual(prevProps.currentLocation, this.props.currentLocation)) {
             this.fetchEvents()
             this.fetchPlaces()
-        }        
+        }
+        
+        if (!isEqual(prevProps.currentZoom, this.props.currentZoom)) {
+            this.fetchEvents()
+            this.fetchPlaces()
+        }
     }
 
     // never let a process live forever 
@@ -184,7 +189,7 @@ class Page extends Component {
     
         /* Get current events, then set them in the state */
         /* TODO: package args into spread object? */
-        VibeMap.getEvents(point, this.state.distance, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
+        VibeMap.getEvents(point, this.props.currentDistance, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
             .then(results => {
                 this.props.setEventsData(results.data)
                 this.setState({ loading: false, timedOut: false })
@@ -203,7 +208,7 @@ class Page extends Component {
 
         /* Get nearby places, then set them in the Redux state */
         /* TODO: package args into spread object? */
-        VibeMap.getPlaces(point, this.state.distance, this.state.event_categories)
+        VibeMap.getPlaces(point, this.props.currentDistance, this.state.event_categories)
             .then(results => {
                 this.props.setPlacesData(results.data)
                 this.setState({ loading: false, timedOut: false })
@@ -243,7 +248,7 @@ class Page extends Component {
             activity={this.state.activity}
             isMobile = { isMobile } />
 
-        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} distance={this.state.distance} zoom={this.state.details_shown ? 16 : this.props.currentZoom} setPosition={this.setPosition} onclick={this.showDetails} />
+        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.state.details_shown ? 16 : this.props.currentZoom} setPosition={this.setPosition} onclick={this.showDetails} />
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
@@ -251,7 +256,7 @@ class Page extends Component {
         // Adaptive view for mobile users
         if (isMobile) {
             return (                
-                <MobilePage data={this.props.eventsData} onclick={this.showDetails} places_data={this.props.placesData} distance={this.state.distance} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
+                <MobilePage data={this.props.eventsData} onclick={this.showDetails} places_data={this.props.placesData} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
             )
         } else {
             return (

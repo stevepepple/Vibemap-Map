@@ -16,6 +16,7 @@ import ZoomLegend from '../map/ZoomLegend'
 
 // TODO: load from common .env
 import * as Constants from '../../constants.js'
+import helpers from '../../helpers.js'
 
 class EventsMap extends React.PureComponent {
 
@@ -58,12 +59,9 @@ class EventsMap extends React.PureComponent {
             viewport: {
                 latitude: nextProps.currentLocation.latitude,
                 longitude: nextProps.currentLocation.longitude,
-                zoom: this.props.zoom
+                zoom: this.props.currentZoom
             }
         })
-
-        // TODO: why is this needed outside a component?
-        this.showLens([nextProps.currentLocation.longitude, nextProps.currentLocation.latitude])
 
         let has_data = this.props.events_data.length > 0
 
@@ -72,7 +70,9 @@ class EventsMap extends React.PureComponent {
         // Make it valide geoJSON
         // TODO: make valid GeoJSON in Redux?
         let places_geojson = turf.featureCollection(combined_places);
-        let events_geojson = turf.featureCollection(nextProps.events_data);    
+        let events_geojson = turf.featureCollection(nextProps.events_data)
+
+        this.showLens([nextProps.currentLocation.latitude, nextProps.currentLocation.latitude])
     
         this.setState({ 
             places_geojson: places_geojson,
@@ -84,8 +84,13 @@ class EventsMap extends React.PureComponent {
     _onViewportChange = viewport => {
         
         // Keep Redux in sync with current map
-        if (viewport.zoom > 2 && Math.abs(viewport.zoom - this.props.currentZoom) >= 1 ) {
+        if (viewport.zoom > 2 && viewport.zoom !== this.props.currentZoom) {
+            
             this.props.setZoom(viewport.zoom)
+            this.props.setDistance(helpers.zoomToRadius(viewport.zoom))
+            // TODO: why is this needed outside a component?
+            
+            console.log("Setting zoom to: ", viewport.zoom, this.props.currentZoom)
         }
 
         // If the user pans by more than 2 kilometers, update the map
@@ -139,14 +144,18 @@ class EventsMap extends React.PureComponent {
     // TODO: Move to it's own component
     showLens = (center) => {
         let lens = this.state.lens
-        let circle_options = { units: 'kilometers'}
+        let circle_options = { units: 'kilometers' }
         // TODO: consolidate with helpers? 
-        let radius_in_kilometers = this.props.distance * Constants.METERS_PER_MILE / 1000;
+        // TODO: and update value from React
+        // Zoom 13 = 1, Zoom 12=5, Zoom 11=10, Zoom 10=20
+        let radius = helpers.zoomToRadius(this.props.currentZoom)
+        let radius_in_kilometers = radius * Constants.METERS_PER_MILE / 1000;
+        console.log("Upated lens circle: ", radius_in_kilometers)
 
         // Add circular lens to the map
         let circle = turf.circle(center, radius_in_kilometers, circle_options)
         lens.features[0] = circle
-        this.setState({ lens })
+        this.setState({ lens, radius })
     }
 
     // Iterate through all place categories and create css icons
@@ -220,7 +229,20 @@ class EventsMap extends React.PureComponent {
                             positionOptions={{ enableHighAccuracy: true }}
                             trackUserLocation={true}
                         />
-            
+
+                        <Source
+                            id='lens'
+                            type='geojson'
+                            data={this.state.lens}>
+                            
+                            <Layer
+                                id='lens_circle'
+                                type='fill'
+                                paint={Styles.lens}
+                                isLayerChecked={true}
+                            />
+                        </Source>
+
                         <Source
                             id='places'
                             type="geojson"
@@ -260,6 +282,7 @@ class EventsMap extends React.PureComponent {
                             </Popup>
                         }            
 
+                        {/* 
                         <Markers 
                             data={this.props.events_data} 
                             currentVibes={this.props.currentVibes} 
@@ -273,6 +296,8 @@ class EventsMap extends React.PureComponent {
                             cluster={false}>
                         </Source>
 
+                        */}
+
                     </ReactMapGL>
 
                 </div>
@@ -284,6 +309,7 @@ class EventsMap extends React.PureComponent {
 const mapDispatchToProps = dispatch => ({
     setZoom: zoom => dispatch(actions.setZoom(zoom)),
     setCurrentLocation: location => dispatch(actions.setCurrentLocation(location)),
+    setDistance: distance => dispatch(actions.setDistance(distance)),
 })
 
 const mapStateToProps = state => {
@@ -293,6 +319,7 @@ const mapStateToProps = state => {
         currentVibes: state.currentVibes,
         currentLocation: state.currentLocation,
         currentZoom: state.currentZoom,
+        currentDistance: state.currentDistance,
     }
 }
 

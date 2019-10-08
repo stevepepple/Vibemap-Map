@@ -6,14 +6,25 @@ import { scaleLinear, scalePow } from 'd3-scale'
 const helpers = {
 
     // Get HTML Position
-    getPosition: function (options) {
+    getPosition: function(options) {
         return new Promise(function (resolve, reject) {
 
             navigator.geolocation.getCurrentPosition(function (position) {
                 resolve(position);
             });
 
-        });
+        })
+    },
+
+    zoomToRadius : function(zoom) {
+        //TODO: Scale marker to zoom size!
+        let zoom_to_radius_scale = scalePow(1)
+            .domain([10, 14]) // Zoom size
+            .range([30, 1.4]) // Scale of marker size
+
+        console.log("Converted zoom: " + zoom + " to " + zoom_to_radius_scale(zoom))
+        
+        return zoom_to_radius_scale(zoom)
     },
 
     // Adapted from https://gist.github.com/James1x0/8443042

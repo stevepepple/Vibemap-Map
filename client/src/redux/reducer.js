@@ -33,7 +33,7 @@ export const currentZoom = (state = 14, action) => {
 }
 
 // TODO: create a mathematical relationship between zoom and distance
-export const currentDistance = (state = {}, action) => {
+export const currentDistance = (state = 1.4, action) => {
   if (action.type == 'SET_DISTANCE') {
     state = action.distance
   }

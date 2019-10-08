@@ -4,9 +4,9 @@ module.exports = {
     },
 
     lens : {
-      'line-color': '#007AFF',
-      'line-opacity': 0.6,
-      'line-width': 2
+      'fill-color': '#007AFF',
+      'fill-opacity': 0.2,
+      'fill-outline-color': '#007AFF'
     },
 
     geolocateStyle : {
