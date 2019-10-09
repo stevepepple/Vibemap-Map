@@ -38,7 +38,7 @@ const helpers = {
 	    var currentHour = parseFloat(moment.format("HH"));
 	
         if(currentHour >= split_afternoon && currentHour <= split_evening) {
-            time_of_day = "tea time";
+            time_of_day = "afternoon";
         } else if(currentHour >= split_evening) {
             time_of_day = "evening";
         } else {
