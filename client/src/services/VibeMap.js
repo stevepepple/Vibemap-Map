@@ -32,9 +32,9 @@ module.exports = {
                 point: point,
                 // distance: this.state.distance,
                 dist: distanceInMeters,
-                activity: activity,
-                days: days,                
-                ordering: "score",
+                //activity: activity,
+                //days: days,                
+                //ordering: "score",
                 start_date_after: day_start,
                 end_date_before: day_end,
                 search: search_term,
@@ -71,7 +71,6 @@ module.exports = {
     // TODO: Include a way to query by time of day
     getPlaces: function (point, distance, activity) {
 
-        console.clear()
         let distanceInMeters = distance * Constants.METERS_PER_MILE
         // TODO: Load more points at greater distances?
         
