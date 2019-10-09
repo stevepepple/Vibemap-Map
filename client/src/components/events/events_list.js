@@ -12,11 +12,21 @@ import TimeAndTemp from '../weather/timeAndTemp'
 
 class EventsList extends Component {
 
+    constructor(props) {
+        super(props)
+        this.onClick = this.onClick.bind(this)
+    }
+
     onChange = (e, { value }) => {
         
         if (value.length > 2) {
             this.props.setSearchTerm(value)
         }
+    }
+
+    onClick = (event, id) => {
+        this.props.setDetailsId(id)
+        this.props.setDetailsShown(true)
     }
 
     render() {
@@ -29,7 +39,7 @@ class EventsList extends Component {
             // TODO: @cory, sorting should happen on the server. 
             let sorted = this.props.data.sort((a, b) => (a.properties.score > b.properties.score) ? -1 : 1)
             items = sorted.map((event) => {
-                return <ListItem key={event.id} id={event.id} link={event.properties.link} onclick={this.props.onclick} content={event.properties} />
+                return <ListItem key={event.id} id={event.id} link={event.properties.link} onClick={this.onClick} content={event.properties} />
             })
             
         } else {
@@ -68,7 +78,9 @@ class EventsList extends Component {
 
 const mapStateToProps = state => {
     return {
-        searchTerm: state.searchTerm
+        searchTerm: state.searchTerm,
+        detailsId: state.detailsId,
+        detailsShown: state.detailsShown
     }
 }
 

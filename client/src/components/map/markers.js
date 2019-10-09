@@ -4,6 +4,8 @@ import helpers from '../../helpers.js'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 import isEqual from 'react-fast-compare'
 
+import Vibe from '../elements/vibe'
+
 import Styles from '../../styles/map_styles.js'
 
 class Markers extends Component {
@@ -39,7 +41,6 @@ class Markers extends Component {
             this.setState({ markers: this.scoreMarkers(this.props.data)})    
         }
     }
-
 
     scoreMarkers(features) {
 
@@ -108,9 +109,19 @@ class Markers extends Component {
             
             // TODO: @cory this
             markers = this.state.markers.map(feature => 
-                <Marker key={feature.id} longitude={feature.geometry.coordinates[0]} latitude={feature.geometry.coordinates[1]}>
-                    <div className={feature.className} onMouseOver={((e) => this.handleOnMouseOver(e, feature))} style={{ height: feature.height, width: feature.width}}>
+                <Marker 
+                    key={feature.id} 
+                    longitude={feature.geometry.coordinates[0]} 
+                    latitude={feature.geometry.coordinates[1]}>
+                    <div 
+                        className={feature.className} 
+                        onClick={((e) => this.props.onClick(e, feature))} 
+                        onMouseOver={((e) => this.handleOnMouseOver(e, feature))} 
+                        style={{ height: feature.height, width: feature.width}}>
+
+                        <Vibe feature={feature} />
                         <img src={feature.properties.images[0]} height={'100%'} width={'100%'} />    
+
                     </div>                    
                 </Marker>
             )            

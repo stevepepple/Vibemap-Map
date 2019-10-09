@@ -21,7 +21,7 @@ import helpers from '../../helpers.js'
 class EventsMap extends React.PureComponent {
 
     constructor(props) {
-        super(props);
+        super(props)
 
         // TODO: Move to database or it's own repository
         this.state = {
@@ -89,7 +89,6 @@ class EventsMap extends React.PureComponent {
             this.props.setZoom(viewport.zoom)
             this.props.setDistance(helpers.zoomToRadius(viewport.zoom))
             // TODO: why is this needed outside a component?
-            
             console.log("Setting zoom to: ", viewport.zoom, this.props.currentZoom)
         }
 
@@ -112,8 +111,9 @@ class EventsMap extends React.PureComponent {
         
     }
 
-    _onClick = event => {
-
+    _onClick = (event, feature) => {
+        this.props.setDetailsId(feature.id)
+        this.props.setDetailsShown(true)
     }
 
     _onHover = event => {
@@ -282,11 +282,11 @@ class EventsMap extends React.PureComponent {
                             </Popup>
                         }            
 
-                        {/* 
                         <Markers 
                             data={this.props.events_data} 
                             currentVibes={this.props.currentVibes} 
                             zoom={this.props.currentZoom}
+                            onClick={this._onClick}
                             showPopup={this.showPopup} />
 
                         <Source
@@ -295,8 +295,6 @@ class EventsMap extends React.PureComponent {
                             data={this.state.events_geojson}
                             cluster={false}>
                         </Source>
-
-                        */}
 
                     </ReactMapGL>
 
@@ -309,7 +307,9 @@ class EventsMap extends React.PureComponent {
 const mapDispatchToProps = dispatch => ({
     setZoom: zoom => dispatch(actions.setZoom(zoom)),
     setCurrentLocation: location => dispatch(actions.setCurrentLocation(location)),
-    setDistance: distance => dispatch(actions.setDistance(distance)),
+    setDetailsId: id => dispatch(actions.setDetailsId(id)),
+    setDetailsShown: show => dispatch(actions.setDetailsShown(show)),
+    setDistance: distance => dispatch(actions.setDistance(distance))
 })
 
 const mapStateToProps = state => {
@@ -320,6 +320,8 @@ const mapStateToProps = state => {
         currentLocation: state.currentLocation,
         currentZoom: state.currentZoom,
         currentDistance: state.currentDistance,
+        detailsId: state.detailsId,
+        detailsShown: state.detailsShown
     }
 }
 

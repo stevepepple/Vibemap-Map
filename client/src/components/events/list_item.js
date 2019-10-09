@@ -6,11 +6,8 @@ import helpers from '../../helpers';
 
 class ListItem extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     handleHover(id) {
+        console.log("Hovering on: ", this.props.id)
         helpers.fireEvent(this.props.id, "focus")
     }
 
@@ -22,7 +19,7 @@ class ListItem extends React.Component {
         
         let title = this.props.content.name;
         let start = this.props.content.start_time
-        let date = moment(this.props.content.start_date)
+        let date = this.props.content.start_date
         let score = Math.round(this.props.content.score)
         let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);
          
@@ -38,16 +35,14 @@ class ListItem extends React.Component {
         if (typeof content.vibes !== "undefined") {
             vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
         }
-
-        let boundClick = this.props.onclick.bind(this, this.props.id);
-
+        
         /* TODO: Can this be made an abtract component for other types of data, i.e. places */
         return (
             
-            <Item onClick={boundClick} key={this.props.id} data-id={content.id}>
+            <Item onClick={((e) => this.props.onClick(e, this.props.id))} key={this.props.id} data-id={content.id}>
                 <Item.Image src={this.props.content.images[0]} size='small' />
                 <Item.Content onMouseOver={this.handleHover.bind(this, this.props.id)} onMouseLeave={this.onMouseLeave.bind(this, this.props.id)}>
-                    <Item.Extra className='date'>{date.format('dddd')} {start}</Item.Extra>
+                    <Item.Extra className='date'>{date} {start}</Item.Extra>
                     <Item.Header>{title}</Item.Header>                
                     <Item.Extra>
                         <div>

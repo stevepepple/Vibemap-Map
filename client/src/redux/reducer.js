@@ -16,6 +16,21 @@ export const uiState = (state = {}, action) => {
   return state
 }
 
+export const detailsShown = (state = false, action) => {
+  if (action.type == 'SET_DETAILS_SHOWN') {
+    state = action.show
+  }
+  return state
+}
+
+export const detailsId = (state = null, action) => {
+  if (action.type == 'SET_DETAILS_ID') {
+    console.log("SET_DETAILS_ID: " + action.id)
+    state = action.id
+  }
+  return state
+}
+
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
 export const currentLocation = (state = { latitude: 37.79535238155009, longitude: -122.2823644705406 }, action) => {
@@ -163,6 +178,8 @@ export const reducers = combineReducers({
   currentDistance,
   currentDays,
   currentVibes,
+  detailsId,
+  detailsShown,
   name,
   eventsData,
   nearby_places,

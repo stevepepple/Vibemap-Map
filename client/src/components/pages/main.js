@@ -61,8 +61,6 @@ class Page extends Component {
         // TODO: move to Redux and pull default activities from YAML
         this.setActivity = this.setActivity.bind(this)
         // TODO: move to Redux
-        this.showDetails = this.showDetails.bind(this)
-        this.showDetails = this.showDetails.bind(this)
         this.clearDetails = this.clearDetails.bind(this)
     }
      
@@ -217,21 +215,11 @@ class Page extends Component {
             })
     }
 
-    // Get the current data item and display it
-    // Add details shows state to Redux and sync with mobile + web UI
-    showDetails = function (id, event) {
-
-        console.log('SHow details for: ', id)        
-
-        // TODO: Call this API; but store state in URL a different way
-        //this.props.history.push('/v0.1/events/' + id + '/')
-        this.setState({ details_shown: true, current_item : id })
-    }
-
     clearDetails = function() {
-        this.props.history.replace('/events/')
+        this.props.history.replace('')
 
-        this.setState({ current_item : null, details_shown : false })
+        this.props.setDetailsId(null)
+        this.props.setDetailsShown(false)
     }
 
     render() {
@@ -248,7 +236,7 @@ class Page extends Component {
             activity={this.state.activity}
             isMobile = { isMobile } />
 
-        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.state.details_shown ? 16 : this.props.currentZoom} setPosition={this.setPosition} onclick={this.showDetails} />
+        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.props.detailsShown ? 16 : this.props.currentZoom} setPosition={this.setPosition} />
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
@@ -269,8 +257,8 @@ class Page extends Component {
                             <Grid.Column width={7} className='list_details'>
                                 {
                                     /* TODO: Refactor into component */
-                                    this.state.details_shown ? (
-                                        <EventDetails id={this.state.current_item} clearDetails={this.clearDetails} />
+                                    this.props.detailsShown ? (
+                                        <EventDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
                                     ) : (
                                         <EventsList data={this.props.eventsData} type='places' onclick={this.showDetails} />
                                     )
@@ -308,6 +296,8 @@ const mapStateToProps = state => ({
     currentZoom: state.currentZoom,
     currentDays: state.currentDays,
     currentDistance: state.currentDistance,
+    detailsShown: state.detailsShown,
+    detailsId: state.detailsId,
     eventsData: state.eventsData,
     placesData: state.placesData,
     searchTerm: state.searchTerm

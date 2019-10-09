@@ -1,8 +1,19 @@
+import { detailShown } from "./reducer";
+
 export const setUIState = state => ({
   type: 'SET_UI_STATE',
   state,
 });
 
+export const setDetailsShown = show => ({
+  type: 'SET_DETAILS_SHOWN',
+  show,
+});
+
+export const setDetailsId = id => ({
+  type: 'SET_DETAILS_ID',
+  id,
+});
 
 export const activateGeod = geod => ({
   type: 'ACTIVATE_GEOD',
