@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions'
+
 import { Button, Card, Grid, Dimmer, GridColumn, Icon, List, Loader, Segment, Tab } from 'semantic-ui-react'
 import { Global, css } from '@emotion/core'
 
@@ -11,12 +13,19 @@ class MobileList extends Component {
     constructor(props) {
         super(props);
         //this.showDetails = this.showDetails.bind(this);
+
+        this.handleButton = this.handleButton.bind(this);
     }
 
     // Pass the list tyep via button.
     handleButton = (e) => {
         let type = e.target.getAttribute('value')
         this.props.handleListType(type)
+    }
+
+    onClick = (event, id) => {
+        this.props.setDetailsId(id)
+        this.props.setDetailsShown(true)
     }
 
     render() {
@@ -29,7 +38,7 @@ class MobileList extends Component {
             // TODO: @cory, sorting should happen on the server. 
             let sorted = this.props.data.sort((a, b) => (a.properties.score > b.properties.score) ? -1 : 1)
             items = sorted.map((event) => {
-                return <MobileListItem key={event.id} id={event.id} link={event.properties.link} onclick={this.props.onclick} content={event.properties} />
+                return <MobileListItem key={event.id} id={event.id} link={event.properties.link} onClick={this.onClick} content={event.properties} />
             })
             
         } else {
@@ -70,5 +79,12 @@ class MobileList extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        searchTerm: state.searchTerm,
+        detailsId: state.detailsId,
+        detailsShown: state.detailsShown
+    }
+}
 
-export default MobileList;
+export default connect(mapStateToProps, actions)(MobileList);

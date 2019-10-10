@@ -103,7 +103,7 @@ class Navigation extends Component {
                                 {/* TODO: replace location input with search able dropdown */}
                                 <Form><Form.Group>
                                     <Dropdown
-                                        placeholder='Activty'
+                                        placeholder='Activity'
                                         search
                                         className='icon'                                    
                                         icon='bullseye' // TODO: Map currently selected to icon

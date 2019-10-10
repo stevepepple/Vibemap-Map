@@ -36,13 +36,11 @@ class ListItem extends React.Component {
             vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
         }
 
-        let boundClick = this.props.onclick.bind(this, this.props.id);
-
         /* TODO: Can this be made an abtract component for other types of data, i.e. places */
         return (
             
             <List.Item className={'mobileListItem'} 
-                onClick={boundClick} 
+                onClick={((e) => this.props.onClick(e, this.props.id))}
                 key={this.props.id} 
                 data-id={content.id}
                 style={{ 
