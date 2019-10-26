@@ -41,7 +41,7 @@ module.exports = {
                 per_page: 50
             });
 
-            fetch(ApiUrl + "/v0.1/events/?" + query, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.2/events/?" + query, { headers: ApiHeaders })
                 .then(data => data.json())
                 .then(res => {
 
@@ -56,7 +56,7 @@ module.exports = {
 
     getEventDetails: function(id){
         return new Promise(function (resolve, reject) {
-            fetch(ApiUrl + "/v0.1/events/" + id, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.2/events/" + id, { headers: ApiHeaders })
                 .then(data => data.json())
                 .then(result => {
                     clearTimeout(timeout);
@@ -85,7 +85,7 @@ module.exports = {
                 per_page: 1000
             });
 
-            fetch(ApiUrl + "/v0.1/places/?" + query, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.2/places/?" + query, { headers: ApiHeaders })
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout);
