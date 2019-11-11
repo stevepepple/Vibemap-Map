@@ -22,6 +22,7 @@ module.exports = {
     getEvents: function(point, distance, activity, days, search_term) {
         
         let distanceInMeters = distance * Constants.METERS_PER_MILE
+        console.log("distance: ", distanceInMeters)
         let day_start = moment().startOf('day').format("YYYY-MM-DD HH:MM");
         let day_end = moment().add(days, 'days').format("YYYY-MM-DD HH:MM");
 
@@ -38,10 +39,10 @@ module.exports = {
                 start_date_after: day_start,
                 end_date_before: day_end,
                 search: search_term,
-                per_page: 50
+                per_page: 100
             });
 
-            fetch(ApiUrl + "/v0.1/events/?" + query, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.2/events/?" + query, { headers: ApiHeaders })
                 .then(data => data.json())
                 .then(res => {
 
@@ -56,7 +57,7 @@ module.exports = {
 
     getEventDetails: function(id){
         return new Promise(function (resolve, reject) {
-            fetch(ApiUrl + "/v0.1/events/" + id, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.2/events/" + id, { headers: ApiHeaders })
                 .then(data => data.json())
                 .then(result => {
                     clearTimeout(timeout);
@@ -85,13 +86,29 @@ module.exports = {
                 per_page: 1000
             });
 
-            fetch(ApiUrl + "/v0.1/places/?" + query, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.2/places/?" + query, { headers: ApiHeaders })
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout);
                     
                     //console.clear()
-                    //console.log('Received this many places: ', res.results.features.length)
+                    console.log('Received this many places: ', res.results.features.length)
+                    res.results.features.forEach(place => {
+                        if (place.properties.aggregate_rating > 2) {
+                            if (place.properties.categories == undefined || place.properties.categories.length == 0) {
+                                place.properties.categories = ["resturaunt"]
+                            }
+
+                            if (place.properties.aggregate_rating > 4.0) {
+                               //console.log(place.properties.name + " " + place.properties.aggregate_rating + " " + place.properties.categories)
+                            }
+
+                            
+                        } else {
+                            place.properties.aggregate_rating = 2
+                        }
+                        
+                    });
                     //console.log(res.results.features);
 
                     resolve({ data: res.results.features, loading: false, timedOut: false })
