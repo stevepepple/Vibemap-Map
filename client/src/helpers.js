@@ -18,9 +18,11 @@ const helpers = {
 
     zoomToRadius : function(zoom) {
         //TODO: Scale marker to zoom size!
+        
         let zoom_to_radius_scale = scalePow(1)
-            .domain([10, 14]) // Zoom size
-            .range([30, 1.4]) // Scale of marker size
+            .domain([8, 16]) // Zoom size
+            .range([40, 0.2]) // Scale of marker size
+
 
         console.log("Converted zoom: " + zoom + " to " + zoom_to_radius_scale(zoom))
         
