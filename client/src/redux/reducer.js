@@ -133,6 +133,7 @@ export const placesData = (state = [], action) => {
     let processed = action.places_data.map(place => {
       // TODO: Score places with more categories higher
       //console.log("categories: ", place.properties.categories)
+      // TODO: work with Cory to fix these categories according to the schema
       place.properties.categories = place.properties.categories.shift();
       //event.properties.score = event.properties.likes
       return place
