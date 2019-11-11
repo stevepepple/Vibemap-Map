@@ -19,7 +19,7 @@ export default class Vibe extends React.Component{
     render() {
         return (
             <div className="vibe">
-                Chill
+                
             </div>
         )
     }
