@@ -5,7 +5,7 @@ module.exports = {
 
     lens : {
       'fill-color': '#007AFF',
-      'fill-opacity': 0.2,
+      'fill-opacity': 0.4,
       'fill-outline-color': '#007AFF'
     },
 
@@ -17,7 +17,7 @@ module.exports = {
       width: 30
     },
 
-    // TODO: this style is not used? 
+    /* TODO: this style is not used? 
     places_circle: {
       'circle-radius': [
       'interpolate',
@@ -131,11 +131,13 @@ module.exports = {
       'circle-stroke-opacity': {
         stops: [[10, 0.0], [12, 0.4], [13, 0.6], [18, 1.0]] }
     },
- 
+    */
     marker_layout :  {
       "visibility": "visible",
       "text-field": ["to-string", ["get", "name"]],
       "text-allow-overlap" : true,
+      "icon-allow-overlap": false,
+      "symbol-sort-key": ["get", "aggregate_rating"],
       "text-offset": [0, -2],
       "icon-image": [
         "step",
@@ -146,13 +148,19 @@ module.exports = {
       ],
       "text-size": 10,
       "icon-size": [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        0,
-        0.1,
-        22,
-        1.4
+        "case",
+        [">=", ["get", "aggregate_rating"], 3],
+        // Size is small
+        0.8,
+
+        [">=", ["get", "aggregate_rating"], 4],
+        1,
+
+        [">=", ["get", "aggregate_rating"], 5],
+        1.4,
+
+        // Fall back value
+        0.6
       ]
     },
 
@@ -167,11 +175,11 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 1,
-          10, 6,
-          12, 30,
+          10, 20,
+          12, 40,
           13, 50,
-          14, 70,
-          20, 130
+          14, 60,
+          20, 200
       ],
       'heatmap-opacity': [
         "interpolate",
@@ -179,17 +187,28 @@ module.exports = {
         ["zoom"],
           8, 0.2,
           12, 0.3,
-          15, 0.4
+          20, 0.4
       ],
       // TODO: Scale this on the total number of results vs. size of area...
       'heatmap-intensity': [
         "interpolate",
         ["linear"],
         ["zoom"],
-          8, 0.1,
+          8, 0.2,
           14, 0.25,
-          20, 0.4
+          20, 0.6
       ],
+      /*
+      "heatmap-weight": [
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "aggregate_rating"],
+          1, 0.1,
+          5, 1
+        ]
+      ],
+      */
       "heatmap-color": [
         "interpolate",
         ["linear"],
@@ -248,5 +267,47 @@ module.exports = {
           'stops': [[8, 0.1], [20, 0.6]]
         },
         'circle-translate': [-2, -2]
+    },
+
+    places_circle: {
+      // increase the radius of the circle as the zoom level and dbh value increases
+      'circle-radius': [
+        "case",
+        [
+          ">=",
+          [
+            "get",
+            "aggregate_rating"
+          ],
+          3
+        ],
+        2,
+        [
+          ">=",
+          [
+            "get",
+            "aggregate_rating"
+          ],
+          4
+        ],
+        4,
+        [
+          ">=",
+          [
+            "get",
+            "aggregate_rating"
+          ],
+          5
+        ],
+        10,
+        2
+      ],
+      'circle-color': "#e27012",
+      'circle-stroke-color': '#FFFFFF',
+      'circle-stroke-width': 0.4,
+      'circle-opacity': {
+        'stops': [[8, 0.2], [20, 0.8]]
+      },
+      'circle-translate': [-2, -2]
     }
 }
