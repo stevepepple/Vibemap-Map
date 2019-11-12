@@ -2,6 +2,7 @@ import request from 'request-promise'
 import * as Constants from './constants.js'
 
 import { scaleLinear, scalePow } from 'd3-scale'
+import * as turf from '@turf/turf'
 
 const helpers = {
 
@@ -17,12 +18,10 @@ const helpers = {
     },
 
     zoomToRadius : function(zoom) {
-        //TODO: Scale marker to zoom size!
-        
+        // Scale and interpolate radius to zoom siz
         let zoom_to_radius_scale = scalePow(1)
-            .domain([8, 16]) // Zoom size
-            .range([40, 0.2]) // Scale of marker size
-
+            .domain([8, 12, 14, 16]) // Zoom size
+            .range([40, 10, 2, 0.2]) // Scale of search radius
 
         console.log("Converted zoom: " + zoom + " to " + zoom_to_radius_scale(zoom))
         
@@ -59,6 +58,27 @@ const helpers = {
         }
 
         return matches;
+    },
+
+    sortLocations: function(locations, currentLocation) {
+
+        let current = turf.point([currentLocation.longitude, currentLocation.latitude])
+        // Sort the list of places based on closness to the users
+        let sorted_locations = locations.sort((a, b) => {
+            let point_a = turf.point(a.centerpoint)
+            let point_b = turf.point(b.centerpoint)
+            a.distance = turf.distance(current, point_a)
+            b.distance = turf.distance(current, point_b)
+            
+            if (a.distance > b.distance) {
+                return 1
+            } else {
+                return -1
+            }
+        
+        })
+
+        return sorted_locations
     },
 
     topFoursquareResult: function(results) {
