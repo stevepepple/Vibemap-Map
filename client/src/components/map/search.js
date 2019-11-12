@@ -5,10 +5,10 @@ import { Search, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions';
 
-import PlacesAutocomplete, {
-    geocodeByAddress,
-    getLatLng,
-} from 'react-places-autocomplete';
+import helpers from '../../helpers.js'
+
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+
 
 class LocationSearchInput extends React.Component {
     constructor(props) {
@@ -17,22 +17,41 @@ class LocationSearchInput extends React.Component {
             address: '',
             best: null, 
             results : [],
+            // TODO sort by nearnest to user
             locations: [
-                { key: 'nearby', text: 'Nearby', coords: [42, -122], value: 'nearby' },
-                { key: 'oakland', text: 'Oakland', coords: [42, -122], value: 'oakland' },
-                { key: 'sf', text: 'San Francisco', coords :[42, -122], value: 'sf' },
-                { key: 'portland', text: 'Portland', coords: [45.525781, -122.672448], value: 'portland' },
-                { key: 'sanjose', text: 'San Jose', coords: [37.3, -121.8], value: 'sanjose' },
-                { key: 'seattle', text: 'Seattle', coords: [45.525781, -122.672448], value: 'seattle' },
-                { key: 'guadalajara', text: 'Guadalajara', coords: [20.67657143973132,-103.34742475872281], value: 'guadalajara' },
-                { key: 'vancouver', text: 'Vancouver', coords: [42, -122], value: 'vancouver' },
-                { key: 'cairo', text: 'Cairo', coords: [31.233155, 30.042124], value: 'cairo' } 
+                { "id": "31c71dc4-b861-42a3-b722-03d52894fc24", "text": "Austin, TX", "value": "austin", "name": "Austin-Round Rock, TX Metro Area", "description": null, "centerpoint": [-97.65444655424398, 30.262609025602593], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "a207c7df-4f84-4d8e-8839-84b246ede716", "text": "Boston, MA", "value": "boston", "name": "Boston-Cambridge-Newton, MA-NH Metro Area", "description": null, "centerpoint": [-71.02192727231369, 42.51789894269843], "zoom_start": 13, "bearing_start": null, "pitch_start": null }, 
+                { "id": "56a56e10-460e-40d0-a72f-58b04bd051b4", "text": "Chicago, IL", "value": "chicago", "name": "Chicago-Naperville-Elgin, IL-IN-WI Metro Area", "description": null, "centerpoint": [-87.829623137516, 41.824839540182225], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "9320479f-3ff3-4542-b8b8-938d8935b495", "text": "Dallas, TX", "value": "dallas", "name": "Dallas-Fort Worth-Arlington, TX Metro Area", "description": null, "centerpoint": [-97.02519305892125, 32.818153180168665], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "a2a38afe-f0e1-445c-92eb-7518acdaaf82", "text": "Denver, CO", "value": "denver", "name": "Denver-Aurora-Lakewood, CO", "description": null, "centerpoint": [-104.98755003471857, 39.73998623841923], "zoom_start": 13, "bearing_start": null, "pitch_start": null }, 
+                { "id": "6e31a0eb-e654-4405-80b3-c7aa01c68191", "text": "Guadalajara, MX", "value": "guadalajara", "name": "Guadalajara", "description": "", "centerpoint": [-103.32267587463409, 20.656168982503225], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "2a776095-98c2-45d0-9607-193f34586dfb", "text": "Indianapolis, IN", "value": "indianapolis", "name": "Indianapolis-Carmel-Anderson, IN Metro Area", "description": null, "centerpoint": [-86.20613804576381, 39.74743133204517], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "28e5b449-f2ca-4d3b-a8b4-c57cf049f5d1", "text": "Kansas City, MO", "value": "kansas_city", "name" : "Kansas City, MO-KS Metro Area", "description": null, "centerpoint": [-94.44439829770525, 38.93718341523665], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "c9a66e10-a1c4-482b-b47f-03d33c87495a", "text": "Los Angeles", "value": "la", "name": "Los Angeles-Long Beach-Anaheim, CA", "description": null, "centerpoint": [-118.1807682789231, 34.11175858157532], "zoom_start": 13, "bearing_start": null, "pitch_start": null }, 
+                { "id": "2a55b81d-3a29-4ffa-befc-accba234d994", "text": "Louisville, KY", "value": "louisville", "name": "Louisville/Jefferson County, KY-IN Metro Area", "description": null, "centerpoint": [-85.67084858950163, 38.33674952468235], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "4505fd97-4768-47bf-b653-e8da5e381d4c", "text": "New York, NY", "value": "new_york", "name": "New York-Newark-Jersey City, NY-NJ-PA Metro Area", "description": null, "centerpoint": [-73.90241970241001, 40.89842231474656], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "6ea3142b-f1b6-4fce-8484-b7c8b0a32473", "text": "North America difference (temp)", "value": "north_america", "name": "North America difference (temp)", "description": null, "centerpoint": [-100.17577749141557, 35.232344815909016], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "1fc95260-6940-4757-bb26-39b03686fb88", "text": "Portland, OR", "value": "portland", "name": "Portland-Vancouver-Hillsboro, OR-WA", "description": null, "centerpoint": [-122.66829009841561, 45.5201615939854], "zoom_start": 13, "bearing_start": null, "pitch_start": null }, 
+                { "id": "2f86fd6b-3cdc-41f3-92ae-b41dc2101662", "text": "San Diego, CA", "value": "san_diego", "name": "San Diego-Carlsbad, CA Metro Area", "description": null, "centerpoint": [-116.77020744456777, 33.02820319895837], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "2b22ebd8-d96d-4396-9033-3f296293a968", "text": "San Francisco, CA", "value": "sf", "name": "San Francisco-Oakland-Hayward, CA", "description": null, "centerpoint": [-122.44188920194642, 37.76372517208057], "zoom_start": 12, "bearing_start": -4, "pitch_start": null }, 
+                { "id": "2b22ebd8-d96d-4396-9033-3f296293a968", "text": "Oakland, CA", "value": "oakland", "name": "Oakland, CA", "description": null, "centerpoint": [-122.26974770439848, 37.79926844695808], "zoom_start": 13.2, "bearing_start": 24, "pitch_start": null }, 
+                { "id": "142ed33f-d405-489e-9d14-bd71486a08e5", "text": "Seattle, WA", "value": "seattle", "name": "Seattle-Tacoma-Bellevue, WA", "description": null, "centerpoint": [-121.88142744808042, 47.55747489573192], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "d5cbfdc0-789c-4cd9-8d32-0e75b944fbca", "text": "St. Louis, MO", "value": "st_louis", "name": "St. Louis, MO-IL Metro Area", "description": null, "centerpoint": [-90.35010496116666, 38.735268712355776], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
+                { "id": "bf753c41-259b-4f7b-bf43-44ab0fe4be57", "text": "Vancouver, CA", "value": "vancouver", "name": "Vancouver", "description": null, "centerpoint": [-122.84055167612689, 49.225514360152026], "zoom_start": null, "bearing_start": null, "pitch_start": null },
             ]
         }
 
         this.handleSearch = this.handleSearch.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleSelect = this.handleSelect.bind(this)
+    }
+
+    componentWillMount() {
+
+        let ordered_locations = helpers.sortLocations(this.state.locations, this.props.currentLocation) 
+
+        this.setState({ locations: ordered_locations })
+
     }
 
     handleSearch = (e, { searchQuery }) => {
@@ -65,8 +84,6 @@ class LocationSearchInput extends React.Component {
                     })
             });    
         }   
-        
-        
     }
 
     handleChange = address => {
@@ -74,23 +91,41 @@ class LocationSearchInput extends React.Component {
     };
 
     handleSelect = (e, { value }) => {
-        geocodeByAddress(value)
-            .then(results => {
+        
+        let item = this.state.locations.find(o => o.value == value)
 
-                this.setState({ results: results })
+        console.log("Changed select box", value, item)
 
-                getLatLng(results[0])
-                    .then(best => this.setState({ best : best }))
-                
-            })
-            .then(best => {
-                //this.props.setPosition(this.state.best.lat, this.state.best.lng)
-                this.props.setCurrentLocation({ latitude: this.state.best.lat, longitude: this.state.best.lng })
+        if(item) {
+            if (item.zoom_start) {
+                this.props.setZoom(item.zoom_start)
+            }
 
-                console.log('Success', this.state.best)
-            })
-            .catch(error => console.error('Error', error));
-    };
+            if (item.bearing_start) {
+                this.props.setBearing(item.bearing_start)
+            }
+
+            this.props.setCurrentLocation({ latitude: item.centerpoint[1], longitude: item.centerpoint[0] })
+        } else {
+            geocodeByAddress(value)
+                .then(results => {
+
+                    this.setState({ results: results })
+
+                    getLatLng(results[0])
+                        .then(best => this.setState({ best: best }))
+
+                })
+                .then(best => {
+                    //this.props.setPosition(this.state.best.lat, this.state.best.lng)
+                    this.props.setCurrentLocation({ latitude: this.state.best.lat, longitude: this.state.best.lng })
+
+                    console.log('Success', this.state.best)
+                })
+                .catch(error => console.error('Error', error));
+        }
+    
+    }
 
     render() {
 
@@ -110,62 +145,18 @@ class LocationSearchInput extends React.Component {
                 onSearchChange={this.handleSearch}
                 onChange={this.handleSelect}
                 options={options}
+                defaultValue="sf"
                 placeholder='Near by'
             />
-
-            /*
-            <PlacesAutocomplete
-                value={this.state.address}
-                onChange={this.handleChange}
-                onSelect={this.handleSelect}
-            >
-                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                    <div className="ui search">
-                        <div className="ui icon input">
-                            <input className='ui search prompt' type="text" tabIndex="0" autoComplete="off"
-                                {...getInputProps({
-                                    placeholder: 'Search Places ...',
-                                    className: 'location-search-input',
-                                })}
-                            />
-                            <i aria-hidden="true" className="search icon"></i>
-                        </div>
-
-                        <div className={"results transition autocomplete-dropdown-container " + (this.state.address.length > 1 ? 'visible' : '')}>
-                            <div> Nearby </div>
-                            {loading && <div className='ui'>Loading...</div>}
-                            {suggestions.map(suggestion => {
-                                const className = suggestion.active
-                                    ? 'suggestion-item--active'
-                                    : 'suggestion-item';
-                                // inline style for demonstration purpose
-                                const style = suggestion.active
-                                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                                return (
-                                    <div
-                                        {...getSuggestionItemProps(suggestion, {
-                                            className,
-                                            style,
-                                        })}
-                                    >
-                                        <span>{suggestion.description}</span>
-                                    </div>
-                                );
-                            })}
-                        </div>
-
-                    </div>
-                )}
-            </PlacesAutocomplete>
-            */
         );
     }
 }
 
 const mapStateToProps = state => ({
-    geod: state.geod,
-    currentLocation: state.currentLocation
+    bearing: state.bearing,
+    geod: state.geod,    
+    currentLocation: state.currentLocation,
+    currentZoom: state.currentZoom
 });
 
 const mapDispatchToProps = dispatch => ({
