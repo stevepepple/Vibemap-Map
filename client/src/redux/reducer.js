@@ -1,4 +1,7 @@
 import { combineReducers } from 'redux'
+import { connectRouter } from 'connected-react-router'
+
+import queryString from 'query-string'
 
 export function uiReducer(state = uiState, action) {
   switch(action.type) {
@@ -31,11 +34,27 @@ export const detailsId = (state = null, action) => {
   return state
 }
 
+export const activity = (state = "all", action) => {
+  if (action.type == 'SET_ACTIVITY') {
+    console.log("SET ACTIVITY FROM URL!!!", action)
+    state = action.activity
+  }
+  return state
+}
+
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
 export const currentLocation = (state = { latitude: 37.79535238155009, longitude: -122.2823644705406 }, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
     state = action.location
+  }
+  return state
+}
+
+export const bearing = (state = 0, action) => {
+  if (action.type == 'SET_BEARING') {
+    console.log("SET BEARING: ", action.bearing)
+    state = action.bearing
   }
   return state
 }
@@ -110,6 +129,16 @@ export const nearby_places = (state = [], action) => {
   return state
 }
 
+export const cities = (state = [], action) => {
+
+  if (action.cities == 'SET_CITIES') {
+    // Save the processed data to state.
+    return action.cities
+  }
+
+  return state
+}
+
 export const eventsData = (state = [], action) => {
 
   if (action.type == 'SET_EVENTS_DATA') {
@@ -170,10 +199,14 @@ export const geod = (state = {}, action) => {
       return state;
   }
 
-};
+}
 
-export const reducers = combineReducers({
+export const reducers = (history) => combineReducers({
+  activity,
+  bearing,
+  cities,
   geod,
+  router: connectRouter(history),
   currentLocation,
   currentZoom,
   currentDistance,

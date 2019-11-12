@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 //import Geocoder from "@mapbox/react-geocoder"
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
+import queryString from 'query-string'
 
 import * as turf from '@turf/turf'
 import { Global } from '@emotion/core'
@@ -57,11 +58,14 @@ class EventsMap extends React.PureComponent {
 
         this.setState({ 
             viewport: {
+                bearing: nextProps.bearing,
                 latitude: nextProps.currentLocation.latitude,
                 longitude: nextProps.currentLocation.longitude,
                 zoom: this.props.currentZoom
             }
         })
+
+        // TODO: Handle URL params
 
         let has_data = this.props.events_data.length > 0
 
@@ -84,7 +88,6 @@ class EventsMap extends React.PureComponent {
     _onViewportChange = viewport => {
         
         // Keep Redux in sync with current map
-        console.log("Zoom changed? ", viewport.zoom !== this.props.currentZoom)
         if (viewport.zoom > 2 && viewport.zoom !== this.props.currentZoom) {
             
             this.props.setZoom(viewport.zoom)
@@ -100,10 +103,8 @@ class EventsMap extends React.PureComponent {
         // TODO: there's still a problem in how the new and old values sync...
         // Need to throttle and take the last, most recent value
         this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
-        this.props.setDistance(helpers.zoomToRadius(viewport.zoom))
 
-        if (distance > 2) {
-            console.log("New location: ", viewport.latitude)
+        if (distance > 1.5) {
             this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
             // TODO: What the write way to trigger chaged map and data from Redux.
             //this.props.setPosition(viewport.latitude, viewport.longitude)
@@ -324,13 +325,17 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
     //console.log('State in events map:', state)
     return {
+        bearing: state.bearing,
         nearby_places: state.nearby_places,
         currentVibes: state.currentVibes,
         currentLocation: state.currentLocation,
         currentZoom: state.currentZoom,
         currentDistance: state.currentDistance,
         detailsId: state.detailsId,
-        detailsShown: state.detailsShown
+        detailsShown: state.detailsShown,
+        pathname: state.router.location.pathname,
+        params: state.params,
+        search: state.router.location.search
     }
 }
 
