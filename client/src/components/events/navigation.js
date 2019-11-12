@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Dropdown, Form } from 'semantic-ui-react'
+import queryString from 'query-string'
 
 import PropTypes from 'prop-types'
 import * as Constants from '../../constants.js'
@@ -7,7 +8,10 @@ import * as Constants from '../../constants.js'
 import LocationSearchInput from '../map/search'
 
 import { connect } from 'react-redux'
+import { store } from '../..//redux/store'
+
 import * as actions from '../../redux/actions'
+import { push } from 'connected-react-router'
 
 import '../../styles/navigation.scss'
 
@@ -29,13 +33,45 @@ class Navigation extends Component {
                 { key: '7', text: 'Week', value: '5' },
                 { key: '14', text: '2 weeks', value: '14' }
             ],
-            vibes: ['local'],
+            params: {},
+            vibes: [],
             vibe_options : []
         }
     }
 
     componentWillMount() {
-        this.setVibeOptions()
+        this.setVibeOptions()        
+
+        let params = queryString.parse(this.props.search)
+        this.setState({ params: params })
+
+        if (params.activity) {
+            this.props.setActivity(params.activity)
+        }
+
+        if (params.days) {
+            this.props.setDays(params.days)
+        }
+
+        if (params.vibes) {
+            this.props.setCurrentVibes(params.vibes)
+            console.log("Vibes from URL: ", params.vibes)
+        }
+    }
+
+    // TODO: Should this be in Redux
+    componentWillReceiveProps(props) {
+        let new_history = queryString.stringify(this.state.params)
+        console.log("Navigation got new props: ", new_history)
+        push(new_history);
+    }
+
+    updateURL(key, value) {
+        // Update state and push to Redux search history
+        let params = this.state.params;
+        params[key] = value
+        let string = queryString.stringify(params)
+        store.dispatch(push({ search: string }))
     }
 
     setVibeOptions = (props) => {
@@ -46,24 +82,23 @@ class Navigation extends Component {
         this.setState({ vibe_options: options })
         // Update redux with the default value
         this.props.setCurrentVibes(this.state.vibes)
-
     }
     
     handleDaysChange = (e, { value }) => {
-        console.log('Days changed in navigations: ', value)
         this.props.setDays(value)
-        // TODO: should need to propagate the value back up like this; Redux props should flow automatically. 
-        this.props.setDays(value)
+        this.updateURL("days", value)
     }
 
     handleActivityChange = (event, { value }) => {
         this.setState({ current_activity : value })
         this.props.setActivity(value)
+        this.updateURL("activity", value)
     }
 
     handleVibeChange = (event, { value }) => {
         this.setState({ vibes: value })
         this.props.setCurrentVibes(value)  
+        this.updateURL("vibes", value)
     }
 
     render() {
@@ -124,7 +159,7 @@ class Navigation extends Component {
                                         onChange={this.handleVibeChange}
                                         //value={['local']}
                                         options={this.state.vibe_options}
-                                        value={this.state.vibes}
+                                        value={this.props.currentVibes}
                                     />
                                 </Form.Group></Form>                                
 
@@ -140,17 +175,16 @@ class Navigation extends Component {
 
 const mapStateToProps = state => {
     return {
+        activity: state.activity,
         nearby_places: state.nearby_places,
         currentLocation: state.currentLocation,
         currentZoom: state.currentZoom,
         currentDays: state.currentDays,
         currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,
+        pathname: state.router.location.pathname,
+        search: state.router.location.search
     }
 }
-
-const mapDispatchToProps = dispatch => ({
-    setLocation: location => dispatch(actions.setCurrentLocation(location))
-})
 
 export default connect(mapStateToProps, actions)(Navigation)
