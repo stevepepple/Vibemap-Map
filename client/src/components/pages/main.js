@@ -108,11 +108,13 @@ class Page extends Component {
         if (!isEqual(prevProps.currentLocation, this.props.currentLocation)) {
             this.fetchEvents()
             this.fetchPlaces()
+            this.fetchCities()
         }
         
         if (!isEqual(prevProps.currentZoom, this.props.currentZoom)) {
             this.fetchEvents()
             this.fetchPlaces()
+            this.fetchCities()
         }
     }
 
@@ -155,6 +157,7 @@ class Page extends Component {
     }
 
     // TODO: set via Redux
+    // TODO: Or load from YAML definition
     setActivity(activity, key) {
 
         let event_categories = Constants.activty_categories.find(item => item.key === activity)
@@ -178,6 +181,14 @@ class Page extends Component {
         this.setState({ width: window.innerWidth })
     }
 
+    fetchCities() {
+        VibeMap.getCities()
+            .then(results => {
+                console.log("Got city boundary data: ", results.data)
+                this.props.setCities(results.data)
+            })
+    }
+
     /* TODO: Should all of this logic just flow through an event service and component? */
     // Change to getPlaces
     fetchEvents(position) {
@@ -187,6 +198,7 @@ class Page extends Component {
     
         /* Get current events, then set them in the state */
         /* TODO: package args into spread object? */
+        
         VibeMap.getEvents(point, this.props.currentDistance, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
             .then(results => {
                 this.props.setEventsData(results.data)
@@ -206,7 +218,8 @@ class Page extends Component {
 
         /* Get nearby places, then set them in the Redux state */
         /* TODO: package args into spread object? */
-        VibeMap.getPlaces(point, this.props.currentDistance, this.state.event_categories)
+        console.log("Getting places for current distance: ", this.props.currentDistance)
+        VibeMap.getPlaces(point, this.props.currentDistance, this.state.event_categories, this.props.currentVibes)
             .then(results => {
                 this.props.setPlacesData(results.data)
                 this.setState({ loading: false, timedOut: false })
@@ -290,12 +303,14 @@ class Page extends Component {
 }
 
 const mapStateToProps = state => ({
+    cities: state.cities,
     geod: state.geod,
     currentCategory: state.currentCategory,
     currentLocation: state.currentLocation,
     currentZoom: state.currentZoom,
     currentDays: state.currentDays,
     currentDistance: state.currentDistance,
+    currentVibes: state.currentVibes,
     detailsShown: state.detailsShown,
     detailsId: state.detailsId,
     eventsData: state.eventsData,
