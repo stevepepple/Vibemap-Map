@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 //import Geocoder from "@mapbox/react-geocoder"
 import { connect } from 'react-redux'
+import { store } from '../../redux/store'
 import * as actions from '../../redux/actions'
+import { push } from 'connected-react-router'
+
 
 import * as turf from '@turf/turf'
 import { Global } from '@emotion/core'
+import queryString from 'query-string'
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup } from 'react-map-gl'
 
 // TODO: Remove these other map sources
@@ -57,6 +61,7 @@ class EventsMap extends React.PureComponent {
 
         this.setState({ 
             viewport: {
+                bearing: nextProps.bearing,
                 latitude: nextProps.currentLocation.latitude,
                 longitude: nextProps.currentLocation.longitude,
                 zoom: this.props.currentZoom
@@ -84,7 +89,7 @@ class EventsMap extends React.PureComponent {
     _onViewportChange = viewport => {
         
         // Keep Redux in sync with current map
-        console.log("Zoom changed? ", viewport.zoom !== this.props.currentZoom)
+        
         if (viewport.zoom > 2 && viewport.zoom !== this.props.currentZoom) {
             
             this.props.setZoom(viewport.zoom)
@@ -96,22 +101,23 @@ class EventsMap extends React.PureComponent {
         let original_location = turf.point([this.props.currentLocation.longitude, this.props.currentLocation.latitude])
         let distance = turf.distance(original_location, new_location)
 
-
         // TODO: there's still a problem in how the new and old values sync...
         // Need to throttle and take the last, most recent value
-        this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
-        this.props.setDistance(helpers.zoomToRadius(viewport.zoom))
+        if (viewport.longitude > 0) {
+           // this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
+            this.props.setLocationParams(this.props.currentLocation)
+        }
+        
 
-        if (distance > 2) {
-            console.log("New location: ", viewport.latitude)
-            this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
-            // TODO: What the write way to trigger chaged map and data from Redux.
-            //this.props.setPosition(viewport.latitude, viewport.longitude)
+        if (distance > 1.5) {
+            //this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
+            this.props.setLocationParams(this.props.currentLocation)
         }
 
-        this.setState({ viewport })
-        
+        this.setState({ viewport })   
     }
+
+    
 
     _onClick = (event, feature) => {
         
@@ -291,12 +297,14 @@ class EventsMap extends React.PureComponent {
                             </Popup>
                         }            
 
+                        {/* TODO: Replace events with sorted top picks 
                         <Markers 
                             data={this.props.events_data} 
                             currentVibes={this.props.currentVibes} 
                             zoom={this.props.currentZoom}
                             onClick={this._onClick}
                             showPopup={this.showPopup} />
+                        */}
                         
                         <Source
                             id='events'
@@ -324,13 +332,17 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
     //console.log('State in events map:', state)
     return {
+        bearing: state.bearing,
         nearby_places: state.nearby_places,
         currentVibes: state.currentVibes,
         currentLocation: state.currentLocation,
         currentZoom: state.currentZoom,
         currentDistance: state.currentDistance,
         detailsId: state.detailsId,
-        detailsShown: state.detailsShown
+        detailsShown: state.detailsShown,
+        pathname: state.router.location.pathname,
+        params: state.params,
+        search: state.router.location.search
     }
 }
 

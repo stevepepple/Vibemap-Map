@@ -19,10 +19,34 @@ module.exports = {
         console.log(arg)
     },
 
+    getCities: function() {
+        return new Promise(function (resolve, reject) {
+            let query = querystring.stringify({
+                // lat: this.state.lat,
+                // lon: this.state.lon,
+                //point: point,
+                // distance: this.state.distance,
+                //dist: distanceInMeters,
+                //activity: activity,
+                //days: days,                
+            })
+
+            fetch(ApiUrl + "/v0.2/boundaries/?" + query, { headers: ApiHeaders })
+                .then(data => data.json())
+                .then(res => {
+                    clearTimeout(timeout);
+                    resolve({ data: res.results, loading: false, timedOut: false })
+
+                }, (error) => {
+                    console.log(error)
+                });
+        }); 
+    },
+
     getEvents: function(point, distance, activity, days, search_term) {
         
         let distanceInMeters = distance * Constants.METERS_PER_MILE
-        console.log("distance: ", distanceInMeters)
+
         let day_start = moment().startOf('day').format("YYYY-MM-DD HH:MM");
         let day_end = moment().add(days, 'days').format("YYYY-MM-DD HH:MM");
 
@@ -35,11 +59,11 @@ module.exports = {
                 dist: distanceInMeters,
                 //activity: activity,
                 //days: days,                
-                //ordering: "score",
+                ordering: "likes--",
                 start_date_after: day_start,
                 end_date_before: day_end,
                 search: search_term,
-                per_page: 100
+                per_page: 20
             });
 
             fetch(ApiUrl + "/v0.2/events/?" + query, { headers: ApiHeaders })
@@ -70,21 +94,30 @@ module.exports = {
     },
 
     // TODO: Include a way to query by time of day
-    getPlaces: function (point, distance, activity) {
+    getPlaces: function (point, distance, activity, vibes) {
 
         let distanceInMeters = distance * Constants.METERS_PER_MILE
-        // TODO: Load more points at greater distances?
         
+        // TODO: Load more points at greater distances?        
         return new Promise(function (resolve, reject) {
-            let query = querystring.stringify({
+            let params = {
                 // lat: this.state.lat,
                 // lon: this.state.lon,
+                ordering: 'aggregateScore',
                 point: point,
-                // distance: this.state.distance,
                 dist: distanceInMeters,
-                activity: activity,
-                per_page: 1000
-            });
+                // TODO: Make two calls, one for all and one for vibe or search? 
+                vibes: vibes,
+                per_page: 2000
+            }
+
+            if (activity) {
+                params["category"] = activity
+            }
+
+            let query = querystring.stringify(params);
+
+            
 
             fetch(ApiUrl + "/v0.2/places/?" + query, { headers: ApiHeaders })
                 .then(data => data.json())
@@ -92,6 +125,7 @@ module.exports = {
                     clearTimeout(timeout);
                     
                     //console.clear()
+                    //console.log("distance: ", distanceInMeters)
                     console.log('Received this many places: ', res.results.features.length)
                     res.results.features.forEach(place => {
                         if (place.properties.aggregate_rating > 2) {
