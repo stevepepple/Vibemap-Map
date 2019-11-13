@@ -68,8 +68,6 @@ class EventsMap extends React.PureComponent {
             }
         })
 
-        // TODO: Handle URL params
-
         let has_data = this.props.events_data.length > 0
 
         // TODO: @cory Hack to group event and places heatmap, until the venues database is updated.

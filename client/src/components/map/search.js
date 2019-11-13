@@ -17,7 +17,7 @@ class LocationSearchInput extends React.Component {
             address: '',
             best: null, 
             results : [],
-            // TODO sort by nearnest to user
+            // TODO: update Admin pannel with this value and pull from API
             locations: [
                 { "id": "31c71dc4-b861-42a3-b722-03d52894fc24", "text": "Austin, TX", "value": "austin", "name": "Austin-Round Rock, TX Metro Area", "description": null, "centerpoint": [-97.65444655424398, 30.262609025602593], "zoom_start": null, "bearing_start": null, "pitch_start": null }, 
                 { "id": "a207c7df-4f84-4d8e-8839-84b246ede716", "text": "Boston, MA", "value": "boston", "name": "Boston-Cambridge-Newton, MA-NH Metro Area", "description": null, "centerpoint": [-71.02192727231369, 42.51789894269843], "zoom_start": 13, "bearing_start": null, "pitch_start": null }, 

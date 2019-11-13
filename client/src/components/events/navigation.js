@@ -59,10 +59,9 @@ class Navigation extends Component {
         }
     }
 
-    // TODO: Should this be in Redux
+    // Sync URL params with React Router history in Redux store
     componentWillReceiveProps(props) {
         let new_history = queryString.stringify(this.state.params)
-        console.log("Navigation got new props: ", new_history)
         push(new_history);
     }
 
