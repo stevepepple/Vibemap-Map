@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 //import Geocoder from "@mapbox/react-geocoder"
 import { connect } from 'react-redux'
+import { store } from '../../redux/store'
 import * as actions from '../../redux/actions'
-import queryString from 'query-string'
+import { push } from 'connected-react-router'
+
 
 import * as turf from '@turf/turf'
 import { Global } from '@emotion/core'
+import queryString from 'query-string'
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup } from 'react-map-gl'
 
 // TODO: Remove these other map sources
@@ -88,6 +91,7 @@ class EventsMap extends React.PureComponent {
     _onViewportChange = viewport => {
         
         // Keep Redux in sync with current map
+        
         if (viewport.zoom > 2 && viewport.zoom !== this.props.currentZoom) {
             
             this.props.setZoom(viewport.zoom)
@@ -99,20 +103,23 @@ class EventsMap extends React.PureComponent {
         let original_location = turf.point([this.props.currentLocation.longitude, this.props.currentLocation.latitude])
         let distance = turf.distance(original_location, new_location)
 
-
         // TODO: there's still a problem in how the new and old values sync...
         // Need to throttle and take the last, most recent value
-        this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
+        if (viewport.longitude > 0) {
+           // this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
+            this.props.setLocationParams(this.props.currentLocation)
+        }
+        
 
         if (distance > 1.5) {
-            this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
-            // TODO: What the write way to trigger chaged map and data from Redux.
-            //this.props.setPosition(viewport.latitude, viewport.longitude)
+            //this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
+            this.props.setLocationParams(this.props.currentLocation)
         }
 
-        this.setState({ viewport })
-        
+        this.setState({ viewport })   
     }
+
+    
 
     _onClick = (event, feature) => {
         
@@ -292,12 +299,14 @@ class EventsMap extends React.PureComponent {
                             </Popup>
                         }            
 
+                        {/* TODO: Replace events with sorted top picks 
                         <Markers 
                             data={this.props.events_data} 
                             currentVibes={this.props.currentVibes} 
                             zoom={this.props.currentZoom}
                             onClick={this._onClick}
                             showPopup={this.showPopup} />
+                        */}
                         
                         <Source
                             id='events'

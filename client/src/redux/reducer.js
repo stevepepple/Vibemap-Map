@@ -34,9 +34,11 @@ export const detailsId = (state = null, action) => {
   return state
 }
 
-export const activity = (state = "all", action) => {
+export const activity = (state = "", action) => {
   if (action.type == 'SET_ACTIVITY') {
-    console.log("SET ACTIVITY FROM URL!!!", action)
+    if (action.activity == "all"){
+      action.activity = null
+    }
     state = action.activity
   }
   return state
@@ -44,8 +46,9 @@ export const activity = (state = "all", action) => {
 
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
-export const currentLocation = (state = { latitude: 37.79535238155009, longitude: -122.2823644705406 }, action) => {
+export const currentLocation = (state = { latitude: 0, longitude: 0 }, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
+    console.log("Setting curent location...", action.location)
     state = action.location
   }
   return state
@@ -187,6 +190,7 @@ export const name = (state = 'Steve', action) => {
       return state;
   }
 }
+
 
 export const geod = (state = {}, action) => {
 

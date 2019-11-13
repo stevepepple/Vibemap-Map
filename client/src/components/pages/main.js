@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import querystring from 'querystring'
+import queryString from 'querystring'
 import isEqual from 'react-fast-compare'
 
 import { Grid } from 'semantic-ui-react'
@@ -23,6 +23,8 @@ import Navigation from '../events/navigation.js'
 /* REDUX STUFF */
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
+import { store } from '../../redux/store'
+import { push } from 'connected-react-router'
 
 /* TODO: Break this into styles for each component */
 import '../../styles/events_page.scss'
@@ -66,7 +68,6 @@ class Page extends Component {
      
     componentWillMount() {
         
-        console.log("Mounting main page...")
         // TODO: remove to Redux? 
         this.setState({ activity_options : Constants.activty_categories })
         
@@ -84,15 +85,25 @@ class Page extends Component {
 
     componentDidMount() {
         
+        console.log("Location before getPosition: ", this.props.currentLocation)
         // Set global state with user's location
-        helpers.getPosition()
-            .then((position) => {
-                if (position) {
-                    this.props.setCurrentLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude })
-                } else {
-                    // TODO: what if the user disallows location
-                }
-        })
+        let params = queryString.parse(this.props.search)
+
+        // TODO: There should be a button for "Near Me"
+        if (params.latitude && params.longitude) {
+            this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude })
+        } else {
+            helpers.getPosition()
+                .then((position) => {
+                    if (position) {
+                        this.props.setCurrentLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude })
+                    } else {
+                        // TODO: what if the user disallows location
+                    }
+                })
+        }
+
+        
 
         // Handle scree resizing
         window.addEventListener('resize', this.handleWindowSizeChange)
@@ -103,6 +114,11 @@ class Page extends Component {
         // TODO: should be a switch statement
         if (prevProps.searchTerm !== this.props.searchTerm) {
             this.fetchEvents()
+        }
+
+        if (!isEqual(prevProps.activity, this.props.activity)) {
+            this.fetchEvents()
+            this.fetchPlaces()
         }
 
         if (!isEqual(prevProps.currentLocation, this.props.currentLocation)) {
@@ -127,10 +143,19 @@ class Page extends Component {
         }
     }
 
+    setLocationParams = location => {
+        let params = queryString.parse(this.props.search)
+        params["latitude"] = location.latitude
+        params["longitude"] = location.longitude
+        let string = queryString.stringify(params)
+        store.dispatch(push({ search: string }))
+    }
+
     // Take URL params and map to state
     // TODO: Sync the URL state both ways
+    // TODO: This all get splaces by react router + redux
     setStateFromQuery(query) {
-        let params = querystring.parse(query)
+        let params = queryString.parse(query)
         /*TODO: cases for each param that are validated against available options */
 
         for (const key in params) {
@@ -219,7 +244,7 @@ class Page extends Component {
         /* Get nearby places, then set them in the Redux state */
         /* TODO: package args into spread object? */
         console.log("Getting places for current distance: ", this.props.currentDistance)
-        VibeMap.getPlaces(point, this.props.currentDistance, this.state.event_categories, this.props.currentVibes)
+        VibeMap.getPlaces(point, this.props.currentDistance, this.props.activity, this.props.currentVibes)
             .then(results => {
                 this.props.setPlacesData(results.data)
                 this.setState({ loading: false, timedOut: false })
@@ -249,7 +274,7 @@ class Page extends Component {
             activity={this.state.activity}
             isMobile = { isMobile } />
 
-        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.props.detailsShown ? 16 : this.props.currentZoom} setPosition={this.setPosition} />
+        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.props.detailsShown ? 16 : this.props.currentZoom} setPosition={this.setPosition} setLocationParams={this.setLocationParams} />
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
@@ -303,6 +328,7 @@ class Page extends Component {
 }
 
 const mapStateToProps = state => ({
+    activity: state.activity,
     cities: state.cities,
     geod: state.geod,
     currentCategory: state.currentCategory,

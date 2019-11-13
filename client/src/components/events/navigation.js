@@ -8,7 +8,7 @@ import * as Constants from '../../constants.js'
 import LocationSearchInput from '../map/search'
 
 import { connect } from 'react-redux'
-import { store } from '../..//redux/store'
+import { store } from '../../redux/store'
 
 import * as actions from '../../redux/actions'
 import { push } from 'connected-react-router'

@@ -100,17 +100,24 @@ module.exports = {
         
         // TODO: Load more points at greater distances?        
         return new Promise(function (resolve, reject) {
-            let query = querystring.stringify({
+            let params = {
                 // lat: this.state.lat,
                 // lon: this.state.lon,
                 ordering: 'aggregateScore',
                 point: point,
                 dist: distanceInMeters,
-                activity: activity,
                 // TODO: Make two calls, one for all and one for vibe or search? 
                 vibes: vibes,
                 per_page: 2000
-            });
+            }
+
+            if (activity) {
+                params["category"] = activity
+            }
+
+            let query = querystring.stringify(params);
+
+            
 
             fetch(ApiUrl + "/v0.2/places/?" + query, { headers: ApiHeaders })
                 .then(data => data.json())
