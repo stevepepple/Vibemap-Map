@@ -29,7 +29,7 @@ const helpers = {
     },
 
     normalize : function(val, max, min) { 
-        return (val - min) / 10 * (max - min)
+        return (val - min) / (max - min) * 10
     },
 
     // Adapted from https://gist.github.com/James1x0/8443042

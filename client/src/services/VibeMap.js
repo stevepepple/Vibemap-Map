@@ -177,9 +177,10 @@ module.exports = {
                             max_vibe_score = place.properties.vibe_score
                         }
 
-                        if (place.properties.vibe_score > max_event_score) {
+                        if (place.properties.event_score > max_event_score) {
                             max_event_score = place.properties.event_score
                         }
+
                         console.log("Aggregate score: ", helpers.default.normalize(place.properties.aggregate_rating, 0, max_aggregate_score))
                         console.log("Vibe score: ", helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score) )
                         console.log("Event score: ", helpers.default.normalize(place.properties.event_score, 0, max_event_score))
