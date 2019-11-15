@@ -28,7 +28,7 @@ const helpers = {
         return zoom_to_radius_scale(zoom)
     },
 
-    normalize : function(val, max, min) { 
+    normalize : function(val, min, max) { 
         return (val - min) / (max - min) * 10
     },
 

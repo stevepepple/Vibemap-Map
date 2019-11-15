@@ -132,6 +132,7 @@ module.exports = {
                     let max_vibe_score = 0;
                     let max_aggregate_score = 0;
 
+                    // Score indivisual results
                     res.results.features.forEach(place => {
                         place.properties.aggregate_rating = parseInt(place.properties.aggregate_rating)
                         
@@ -143,7 +144,6 @@ module.exports = {
                         // TODO: Sum of events is a stand in for a better metric of a places relevance
                         place.properties.num_events = place.properties.hotspots_events.features.length;                        
                         if (place.properties.num_events > 0 ) {
-                            console.log(place)
                             let likes = place.properties.hotspots_events.features[0].properties.likes
                             // TODO: Whats an appropriate ceiling to rank against
                             let like_score = likes / 100
@@ -180,15 +180,22 @@ module.exports = {
                         if (place.properties.event_score > max_event_score) {
                             max_event_score = place.properties.event_score
                         }
+                    
+                    })
 
-                        console.log("Aggregate score: ", helpers.default.normalize(place.properties.aggregate_rating, 0, max_aggregate_score))
-                        console.log("Vibe score: ", helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score) )
-                        console.log("Event score: ", helpers.default.normalize(place.properties.event_score, 0, max_event_score))
-                        
-                    });
-                    //console.log(res.results.features);
+                    let places_scored = res.results.features.map((place) => {
+                        place.properties.event_score = helpers.default.normalize(place.properties.event_score, 0, max_event_score)
+                        place.properties.vibe_score = helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score)
+                        place.properties.aggregate_rating = helpers.default.normalize(place.properties.aggregate_rating, 0, max_aggregate_score)
 
-                    resolve({ data: res.results.features, loading: false, timedOut: false })
+                        place.average_score = place.properties.event_score + place.properties.vibe_score + place.properties.aggregate_rating / 3
+
+                        console.log(place.average_score)
+                        return place
+                    })
+                    
+
+                    resolve({ data: places_scored, loading: false, timedOut: false })
                     
                 }, (error) => {
                     console.log(error)
