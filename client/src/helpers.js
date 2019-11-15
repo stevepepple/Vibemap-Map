@@ -20,12 +20,16 @@ const helpers = {
     zoomToRadius : function(zoom) {
         // Scale and interpolate radius to zoom siz
         let zoom_to_radius_scale = scalePow(1)
-            .domain([8, 12, 14, 16]) // Zoom size
-            .range([40, 10, 2, 0.2]) // Scale of search radius
+          .domain([8, 12, 14, 16]) // Zoom size
+          .range([40, 10, 2, 0.2]) // Scale of search radius
 
         console.log("Converted zoom: " + zoom + " to " + zoom_to_radius_scale(zoom))
         
         return zoom_to_radius_scale(zoom)
+    },
+
+    normalize : function(val, max, min) { 
+        return (val - min) / 10 * (max - min)
     },
 
     // Adapted from https://gist.github.com/James1x0/8443042

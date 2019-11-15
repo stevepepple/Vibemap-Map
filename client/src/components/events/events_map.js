@@ -104,13 +104,13 @@ class EventsMap extends React.PureComponent {
         // TODO: there's still a problem in how the new and old values sync...
         // Need to throttle and take the last, most recent value
         if (viewport.longitude > 0) {
-           // this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
+            this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
             this.props.setLocationParams(this.props.currentLocation)
         }
         
 
         if (distance > 1.5) {
-            //this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
+            this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
             this.props.setLocationParams(this.props.currentLocation)
         }
 

@@ -1,6 +1,7 @@
 const Constants = require('../constants')
 const querystring = require('querystring')
 const moment = require('moment')
+const helpers = require('../helpers.js')
 
 const ApiHeaders = new Headers({
     'Authorization': 'Token ' + Constants.SYSTEM_TOKEN
@@ -127,20 +128,61 @@ module.exports = {
                     //console.clear()
                     //console.log("distance: ", distanceInMeters)
                     console.log('Received this many places: ', res.results.features.length)
+                    let max_event_score = 0;
+                    let max_vibe_score = 0;
+                    let max_aggregate_score = 0;
+
                     res.results.features.forEach(place => {
-                        if (place.properties.aggregate_rating > 2) {
+                        place.properties.aggregate_rating = parseInt(place.properties.aggregate_rating)
+                        
+                        // Give place a vibe score
+                        place.properties.vibe_score = place.properties.vibes.length;
+                        // TODO: Places that match vibe get a bonus
+
+                        // Give place an event score
+                        // TODO: Sum of events is a stand in for a better metric of a places relevance
+                        place.properties.num_events = place.properties.hotspots_events.features.length;                        
+                        if (place.properties.num_events > 0 ) {
+                            console.log(place)
+                            let likes = place.properties.hotspots_events.features[0].properties.likes
+                            // TODO: Whats an appropriate ceiling to rank against
+                            let like_score = likes / 100
+                            // Simple sum of score works for now
+                            place.properties.event_score = place.properties.num_events + likes                        
+                        } else {
+                            place.properties.event_score = 0
+                        }                        
+
+                        if (place.properties.aggregate_rating >= 2) {
+
                             if (place.properties.categories == undefined || place.properties.categories.length == 0) {
-                                place.properties.categories = ["resturaunt"]
+                                place.properties.categories = ["missing"]
                             }
 
-                            if (place.properties.aggregate_rating > 4.0) {
-                               //console.log(place.properties.name + " " + place.properties.aggregate_rating + " " + place.properties.categories)
+                            if (place.properties.aggregate_rating > 4.0) {                            
+                               console.log(place.properties.name + " " + place.properties.aggregate_rating + " " + place.properties.categories)
                             }
 
+                            console.log(place.properties.name + ", " + place.properties.categories + ", " + place.properties.aggregate_rating + ", " + place.properties.vibe_score + ", " + " " + place.properties.vibes)
                             
                         } else {
                             place.properties.aggregate_rating = 2
                         }
+
+                        if (place.properties.aggregate_rating > max_aggregate_score) {
+                            max_aggregate_score = place.properties.aggregate_rating
+                        }
+
+                        if (place.properties.vibe_score > max_vibe_score) {
+                            max_vibe_score = place.properties.vibe_score
+                        }
+
+                        if (place.properties.vibe_score > max_event_score) {
+                            max_event_score = place.properties.event_score
+                        }
+                        console.log("Aggregate score: ", helpers.default.normalize(place.properties.aggregate_rating, 0, max_aggregate_score))
+                        console.log("Vibe score: ", helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score) )
+                        console.log("Event score: ", helpers.default.normalize(place.properties.event_score, 0, max_event_score))
                         
                     });
                     //console.log(res.results.features);
