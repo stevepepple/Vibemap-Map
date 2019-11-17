@@ -158,12 +158,6 @@ module.exports = {
                             if (place.properties.categories == undefined || place.properties.categories.length == 0) {
                                 place.properties.categories = ["missing"]
                             }
-
-                            if (place.properties.aggregate_rating > 4.0) {                            
-                               console.log(place.properties.name + " " + place.properties.aggregate_rating + " " + place.properties.categories)
-                            }
-
-                            console.log(place.properties.name + ", " + place.properties.categories + ", " + place.properties.aggregate_rating + ", " + place.properties.vibe_score + ", " + " " + place.properties.vibes)
                             
                         } else {
                             place.properties.aggregate_rating = 2
@@ -180,7 +174,6 @@ module.exports = {
                         if (place.properties.event_score > max_event_score) {
                             max_event_score = place.properties.event_score
                         }
-                    
                     })
 
                     let places_scored = res.results.features.map((place) => {
@@ -188,14 +181,18 @@ module.exports = {
                         place.properties.vibe_score = helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score)
                         place.properties.aggregate_rating = helpers.default.normalize(place.properties.aggregate_rating, 0, max_aggregate_score)
 
-                        place.average_score = place.properties.event_score + place.properties.vibe_score + place.properties.aggregate_rating / 3
+                        // Simple average of the different scores
+                        place.properties.average_score = place.properties.event_score + place.properties.vibe_score + place.properties.aggregate_rating / 3
 
-                        console.log(place.average_score)
                         return place
                     })
-                    
 
-                    resolve({ data: places_scored, loading: false, timedOut: false })
+
+                    let places_scored_and_sorted = places_scored.sort((a,b) => {
+                        return b.properties.average_score - a.properties.average_score
+                    })
+
+                    resolve({ data: places_scored_and_sorted, loading: false, timedOut: false })
                     
                 }, (error) => {
                     console.log(error)

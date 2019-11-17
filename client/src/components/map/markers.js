@@ -51,18 +51,16 @@ class Markers extends Component {
             let id = feature._id
             let src = feature.properties.image
             let likes = feature.properties.likes
-            let score = feature.properties.score
+            let score = feature.properties.average_score
             let orginal_score = feature.properties.score
             let vibes = feature.properties.vibes
             let name = feature.name ? feature.name : feature.properties.name
             let link = feature.properties.link
+            
             let categories = feature.properties.categories
 
-            categories = categories.map(function (category) {
-                return category.toLowerCase()
-            })
-
             // Update the size of markers based upon how well it matches the UI filter
+            // TODO: Move this into core scoring function.
             let match_bonus = 10
             let vibe_matches = 0
 
@@ -74,15 +72,22 @@ class Markers extends Component {
             let vibe_score = match_bonus * vibe_matches
             
             feature.score = score + vibe_score
+
             feature.size = helpers.scaleMarker(score, max, this.props.zoom)
             feature.width = feature.size + 'px'
             feature.height = feature.size + 'px'
 
             feature.className = 'marker'
+
+            /*
+            categories = categories.map(function (category) {
+                return category.toLowerCase()
+            })
             if (categories !== null) {
                 feature.className = feature.className + ' ' + categories.join(' ')
             }
-
+            */
+        
             
             if (feature.score > 10) {
                 //console.log("!!! marker score: ", feature.score)

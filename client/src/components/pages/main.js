@@ -14,7 +14,7 @@ import * as Constants from '../../constants.js'
 
 // Pages
 import MobilePage from './mobile.js'
-import EventsList from '../events/events_list.js'
+import PlacesList from '../places/places_list.js'
 import EventDetails from '../events/event_details.js'
 import EventsMap from '../events/events_map.js'
 import Navigation from '../events/navigation.js'
@@ -52,6 +52,7 @@ class Page extends Component {
             loading: true,
             timedOut: false,
             time_of_day: 'morning',
+            top_picks: [],
             width: window.innerWidth,
         }
 
@@ -209,7 +210,6 @@ class Page extends Component {
     fetchCities() {
         VibeMap.getCities()
             .then(results => {
-                console.log("Got city boundary data: ", results.data)
                 this.props.setCities(results.data)
             })
     }
@@ -247,6 +247,8 @@ class Page extends Component {
         VibeMap.getPlaces(point, this.props.currentDistance, this.props.activity, this.props.currentVibes)
             .then(results => {
                 this.props.setPlacesData(results.data)
+
+                this.setState({ top_picks: this.props.placesData.filter(place => place.properties.average_score > 7)})
                 this.setState({ loading: false, timedOut: false })
             }, (error) => {
                 console.log(error)
@@ -298,7 +300,7 @@ class Page extends Component {
                                     this.props.detailsShown ? (
                                         <EventDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
                                     ) : (
-                                        <EventsList data={this.props.eventsData} type='places' onclick={this.showDetails} />
+                                        <PlacesList data={this.state.top_picks} type='places' onclick={this.showDetails} />
                                     )
                                 }
 

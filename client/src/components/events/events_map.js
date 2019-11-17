@@ -204,6 +204,8 @@ class EventsMap extends React.PureComponent {
         let has_places_data = this.props.places_data.length > 0
         let has_events_data = this.props.events_data.length > 0
 
+        let top_picks = this.props.places_data.filter(place => place.properties.average_score > 6 )
+
         return (
 
             <div>
@@ -297,14 +299,13 @@ class EventsMap extends React.PureComponent {
                             </Popup>
                         }            
 
-                        {/* TODO: Replace events with sorted top picks 
+                        {/* TODO: Replace events with sorted top picks */}
                         <Markers 
-                            data={this.props.events_data} 
+                            data={top_picks} 
                             currentVibes={this.props.currentVibes} 
                             zoom={this.props.currentZoom}
                             onClick={this._onClick}
                             showPopup={this.showPopup} />
-                        */}
                         
                         <Source
                             id='events'
