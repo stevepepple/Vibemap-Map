@@ -49,6 +49,8 @@ export const activity = (state = "", action) => {
 export const currentLocation = (state = { latitude: 0, longitude: 0 }, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
     console.log("Setting curent location...", action.location)
+    action.location.latitude = parseFloat(action.location.latitude)
+    action.location.longitude = parseFloat(action.location.longitude)
     state = action.location
   }
   return state
@@ -95,7 +97,7 @@ export const searchTerm = (state = "", action) => {
   return state
 }
 
-export const currentVibes = (state = {}, action) => {
+export const currentVibes = (state = ['chill'], action) => {
   if (action.type == 'SET_CURRENT_VIBES') {
     state = action.vibes
     console.log("SET CURRENT VIBES: ", action.vibes)
