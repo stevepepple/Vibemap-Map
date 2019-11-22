@@ -17,7 +17,6 @@ class Markers extends Component {
             markers: [],
             has_features: false
         }
-
     }
 
     componentWillMount() {
@@ -45,8 +44,8 @@ class Markers extends Component {
     scoreMarkers(features) {
 
         let scored_markers = features.map((feature) => {
-            let min_size = 40
-            let max = helpers.getMax(features, 'score')
+            let min_size = 20
+            let max = helpers.getMax(features, 'average_score')
 
             let id = feature._id
             let src = feature.properties.image
@@ -65,10 +64,12 @@ class Markers extends Component {
             let vibe_matches = 0
 
             //console.log("compare vibes: ", vibes, current_vibes)
+            // TODO: Move this to core scoring method
             if (vibes && this.props.currentVibes) {
                 //console.log('Item\'s vibes: ', vibes)
                 vibe_matches = helpers.matchLists(vibes, this.props.currentVibes)
             }
+
             let vibe_score = match_bonus * vibe_matches
             
             feature.score = score + vibe_score
@@ -87,7 +88,6 @@ class Markers extends Component {
                 feature.className = feature.className + ' ' + categories.join(' ')
             }
             */
-        
             
             if (feature.score > 10) {
                 //console.log("!!! marker score: ", feature.score)
@@ -102,7 +102,7 @@ class Markers extends Component {
 
     // TODO: this is a realy nice way to handle it; make a help funcition?
     handleOnMouseOver(e, feature) {
-        
+        console.log("Hovered on marker: ", feature)
         this.props.showPopup(feature.properties.name, feature.geometry.coordinates[1], feature.geometry.coordinates[0])
     }
 
@@ -123,7 +123,7 @@ class Markers extends Component {
                         onClick={((e) => this.props.onClick(e, feature))} 
                         onMouseOver={((e) => this.handleOnMouseOver(e, feature))} 
                         style={{ height: feature.height, width: feature.width}}>
-
+                        <div className='name'>{feature.properties.name}</div>
                         <Vibe feature={feature} />
                         <img src={feature.properties.images[0]} height={'100%'} width={'100%'} />    
 
