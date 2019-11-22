@@ -45,6 +45,8 @@ class Navigation extends Component {
         let params = queryString.parse(this.props.search)
         this.setState({ params: params })
 
+        console.log("Got URL Params: ", params)
+
         if (params.activity) {
             this.props.setActivity(params.activity)
         }
@@ -54,14 +56,21 @@ class Navigation extends Component {
         }
 
         if (params.vibes) {
-            this.props.setCurrentVibes(params.vibes)
-            console.log("Vibes from URL: ", params.vibes)
+            
+            let vibes = []
+            if (typeof(params.vibes) == "string") {
+                vibes.push(params.vibes)
+            } else {
+                vibes = params.vibes
+            }
+            console.log("VIBEZ: ", vibes)
+            this.props.setCurrentVibes(vibes)
         }
     }
 
     // Sync URL params with React Router history in Redux store
     componentWillReceiveProps(props) {
-        let new_history = queryString.stringify(this.state.params)
+        let new_history = queryString.stringify(this.state.params)    
         push(new_history);
     }
 
@@ -70,6 +79,7 @@ class Navigation extends Component {
         let params = this.state.params;
         params[key] = value
         let string = queryString.stringify(params)
+        console.log("Updating URL", string)
         store.dispatch(push({ search: string }))
     }
 
