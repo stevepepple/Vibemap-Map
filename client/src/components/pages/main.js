@@ -14,8 +14,9 @@ import * as Constants from '../../constants.js'
 
 // Pages
 import MobilePage from './mobile.js'
+import PlaceDetails from '../places/places_details.js'
 import PlacesList from '../places/places_list.js'
-import EventDetails from '../events/event_details.js'
+
 import EventsMap from '../events/events_map.js'
 import Navigation from '../events/navigation.js'
 //import PlaceCards from '../places/place_cards.js'
@@ -103,9 +104,7 @@ class Page extends Component {
                     }
                 })
         }
-
         
-
         // Handle scree resizing
         window.addEventListener('resize', this.handleWindowSizeChange)
     }
@@ -119,6 +118,11 @@ class Page extends Component {
 
         if (!isEqual(prevProps.activity, this.props.activity)) {
             this.fetchEvents()
+            this.fetchPlaces()
+        }
+
+        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
+            console.log("Different vibes: ", this.props.currentVibes)
             this.fetchPlaces()
         }
 
@@ -145,10 +149,16 @@ class Page extends Component {
     }
 
     setLocationParams = location => {
-        let params = queryString.parse(this.props.search)
+        // Slice remove the question mark
+        let params = queryString.parse(this.props.search.slice(1))
+
+        console.log("URL Params before location: ", params)
+
         params["latitude"] = location.latitude
         params["longitude"] = location.longitude
+        
         let string = queryString.stringify(params)
+        console.log("Pushing new URL params: ", string)
         store.dispatch(push({ search: string }))
     }
 
@@ -243,6 +253,11 @@ class Page extends Component {
 
         /* Get nearby places, then set them in the Redux state */
         /* TODO: package args into spread object? */
+
+        /* TODO: 
+        1. have two calls: map by category and genearl vibe
+        2. Search by specific keyword and vibe
+        */
         console.log("Getting places for current distance: ", this.props.currentDistance)
         VibeMap.getPlaces(point, this.props.currentDistance, this.props.activity, this.props.currentVibes)
             .then(results => {
@@ -298,7 +313,7 @@ class Page extends Component {
                                 {
                                     /* TODO: Refactor into component */
                                     this.props.detailsShown ? (
-                                        <EventDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
+                                        <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
                                     ) : (
                                         <PlacesList data={this.state.top_picks} type='places' onclick={this.showDetails} />
                                     )
@@ -343,7 +358,8 @@ const mapStateToProps = state => ({
     detailsId: state.detailsId,
     eventsData: state.eventsData,
     placesData: state.placesData,
-    searchTerm: state.searchTerm
+    searchTerm: state.searchTerm,
+    search: state.router.location.search
 })
 
 const EventsPage = connect(
