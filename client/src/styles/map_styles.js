@@ -135,9 +135,10 @@ module.exports = {
     marker_layout :  {
       "visibility": "visible",
       "text-field": ["to-string", ["get", "name"]],
-      "text-allow-overlap" : true,
+      "text-allow-overlap" : false,
       "icon-allow-overlap": false,
-      "symbol-sort-key": ["get", "aggregate_rating"],
+      // TODO: 
+      "symbol-sort-key": ["get", "aggregate_score"],
       "text-offset": [0, -2],
       "icon-image": [
         "step",
@@ -147,21 +148,22 @@ module.exports = {
         ["to-string", ["get", "categories"]]
       ],
       "text-size": 10,
+      "icon-padding": 1,
       "icon-size": [
         "case",
-        [">=", ["get", "aggregate_rating"], 3],
-        // Size is small
+        [">", ["get", "aggregate_rating"], 5],
+        1.2,
+
+        [">", ["get", "aggregate_rating"], 4],
         0.8,
 
-        [">=", ["get", "aggregate_rating"], 4],
-        1,
-
-        [">=", ["get", "aggregate_rating"], 5],
-        1.4,
+        [">", ["get", "aggregate_rating"], 3],
+        0.6,
 
         // Fall back value
-        0.6
+        0.2
       ]
+      
     },
 
     marker_paint: { 
@@ -196,7 +198,7 @@ module.exports = {
         ["zoom"],
           8, 0.2,
           14, 0.25,
-          20, 0.6
+          20, 0.4
       ],
       /*
       "heatmap-weight": [
@@ -306,7 +308,7 @@ module.exports = {
       'circle-stroke-color': '#FFFFFF',
       'circle-stroke-width': 0.4,
       'circle-opacity': {
-        'stops': [[8, 0.2], [20, 0.8]]
+        'stops': [[8, 0.2], [20, 0.6]]
       },
       'circle-translate': [-2, -2]
     }
