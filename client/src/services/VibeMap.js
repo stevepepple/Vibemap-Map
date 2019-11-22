@@ -70,7 +70,7 @@ module.exports = {
             fetch(ApiUrl + "/v0.2/events/?" + query, { headers: ApiHeaders })
                 .then(data => data.json())
                 .then(res => {
-
+                    console.log("API Result: ", res)
                     clearTimeout(timeout);
                     resolve({ data: res.results.features, loading: false, timedOut: false })
                     
@@ -94,6 +94,21 @@ module.exports = {
         })
     },
 
+    getPlaceDetails: function (id) {
+        return new Promise(function (resolve, reject) {
+            fetch(ApiUrl + "/v0.2/places/" + id, { headers: ApiHeaders })
+                .then(data => data.json())
+                .then(result => {
+                    clearTimeout(timeout);
+                    console.log("Got place details: ", result)
+                    resolve({ data: result, loading: false, timedOut: false })
+
+                }, (error) => {
+                    console.log(error)
+                })
+        })
+    },
+
     // TODO: Include a way to query by time of day
     getPlaces: function (point, distance, activity, vibes) {
 
@@ -104,7 +119,7 @@ module.exports = {
             let params = {
                 // lat: this.state.lat,
                 // lon: this.state.lon,
-                ordering: 'aggregateScore',
+                ordering: '-aggregate_rating',
                 point: point,
                 dist: distanceInMeters,
                 // TODO: Make two calls, one for all and one for vibe or search? 
@@ -118,8 +133,6 @@ module.exports = {
 
             let query = querystring.stringify(params);
 
-            
-
             fetch(ApiUrl + "/v0.2/places/?" + query, { headers: ApiHeaders })
                 .then(data => data.json())
                 .then(res => {
@@ -128,16 +141,17 @@ module.exports = {
                     //console.clear()
                     //console.log("distance: ", distanceInMeters)
                     console.log('Received this many places: ', res.results.features.length)
-                    let max_event_score = 0;
-                    let max_vibe_score = 0;
-                    let max_aggregate_score = 0;
+                    let max_event_score = 0
+                    let max_vibe_score = 0
+                    let max_aggregate_score = 0
+                    let max_distance = 0
 
                     // Score indivisual results
                     res.results.features.forEach(place => {
                         place.properties.aggregate_rating = parseInt(place.properties.aggregate_rating)
                         
                         // Give place a vibe score
-                        place.properties.vibe_score = place.properties.vibes.length;
+                        place.properties.vibe_score = place.properties.vibes.length
                         // TODO: Places that match vibe get a bonus
 
                         // Give place an event score
