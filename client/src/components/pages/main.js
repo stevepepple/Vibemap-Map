@@ -58,7 +58,6 @@ class Page extends Component {
         }
 
         // THIS is an optimization to instantiate these func just once
-        this.setStateFromQuery = this.setStateFromQuery.bind(this)
         this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this)
         this.fetchEvents = this.fetchEvents.bind(this)
         this.fetchPlaces = this.fetchPlaces.bind(this)
@@ -80,14 +79,12 @@ class Page extends Component {
         // Concatanate the default set of categories
         let combined_categories = helpers.findPlaceCategoriess(current.categories)
 
-        this.setStateFromQuery(this.props.location.search)
         this.setState({ place_categories: combined_categories })
 
     }
 
     componentDidMount() {
         
-        console.log("Location before getPosition: ", this.props.currentLocation)
         // Set global state with user's location
         let params = queryString.parse(this.props.search)
 
@@ -112,17 +109,15 @@ class Page extends Component {
     componentDidUpdate(prevProps, prevState) {
     
         // TODO: should be a switch statement
-        if (prevProps.searchTerm !== this.props.searchTerm) {
-            this.fetchEvents()
-        }
+        // TODO: Handle zoom here? 
 
         if (!isEqual(prevProps.activity, this.props.activity)) {
             this.fetchEvents()
             this.fetchPlaces()
         }
 
-        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
-            console.log("Different vibes: ", this.props.currentVibes)
+        //console.log("Search for: ", this.props.searchTerm)
+        if (!isEqual(prevProps.searchTerm, this.props.searchTerm) && this.props.searchTerm > 2) {
             this.fetchPlaces()
         }
 
@@ -133,8 +128,10 @@ class Page extends Component {
         }
         
         if (!isEqual(prevProps.currentZoom, this.props.currentZoom)) {
-            this.fetchEvents()
+        
+            this.props.setDistance(helpers.zoomToRadius(this.props.currentZoom))
             this.fetchPlaces()
+            this.fetchEvents()
             this.fetchCities()
         }
     }
@@ -162,36 +159,7 @@ class Page extends Component {
         store.dispatch(push({ search: string }))
     }
 
-    // Take URL params and map to state
-    // TODO: Sync the URL state both ways
-    // TODO: This all get splaces by react router + redux
-    setStateFromQuery(query) {
-        let params = queryString.parse(query)
-        /*TODO: cases for each param that are validated against available options */
-
-        for (const key in params) {
-            if (params.hasOwnProperty(key)) {
-                const value = params[key]
-                switch (key) {
-                    case "days":
-                        console.log("Got days!!!!", value)
-                        if (Number.isInteger(value)) {
-                            this.props.setDays(value)
-                        }
-                        break
-
-                    case "activity":
-                        // TODO: Handle validate if value is note correct
-                        this.setActivity(value)
-                        break
-
-                    default:
-                        break
-                }
-            }
-        }
-    }
-
+    
     // TODO: set via Redux
     // TODO: Or load from YAML definition
     setActivity(activity, key) {
@@ -234,7 +202,7 @@ class Page extends Component {
         /* Get current events, then set them in the state */
         /* TODO: package args into spread object? */
         
-        VibeMap.getEvents(point, this.props.currentDistance, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
+        VibeMap.getEvents(point, this.props.distance, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
             .then(results => {
                 this.props.setEventsData(results.data)
                 this.setState({ loading: false, timedOut: false })
@@ -249,25 +217,45 @@ class Page extends Component {
 
         let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
 
-        this.setState({ timedOut: false })
+        this.setState({ timedOut: false, searching: false })
 
         /* Get nearby places, then set them in the Redux state */
-        /* TODO: package args into spread object? */
+        // If there a search term or vibes do a top pick search
+        if (this.props.currentVibes.length > 0 || this.props.searchTerm !== "") {
+            this.setState({ searching: true})
+            
+            // TODO: add search variable.
+            VibeMap.getPicks(point, this.props.currentDistance, this.props.activity, this.props.currentVibes, this.props.searchTerm)
+                .then(results => {
+                    //this.props.setPlacesData(results.data)
+                    // TODO: any reason to store this in redux
+                    //this.setState({ top_picks: results.data })
+                    let top_picks = results.data.slice(1, 30)
+                    this.props.setTopPicks(top_picks)
+            }, (error) => {
+                console.log(error)
+            })
+        } else {
+            this.setState({ searching: false }) 
+        }
 
-        /* TODO: 
-        1. have two calls: map by category and genearl vibe
-        2. Search by specific keyword and vibe
-        */
-        console.log("Getting places for current distance: ", this.props.currentDistance)
-        VibeMap.getPlaces(point, this.props.currentDistance, this.props.activity, this.props.currentVibes)
+        VibeMap.getPlaces(point, this.props.distance, this.props.activity, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
                 this.props.setPlacesData(results.data)
 
-                this.setState({ top_picks: this.props.placesData.filter(place => place.properties.average_score > 7)})
+                if(this.state.searching !== true) {
+                    // TODO: still join to results?
+                    let top_picks = this.props.placesData.slice(1, 20)
+                    this.props.setTopPicks(top_picks)
+                    //this.setState({ top_picks: })
+                }
+                
                 this.setState({ loading: false, timedOut: false })
             }, (error) => {
                 console.log(error)
             })
+
+
     }
 
     clearDetails = function() {
@@ -315,7 +303,7 @@ class Page extends Component {
                                     this.props.detailsShown ? (
                                         <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
                                     ) : (
-                                        <PlacesList data={this.state.top_picks} type='places' onclick={this.showDetails} />
+                                        <PlacesList data={this.props.topPicks} type='places' onclick={this.showDetails} />
                                     )
                                 }
 
@@ -352,14 +340,15 @@ const mapStateToProps = state => ({
     currentLocation: state.currentLocation,
     currentZoom: state.currentZoom,
     currentDays: state.currentDays,
-    currentDistance: state.currentDistance,
     currentVibes: state.currentVibes,
     detailsShown: state.detailsShown,
     detailsId: state.detailsId,
+    distance: state.distance,
     eventsData: state.eventsData,
     placesData: state.placesData,
     searchTerm: state.searchTerm,
-    search: state.router.location.search
+    search: state.router.location.search,
+    topPicks: state.topPicks
 })
 
 const EventsPage = connect(

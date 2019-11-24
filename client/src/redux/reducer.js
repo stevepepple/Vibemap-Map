@@ -48,7 +48,6 @@ export const activity = (state = "", action) => {
 // then returns a state
 export const currentLocation = (state = { latitude: 0, longitude: 0 }, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
-    console.log("Setting curent location...", action.location)
     action.location.latitude = parseFloat(action.location.latitude)
     action.location.longitude = parseFloat(action.location.longitude)
     state = action.location
@@ -72,7 +71,7 @@ export const currentZoom = (state = 14, action) => {
 }
 
 // TODO: create a mathematical relationship between zoom and distance
-export const currentDistance = (state = 1.4, action) => {
+export const distance = (state = 1.4, action) => {
   if (action.type == 'SET_DISTANCE') {
     state = action.distance
   }
@@ -91,7 +90,6 @@ export const currentDays = (state = 1, action) => {
 // Default state is one day
 export const searchTerm = (state = "", action) => {
   if (action.type == 'SET_SEARCH_TERM') {
-    console.log('Setting search ', action)
     state = action.term
   }
   return state
@@ -100,16 +98,14 @@ export const searchTerm = (state = "", action) => {
 export const currentVibes = (state = ['chill'], action) => {
   if (action.type == 'SET_CURRENT_VIBES') {
     state = action.vibes
-    console.log("SET CURRENT VIBES: ", action.vibes)
   }
   return state
 }
 
 export const nearby_places = (state = [], action) => {
   if (action.type == 'SET_NEARBY_PLACES') {
-    let data = [];
+    let data = []
 
-    console.log('SET NEARBY PLACES ', action.places)
     let places = action.places
     /*
     let places = GeoJSON.parse(action.places, { Point: ['latitude', 'longitude'] });
@@ -167,9 +163,33 @@ export const placesData = (state = [], action) => {
     let processed = action.places_data.map(place => {
       // TODO: Score places with more categories higher
       //console.log("categories: ", place.properties.categories)
-      // TODO: work with Cory to fix these categories according to the schema
-      place.properties.categories = place.properties.categories.shift();
+      // TODO: work with Cory to fix 
+      //console.log(place.properties.categories)
+      //if (place.properties.categories.length > 1) 
+      place.properties.sub_categories = place.properties.categories
+      place.properties.categories = place.properties.sub_categories[0]
       //event.properties.score = event.properties.likes
+      return place
+    })
+
+    // Save the processed data to state.
+    state = processed
+  }
+
+  return state
+}
+
+export const topPicks = (state = [], action) => {
+
+  if (action.type == 'SET_TOP_PICKS_DATA') {
+    // TODO: Map and process, but plan to moe this logic to API
+    let processed = action.places_data.map(place => {
+      // TODO: work with Cory to fix these categories according to the schema
+      place.properties.sub_categories = place.properties.categories
+      if (place.properties.sub_categories && place.properties.sub_categories.length > 0) {
+        place.properties.categories = place.properties.sub_categories[0]  
+      }
+      
       return place
     })
 
@@ -215,15 +235,16 @@ export const reducers = (history) => combineReducers({
   router: connectRouter(history),
   currentLocation,
   currentZoom,
-  currentDistance,
   currentDays,
   currentVibes,
   detailsId,
   detailsShown,
+  distance,
   name,
   eventsData,
   nearby_places,
   placesData,
   searchTerm,
+  topPicks,
   uiState
 });
