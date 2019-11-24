@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Dropdown, Form } from 'semantic-ui-react'
+import isEqual from 'react-fast-compare'
 import queryString from 'query-string'
 
 import PropTypes from 'prop-types'
@@ -9,7 +10,6 @@ import LocationSearchInput from '../map/search'
 
 import { connect } from 'react-redux'
 import { store } from '../../redux/store'
-
 import * as actions from '../../redux/actions'
 import { push } from 'connected-react-router'
 
@@ -45,14 +45,22 @@ class Navigation extends Component {
         let params = queryString.parse(this.props.search)
         this.setState({ params: params })
 
-        console.log("Got URL Params: ", params)
+        if (params.place) {
+            this.props.setDetailsId(params.place)
+            this.props.setDetailsShown(true)
+        }
 
         if (params.activity) {
             this.props.setActivity(params.activity)
         }
 
-        if (params.days) {
-            this.props.setDays(params.days)
+        if (params.search) {
+            console.log("Setting search from URL")
+            this.props.setSearchTerm(params.search)
+        }
+
+        if (params.latitude && params.longitude) {
+            this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude })
         }
 
         if (params.vibes) {
@@ -66,20 +74,49 @@ class Navigation extends Component {
             console.log("VIBEZ: ", vibes)
             this.props.setCurrentVibes(vibes)
         }
+
+        if (params.days) {
+            this.props.setDays(params.days)
+        }
     }
 
     // Sync URL params with React Router history in Redux store
-    componentWillReceiveProps(props) {
+    componentDidUpdate(prevProps, prevState) {
+
         let new_history = queryString.stringify(this.state.params)    
-        push(new_history);
+        push(new_history)
+
+        if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {
+            console.log("Set search: ", this.props.searchTerm)
+            // TODO: set URL
+            this.updateURL("search", this.props.searchTerm)
+        }
+
+
+        if (!isEqual(prevProps.detailsId, this.props.detailsId)) {
+            console.log("Set place ID: ", this.props.detailsId)
+            // TODO: set URL
+            this.updateURL("place", this.props.detailsId)
+        }
+
+        if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {
+            console.log("Set search: ", this.props.searchTerm)
+            // TODO: set URL
+            this.updateURL("search", this.props.searchTerm)
+        }
     }
 
     updateURL(key, value) {
         // Update state and push to Redux search history
         let params = this.state.params;
-        params[key] = value
+
+        if (value && value !== "") {
+            params[key] = value    
+        } else {
+            delete params[key]
+        }
+        
         let string = queryString.stringify(params)
-        console.log("Updating URL", string)
         store.dispatch(push({ search: string }))
     }
 
@@ -185,14 +222,17 @@ class Navigation extends Component {
 const mapStateToProps = state => {
     return {
         activity: state.activity,
+        detailsId: state.detailsId,
         nearby_places: state.nearby_places,
         currentLocation: state.currentLocation,
         currentZoom: state.currentZoom,
         currentDays: state.currentDays,
         currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,
+        detailsId: state.detailsId,
         pathname: state.router.location.pathname,
-        search: state.router.location.search
+        search: state.router.location.search,
+        searchTerm: state.searchTerm
     }
 }
 

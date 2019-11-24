@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
+
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
@@ -18,10 +20,7 @@ class EventsList extends Component {
     }
 
     onChange = (e, { value }) => {
-        
-        if (value.length > 2) {
-            this.props.setSearchTerm(value)
-        }
+        this.props.setSearchTerm(value)
     }
 
     onClick = (event, id) => {
@@ -34,6 +33,8 @@ class EventsList extends Component {
         let top_item = null;
         let items = null;
 
+        let searchTerm = this.props.searchTerm
+
         if (has_items) {
             // TODO: @cory, sorting should happen on the server. 
             let sorted = this.props.data.sort((a, b) => (a.properties.score > b.properties.score) ? -1 : 1)
@@ -42,7 +43,7 @@ class EventsList extends Component {
             })
             
         } else {
-            return <Dimmer active inverted><Loader inverted><h3>Have you ever stopped to smell the roses near Grand Avenue?</h3></Loader></Dimmer>
+             
         }
 
         return (
@@ -65,11 +66,27 @@ class EventsList extends Component {
 
                 <TimeAndTemp />
 
-                <Input fluid placeholder='Search...' icon='search' iconPosition='left' onChange={this.onChange} />
-                            
-                <Item.Group divided relaxed className='events_list'>
-                    {items}
-                </Item.Group>
+                <Input 
+                    fluid 
+                    placeholder='Search...' 
+                    icon='search' 
+                    iconPosition='left' 
+                    onChange={_.debounce(this.onChange, 500, {
+                        leading: true,
+                    })} 
+                    value={searchTerm} />
+                
+                {has_items? (
+                    <Item.Group divided relaxed className='events_list'>
+                        {items}
+                    </Item.Group>
+                ) : (
+                    <Segment placeholder>
+                        <Dimmer active inverted><Loader inverted><h3>Have you ever stopped to smell the roses near Grand Avenue?</h3></Loader></Dimmer>
+                    </Segment>
+                )}
+                     
+                
             </Segment>
         );
     }
