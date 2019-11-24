@@ -111,9 +111,10 @@ module.exports = {
 
     // TODO: Include a way to query by time of day
     getPicks: function (point, distance, activity, vibes, search) {
-
-        console.log("Get Picks for Radius of: ", distance)
-        let distanceInMeters = distance * Constants.METERS_PER_MILE
+ 
+        // Don't allow distance to be negative.
+        let distanceInMeters = 1
+        if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
         
         // TODO: Load more points at greater distances?        
         return new Promise(function (resolve, reject) {
@@ -140,8 +141,8 @@ module.exports = {
             fetch(ApiUrl + "/v0.2/places/?" + query, { headers: ApiHeaders })
                 .then(data => data.json())
                 .then(res => {
+
                     clearTimeout(timeout);
-                    
                     let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point)
 
                     resolve({ data: places_scored_and_sorted, loading: false, timedOut: false })
@@ -155,9 +156,9 @@ module.exports = {
     // TODO: Include a way to query by time of day
     getPlaces: function (point, distance, activity, vibes, search_term) {
 
-        let distanceInMeters = distance * Constants.METERS_PER_MILE
+        let distanceInMeters = 1
+        if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
 
-        console.log("Getting place in radius of: ", distance)
         
         // TODO: Load more points at greater distances?        
         return new Promise(function (resolve, reject) {
@@ -187,7 +188,7 @@ module.exports = {
                     
                     //console.clear()
                     //console.log("distance: ", distanceInMeters)
-                    let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point)
+                    let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point, vibes)
 
                     resolve({ data: places_scored_and_sorted, loading: false, timedOut: false })
                     
@@ -197,17 +198,31 @@ module.exports = {
         });
     },
 
-    scorePlaces: function(places, center_point) {
+    scorePlaces: function(places, center_point, vibes) {
         let max_event_score = 1
         let max_vibe_score = 1
         let max_aggregate_score = 1
         let max_distance = 1
+
+        let vibe_match_bonus = 10
 
         let place = places.map((place) => {
             place.properties.aggregate_rating = parseInt(place.properties.aggregate_rating)
 
             // Give place a vibe score
             place.properties.vibe_score = place.properties.vibes.length
+
+            // Give direct vibe matches bonus points
+            let vibe_matches = 0
+            let vibe_bonus = 0
+            if (vibes && place.properties.vibes) {
+                vibe_matches = helpers.default.matchLists(vibes, place.properties.vibes)
+            }
+
+            vibe_bonus = vibe_matches * vibe_match_bonus
+            place.properties.vibe_score += vibe_bonus
+
+
             // TODO: Places that match vibe get a bonus
 
             // Give place an event score
