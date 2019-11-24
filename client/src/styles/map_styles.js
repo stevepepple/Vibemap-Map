@@ -152,7 +152,7 @@ module.exports = {
       "icon-size": [
         "case",
         [">", ["get", "aggregate_rating"], 5],
-        1.2,
+        1.0,
 
         [">", ["get", "aggregate_rating"], 4],
         0.8,
@@ -178,9 +178,9 @@ module.exports = {
         ["zoom"],
           8, 1,
           10, 20,
-          12, 40,
-          13, 50,
-          14, 60,
+          12, 50,
+          13, 60,
+          14, 70,
           20, 200
       ],
       'heatmap-opacity': [
@@ -188,7 +188,7 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 0.2,
-          12, 0.3,
+          12, 0.2,
           20, 0.4
       ],
       // TODO: Scale this on the total number of results vs. size of area...
@@ -196,16 +196,27 @@ module.exports = {
         "interpolate",
         ["linear"],
         ["zoom"],
-          8, 0.2,
+          8, 0.4,
+          12, 0.0,
           14, 0.25,
           20, 0.4
       ],
       /*
+      TODO: One of these approaches should work...
+      'heatmap-weight': {
+        property: 'aggregate_rating',
+        type: 'linear',
+        stops: [
+          [0, 1],
+          [1, 10]
+        ]
+      },
+      
       "heatmap-weight": [
         [
           "interpolate",
           ["linear"],
-          ["get", "aggregate_rating"],
+          ["get", "aggregate_score"],
           1, 0.1,
           5, 1
         ]
@@ -219,14 +230,13 @@ module.exports = {
         "hsla(240, 80%, 94%, 0)",
         0.3,
         "hsla(286, 100%, 50%, 0.2)",
-        0.6,
+        0.5,
         "hsla(179, 100%, 50%, 0.6)",
         0.95,
         "hsla(50, 100%, 50%, 0.9)",
         /* The pink is too much? */
         1.2,
-        "hsla(25, 100%, 50%, 0.8)"
-        
+        "hsla(25, 100%, 50%, 0.8)" 
       ]
     },
 
@@ -275,32 +285,11 @@ module.exports = {
       // increase the radius of the circle as the zoom level and dbh value increases
       'circle-radius': [
         "case",
-        [
-          ">=",
-          [
-            "get",
-            "aggregate_rating"
-          ],
-          3
-        ],
+        [">=", ["get", "aggregate_rating"], 3],
         2,
-        [
-          ">=",
-          [
-            "get",
-            "aggregate_rating"
-          ],
-          4
-        ],
+        [">=", ["get", "aggregate_rating"], 4],
         4,
-        [
-          ">=",
-          [
-            "get",
-            "aggregate_rating"
-          ],
-          5
-        ],
+        [">=", ["get","aggregate_rating"], 5],
         10,
         2
       ],
@@ -308,7 +297,7 @@ module.exports = {
       'circle-stroke-color': '#FFFFFF',
       'circle-stroke-width': 0.4,
       'circle-opacity': {
-        'stops': [[8, 0.2], [20, 0.6]]
+        'stops': [[8, 0.2], [20, 0.2]]
       },
       'circle-translate': [-2, -2]
     }

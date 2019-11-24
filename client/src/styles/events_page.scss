@@ -235,6 +235,11 @@
     z-index: 100;
 }
 
+.mapboxgl-popup-content {
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
 .here {
     background: #66B5F8;
     border-radius: 50%;
