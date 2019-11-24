@@ -116,6 +116,11 @@ class Page extends Component {
             this.fetchPlaces()
         }
 
+        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
+            //this.fetchEvents()
+            this.fetchPlaces()
+        }
+
         //console.log("Search for: ", this.props.searchTerm)
         if (!isEqual(prevProps.searchTerm, this.props.searchTerm) && this.props.searchTerm > 2) {
             this.fetchPlaces()
@@ -225,7 +230,7 @@ class Page extends Component {
             this.setState({ searching: true})
             
             // TODO: add search variable.
-            VibeMap.getPicks(point, this.props.currentDistance, this.props.activity, this.props.currentVibes, this.props.searchTerm)
+            VibeMap.getPicks(point, this.props.distance, this.props.activity, this.props.currentVibes, this.props.searchTerm)
                 .then(results => {
                     //this.props.setPlacesData(results.data)
                     // TODO: any reason to store this in redux
