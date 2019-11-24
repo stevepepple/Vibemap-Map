@@ -100,7 +100,7 @@ const mapStateToProps = state => {
         detailsId: state.detailsId,
         nearby_places: state.nearby_places,
         currentLocation: state.currentLocation,
-        currentZoom: state.currentZoom,
+        zoom: state.zoom,
         currentDays: state.currentDays,
         currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,

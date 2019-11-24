@@ -107,7 +107,7 @@ class EventsMap extends React.PureComponent {
             this.props.setLocationParams(this.props.currentLocation)
         }
 
-        if (viewport.zoom > 2 && viewport.zoom !== this.props.currentZoom) {
+        if (viewport.zoom > 2 && viewport.zoom !== this.props.zoom) {
             console.log("New Zoom: ", viewport.zoom)
             this.props.setZoom(viewport.zoom)
             this.props.setDistance(helpers.zoomToRadius(viewport.zoom))
@@ -164,7 +164,7 @@ class EventsMap extends React.PureComponent {
         // TODO: consolidate with helpers? 
         // TODO: and update value from React
         // Zoom 13 = 1, Zoom 12=5, Zoom 11=10, Zoom 10=20
-        let radius = helpers.zoomToRadius(this.props.currentZoom)
+        let radius = helpers.zoomToRadius(this.props.zoom)
         let radius_in_kilometers = radius * Constants.METERS_PER_MILE / 1000;
 
         // Add circular lens to the map
@@ -209,10 +209,6 @@ class EventsMap extends React.PureComponent {
         let has_places_data = this.props.places_data.length > 0
         let has_events_data = this.props.events_data.length > 0
 
-        // Was above threshold rating.
-        //let top_picks = this.props.places_data.filter(place => place.properties.average_score > 5 )
-        // Now top x records
-
         return (
 
             <div>
@@ -223,7 +219,7 @@ class EventsMap extends React.PureComponent {
                 <div className = 'map_container'>
                     {/* Floating legend */}
 
-                    <ZoomLegend zoom={this.props.currentZoom} />
+                    <ZoomLegend zoom={this.props.zoom} />
 
                     {/* TODO: Move to it's own class <Map> */}
                     <ReactMapGL
@@ -309,11 +305,10 @@ class EventsMap extends React.PureComponent {
                             </Popup>
                         }            
 
-                        {/* TODO: Replace events with sorted top picks */}
                         <Markers 
                             data={this.props.topPicks} 
                             currentVibes={this.props.currentVibes} 
-                            zoom={this.props.currentZoom}
+                            zoom={this.props.zoom}
                             onClick={this._onClick}
                             showPopup={this.showPopup} />
                         
@@ -347,7 +342,7 @@ const mapStateToProps = state => {
         nearby_places: state.nearby_places,
         currentVibes: state.currentVibes,
         currentLocation: state.currentLocation,
-        currentZoom: state.currentZoom,
+        zoom: state.zoom,
         currentDistance: state.currentDistance,
         detailsId: state.detailsId,
         detailsShown: state.detailsShown,

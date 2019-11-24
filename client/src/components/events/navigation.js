@@ -64,7 +64,7 @@ class Navigation extends Component {
         }
 
         if (params.zoom) {
-            this.props.setCurrentZoom(params.zoom)
+            this.props.setZoom(params.zoom)
         }
 
         if (params.vibes) {
@@ -96,16 +96,15 @@ class Navigation extends Component {
             this.updateURL("search", this.props.searchTerm)
         }
 
-
         if (!isEqual(prevProps.detailsId, this.props.detailsId)) {
             console.log("Set place ID: ", this.props.detailsId)
             // TODO: set URL
             this.updateURL("place", this.props.detailsId)
         }
 
-        if (!isEqual(prevProps.currentZoom, this.props.currentZoom)) {
+        if (!isEqual(prevProps.zoom, this.props.zoom)) {
             // TODO: set URL
-            this.updateURL("zoom", this.props.currentZoom)
+            this.updateURL("zoom", this.props.zoom)
         }
 
         if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {
@@ -234,7 +233,7 @@ const mapStateToProps = state => {
         detailsId: state.detailsId,
         nearby_places: state.nearby_places,
         currentLocation: state.currentLocation,
-        currentZoom: state.currentZoom,
+        zoom: state.zoom,
         currentDays: state.currentDays,
         currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,

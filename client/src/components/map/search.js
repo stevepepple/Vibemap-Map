@@ -152,7 +152,7 @@ const mapStateToProps = state => ({
     bearing: state.bearing,
     geod: state.geod,    
     currentLocation: state.currentLocation,
-    currentZoom: state.currentZoom
+    zoom: state.zoom
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -63,7 +63,7 @@ export const bearing = (state = 0, action) => {
   return state
 }
 
-export const currentZoom = (state = 14, action) => {
+export const zoom = (state = 14, action) => {
   if (action.type == 'SET_ZOOM') {
     state = action.zoom
   }
@@ -186,6 +186,7 @@ export const topPicks = (state = [], action) => {
     let processed = action.places_data.map(place => {
       // TODO: work with Cory to fix these categories according to the schema
       place.properties.sub_categories = place.properties.categories
+  
       if (place.properties.sub_categories && place.properties.sub_categories.length > 0) {
         place.properties.categories = place.properties.sub_categories[0]  
       }
@@ -234,7 +235,6 @@ export const reducers = (history) => combineReducers({
   geod,
   router: connectRouter(history),
   currentLocation,
-  currentZoom,
   currentDays,
   currentVibes,
   detailsId,
@@ -246,5 +246,6 @@ export const reducers = (history) => combineReducers({
   placesData,
   searchTerm,
   topPicks,
-  uiState
+  uiState,
+  zoom
 });

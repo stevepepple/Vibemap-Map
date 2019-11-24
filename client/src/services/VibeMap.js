@@ -163,8 +163,6 @@ module.exports = {
         // TODO: Load more points at greater distances?        
         return new Promise(function (resolve, reject) {
             let params = {
-                // lat: this.state.lat,
-                // lon: this.state.lon,
                 ordering: '-aggregate_rating',
                 point: point,
                 dist: distanceInMeters,

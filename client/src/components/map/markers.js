@@ -56,6 +56,9 @@ class Markers extends Component {
             let name = feature.name ? feature.name : feature.properties.name
             let link = feature.properties.link
             let categories = feature.properties.sub_categories
+
+            console.log("Score of max: ", score, max)
+            console.log("Current zoom: ", this.props.zoom)
         
             feature.size = helpers.scaleMarker(score, max, this.props.zoom)
             feature.width = feature.size + 'px'

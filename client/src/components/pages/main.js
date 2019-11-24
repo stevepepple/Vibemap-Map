@@ -132,9 +132,9 @@ class Page extends Component {
             this.fetchCities()
         }
         
-        if (!isEqual(prevProps.currentZoom, this.props.currentZoom)) {
+        if (!isEqual(prevProps.zoom, this.props.zoom)) {
         
-            this.props.setDistance(helpers.zoomToRadius(this.props.currentZoom))
+            this.props.setDistance(helpers.zoomToRadius(this.props.zoom))
             this.fetchPlaces()
             this.fetchEvents()
             this.fetchCities()
@@ -284,7 +284,7 @@ class Page extends Component {
             activity={this.state.activity}
             isMobile = { isMobile } />
 
-        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.props.detailsShown ? 16 : this.props.currentZoom} setPosition={this.setPosition} setLocationParams={this.setLocationParams} />
+        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.props.detailsShown ? 16 : this.props.zoom} setPosition={this.setPosition} setLocationParams={this.setLocationParams} />
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
@@ -343,7 +343,7 @@ const mapStateToProps = state => ({
     geod: state.geod,
     currentCategory: state.currentCategory,
     currentLocation: state.currentLocation,
-    currentZoom: state.currentZoom,
+    zoom: state.zoom,
     currentDays: state.currentDays,
     currentVibes: state.currentVibes,
     detailsShown: state.detailsShown,
