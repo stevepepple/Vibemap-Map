@@ -55,45 +55,29 @@ class Markers extends Component {
             let vibes = feature.properties.vibes
             let name = feature.name ? feature.name : feature.properties.name
             let link = feature.properties.link
-            
-            let categories = feature.properties.categories
-
-            // Update the size of markers based upon how well it matches the UI filter
-            // TODO: Move this into core scoring function.
-            let match_bonus = 10
-            let vibe_matches = 0
-
-            //console.log("compare vibes: ", vibes, current_vibes)
-            // TODO: Move this to core scoring method
-            if (vibes && this.props.currentVibes) {
-                //console.log('Item\'s vibes: ', vibes)
-                vibe_matches = helpers.matchLists(vibes, this.props.currentVibes)
-            }
-
-            let vibe_score = match_bonus * vibe_matches
-            
-            feature.score = score + vibe_score
-
+            let categories = feature.properties.sub_categories
+        
             feature.size = helpers.scaleMarker(score, max, this.props.zoom)
             feature.width = feature.size + 'px'
             feature.height = feature.size + 'px'
 
             feature.className = 'marker'
 
-            /*
-            categories = categories.map(function (category) {
-                return category.toLowerCase()
-            })
-            if (categories !== null) {
-                feature.className = feature.className + ' ' + categories.join(' ')
-            }
-            */
-            
-            if (feature.score > 10) {
-                //console.log("!!! marker score: ", feature.score)
-                feature.className = feature.className + ' popular '
-            }
+            if(categories.length > 0 && typeof(categories) == "object") {
+                
+                categories = categories.map(function (category) {
+                    return category.toLowerCase()
+                })
 
+                if (categories !== null) {
+                    feature.className = feature.className + ' ' + categories.join(' ')
+                }
+            } else {
+                if (categories !== null) {
+                    feature.className = feature.className + ' ' + categories
+                }
+            }
+            
             return feature
         })
 
