@@ -63,6 +63,10 @@ class Navigation extends Component {
             this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude })
         }
 
+        if (params.zoom) {
+            this.props.setCurrentZoom(params.zoom)
+        }
+
         if (params.vibes) {
             
             let vibes = []
@@ -97,6 +101,11 @@ class Navigation extends Component {
             console.log("Set place ID: ", this.props.detailsId)
             // TODO: set URL
             this.updateURL("place", this.props.detailsId)
+        }
+
+        if (!isEqual(prevProps.currentZoom, this.props.currentZoom)) {
+            // TODO: set URL
+            this.updateURL("zoom", this.props.currentZoom)
         }
 
         if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {
