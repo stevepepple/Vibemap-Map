@@ -20,12 +20,13 @@ const helpers = {
     zoomToRadius : function(zoom) {
         // Scale and interpolate radius to zoom siz
         let zoom_to_radius_scale = scalePow(1)
-          .domain([8, 12, 14, 16]) // Zoom size
-          .range([40, 10, 2, 0.2]) // Scale of search radius
+          .domain([8,  12, 13, 14, 16]) // Zoom size
+          .range([ 40, 7,  3,  2,  0.2]) // Scale of search radius
 
-        console.log("Converted zoom: " + zoom + " to " + zoom_to_radius_scale(zoom))
+        let new_zoom = zoom_to_radius_scale(zoom)
+        console.log("Converted zoom: " + zoom + " to " + new_zoom)
         
-        return zoom_to_radius_scale(zoom)
+        return new_zoom
     },
 
     normalize : function(val, min, max) { 
@@ -74,7 +75,7 @@ const helpers = {
             a.distance = turf.distance(current, point_a)
             b.distance = turf.distance(current, point_b)
             
-            if (a.distance > b.distance) {
+            if (a.distance < b.distance) {
                 return 1
             } else {
                 return -1
