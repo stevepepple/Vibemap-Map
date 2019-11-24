@@ -102,7 +102,6 @@ class Markers extends Component {
 
     // TODO: this is a realy nice way to handle it; make a help funcition?
     handleOnMouseOver(e, feature) {
-        console.log("Hovered on marker: ", feature)
         this.props.showPopup(feature.properties.name, feature.geometry.coordinates[1], feature.geometry.coordinates[0])
     }
 

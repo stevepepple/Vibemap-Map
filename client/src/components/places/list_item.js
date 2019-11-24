@@ -8,6 +8,7 @@ class ListItem extends React.Component {
 
     handleHover(id) {
         console.log("Hovering on: ", this.props.id)
+        // TODO: why is this not working
         helpers.fireEvent(this.props.id, "focus")
     }
 
