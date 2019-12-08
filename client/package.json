@@ -2,7 +2,7 @@
   "name": "hotspot",
   "version": "0.0.1",
   "scripts": {
-    "serve": "npm run build",
+    "serve": "npm run build & serve -s build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

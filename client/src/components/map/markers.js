@@ -17,7 +17,6 @@ class Markers extends Component {
             markers: [],
             has_features: false
         }
-
     }
 
     componentWillMount() {
@@ -45,13 +44,13 @@ class Markers extends Component {
     scoreMarkers(features) {
 
         let scored_markers = features.map((feature) => {
-            let min_size = 40
-            let max = helpers.getMax(features, 'score')
+            let min_size = 20
+            let max = helpers.getMax(features, 'average_score')
 
             let id = feature._id
             let src = feature.properties.image
             let likes = feature.properties.likes
-            let score = feature.properties.score
+            let score = feature.properties.average_score
             let orginal_score = feature.properties.score
             let vibes = feature.properties.vibes
             let name = feature.name ? feature.name : feature.properties.name
@@ -79,12 +78,21 @@ class Markers extends Component {
                 }
             }
 
-            
-            if (feature.score > 10) {
-                //console.log("!!! marker score: ", feature.score)
-                feature.className = feature.className + ' popular '
-            }
+            if(categories.length > 0 && typeof(categories) == "object") {
+                
+                categories = categories.map(function (category) {
+                    return category.toLowerCase()
+                })
 
+                if (categories !== null) {
+                    feature.className = feature.className + ' ' + categories.join(' ')
+                }
+            } else {
+                if (categories !== null) {
+                    feature.className = feature.className + ' ' + categories
+                }
+            }
+            
             return feature
         })
 
@@ -93,7 +101,6 @@ class Markers extends Component {
 
     // TODO: this is a realy nice way to handle it; make a help funcition?
     handleOnMouseOver(e, feature) {
-        
         this.props.showPopup(feature.properties.name, feature.geometry.coordinates[1], feature.geometry.coordinates[0])
     }
 
@@ -116,7 +123,7 @@ class Markers extends Component {
                         onClick={((e) => this.props.onClick(e, feature))} 
                         onMouseOver={((e) => this.handleOnMouseOver(e, feature))} 
                         style={{ height: feature.height, width: feature.width}}>
-
+                        <div className='name'>{feature.properties.name}</div>
                         <Vibe feature={feature} />
                         <img src={feature.properties.images[0]} height={'100%'} width={'100%'} />    
 
