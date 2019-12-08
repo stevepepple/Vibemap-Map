@@ -94,7 +94,7 @@ module.exports = {
     },
 
     // TODO: Include a way to query by time of day
-    getPlaces: function (point, distance, activity, vibes) {
+    getTopPicks: function (point, distance, activity, vibes) {
 
         let distanceInMeters = distance * Constants.METERS_PER_MILE
         
@@ -108,7 +108,48 @@ module.exports = {
                 dist: distanceInMeters,
                 // TODO: Make two calls, one for all and one for vibe or search? 
                 vibes: vibes,
-                per_page: 2000
+                per_page: 50
+            }
+
+            if (activity) {
+                params["category"] = activity
+            }
+
+            let center_point = point.split(',').map(value => parseFloat(value))
+
+            let query = querystring.stringify(params);
+
+            fetch(ApiUrl + "/v0.2/places/?" + query, { headers: ApiHeaders })
+                .then(data => data.json())
+                .then(res => {
+
+                    clearTimeout(timeout);
+                    let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point)
+
+                    resolve({ data: places_scored_and_sorted, loading: false, timedOut: false })
+
+                }, (error) => {
+                    console.log(error)
+                });
+        })
+    },
+
+    // TODO: Include a way to query by time of day
+    getPlaces: function (point, distance, activity, vibes, search_term) {
+
+        let distanceInMeters = 1
+        if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
+
+        
+        // TODO: Load more points at greater distances?        
+        return new Promise(function (resolve, reject) {
+            let params = {
+                ordering: '-aggregate_rating',
+                point: point,
+                dist: distanceInMeters,
+                categories: activity,
+                search: search_term,
+                per_page: 1000
             }
 
             if (activity) {
