@@ -29,7 +29,7 @@ class Mobile extends Component {
                     </TabList>
                     <TabPanel>
 
-                        <EventsMap events_data={this.props.eventsData} places_data={this.props.placesData} latitude={this.props.latitude} longitude={this.props.longitude} distance={this.props.distance} zoom={this.props.details_shown ? 16 : this.props.currentZoom} setPosition={this.props.setPosition} onclick={this.props.onclick} />                     
+                        <EventsMap events_data={this.props.eventsData} places_data={this.props.placesData} latitude={this.props.latitude} longitude={this.props.longitude} distance={this.props.distance} zoom={this.props.details_shown ? 16 : this.props.zoom} setPosition={this.props.setPosition} onclick={this.props.onclick} />                     
                         <MobileList data={this.props.eventsData} type='places' onclick={this.props.onclick} handleListType={this.handleListType}/>
                     </TabPanel>
                     <TabPanel>
@@ -48,7 +48,7 @@ const mapStateToProps = state => ({
     geod: state.geod,
     currentCategory: state.currentCategory,
     currentLocation: state.currentLocation,
-    currentZoom: state.currentZoom,
+    zoom: state.zoom,
     currentDays: state.currentDays,
     currentDistance: state.currentDistance,
     eventsData: state.eventsData,

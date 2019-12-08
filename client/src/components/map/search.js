@@ -47,11 +47,8 @@ class LocationSearchInput extends React.Component {
     }
 
     componentWillMount() {
-
-        let ordered_locations = helpers.sortLocations(this.state.locations, this.props.currentLocation) 
-
+        let ordered_locations = helpers.sortLocations(this.state.locations, this.props.currentLocation)
         this.setState({ locations: ordered_locations })
-
     }
 
     handleSearch = (e, { searchQuery }) => {
@@ -70,17 +67,16 @@ class LocationSearchInput extends React.Component {
                         let new_locations = results.map(address => {
 
                             if (address.formatted_address) {
-                                return { key: address.place_id, text: address.formatted_address, coords: [address.geometry.location.lat(), address.geometry.location.lng()], value: address.formatted_address }
+                                return { key: address.place_id, id: address.place_id, text: address.formatted_address, centerpoint: [address.geometry.location.lat(), address.geometry.location.lng()], value: address.formatted_address }
                             }
                            
                         })
 
-                        this.setState({ results: new_locations })
 
-                        /*
-                        getLatLng(results[0])
-                            .then(best => this.setState({ best: best }))
-                        */
+                        this.setState({ 
+                            results: new_locations 
+                        })
+
                     })
             });    
         }   
@@ -106,6 +102,8 @@ class LocationSearchInput extends React.Component {
             }
 
             this.props.setCurrentLocation({ latitude: item.centerpoint[1], longitude: item.centerpoint[0] })
+            this.props.setDetailsId(null)
+            this.props.setDetailsShown(false)
         } else {
             geocodeByAddress(value)
                 .then(results => {
@@ -119,8 +117,6 @@ class LocationSearchInput extends React.Component {
                 .then(best => {
                     //this.props.setPosition(this.state.best.lat, this.state.best.lng)
                     this.props.setCurrentLocation({ latitude: this.state.best.lat, longitude: this.state.best.lng })
-
-                    console.log('Success', this.state.best)
                 })
                 .catch(error => console.error('Error', error));
         }
@@ -135,12 +131,12 @@ class LocationSearchInput extends React.Component {
 
         return (
             <Dropdown
-                clearable
                 fluid
                 search
-                className='icon'
+                className='icon select_city'
                 icon='compass'
                 labeled
+                floating
                 selection
                 onSearchChange={this.handleSearch}
                 onChange={this.handleSelect}
@@ -156,7 +152,7 @@ const mapStateToProps = state => ({
     bearing: state.bearing,
     geod: state.geod,    
     currentLocation: state.currentLocation,
-    currentZoom: state.currentZoom
+    zoom: state.zoom
 });
 
 const mapDispatchToProps = dispatch => ({

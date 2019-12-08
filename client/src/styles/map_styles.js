@@ -135,9 +135,10 @@ module.exports = {
     marker_layout :  {
       "visibility": "visible",
       "text-field": ["to-string", ["get", "name"]],
-      "text-allow-overlap" : true,
+      "text-allow-overlap" : false,
       "icon-allow-overlap": false,
-      "symbol-sort-key": ["get", "aggregate_rating"],
+      // TODO: 
+      "symbol-sort-key": ["get", "aggregate_score"],
       "text-offset": [0, -2],
       "icon-image": [
         "step",
@@ -147,21 +148,22 @@ module.exports = {
         ["to-string", ["get", "categories"]]
       ],
       "text-size": 10,
+      "icon-padding": 1,
       "icon-size": [
         "case",
-        [">=", ["get", "aggregate_rating"], 3],
-        // Size is small
+        [">", ["get", "aggregate_rating"], 5],
+        1.0,
+
+        [">", ["get", "aggregate_rating"], 4],
         0.8,
 
-        [">=", ["get", "aggregate_rating"], 4],
-        1,
-
-        [">=", ["get", "aggregate_rating"], 5],
-        1.4,
+        [">", ["get", "aggregate_rating"], 3],
+        0.6,
 
         // Fall back value
-        0.6
+        0.2
       ]
+      
     },
 
     marker_paint: { 
@@ -178,7 +180,7 @@ module.exports = {
           10, 20,
           12, 40,
           13, 50,
-          14, 60,
+          14, 70,
           20, 200
       ],
       'heatmap-opacity': [
@@ -186,7 +188,7 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 0.2,
-          12, 0.3,
+          12, 0.2,
           20, 0.4
       ],
       // TODO: Scale this on the total number of results vs. size of area...
@@ -194,16 +196,27 @@ module.exports = {
         "interpolate",
         ["linear"],
         ["zoom"],
-          8, 0.2,
+          8, 0.4,
+          12, 0.2,
           14, 0.25,
-          20, 0.6
+          20, 0.4
       ],
       /*
+      TODO: One of these approaches should work...
+      'heatmap-weight': {
+        property: 'aggregate_rating',
+        type: 'linear',
+        stops: [
+          [0, 1],
+          [1, 10]
+        ]
+      },
+      
       "heatmap-weight": [
         [
           "interpolate",
           ["linear"],
-          ["get", "aggregate_rating"],
+          ["get", "aggregate_score"],
           1, 0.1,
           5, 1
         ]
@@ -217,14 +230,13 @@ module.exports = {
         "hsla(240, 80%, 94%, 0)",
         0.3,
         "hsla(286, 100%, 50%, 0.2)",
-        0.6,
+        0.5,
         "hsla(179, 100%, 50%, 0.6)",
         0.95,
         "hsla(50, 100%, 50%, 0.9)",
         /* The pink is too much? */
         1.2,
-        "hsla(25, 100%, 50%, 0.8)"
-        
+        "hsla(25, 100%, 50%, 0.8)" 
       ]
     },
 
@@ -273,32 +285,11 @@ module.exports = {
       // increase the radius of the circle as the zoom level and dbh value increases
       'circle-radius': [
         "case",
-        [
-          ">=",
-          [
-            "get",
-            "aggregate_rating"
-          ],
-          3
-        ],
+        [">=", ["get", "aggregate_rating"], 3],
         2,
-        [
-          ">=",
-          [
-            "get",
-            "aggregate_rating"
-          ],
-          4
-        ],
+        [">=", ["get", "aggregate_rating"], 4],
         4,
-        [
-          ">=",
-          [
-            "get",
-            "aggregate_rating"
-          ],
-          5
-        ],
+        [">=", ["get","aggregate_rating"], 5],
         10,
         2
       ],
@@ -306,7 +297,7 @@ module.exports = {
       'circle-stroke-color': '#FFFFFF',
       'circle-stroke-width': 0.4,
       'circle-opacity': {
-        'stops': [[8, 0.2], [20, 0.8]]
+        'stops': [[8, 0.2], [20, 0.2]]
       },
       'circle-translate': [-2, -2]
     }
