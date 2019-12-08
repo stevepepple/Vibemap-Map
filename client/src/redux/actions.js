@@ -75,10 +75,16 @@ export const setCities = cities => ({
   cities,
 })
 
-export const setPlacesData = places_data => ({
+export const setPlacesData = (places_data, refreshResults) => ({
   type: 'SET_PLACES_DATA',
   places_data,
-});
+  refreshResults
+})
+
+export const setTopPicks = places_data => ({
+  type: 'SET_TOP_PICKS_DATA',
+  places_data,
+})
 
 export const setNearbyPlaces = places => ({
   type: 'SET_NEARBY_PLACES',
