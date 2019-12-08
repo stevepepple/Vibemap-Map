@@ -9,3 +9,4 @@
 .DS_Store
 client/src/styles/icons/
 app_certificate
+client/debug.log
