@@ -59,17 +59,7 @@ class EventsMap extends React.PureComponent {
     // TODO: Move to componentWillUPdate
     componentWillReceiveProps(nextProps){
 
-        this.setState({ 
-            viewport: {
-                bearing: nextProps.bearing,
-                latitude: nextProps.currentLocation.latitude,
-                longitude: nextProps.currentLocation.longitude,
-                zoom: this.props.currentZoom
-            }
-        })
-
-        let has_data = this.props.events_data.length > 0
-
+        
         // TODO: @cory Hack to group event and places heatmap, until the venues database is updated.
         let combined_places = nextProps.places_data.concat(nextProps.events_data)
         // Make it valide geoJSON
@@ -77,8 +67,12 @@ class EventsMap extends React.PureComponent {
         let places_geojson = turf.featureCollection(combined_places)
         let events_geojson = turf.featureCollection(nextProps.events_data)
 
-        this.showLens([nextProps.currentLocation.latitude, nextProps.currentLocation.latitude])
-    
+        //this.showLens([nextProps.currentLocation.latitude, nextProps.currentLocation.latitude])
+        let has_data = this.props.events_data.length > 0
+
+        let zoom = nextProps.zoom
+        if (nextProps.detailsShown === true) this.state.prev_zoom += 1
+
         this.setState({ 
             places_geojson: places_geojson,
             events_geojson: events_geojson,
@@ -124,7 +118,19 @@ class EventsMap extends React.PureComponent {
         console.log("Clicked this: ", event, feature)
         //this.props.setDetailsId(feature.id)
         //this.props.setDetailsShown(true)
-
+        let id = null
+        if (feature && feature.id) {
+            id = feature.id
+        } else if (event.features.length > 0 && event.features[0].hasOwnProperty('properties') && event.features[0].properties.id) {
+            id = event.features[0].properties.id 
+        }
+        
+        if (id !== null) {
+            this.props.setDetailsId(id)
+            // TODO: there's probably a smart way to do this with browser history
+            this.setState({ prev_zoom : this.props.zoom })
+            this.props.setDetailsShown(true)
+        }
     }
 
     _onHover = event => {
