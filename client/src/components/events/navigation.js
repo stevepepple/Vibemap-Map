@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Grid, Dropdown, Form } from 'semantic-ui-react'
+import { Grid, Dropdown, Form, Segment } from 'semantic-ui-react'
+import isEqual from 'react-fast-compare'
 import queryString from 'query-string'
 
-import PropTypes from 'prop-types'
 import * as Constants from '../../constants.js'
 
 import LocationSearchInput from '../map/search'
@@ -21,7 +21,7 @@ const datePicker = {
     lineHeight: '2em'
 }
 
-class Navigation extends Component {
+class Navigation extends React.PureComponent {
     constructor(props) {
         super(props)
 
@@ -49,8 +49,19 @@ class Navigation extends Component {
             this.props.setActivity(params.activity)
         }
 
-        if (params.days) {
-            this.props.setDays(params.days)
+        // TODO: Set days from params?
+
+        if (params.search) {
+            console.log("Setting search from URL")
+            this.props.setSearchTerm(params.search)
+        }
+
+        if (params.latitude && params.longitude) {
+            this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude })
+        }
+
+        if (params.zoom) {
+            this.props.setZoom(parseFloat(params.zoom))
         }
 
         if (params.vibes) {
@@ -60,9 +71,35 @@ class Navigation extends Component {
     }
 
     // Sync URL params with React Router history in Redux store
-    componentWillReceiveProps(props) {
-        let new_history = queryString.stringify(this.state.params)
-        push(new_history);
+    componentDidUpdate(prevProps, prevState) {
+
+        console.log('Rerendered navigation component!!!')
+
+        let new_history = queryString.stringify(this.state.params)    
+        push(new_history)
+
+        if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {
+            console.log("Set search: ", this.props.searchTerm)
+            // TODO: set URL
+            this.updateURL("search", this.props.searchTerm)
+        }
+
+        if (!isEqual(prevProps.detailsId, this.props.detailsId)) {
+            console.log("Set place ID: ", this.props.detailsId)
+            // TODO: set URL
+            this.updateURL("place", this.props.detailsId)
+        }
+
+        if (!isEqual(prevProps.zoom, this.props.zoom)) {
+            // TODO: set URL
+            this.updateURL("zoom", this.props.zoom)
+        }
+
+        if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {
+            console.log("Set search: ", this.props.searchTerm)
+            // TODO: set URL
+            this.updateURL("search", this.props.searchTerm)
+        }
     }
 
     updateURL(key, value) {
@@ -105,6 +142,7 @@ class Navigation extends Component {
         let search = <Form>
             <Form.Group widths='equal'>
                 <LocationSearchInput className='mobile search'/>
+                {/* TODO: Further investigate why dropdowns are the slowest component on the page */}
                 <Dropdown
                     button
                     className='icon'
@@ -116,11 +154,11 @@ class Navigation extends Component {
                     text={this.state.options.find(obj => obj.value == this.props.currentDays).text}
                     style={datePicker}
                 />
-            </Form.Group>
+            </Form.Group> 
         </Form>
 
         return (
-            <div>
+            <React.Fragment>
                 {this.props.isMobile? (
                     <div className='navigation mobile'>
                         {search}
@@ -167,7 +205,7 @@ class Navigation extends Component {
                     </div >
                 )}
 
-            </div>
+            </React.Fragment>
         )
     }
 }
