@@ -222,12 +222,14 @@ html, body, #root, div.App, div.App > div {
     -webkit-border-radius: 50% 50% 50% 50%;
     -moz-border-radius: 50% 50% 50% 50%;
     border-radius: 50% 50% 50% 50%;
-    background: #811897;
+    background: #D224B6;
     background-image: url('https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_64.png');
     background-size: cover;  
     border: solid 1.5px #FFFFFF;
     cursor: help;
     opacity: 0.8;
+    margin-left: -1.5em;
+    margin-top: -1.5em;
     /*
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
@@ -245,6 +247,11 @@ html, body, #root, div.App, div.App > div {
 
 .marker-popup {
     z-index: 100;
+}
+
+.mapboxgl-popup-content {
+    font-size: 0.9em;
+    font-weight: 600;
 }
 
 .here {
@@ -297,7 +304,7 @@ html, body, #root, div.App, div.App > div {
 }
 
 .marker img {
-    visibility: hidden;
+    /* visibility: hidden; */
     border-radius: 50%;
     transform: scale(1.2);
 }
@@ -312,9 +319,23 @@ html, body, #root, div.App, div.App > div {
     height: 2.0em;
 }
 
+.marker .name {
+    position: absolute;
+    font-size: 0.7em;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-top: -3em;
+    max-width: 9em;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    width: 10em;
+}
+
 .marker .vibe {
-    margin-top: -20px;
+    font-size: 0.8em;
+    margin-top: -1.6em;
     position: fixed;
+    font-style: italic;
     color:  $color-purple;
     font-weight: 600;
     text-shadow: 3px 2px 3px rgba(255,255,255,.8);
