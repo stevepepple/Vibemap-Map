@@ -20,12 +20,17 @@ const helpers = {
     zoomToRadius : function(zoom) {
         // Scale and interpolate radius to zoom siz
         let zoom_to_radius_scale = scalePow(1)
-            .domain([8, 12, 14, 16]) // Zoom size
-            .range([40, 10, 2, 0.2]) // Scale of search radius
+          .domain([8,  12, 13, 14, 18]) // Zoom size
+          .range([ 40, 7,  3,  2,  0.2]) // Scale of search radius
 
-        console.log("Converted zoom: " + zoom + " to " + zoom_to_radius_scale(zoom))
+        let new_zoom = zoom_to_radius_scale(zoom)
+        console.log("Converted zoom: " + zoom + " to " + new_zoom)
         
-        return zoom_to_radius_scale(zoom)
+        return new_zoom
+    },
+
+    normalize : function(val, min, max) { 
+        return (val - min) / (max - min) * 10
     },
 
     // Adapted from https://gist.github.com/James1x0/8443042
@@ -70,7 +75,7 @@ const helpers = {
             a.distance = turf.distance(current, point_a)
             b.distance = turf.distance(current, point_b)
             
-            if (a.distance > b.distance) {
+            if (a.distance < b.distance) {
                 return 1
             } else {
                 return -1
@@ -174,7 +179,7 @@ const helpers = {
         //TODO: Scale marker to zoom size!
         let marker_scale = scalePow(0.2)
             .domain([10, 20]) // Zoom size
-            .range([8, 60]) // Scale of marker size
+            .range([6, 40]) // Scale of marker size
 
         let base_marker = marker_scale(zoom)
         let max_marker = base_marker * 3;
