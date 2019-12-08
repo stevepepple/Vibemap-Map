@@ -76,19 +76,20 @@ class EventsMap extends React.PureComponent {
         this.setState({ 
             places_geojson: places_geojson,
             events_geojson: events_geojson,
-            has_data: has_data
+            has_data: has_data,
+            viewport: {
+                bearing: nextProps.bearing,
+                latitude: nextProps.currentLocation.latitude,
+                longitude: nextProps.currentLocation.longitude,
+                zoom: zoom
+            }
         })
     }
 
     _onViewportChange = viewport => {
         
         // Keep Redux in sync with current map
-        
-        if (viewport.zoom > 2 && viewport.zoom !== this.props.currentZoom) {
-            
-            this.props.setZoom(viewport.zoom)
-            this.props.setDistance(helpers.zoomToRadius(viewport.zoom))
-        }
+        // TODO: how to transtlate greater of viewport width or height to search radius
 
         // If the user pans by more than 2 kilometers, update the map
         let new_location = turf.point([viewport.longitude, viewport.latitude])
@@ -98,20 +99,23 @@ class EventsMap extends React.PureComponent {
         // TODO: there's still a problem in how the new and old values sync...
         // Need to throttle and take the last, most recent value
         if (viewport.longitude > 0) {
-           // this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
+            this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
             this.props.setLocationParams(this.props.currentLocation)
         }
-        
 
-        if (distance > 1.5) {
-            //this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
+        if (distance > 0.2) {
+            this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
             this.props.setLocationParams(this.props.currentLocation)
+        }
+
+        if (viewport.zoom > 2 && viewport.zoom !== this.props.zoom) {
+            console.log("New Zoom: ", viewport.zoom)
+            this.props.setZoom(viewport.zoom)
+            this.props.setDistance(helpers.zoomToRadius(viewport.zoom))
         }
 
         this.setState({ viewport })   
     }
-
-    
 
     _onClick = (event, feature) => {
         
@@ -165,7 +169,7 @@ class EventsMap extends React.PureComponent {
         // TODO: consolidate with helpers? 
         // TODO: and update value from React
         // Zoom 13 = 1, Zoom 12=5, Zoom 11=10, Zoom 10=20
-        let radius = helpers.zoomToRadius(this.props.currentZoom)
+        let radius = helpers.zoomToRadius(this.props.zoom)
         let radius_in_kilometers = radius * Constants.METERS_PER_MILE / 1000;
 
         // Add circular lens to the map
@@ -220,7 +224,7 @@ class EventsMap extends React.PureComponent {
                 <div className = 'map_container'>
                     {/* Floating legend */}
 
-                    <ZoomLegend zoom={this.props.currentZoom} />
+                    <ZoomLegend zoom={this.props.zoom} />
 
                     {/* TODO: Move to it's own class <Map> */}
                     <ReactMapGL
@@ -247,19 +251,6 @@ class EventsMap extends React.PureComponent {
                         />
 
                         <Source
-                            id='lens'
-                            type='geojson'
-                            data={this.state.lens}>
-                            
-                            <Layer
-                                id='lens_circle'
-                                type='fill'
-                                paint={Styles.lens}
-                                isLayerChecked={true}
-                            />
-                        </Source>
-
-                        <Source
                             id='places'
                             type="geojson"
                             data={this.state.places_geojson}
@@ -271,20 +262,36 @@ class EventsMap extends React.PureComponent {
                                 paint={Styles.places_heatmap}
                                 isLayerChecked={true}
                             />
-
                             <Layer
                                 id='places_circle'
                                 type='circle'
                                 paint={Styles.places_circle}
                                 isLayerChecked={true}
                             />
-
+                            
                             <Layer
                                 id="places"
                                 type="symbol"
                                 layout={Styles.marker_layout}
                                 paint={Styles.marker_paint}
                             />
+
+                            {/* 
+                            TODO: make this work or get rid of it.
+                            <Source
+                                id='lens'
+                                type='geojson'
+                                data={this.state.lens}>
+
+                                <Layer
+                                    id='lens_circle'
+                                    type='fill'
+                                    paint={Styles.lens}
+                                    isLayerChecked={true}
+                                />
+                            </Source>
+                            */}
+                            
 
                         </Source>
 
@@ -303,14 +310,12 @@ class EventsMap extends React.PureComponent {
                             </Popup>
                         }            
 
-                        {/* TODO: Replace events with sorted top picks 
                         <Markers 
-                            data={this.props.events_data} 
+                            data={this.props.topPicks} 
                             currentVibes={this.props.currentVibes} 
-                            zoom={this.props.currentZoom}
+                            zoom={this.props.zoom}
                             onClick={this._onClick}
                             showPopup={this.showPopup} />
-                        */}
                         
                         <Source
                             id='events'
@@ -342,13 +347,14 @@ const mapStateToProps = state => {
         nearby_places: state.nearby_places,
         currentVibes: state.currentVibes,
         currentLocation: state.currentLocation,
-        currentZoom: state.currentZoom,
+        zoom: state.zoom,
         currentDistance: state.currentDistance,
         detailsId: state.detailsId,
         detailsShown: state.detailsShown,
         pathname: state.router.location.pathname,
         params: state.params,
-        search: state.router.location.search
+        search: state.router.location.search,
+        topPicks: state.topPicks
     }
 }
 
