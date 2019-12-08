@@ -50,7 +50,8 @@ export const activity = (state = "", action) => {
 // then returns a state
 export const currentLocation = (state = { latitude: 0, longitude: 0 }, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
-    console.log("Setting curent location...", action.location)
+    action.location.latitude = parseFloat(action.location.latitude)
+    action.location.longitude = parseFloat(action.location.longitude)
     state = action.location
   }
   return state
@@ -64,7 +65,7 @@ export const bearing = (state = 0, action) => {
   return state
 }
 
-export const currentZoom = (state = 14, action) => {
+export const zoom = (state = 14, action) => {
   if (action.type == 'SET_ZOOM') {
     state = action.zoom
   }
@@ -72,7 +73,7 @@ export const currentZoom = (state = 14, action) => {
 }
 
 // TODO: create a mathematical relationship between zoom and distance
-export const currentDistance = (state = 1.4, action) => {
+export const distance = (state = 1.4, action) => {
   if (action.type == 'SET_DISTANCE') {
     state = action.distance
   }
@@ -91,25 +92,22 @@ export const currentDays = (state = 1, action) => {
 // Default state is one day
 export const searchTerm = (state = "", action) => {
   if (action.type == 'SET_SEARCH_TERM') {
-    console.log('Setting search ', action)
     state = action.term
   }
   return state
 }
 
-export const currentVibes = (state = {}, action) => {
+export const currentVibes = (state = ['chill'], action) => {
   if (action.type == 'SET_CURRENT_VIBES') {
     state = action.vibes
-    console.log("SET CURRENT VIBES: ", action.vibes)
   }
   return state
 }
 
 export const nearby_places = (state = [], action) => {
   if (action.type == 'SET_NEARBY_PLACES') {
-    let data = [];
+    let data = []
 
-    console.log('SET NEARBY PLACES ', action.places)
     let places = action.places
     /*
     let places = GeoJSON.parse(action.places, { Point: ['latitude', 'longitude'] });
@@ -198,8 +196,12 @@ export const topPicks = (state = [], action) => {
     // TODO: Map and process, but plan to moe this logic to API
     let processed = action.places_data.map(place => {
       // TODO: work with Cory to fix these categories according to the schema
-      place.properties.categories = place.properties.categories.shift();
-      //event.properties.score = event.properties.likes
+      place.properties.sub_categories = place.properties.categories
+  
+      if (place.properties.sub_categories && place.properties.sub_categories.length > 0) {
+        place.properties.categories = place.properties.sub_categories[0]  
+      }
+      
       return place
     })
 
@@ -244,16 +246,17 @@ export const reducers = (history) => combineReducers({
   geod,
   router: connectRouter(history),
   currentLocation,
-  currentZoom,
-  currentDistance,
   currentDays,
   currentVibes,
   detailsId,
   detailsShown,
+  distance,
   name,
   eventsData,
   nearby_places,
   placesData,
   searchTerm,
-  uiState
+  topPicks,
+  uiState,
+  zoom
 });
