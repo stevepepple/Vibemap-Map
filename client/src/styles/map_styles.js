@@ -149,15 +149,14 @@ module.exports = {
       "text-size": 10,
       "icon-size": [
         "case",
-        [">=", ["get", "aggregate_rating"], 3],
-        // Size is small
-        0.8,
+        [">", ["get", "aggregate_rating"], 4.9],
+        0.7,
 
-        [">=", ["get", "aggregate_rating"], 4],
-        1,
+        [">", ["get", "aggregate_rating"], 3.9],
+        0.6,
 
-        [">=", ["get", "aggregate_rating"], 5],
-        1.4,
+        [">", ["get", "aggregate_rating"], 3],
+        0.4,
 
         // Fall back value
         0.6
