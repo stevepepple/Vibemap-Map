@@ -78,7 +78,7 @@ class Markers extends Component {
                 }
             }
 
-            if(categories.length > 0 && typeof(categories) == "object") {
+            if(categories && categories.length > 0 && typeof(categories) == "object") {
                 
                 categories = categories.map(function (category) {
                     return category.toLowerCase()
