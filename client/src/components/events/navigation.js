@@ -9,7 +9,6 @@ import LocationSearchInput from '../map/search'
 
 import { connect } from 'react-redux'
 import { store } from '../../redux/store'
-
 import * as actions from '../../redux/actions'
 import { push } from 'connected-react-router'
 
@@ -45,6 +44,11 @@ class Navigation extends React.PureComponent {
         let params = queryString.parse(this.props.search)
         this.setState({ params: params })
 
+        if (params.place) {
+            this.props.setDetailsId(params.place)
+            this.props.setDetailsShown(true)
+        }
+
         if (params.activity) {
             this.props.setActivity(params.activity)
         }
@@ -65,8 +69,19 @@ class Navigation extends React.PureComponent {
         }
 
         if (params.vibes) {
-            this.props.setCurrentVibes(params.vibes)
-            console.log("Vibes from URL: ", params.vibes)
+            
+            let vibes = []
+            if (typeof(params.vibes) == "string") {
+                vibes.push(params.vibes)
+            } else {
+                vibes = params.vibes
+            }
+            console.log("VIBEZ: ", vibes)
+            this.props.setCurrentVibes(vibes)
+        }
+
+        if (params.days) {
+            this.props.setDays(params.days)
         }
     }
 
@@ -105,7 +120,13 @@ class Navigation extends React.PureComponent {
     updateURL(key, value) {
         // Update state and push to Redux search history
         let params = this.state.params;
-        params[key] = value
+
+        if (value && value !== "") {
+            params[key] = value    
+        } else {
+            delete params[key]
+        }
+        
         let string = queryString.stringify(params)
         store.dispatch(push({ search: string }))
     }
@@ -213,14 +234,17 @@ class Navigation extends React.PureComponent {
 const mapStateToProps = state => {
     return {
         activity: state.activity,
+        detailsId: state.detailsId,
         nearby_places: state.nearby_places,
         currentLocation: state.currentLocation,
-        currentZoom: state.currentZoom,
+        zoom: state.zoom,
         currentDays: state.currentDays,
         currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,
+        detailsId: state.detailsId,
         pathname: state.router.location.pathname,
-        search: state.router.location.search
+        search: state.router.location.search,
+        searchTerm: state.searchTerm
     }
 }
 
