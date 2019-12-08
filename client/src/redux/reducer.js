@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
+import _ from 'lodash'
+
 import queryString from 'query-string'
 
 export function uiReducer(state = uiState, action) {
@@ -165,6 +167,36 @@ export const placesData = (state = [], action) => {
     let processed = action.places_data.map(place => {
       // TODO: Score places with more categories higher
       //console.log("categories: ", place.properties.categories)
+      // TODO: work with Cory to fix 
+      //console.log(place.properties.categories)
+      //if (place.properties.categories.length > 1) 
+      place.properties.sub_categories = place.properties.categories
+      place.properties.categories = place.properties.sub_categories[0]
+      //event.properties.score = event.properties.likes
+      return place
+    })
+    
+    // If request is for fresh results update the map.
+    // Otehrwise, merge the results
+    if(action.refreshResults) {
+      state = processed
+    } else {
+      var merged = _.unionBy(state, processed, 'id')
+      state = merged
+    }
+    
+    console.log("How many total places: ", state.length)
+    
+  }
+
+  return state
+}
+
+export const topPicks = (state = [], action) => {
+
+  if (action.type == 'SET_TOP_PICKS_DATA') {
+    // TODO: Map and process, but plan to moe this logic to API
+    let processed = action.places_data.map(place => {
       // TODO: work with Cory to fix these categories according to the schema
       place.properties.categories = place.properties.categories.shift();
       //event.properties.score = event.properties.likes
