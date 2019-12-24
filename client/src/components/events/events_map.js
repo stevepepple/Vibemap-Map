@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 //import Geocoder from "@mapbox/react-geocoder"
 import { connect } from 'react-redux'
-import { store } from '../../redux/store'
 import * as actions from '../../redux/actions'
-import { push } from 'connected-react-router'
 
 
 import * as turf from '@turf/turf'
 import { Global } from '@emotion/core'
 import queryString from 'query-string'
+
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup } from 'react-map-gl'
+import CustomMapController from '../map/map-conroller'
 
 // TODO: Remove these other map sources
 import Styles from '../../styles/map_styles.js'
@@ -59,12 +59,11 @@ class EventsMap extends React.PureComponent {
     // TODO: Move to componentWillUPdate
     componentWillReceiveProps(nextProps){
 
-        
         // TODO: @cory Hack to group event and places heatmap, until the venues database is updated.
         let combined_places = nextProps.places_data.concat(nextProps.events_data)
         // Make it valide geoJSON
         // TODO: make valid GeoJSON in Redux?
-        let places_geojson = turf.featureCollection(combined_places)
+        let places_geojson = turf.featureCollection(nextProps.places_data)
         let events_geojson = turf.featureCollection(nextProps.events_data)
 
         //this.showLens([nextProps.currentLocation.latitude, nextProps.currentLocation.latitude])
@@ -103,15 +102,18 @@ class EventsMap extends React.PureComponent {
             this.props.setLocationParams(this.props.currentLocation)
         }
 
-        if (distance > 0.2) {
+        if (distance > 0.05) {
             this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
             this.props.setLocationParams(this.props.currentLocation)
         }
 
         if (viewport.zoom > 2 && viewport.zoom !== this.props.zoom) {
-            console.log("New Zoom: ", viewport.zoom)
             this.props.setZoom(viewport.zoom)
             this.props.setDistance(helpers.zoomToRadius(viewport.zoom))
+        }
+
+        if (viewport.bearing !== this.props.bearing) {
+            this.props.setBearing(viewport.bearing)
         }
 
         this.setState({ viewport })   
@@ -213,6 +215,7 @@ class EventsMap extends React.PureComponent {
 
         let has_places_data = this.props.places_data.length > 0
         let has_events_data = this.props.events_data.length > 0
+        const mapController = new CustomMapController();
 
         return (
 
@@ -229,13 +232,14 @@ class EventsMap extends React.PureComponent {
                     {/* TODO: Move to it's own class <Map> */}
                     <ReactMapGL
                         {...this.state.viewport}
+                        controller={mapController}
                         width={'100%'}
                         height={'100%'}
                         mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
-                        mapStyle={'mapbox://styles/stevepepple/cjpk3ts1c0skb2rs52w658p07/draft'}
+                        mapStyle={Constants.MAPBOX_STYLE}
                         onClick={this._onClick}
                         //getCursor={this._getCursor}
-                        onHover={this._onHover}
+                        onHover={this._onHover}                        
                         onViewportChange={this._onViewportChange}
                     >
                     
@@ -262,6 +266,7 @@ class EventsMap extends React.PureComponent {
                                 paint={Styles.places_heatmap}
                                 isLayerChecked={true}
                             />
+                            
                             <Layer
                                 id='places_circle'
                                 type='circle'
@@ -275,6 +280,7 @@ class EventsMap extends React.PureComponent {
                                 layout={Styles.marker_layout}
                                 paint={Styles.marker_paint}
                             />
+                            
 
                             {/* 
                             TODO: make this work or get rid of it.
@@ -316,13 +322,15 @@ class EventsMap extends React.PureComponent {
                             zoom={this.props.zoom}
                             onClick={this._onClick}
                             showPopup={this.showPopup} />
-                        
+                    
+                        {/*
                         <Source
                             id='events'
                             type="geojson"
                             data={this.state.events_geojson}
                             cluster={false}>
                         </Source>
+                        */}
 
                     </ReactMapGL>
 
@@ -332,7 +340,9 @@ class EventsMap extends React.PureComponent {
     }
 }
 
+// TODO: What's the downside of simply important all actions
 const mapDispatchToProps = dispatch => ({
+    setBearing: bearing => dispatch(actions.setBearing(bearing)),
     setZoom: zoom => dispatch(actions.setZoom(zoom)),
     setCurrentLocation: location => dispatch(actions.setCurrentLocation(location)),
     setDetailsId: id => dispatch(actions.setDetailsId(id)),
