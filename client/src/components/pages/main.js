@@ -47,7 +47,7 @@ class Page extends Component {
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
+            vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'outdoors', 'scenic', 'positive', 'unique'],
             // TODO: handle conversion math in VibeMap
             current_item: null,
             details_shown: false,
@@ -125,7 +125,7 @@ class Page extends Component {
             this.fetchPlaces(true)
         }
 
-        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
+        if (!isEqual(prevProps.activity, this.props.activity)) {
             //this.fetchEvents()
             this.fetchPlaces()
         }
@@ -163,13 +163,10 @@ class Page extends Component {
         // Slice remove the question mark
         let params = queryString.parse(this.props.search.slice(1))
 
-        console.log("URL Params before location: ", params)
-
         params["latitude"] = location.latitude
         params["longitude"] = location.longitude
         
         let string = queryString.stringify(params)
-        console.log("Pushing new URL params: ", string)
         store.dispatch(push({ search: string }))
     }
 
@@ -246,7 +243,7 @@ class Page extends Component {
                     //this.props.setPlacesData(results.data)
                     // TODO: any reason to store this in redux
                     //this.setState({ top_picks: results.data })
-                    let top_picks = results.data.slice(1, 30)
+                    let top_picks = results.data.slice(1, 12)
                     this.props.setTopPicks(top_picks)
             }, (error) => {
                 console.log(error)
@@ -261,7 +258,8 @@ class Page extends Component {
 
                 if(this.state.searching !== true) {
                     // TODO: still join to results?
-                    let top_picks = this.props.placesData.slice(1, 20)
+                    // This won't be needed if top picks work, right? 
+                    let top_picks = this.props.placesData.slice(1, 12)
                     this.props.setTopPicks(top_picks)
                     //this.setState({ top_picks: })
                 }
