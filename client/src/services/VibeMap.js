@@ -65,7 +65,7 @@ module.exports = {
                 start_date_after: day_start,
                 end_date_before: day_end,
                 search: search_term,
-                per_page: 20
+                per_page: 100
             });
 
             fetch(ApiUrl + "/v0.2/events/?" + query, { headers: ApiHeaders })
