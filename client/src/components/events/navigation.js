@@ -56,7 +56,6 @@ class Navigation extends React.PureComponent {
         // TODO: Set days from params?
 
         if (params.search) {
-            console.log("Setting search from URL")
             this.props.setSearchTerm(params.search)
         }
 
@@ -87,8 +86,6 @@ class Navigation extends React.PureComponent {
 
     // Sync URL params with React Router history in Redux store
     componentDidUpdate(prevProps, prevState) {
-
-        console.log('Rerendered navigation component!!!')
 
         let new_history = queryString.stringify(this.state.params)    
         push(new_history)
