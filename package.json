@@ -8,20 +8,20 @@
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "concurrently": "^4.1.0",
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.2",
     "cors": "^2.8.5",
-    "dotenv": "^6.1.0",
-    "express": "^4.16.4",
+    "dotenv": "^6.2.0",
+    "express": "^4.17.1",
     "js-yaml": "^3.13.1",
-    "moment": "^2.22.2",
-    "mongoose": "^5.3.14",
-    "nodemon": "^1.18.11",
+    "moment": "^2.24.0",
+    "mongoose": "^5.8.3",
+    "nodemon": "^1.19.4",
     "path": "^0.12.7",
     "react-addons-shallow-compare": "^15.6.2",
-    "react-map-gl": "^5.1.0-alpha.1",
+    "react-map-gl": "^5.1.5",
     "request": "^2.88.0",
-    "yarn": "^1.12.3"
+    "yarn": "^1.21.1"
   },
   "eslintConfig": {
     "extends": "react-app"
