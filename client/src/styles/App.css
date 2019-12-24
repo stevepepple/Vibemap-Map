@@ -34,3 +34,7 @@ html, body {
     transform: rotate(360deg);
   }
 }
+
+.main_menu {
+  z-index: 2001;
+}
