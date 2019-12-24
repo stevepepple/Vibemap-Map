@@ -65,7 +65,7 @@ module.exports = {
                 start_date_after: day_start,
                 end_date_before: day_end,
                 search: search_term,
-                per_page: 20
+                per_page: 100
             });
 
             fetch(ApiUrl + "/v0.2/events/?" + query, { headers: ApiHeaders })
@@ -94,6 +94,7 @@ module.exports = {
         })
     },
 
+    // TODO: Include a way to query by time of day
     getPlaceDetails: function (id) {
         return new Promise(function (resolve, reject) {
             fetch(ApiUrl + "/v0.2/places/" + id, { headers: ApiHeaders })
@@ -127,7 +128,7 @@ module.exports = {
                 categories: activity,
                 search: search,
                 vibes: vibes,
-                per_page: 1000
+                per_page: 50
             }
 
             if (activity) {
@@ -168,7 +169,7 @@ module.exports = {
                 dist: distanceInMeters,
                 categories: activity,
                 search: search_term,
-                per_page: 2000
+                per_page: 500
             }
 
             if (activity) {
@@ -182,18 +183,16 @@ module.exports = {
             fetch(ApiUrl + "/v0.2/places/?" + query, { headers: ApiHeaders })
                 .then(data => data.json())
                 .then(res => {
+
                     clearTimeout(timeout);
-                    
-                    //console.clear()
-                    //console.log("distance: ", distanceInMeters)
-                    let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point, vibes)
+                    let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point)
 
                     resolve({ data: places_scored_and_sorted, loading: false, timedOut: false })
-                    
+
                 }, (error) => {
                     console.log(error)
                 });
-        });
+        })
     },
 
     scorePlaces: function(places, center_point, vibes) {
@@ -205,7 +204,7 @@ module.exports = {
         let vibe_match_bonus = 10
 
         let place = places.map((place) => {
-            place.properties.aggregate_rating = parseInt(place.properties.aggregate_rating)
+            place.properties.aggregate_rating = parseFloat(place.properties.aggregate_rating)
 
             // Give place a vibe score
             place.properties.vibe_score = place.properties.vibes.length

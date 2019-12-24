@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
+import _ from 'lodash'
+
 import queryString from 'query-string'
 
 export function uiReducer(state = uiState, action) {
@@ -171,9 +173,18 @@ export const placesData = (state = [], action) => {
       //event.properties.score = event.properties.likes
       return place
     })
-
-    // Save the processed data to state.
-    state = processed
+    
+    // If request is for fresh results update the map.
+    // Otehrwise, merge the results
+    if(action.refreshResults) {
+      state = processed
+    } else {
+      var merged = _.unionBy(state, processed, 'id')
+      state = merged
+    }
+    
+    console.log("How many total places: ", state.length)
+    
   }
 
   return state

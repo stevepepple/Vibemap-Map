@@ -56,9 +56,6 @@ class Markers extends Component {
             let name = feature.name ? feature.name : feature.properties.name
             let link = feature.properties.link
             let categories = feature.properties.sub_categories
-
-            console.log("Score of max: ", score, max)
-            console.log("Current zoom: ", this.props.zoom)
         
             feature.size = helpers.scaleMarker(score, max, this.props.zoom)
             feature.width = feature.size + 'px'
@@ -66,7 +63,22 @@ class Markers extends Component {
 
             feature.className = 'marker'
 
-            if(categories.length > 0 && typeof(categories) == "object") {
+            if(categories && categories.length > 0 && typeof(categories) == "object") {
+                
+                categories = categories.map(function (category) {
+                    return category.toLowerCase()
+                })
+
+                if (categories !== null) {
+                    feature.className = feature.className + ' ' + categories.join(' ')
+                }
+            } else {
+                if (categories !== null) {
+                    feature.className = feature.className + ' ' + categories
+                }
+            }
+
+            if(categories && categories.length > 0 && typeof(categories) == "object") {
                 
                 categories = categories.map(function (category) {
                     return category.toLowerCase()
@@ -102,9 +114,11 @@ class Markers extends Component {
             markers = this.state.markers.map(feature => 
                 <Marker 
                     key={feature.id} 
+                    id={feature.id} 
                     longitude={feature.geometry.coordinates[0]} 
                     latitude={feature.geometry.coordinates[1]}>
                     <div 
+                        id={feature.id}
                         className={feature.className} 
                         onClick={((e) => this.props.onClick(e, feature))} 
                         onMouseOver={((e) => this.handleOnMouseOver(e, feature))} 

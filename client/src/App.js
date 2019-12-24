@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import MainPage from './components/pages/main';
-import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
 import { Menu, Dropdown } from 'semantic-ui-react'
+
+import MainPage from './components/pages/main';
+import EventCalendar from './components/pages/calendar';
 
 import './styles/App.css';
 
@@ -17,21 +19,25 @@ class App extends Component {
         <Router>
           <div>
             <Menu id="header" pointing>
-              <Dropdown button labeled className='icon' icon='list' text='Menu'>
+              <Dropdown button labeled className='icon main_menu  ' icon='list' text='Menu'>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Link to="/events">Nearby Events</Link>
+                    <Link to="/places">Nearby</Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Link to="/places">Places Map</Link>
+                    <Link to="/calendar">Calendar</Link>
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               
             </Menu>
             
-            <Route path="/" component={MainPage} />
-        
+            <Switch>
+              <Route path="/calendar" component={EventCalendar} />
+              <Route path="/places" component={MainPage} />
+              <Route path="/" component={MainPage} />
+            </Switch>
+
           </div>
         </Router>
         

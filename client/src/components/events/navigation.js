@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Grid, Dropdown, Form } from 'semantic-ui-react'
+import { Grid, Dropdown, Form, Segment } from 'semantic-ui-react'
 import isEqual from 'react-fast-compare'
 import queryString from 'query-string'
 
-import PropTypes from 'prop-types'
 import * as Constants from '../../constants.js'
 
 import LocationSearchInput from '../map/search'
@@ -21,7 +20,7 @@ const datePicker = {
     lineHeight: '2em'
 }
 
-class Navigation extends Component {
+class Navigation extends React.PureComponent {
     constructor(props) {
         super(props)
 
@@ -54,8 +53,9 @@ class Navigation extends Component {
             this.props.setActivity(params.activity)
         }
 
+        // TODO: Set days from params?
+
         if (params.search) {
-            console.log("Setting search from URL")
             this.props.setSearchTerm(params.search)
         }
 
@@ -64,7 +64,7 @@ class Navigation extends Component {
         }
 
         if (params.zoom) {
-            this.props.setZoom(params.zoom)
+            this.props.setZoom(parseFloat(params.zoom))
         }
 
         if (params.vibes) {
@@ -160,6 +160,7 @@ class Navigation extends Component {
         let search = <Form>
             <Form.Group widths='equal'>
                 <LocationSearchInput className='mobile search'/>
+                {/* TODO: Further investigate why dropdowns are the slowest component on the page */}
                 <Dropdown
                     button
                     className='icon'
@@ -171,11 +172,11 @@ class Navigation extends Component {
                     text={this.state.options.find(obj => obj.value == this.props.currentDays).text}
                     style={datePicker}
                 />
-            </Form.Group>
+            </Form.Group> 
         </Form>
 
         return (
-            <div>
+            <React.Fragment>
                 {this.props.isMobile? (
                     <div className='navigation mobile'>
                         {search}
@@ -222,7 +223,7 @@ class Navigation extends Component {
                     </div >
                 )}
 
-            </div>
+            </React.Fragment>
         )
     }
 }

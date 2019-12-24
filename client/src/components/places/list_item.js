@@ -18,6 +18,7 @@ class ListItem extends React.Component {
 
     render() {
         let content = this.props.content
+
         // If there's an upcoming event, make it the primary content
         if (this.props.content.hotspots_events.features.length > 0) {
             

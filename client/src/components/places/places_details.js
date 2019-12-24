@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import isEqual from 'react-fast-compare'
 
-import { Button, Header, Image, Label } from 'semantic-ui-react'
+import { Button, Header, Image, Label, Reveal } from 'semantic-ui-react'
 import Directions from '../places/directions'
 import VibeMap from '../../services/VibeMap.js'
 
@@ -58,11 +58,14 @@ class PlaceDetails extends Component {
         if (this.state.details_data == null) { return 'No data for the component.' }
 
         let content = this.state.details_data.properties;
+
+        console.log("Place details: ", content)
         //let date = moment(content.date)
         
         // TODO: Make these components that handle mapping and errors.
         let categories = content.categories.map((category) => <Label key={category} className={'pink image label ' + category}>{category}</Label>);
         let vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
+
 
         console.log(content.vibes)
 
@@ -75,7 +78,17 @@ class PlaceDetails extends Component {
                     {categories}
                 </div>
 
-                <Image size='medium' src={content.images[0]} />
+                {/* TODO: Make image a component */}
+                <Reveal animated='fade'>
+                    <Reveal.Content visible>
+                        <Image src='../../styles/image.png' size='small' />
+                    </Reveal.Content>
+                    <Reveal.Content hidden>
+                        <Image size='medium' src={content.images[0]} />
+                    </Reveal.Content>
+                </Reveal>
+
+                
 
                 {/* TODO: Render Description at HTML the proper way as stored in Mongo and then as own React component */}
                 <div className='full_description' style={{ 'height': 'auto' }} dangerouslySetInnerHTML={{ __html: content.description }}></div>

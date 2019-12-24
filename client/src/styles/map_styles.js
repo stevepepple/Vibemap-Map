@@ -151,14 +151,14 @@ module.exports = {
       "icon-padding": 1,
       "icon-size": [
         "case",
-        [">", ["get", "aggregate_rating"], 5],
-        1.0,
+        [">", ["get", "aggregate_rating"], 4.9],
+        0.7,
 
-        [">", ["get", "aggregate_rating"], 4],
-        0.8,
+        [">", ["get", "aggregate_rating"], 3.9],
+        0.6,
 
         [">", ["get", "aggregate_rating"], 3],
-        0.6,
+        0.4,
 
         // Fall back value
         0.2

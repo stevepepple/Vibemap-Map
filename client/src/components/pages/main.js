@@ -14,8 +14,10 @@ import * as Constants from '../../constants.js'
 
 // Pages
 import MobilePage from './mobile.js'
+
 import PlaceDetails from '../places/places_details.js'
 import PlacesList from '../places/places_list.js'
+import ErrorBoundary from '../pages/GlobalError.js'
 
 import EventsMap from '../events/events_map.js'
 import Navigation from '../events/navigation.js'
@@ -45,7 +47,7 @@ class Page extends Component {
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'crazy', 'cool', 'photogenic', 'positive', 'unique'],
+            vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'outdoors', 'scenic', 'positive', 'unique'],
             // TODO: handle conversion math in VibeMap
             current_item: null,
             details_shown: false,
@@ -80,7 +82,6 @@ class Page extends Component {
         let combined_categories = helpers.findPlaceCategoriess(current.categories)
 
         this.setState({ place_categories: combined_categories })
-
     }
 
     componentDidMount() {
@@ -109,14 +110,22 @@ class Page extends Component {
     componentDidUpdate(prevProps, prevState) {
     
         // TODO: should be a switch statement
-        // TODO: Handle zoom here? 
-
-        if (!isEqual(prevProps.activity, this.props.activity)) {
+        if (prevProps.searchTerm !== this.props.searchTerm) {
             this.fetchEvents()
-            this.fetchPlaces()
+            this.fetchPlaces(true)
         }
 
         if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
+            //this.fetchEvents()
+            this.fetchPlaces(true)
+        }
+
+        //console.log("Search for: ", this.props.searchTerm)
+        if (!isEqual(prevProps.searchTerm, this.props.searchTerm) && this.props.searchTerm > 2) {
+            this.fetchPlaces(true)
+        }
+
+        if (!isEqual(prevProps.activity, this.props.activity)) {
             //this.fetchEvents()
             this.fetchPlaces()
         }
@@ -128,14 +137,14 @@ class Page extends Component {
 
         if (!isEqual(prevProps.currentLocation, this.props.currentLocation)) {
             this.fetchEvents()
-            this.fetchPlaces()
+            this.fetchPlaces(false)
             this.fetchCities()
         }
         
         if (!isEqual(prevProps.zoom, this.props.zoom)) {
         
             this.props.setDistance(helpers.zoomToRadius(this.props.zoom))
-            this.fetchPlaces()
+            this.fetchPlaces(false)
             this.fetchEvents()
             this.fetchCities()
         }
@@ -154,13 +163,10 @@ class Page extends Component {
         // Slice remove the question mark
         let params = queryString.parse(this.props.search.slice(1))
 
-        console.log("URL Params before location: ", params)
-
         params["latitude"] = location.latitude
         params["longitude"] = location.longitude
         
         let string = queryString.stringify(params)
-        console.log("Pushing new URL params: ", string)
         store.dispatch(push({ search: string }))
     }
 
@@ -202,7 +208,9 @@ class Page extends Component {
     fetchEvents(position) {
 
         let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
-        this.setState({ timedOut: false})    
+        if(this.state.timedOut == true) {
+            this.setState({ timedOut: false })
+        }
     
         /* Get current events, then set them in the state */
         /* TODO: package args into spread object? */
@@ -218,11 +226,11 @@ class Page extends Component {
 
     // Get Ranked Places for the map
     // TODO: Move to service & reducer
-    fetchPlaces(){
+    fetchPlaces(refreshResults){
 
         let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
 
-        this.setState({ timedOut: false, searching: false })
+        if (this.state.timedOut == true) this.setState({ timedOut: false, searching: false })
 
         /* Get nearby places, then set them in the Redux state */
         // If there a search term or vibes do a top pick search
@@ -235,7 +243,7 @@ class Page extends Component {
                     //this.props.setPlacesData(results.data)
                     // TODO: any reason to store this in redux
                     //this.setState({ top_picks: results.data })
-                    let top_picks = results.data.slice(1, 30)
+                    let top_picks = results.data.slice(1, 12)
                     this.props.setTopPicks(top_picks)
             }, (error) => {
                 console.log(error)
@@ -246,11 +254,12 @@ class Page extends Component {
 
         VibeMap.getPlaces(point, this.props.distance, this.props.activity, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
-                this.props.setPlacesData(results.data)
+                this.props.setPlacesData(results.data, refreshResults)
 
                 if(this.state.searching !== true) {
                     // TODO: still join to results?
-                    let top_picks = this.props.placesData.slice(1, 20)
+                    // This won't be needed if top picks work, right? 
+                    let top_picks = this.props.placesData.slice(1, 12)
                     this.props.setTopPicks(top_picks)
                     //this.setState({ top_picks: })
                 }
@@ -296,29 +305,34 @@ class Page extends Component {
             )
         } else {
             return (
-                <div>
+                <React.Fragment>
                     {navigation}
 
                     {/* 16 column grid */}
-                    <Grid>
+                    <Grid className='content'>
                         <Grid.Row stretched className='collapsed'>
-                            <Grid.Column width={7} className='list_details'>
+                            <Grid.Column floated='left' width={5} className='list_details'>
                                 {
                                     /* TODO: Refactor into component */
                                     this.props.detailsShown ? (
                                         <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
                                     ) : (
-                                        <PlacesList data={this.props.topPicks} type='places' onclick={this.showDetails} />
+                                        <PlacesList data={this.props.placesData} type='places' onclick={this.showDetails} />
                                     )
                                 }
 
                                 {/* <EventsList data={this.state.data} onclick={this.showDetails} /> */}
                                 
                             </Grid.Column>
-                            <Grid.Column width={9}>
-                                {/* <EventModal data={this.state.current_item} show={false} details={<EventDetails data={this.state.current_item_item}/>} /> */}
+                            <Grid.Column width={11}>
+                                
+                                <ErrorBoundary>
 
-                                {events_map}
+                                    {events_map}
+
+                                </ErrorBoundary>
+
+                                {/* <EventModal data={this.state.current_item} show={false} details={<EventDetails data={this.state.current_item_item}/>} /> */}
 
                                 {/* TODO: Refactor into component 
                                     this.state.details_shown ? (
@@ -331,7 +345,7 @@ class Page extends Component {
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
-                </div>
+                </React.Fragment>
             )
         }
     }
