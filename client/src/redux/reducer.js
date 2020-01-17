@@ -104,6 +104,12 @@ export const currentVibes = (state = ['chill'], action) => {
   return state
 }
 
+/* TODO: Read from API or YAML
+export const vibeCategories = (
+vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'outdoors', 'scenic', 'positive', 'unique']
+) */
+
+
 export const nearby_places = (state = [], action) => {
   if (action.type == 'SET_NEARBY_PLACES') {
     let data = []
@@ -137,6 +143,16 @@ export const cities = (state = [], action) => {
   if (action.cities == 'SET_CITIES') {
     // Save the processed data to state.
     return action.cities
+  }
+
+  return state
+}
+
+export const neighborhoods = (state = [], action) => {
+
+  if (action.neighborhoods == 'SET_NEIGHBORHOODS') {
+    // Save the processed data to state.
+    return action.neighborhoods
   }
 
   return state
@@ -197,7 +213,11 @@ export const topPicks = (state = [], action) => {
     let processed = action.places_data.map(place => {
       // TODO: work with Cory to fix these categories according to the schema
       place.properties.sub_categories = place.properties.categories
-  
+      place.properties.top_vibe = null
+      if (place.properties.vibes.length > 0) {
+        place.properties.top_vibe = place.properties.vibes[0]
+      }
+
       if (place.properties.sub_categories && place.properties.sub_categories.length > 0) {
         place.properties.categories = place.properties.sub_categories[0]  
       }
