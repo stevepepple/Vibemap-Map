@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Item, Icon, Image, Label } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -48,7 +48,19 @@ class ListItem extends React.Component {
         
         let vibes = null;
         if (typeof content.vibes !== "undefined") {
-            vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
+            let remainder = content.vibes.length - 1
+            vibes = null
+
+            if (remainder > 0) {
+                vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{content.vibes[0] + ' & ' + remainder + ' more'}</Label>
+            }
+
+            if (remainder == 0) {
+                vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{content.vibes[0]}</Label>
+            }
+
+
+            // vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
         }
         
         /* TODO: Can this be made an abtract component for other types of data, i.e. places */
@@ -66,7 +78,7 @@ class ListItem extends React.Component {
                         <span className='venue'>{content.venue}</span>                  
                         <span className='interested'>
                             <Icon name='user' />
-                            {score} Relevance
+                            {score} VibeMap Score
                         </span>
                     </Item.Extra>
                 </Item.Content>
