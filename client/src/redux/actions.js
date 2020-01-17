@@ -75,6 +75,11 @@ export const setCities = cities => ({
   cities,
 })
 
+export const setNeighborhoods = cities => ({
+  type: 'SET_NEIGHBORHOODS',
+  cities,
+})
+
 export const setPlacesData = (places_data, refreshResults) => ({
   type: 'SET_PLACES_DATA',
   places_data,

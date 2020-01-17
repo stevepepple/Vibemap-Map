@@ -133,43 +133,95 @@ module.exports = {
     },
     */
     marker_layout :  {
-      "visibility": "visible",
-      "text-field": ["to-string", ["get", "name"]],
-      "text-allow-overlap" : false,
-      "icon-allow-overlap": false,
-      // TODO: 
-      "symbol-sort-key": ["get", "aggregate_score"],
-      "text-offset": [0, -2],
-      "icon-image": [
-        "step",
-        ["zoom"],
-        ["to-string", ["get", "categories"]],
-        22,
-        ["to-string", ["get", "categories"]]
-      ],
-      "text-size": 10,
-      "icon-padding": 1,
+      // Icon Style
+      "icon-image": ["to-string", ["get", "categories"]],
+      //"icon-padding": 1,
       "icon-size": [
         "case",
         [">", ["get", "aggregate_rating"], 4.9],
         0.7,
-
         [">", ["get", "aggregate_rating"], 3.9],
         0.6,
-
         [">", ["get", "aggregate_rating"], 3],
         0.4,
-
         // Fall back value
         0.2
-      ]
-      
+      ],
+      // TODO: Make sure important sorting variable is working
+      "symbol-sort-key": ["get", "aggregate_rating"],
+      // Text
+      "text-field": ["to-string", ["get", "name"]],
+      "text-allow-overlap": false,
+      "icon-allow-overlap": true,
+      "text-font": ["Roboto Regular"],
+      "text-size": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        8, 4,
+        22, 16
+      ],
+      "text-offset": [0, -1.2],
+      "text-max-width": 12      
     },
 
     marker_paint: { 
-      "text-opacity": ["step", ["zoom"], 0, 16, 1, 22, 1]
+      'text-color': '#742395',
+      'text-halo-color': '#FFFFFF',
+      'text-halo-width' : 1.2
     },
 
+    top_pick_layout: {
+      // TODO: Make sure important sorting variable is working
+      "symbol-sort-key": ["get", "aggregate_rating"],
+      // Text
+      "text-field": ["to-string", ["get", "name"]],
+      "text-allow-overlap": false,
+      "text-font": ["Roboto Medium"],
+      "text-justify": "center",
+      "text-size": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        8, 6,
+        22, 20
+      ],
+      "text-offset": [0, -2],
+      "text-max-width": 12
+    },
+
+    top_pick_paint: {
+      'text-color': '#811897',
+      'text-halo-color': '#FFFFFF',
+      'text-halo-width': 1.2
+    },
+
+    top_vibe_layout: {
+      // TODO: Make sure important sorting variable is working
+      "symbol-sort-key": ["get", "aggregate_rating"],
+      // Text
+      "text-field": ["to-string", ["get", "top_vibe"]],
+      "text-allow-overlap": false,
+      "text-font": ["Roboto Regular"],
+      "text-justify" : "center",
+      "text-size": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        8, 6,
+        22, 20
+      ],
+      "text-offset": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        8,
+        ["literal", [0, 2]],
+        22,
+        ["literal", [0, 5]]
+      ],
+      "text-max-width": 12
+    },
 
     places_heatmap: {
       'heatmap-radius' : [
@@ -198,7 +250,7 @@ module.exports = {
         ["zoom"],
           8, 0.4,
           12, 0.2,
-          14, 1.5,
+          14, 0.25,
           20, 0.4
       ],
       /*
@@ -238,6 +290,17 @@ module.exports = {
         1.2,
         "hsla(25, 100%, 50%, 0.8)" 
       ]
+    },
+
+    tile_layer_layout: {
+      'line-cap': 'round',
+      'line-join': 'round'
+    },
+
+    tile_layer_paint: {
+        'line-opacity': 0.6,
+      'line-color': 'rgb(53, 175, 109)',
+      'line-width': 2
     },
 
     places_cluster: {

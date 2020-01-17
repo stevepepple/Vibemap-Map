@@ -14,6 +14,7 @@ import CustomMapController from '../map/map-conroller'
 // TODO: Remove these other map sources
 import Styles from '../../styles/map_styles.js'
 import Markers from '../map/markers'
+//import VectoryTile from '../map/VectorTile'
 import PhotoMarker from '../map/photo_marker.js'
 import YouAreHere from '../map/you_are_here.js'
 import ZoomLegend from '../map/ZoomLegend'
@@ -65,6 +66,7 @@ class EventsMap extends React.PureComponent {
         // TODO: make valid GeoJSON in Redux?
         let places_geojson = turf.featureCollection(nextProps.places_data)
         let events_geojson = turf.featureCollection(nextProps.events_data)
+        let top_picks_geojson = turf.featureCollection(nextProps.topPicks)
 
         //this.showLens([nextProps.currentLocation.latitude, nextProps.currentLocation.latitude])
         let has_data = this.props.events_data.length > 0
@@ -75,6 +77,7 @@ class EventsMap extends React.PureComponent {
         this.setState({ 
             places_geojson: places_geojson,
             events_geojson: events_geojson,
+            top_picks_geojson: top_picks_geojson,
             has_data: has_data,
             viewport: {
                 bearing: nextProps.bearing,
@@ -215,7 +218,15 @@ class EventsMap extends React.PureComponent {
 
         let has_places_data = this.props.places_data.length > 0
         let has_events_data = this.props.events_data.length > 0
-        const mapController = new CustomMapController();
+
+        let tile_layer_source = {
+            'type': 'vector',
+            'tiles': ['https://d25uarhxywzl1j.cloudfront.net/v0.1/{z}/{x}/{y}.mvt'],
+            'minzoom': 6,
+            'maxzoom': 14
+        }
+
+        const mapController = new CustomMapController()
 
         return (
 
@@ -266,7 +277,18 @@ class EventsMap extends React.PureComponent {
                                 paint={Styles.places_heatmap}
                                 isLayerChecked={true}
                             />
-                            
+                            {/* 
+                            <Layer
+                                id='tile_layer'
+                                type='line'
+                                source={tile_layer_source}
+                                source-layer='mapillary-sequences'
+                                paint={Styles.tile_layer_layout}
+                                paint={Styles.tile_layer_paint}
+                                isLayerChecked={true}
+                            />
+                            */}
+
                             <Layer
                                 id='places_circle'
                                 type='circle'
@@ -281,27 +303,9 @@ class EventsMap extends React.PureComponent {
                                 paint={Styles.marker_paint}
                             />
                             
-
-                            {/* 
-                            TODO: make this work or get rid of it.
-                            <Source
-                                id='lens'
-                                type='geojson'
-                                data={this.state.lens}>
-
-                                <Layer
-                                    id='lens_circle'
-                                    type='fill'
-                                    paint={Styles.lens}
-                                    isLayerChecked={true}
-                                />
-                            </Source>
-                            */}
-                            
-
                         </Source>
 
-                        {/* Only render popup if it's not null */}  
+                        {/* Only render popup if it's not null */}
                         {this.state.popupInfo &&
                             <Popup
                                 tipSize={4}
@@ -314,15 +318,36 @@ class EventsMap extends React.PureComponent {
                             >
                                 {this.state.popupInfo.name}
                             </Popup>
-                        }            
+                        }
 
-                        <Markers 
-                            data={this.props.topPicks} 
-                            currentVibes={this.props.currentVibes} 
+                        <Markers
+                            data={this.props.topPicks}
+                            currentVibes={this.props.currentVibes}
                             zoom={this.props.zoom}
                             onClick={this._onClick}
                             showPopup={this.showPopup} />
-                    
+                        
+                        <Source
+                            id='top_picks'
+                            type="geojson"
+                            data={this.state.top_picks_geojson}
+                            cluster={false}>
+
+                            <Layer
+                                id="top_picks"
+                                type="symbol"
+                                layout={Styles.top_pick_layout}
+                                paint={Styles.marker_paint}
+                            />
+
+                            <Layer
+                                id="top_vibes"
+                                type="symbol"
+                                layout={Styles.top_vibe_layout}
+                                paint={Styles.top_pick_paint}
+                            />
+                        </Source>
+
                         {/*
                         <Source
                             id='events'

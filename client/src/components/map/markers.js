@@ -123,8 +123,10 @@ class Markers extends Component {
                         onClick={((e) => this.props.onClick(e, feature))} 
                         onMouseOver={((e) => this.handleOnMouseOver(e, feature))} 
                         style={{ height: feature.height, width: feature.width}}>
+                        {/* 
                         <div className='name'>{feature.properties.name}</div>
                         <Vibe feature={feature} />
+                        */}
                         <img src={feature.properties.images[0]} height={'100%'} width={'100%'} />    
 
                     </div>                    
