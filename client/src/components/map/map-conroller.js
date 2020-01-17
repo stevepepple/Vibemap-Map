@@ -8,9 +8,6 @@
 
   export default class CustomMapController extends MapController {
 
-
-    // TODO: handle current location button and zoom level for this action.
-    
     _onPan(event) {
         console.log("User panned the map (in conroller)")
       return this.isFunctionKeyPressed(event) || event.rightButton ?

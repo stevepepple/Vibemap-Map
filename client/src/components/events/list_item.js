@@ -33,7 +33,7 @@ class ListItem extends React.Component {
         
         let vibes = null;
         if (typeof content.vibes !== "undefined") {
-            vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>)
+            vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
         }
         
         /* TODO: Can this be made an abtract component for other types of data, i.e. places */

@@ -28,6 +28,7 @@ class ListItem extends React.Component {
         let score = Math.round(this.props.content.score)
         let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);
 
+
         let content = this.props.content;
         
         let vibes = null;

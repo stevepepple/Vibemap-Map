@@ -139,7 +139,6 @@ class Page extends Component {
             this.fetchEvents()
             this.fetchPlaces(false)
             this.fetchCities()
-            this.fetchNeighborhoods()
         }
         
         if (!isEqual(prevProps.zoom, this.props.zoom)) {
@@ -148,7 +147,6 @@ class Page extends Component {
             this.fetchPlaces(false)
             this.fetchEvents()
             this.fetchCities()
-            this.fetchNeighborhoods()
         }
     }
 
@@ -191,7 +189,6 @@ class Page extends Component {
         }, function() {
             this.fetchEvents()
             this.fetchPlaces()
-            this.fetchNeighborhoods()
         })
     }
 
@@ -203,13 +200,6 @@ class Page extends Component {
         VibeMap.getCities()
             .then(results => {
                 this.props.setCities(results.data)
-            })
-    }
-
-    fetchNeighborhoods() {
-        VibeMap.getNeighborhoods()
-            .then(results => {
-                this.props.setNeighborhoods(results.data)
             })
     }
 
@@ -254,7 +244,6 @@ class Page extends Component {
                     // TODO: any reason to store this in redux
                     //this.setState({ top_picks: results.data })
                     let top_picks = results.data.slice(1, 12)
-                    console.log('top_picks: ', top_picks)
                     this.props.setTopPicks(top_picks)
             }, (error) => {
                 console.log(error)

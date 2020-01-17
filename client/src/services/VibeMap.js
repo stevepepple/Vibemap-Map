@@ -9,7 +9,6 @@ const ApiHeaders = new Headers({
 });
 
 const ApiUrl = 'https://api.vibemap.com';
-const mapbox_url = 'https://api.mapbox.com/datasets/v1/stevepepple/';
 
 let timedOut = false
 
@@ -44,25 +43,6 @@ module.exports = {
                     console.log(error)
                 });
         }); 
-    },
-
-    getNeighborhoods: function(){
-        return new Promise(function (resolve, reject) {
-            let query = querystring.stringify({
-                access_token : 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw'
-            })
-
-            fetch(mapbox_url + "ck2v5hz4r1md12nqnfff9592e" + "/features/" + "?" + query)
-                .then(data => data.json())
-                .then(res => {
-                    clearTimeout(timeout);
-                    
-                    resolve({ data: res, loading: false, timedOut: false })
-
-                }, (error) => {
-                    console.log(error)
-                });
-        });
     },
 
     getEvents: function(point, distance, activity, days, search_term) {
@@ -189,7 +169,7 @@ module.exports = {
                 dist: distanceInMeters,
                 categories: activity,
                 search: search_term,
-                per_page: 100
+                per_page: 500
             }
 
             if (activity) {
@@ -206,8 +186,7 @@ module.exports = {
 
                     clearTimeout(timeout);
                     let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point)
-                    // TODO: remove this quick way of export the current data results to a map
-                    //console.log(JSON.stringify(res))
+
                     resolve({ data: places_scored_and_sorted, loading: false, timedOut: false })
 
                 }, (error) => {
