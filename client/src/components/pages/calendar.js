@@ -44,6 +44,25 @@ class EventCalendar extends Component {
         }
     }
 
+    Event({ event }) {
+        return (
+            <span>
+                <strong>{event.title}</strong>
+                {event.desc && ':  ' + event.desc}
+            </span>
+        )
+    }
+
+    EventAgenda({ event }) {
+        return (
+            <span>
+                <h3>{event.title}</h3>
+                <p>{event.link}</p>
+            </span>
+        )
+    }
+
+
     componentWillMount() {
 
         // Set global state with user's location
@@ -132,6 +151,12 @@ class EventCalendar extends Component {
                     startAccessor='start'
                     endAccessor='end'
                     style={{ height: 600 }}
+                    components={{
+                        event: this.Event,
+                        agenda: {
+                            event: this.EventAgenda,
+                        },
+                    }}
                 />
             </React.Fragment>
             
