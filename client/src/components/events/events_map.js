@@ -14,9 +14,8 @@ import CustomMapController from '../map/map-conroller'
 // TODO: Remove these other map sources
 import Styles from '../../styles/map_styles.js'
 import Markers from '../map/markers'
-import VectoryTile from '../map/VectorTile'
-import PhotoMarker from '../map/photo_marker.js'
-import YouAreHere from '../map/you_are_here.js'
+import VectorTile from '../map/VectorTile'
+//import YouAreHere from '../map/you_are_here.js'
 import ZoomLegend from '../map/ZoomLegend'
 
 // TODO: load from common .env
@@ -240,6 +239,7 @@ class EventsMap extends React.PureComponent {
                         controller={mapController}
                         width={'100%'}
                         height={'100%'}
+                        transition={{ "duration": 300, "delay": 0 }}
                         mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
                         mapStyle={Constants.MAPBOX_STYLE}
                         onClick={this._onClick}
@@ -257,30 +257,10 @@ class EventsMap extends React.PureComponent {
                             style={Styles.geolocateStyle}
                             positionOptions={{ enableHighAccuracy: true }}
                             trackUserLocation={true}
-                        />
-
-                        {/* 
-                        https://tiles.vibemap.com/maps/places/{z}/{x}/{y}.mvt
-                        https://tiles.vibemap.com/maps/places/{z}/{x}/{y}.vector.pbf?
-                        
-                        <Source 
-                            id='tile_layer'
-                            type='vector'
-                            data={this.state.places_geojson}
-                            source={['https://tiles.vibemap.com/maps/places/{z}/{x}/{y}.mvt?']}>
-                            <Layer
-                                id='tiles'
-                                type='heatmap'
-                                minzoom={6}
-                                maxzoom={14}
-                            />
-                        </Source>    
-                        */}
-
-                        <VectoryTile />
+                        />                
                         
                         <Source
-                            id='places'
+                            id='places_2'
                             type="geojson"
                             data={this.state.places_geojson}
                             cluster={false}>
@@ -292,7 +272,7 @@ class EventsMap extends React.PureComponent {
                                 paint={Styles.places_heatmap}
                                 isLayerChecked={true}
                             />                                                    
-
+                            */}
                             <Layer
                                 id='places_circle'
                                 type='circle'
@@ -300,15 +280,12 @@ class EventsMap extends React.PureComponent {
                                 isLayerChecked={true}
                             />
                             
-                            
                             <Layer
                                 id="places"
                                 type="symbol"
                                 layout={Styles.marker_layout}
                                 paint={Styles.marker_paint}
                             />
-
-                            */}
                             
                         </Source>
 
@@ -327,7 +304,6 @@ class EventsMap extends React.PureComponent {
                             </Popup>
                         }
 
-                        {/* 
                         <Markers
                             data={this.props.topPicks}
                             currentVibes={this.props.currentVibes}
@@ -355,7 +331,14 @@ class EventsMap extends React.PureComponent {
                                 paint={Styles.top_pick_paint}
                             />
                         </Source>
-                        */}
+
+                        <VectorTile
+                            id='heat_layer'
+                            type='heatmap'
+                            source='tile_layer'
+                            source-layer='places'
+                            //paint={Styles.places_heatmap}
+                        />
 
                         {/*
                         <Source
