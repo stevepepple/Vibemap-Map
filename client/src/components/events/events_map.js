@@ -14,9 +14,8 @@ import CustomMapController from '../map/map-conroller'
 // TODO: Remove these other map sources
 import Styles from '../../styles/map_styles.js'
 import Markers from '../map/markers'
-//import VectoryTile from '../map/VectorTile'
-import PhotoMarker from '../map/photo_marker.js'
-import YouAreHere from '../map/you_are_here.js'
+import VectorTile from '../map/VectorTile'
+//import YouAreHere from '../map/you_are_here.js'
 import ZoomLegend from '../map/ZoomLegend'
 
 // TODO: load from common .env
@@ -219,12 +218,6 @@ class EventsMap extends React.PureComponent {
         let has_places_data = this.props.places_data.length > 0
         let has_events_data = this.props.events_data.length > 0
 
-        let tile_layer_source = {
-            'type': 'vector',
-            'tiles': ['https://d25uarhxywzl1j.cloudfront.net/v0.1/{z}/{x}/{y}.mvt'],
-            'minzoom': 6,
-            'maxzoom': 14
-        }
 
         const mapController = new CustomMapController()
 
@@ -246,6 +239,7 @@ class EventsMap extends React.PureComponent {
                         controller={mapController}
                         width={'100%'}
                         height={'100%'}
+                        transition={{ "duration": 300, "delay": 0 }}
                         mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
                         mapStyle={Constants.MAPBOX_STYLE}
                         onClick={this._onClick}
@@ -263,32 +257,22 @@ class EventsMap extends React.PureComponent {
                             style={Styles.geolocateStyle}
                             positionOptions={{ enableHighAccuracy: true }}
                             trackUserLocation={true}
-                        />
-
+                        />                
+                        
                         <Source
-                            id='places'
+                            id='places_2'
                             type="geojson"
                             data={this.state.places_geojson}
                             cluster={false}>
 
+                            {/* 
                             <Layer
                                 id='heat'
                                 type='heatmap'
                                 paint={Styles.places_heatmap}
                                 isLayerChecked={true}
-                            />
-                            {/* 
-                            <Layer
-                                id='tile_layer'
-                                type='line'
-                                source={tile_layer_source}
-                                source-layer='mapillary-sequences'
-                                paint={Styles.tile_layer_layout}
-                                paint={Styles.tile_layer_paint}
-                                isLayerChecked={true}
-                            />
+                            />                                                    
                             */}
-
                             <Layer
                                 id='places_circle'
                                 type='circle'
@@ -347,6 +331,14 @@ class EventsMap extends React.PureComponent {
                                 paint={Styles.top_pick_paint}
                             />
                         </Source>
+
+                        <VectorTile
+                            id='heat_layer'
+                            type='heatmap'
+                            source='tile_layer'
+                            source-layer='places'
+                            //paint={Styles.places_heatmap}
+                        />
 
                         {/*
                         <Source

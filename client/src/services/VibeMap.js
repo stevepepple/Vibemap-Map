@@ -69,8 +69,8 @@ module.exports = {
         
         let distanceInMeters = distance * Constants.METERS_PER_MILE
 
-        let day_start = moment().startOf('day').format("YYYY-MM-DD HH:MM");
-        let day_end = moment().add(days, 'days').format("YYYY-MM-DD HH:MM");
+        let day_start = moment().startOf('day').format("YYYY-MM-DD HH:MM")
+        let day_end = moment().add(days, 'days').format("YYYY-MM-DD HH:MM")
 
         return new Promise(function (resolve, reject) {
             let query = querystring.stringify({
@@ -174,12 +174,24 @@ module.exports = {
         })
     },
 
+    getHeatMap: function() {
+        let url = 'https://tiles.vibemap.com/maps/places/11/325/793.mvt'
+
+        return new Promise(function (resolve, reject) {
+            fetch(url, { headers: ApiHeaders })
+                .then(data => console.log(data))
+                
+        })
+    },
+
     // TODO: Include a way to query by time of day
-    getPlaces: function (point, distance, activity, vibes, search_term) {
+    getPlaces: function (point, distance, activity, days, vibes, search_term) {
 
         let distanceInMeters = 1
         if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
 
+        let day_start = moment().startOf('day').utc().format("YYYY-MM-DD HH:MM")
+        let day_end = moment().add(days, 'days').utc().format("YYYY-MM-DD HH:MM")
         
         // TODO: Load more points at greater distances?        
         return new Promise(function (resolve, reject) {
@@ -187,6 +199,8 @@ module.exports = {
                 ordering: '-aggregate_rating',
                 point: point,
                 dist: distanceInMeters,
+                start_date_after: day_start,
+                end_date_before: day_end,
                 categories: activity,
                 search: search_term,
                 per_page: 100

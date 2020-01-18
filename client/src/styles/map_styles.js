@@ -161,7 +161,7 @@ module.exports = {
         8, 4,
         22, 16
       ],
-      "text-offset": [0, -1.2],
+      "text-offset": [-0.6, -1.2],
       "text-max-width": 12      
     },
 
@@ -186,7 +186,15 @@ module.exports = {
         8, 6,
         22, 20
       ],
-      "text-offset": [0, -2],
+      "text-offset": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        8,
+        ["literal", [0, -1]],
+        22,
+        ["literal", [0, -4]]
+      ],
       "text-max-width": 12
     },
 
@@ -230,7 +238,7 @@ module.exports = {
         ["zoom"],
           8, 1,
           10, 20,
-          12, 40,
+          12, 30,
           13, 50,
           14, 70,
           20, 200
@@ -240,7 +248,7 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 0.2,
-          12, 0.2,
+          12, 0.3,
           20, 0.4
       ],
       // TODO: Scale this on the total number of results vs. size of area...
@@ -250,30 +258,18 @@ module.exports = {
         ["zoom"],
           8, 0.4,
           12, 0.2,
-          14, 0.25,
-          20, 0.4
+          14, 0.4,
+          20, 0.5
       ],
-      /*
-      TODO: One of these approaches should work...
-      'heatmap-weight': {
-        property: 'aggregate_rating',
-        type: 'linear',
-        stops: [
-          [0, 1],
-          [1, 10]
-        ]
-      },
       
       "heatmap-weight": [
-        [
           "interpolate",
           ["linear"],
-          ["get", "aggregate_score"],
-          1, 0.1,
-          5, 1
-        ]
+          ["get", "aggregate_rating"],
+          1, 0.2,
+          8, 1
       ],
-      */
+      
       "heatmap-color": [
         "interpolate",
         ["linear"],
@@ -284,7 +280,7 @@ module.exports = {
         "hsla(286, 100%, 50%, 0.2)",
         0.5,
         "hsla(179, 100%, 50%, 0.6)",
-        0.95,
+        0.99,
         "hsla(50, 100%, 50%, 0.9)",
         /* The pink is too much? */
         1.2,
@@ -292,16 +288,18 @@ module.exports = {
       ]
     },
 
+    /*
     tile_layer_layout: {
       'line-cap': 'round',
       'line-join': 'round'
     },
 
     tile_layer_paint: {
-        'line-opacity': 0.6,
+      'line-opacity': 0.6,
       'line-color': 'rgb(53, 175, 109)',
       'line-width': 2
     },
+    */
 
     places_cluster: {
       //   * Blue, 20px circles when point count is less than 100
