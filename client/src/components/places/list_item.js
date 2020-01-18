@@ -21,9 +21,19 @@ class ListItem extends React.Component {
 
         // If there's an upcoming event, make it the primary content
         if (this.props.content.hotspots_events.features.length > 0) {
-            
+            // Make sure the date is now or whatever the search range is...
+            // Otherwise show upcoming events as cards
             let event = this.props.content.hotspots_events.features[0]
-            content = event.properties
+
+            // TODO: today should be what ever day & Time the users is looking for.
+            let today = moment()
+            let event_date = moment(event.properties.start_date)
+            let diff = event_date.diff(today, 'days')
+            
+            if( diff === 0 || diff === 1) {
+                content = event.properties
+            }
+            
         }
         
         let title = content.name;

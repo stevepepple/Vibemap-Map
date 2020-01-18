@@ -12,7 +12,7 @@ import ListItem from './list_item.js'
 import * as Constants from '../../constants.js'
 import TimeAndTemp from '../weather/timeAndTemp'
 
-class EventsList extends Component {
+class PlacesList extends Component {
 
     constructor(props) {
         super(props)
@@ -38,8 +38,8 @@ class EventsList extends Component {
         if (has_items) {
             // TODO: @cory, sorting should happen on the server. 
             let sorted = this.props.data.sort((a, b) => (a.properties.score > b.properties.score) ? -1 : 1)
-            items = sorted.map((event) => {
-                return <ListItem key={event.id} id={event.id} link={event.properties.link} onClick={this.onClick} content={event.properties} />
+            items = sorted.map((place) => {
+                return <ListItem key={place.id} id={place.id} link={place.properties.link} onClick={this.onClick} content={place.properties} />
             })
             
         } else {
@@ -100,4 +100,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, actions)(EventsList);
+export default connect(mapStateToProps, actions)(PlacesList)
