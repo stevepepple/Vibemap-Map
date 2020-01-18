@@ -174,6 +174,16 @@ module.exports = {
         })
     },
 
+    getHeatMap: function() {
+        let url = 'https://tiles.vibemap.com/maps/places/11/325/793.mvt'
+
+        return new Promise(function (resolve, reject) {
+            fetch(url, { headers: ApiHeaders })
+                .then(data => console.log(data))
+                
+        })
+    },
+
     // TODO: Include a way to query by time of day
     getPlaces: function (point, distance, activity, vibes, search_term) {
 
@@ -189,7 +199,7 @@ module.exports = {
                 dist: distanceInMeters,
                 categories: activity,
                 search: search_term,
-                per_page: 100
+                per_page: 200
             }
 
             if (activity) {

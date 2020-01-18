@@ -14,7 +14,7 @@ import CustomMapController from '../map/map-conroller'
 // TODO: Remove these other map sources
 import Styles from '../../styles/map_styles.js'
 import Markers from '../map/markers'
-//import VectoryTile from '../map/VectorTile'
+import VectoryTile from '../map/VectorTile'
 import PhotoMarker from '../map/photo_marker.js'
 import YouAreHere from '../map/you_are_here.js'
 import ZoomLegend from '../map/ZoomLegend'
@@ -219,12 +219,6 @@ class EventsMap extends React.PureComponent {
         let has_places_data = this.props.places_data.length > 0
         let has_events_data = this.props.events_data.length > 0
 
-        let tile_layer_source = {
-            'type': 'vector',
-            'tiles': ['https://d25uarhxywzl1j.cloudfront.net/v0.1/{z}/{x}/{y}.mvt'],
-            'minzoom': 6,
-            'maxzoom': 14
-        }
 
         const mapController = new CustomMapController()
 
@@ -265,29 +259,39 @@ class EventsMap extends React.PureComponent {
                             trackUserLocation={true}
                         />
 
+                        {/* 
+                        https://tiles.vibemap.com/maps/places/{z}/{x}/{y}.mvt
+                        https://tiles.vibemap.com/maps/places/{z}/{x}/{y}.vector.pbf?
+                        
+                        <Source 
+                            id='tile_layer'
+                            type='vector'
+                            data={this.state.places_geojson}
+                            source={['https://tiles.vibemap.com/maps/places/{z}/{x}/{y}.mvt?']}>
+                            <Layer
+                                id='tiles'
+                                type='heatmap'
+                                minzoom={6}
+                                maxzoom={14}
+                            />
+                        </Source>    
+                        */}
+
+                        <VectoryTile />
+                        
                         <Source
                             id='places'
                             type="geojson"
                             data={this.state.places_geojson}
                             cluster={false}>
 
+                            {/* 
                             <Layer
                                 id='heat'
                                 type='heatmap'
                                 paint={Styles.places_heatmap}
                                 isLayerChecked={true}
-                            />
-                            {/* 
-                            <Layer
-                                id='tile_layer'
-                                type='line'
-                                source={tile_layer_source}
-                                source-layer='mapillary-sequences'
-                                paint={Styles.tile_layer_layout}
-                                paint={Styles.tile_layer_paint}
-                                isLayerChecked={true}
-                            />
-                            */}
+                            />                                                    
 
                             <Layer
                                 id='places_circle'
@@ -296,12 +300,15 @@ class EventsMap extends React.PureComponent {
                                 isLayerChecked={true}
                             />
                             
+                            
                             <Layer
                                 id="places"
                                 type="symbol"
                                 layout={Styles.marker_layout}
                                 paint={Styles.marker_paint}
                             />
+
+                            */}
                             
                         </Source>
 
@@ -320,6 +327,7 @@ class EventsMap extends React.PureComponent {
                             </Popup>
                         }
 
+                        {/* 
                         <Markers
                             data={this.props.topPicks}
                             currentVibes={this.props.currentVibes}
@@ -347,6 +355,7 @@ class EventsMap extends React.PureComponent {
                                 paint={Styles.top_pick_paint}
                             />
                         </Source>
+                        */}
 
                         {/*
                         <Source

@@ -136,8 +136,10 @@ class Page extends Component {
         }
 
         if (!isEqual(prevProps.currentLocation, this.props.currentLocation)) {
+            // TODO: measure distance between current and previous event
+            // If they close together, merge the data in fetchPlaces.
             this.fetchEvents()
-            this.fetchPlaces(false)
+            this.fetchPlaces(true)
             this.fetchCities()
             this.fetchNeighborhoods()
         }
@@ -192,6 +194,7 @@ class Page extends Component {
             this.fetchEvents()
             this.fetchPlaces()
             this.fetchNeighborhoods()
+            this.fetchHeamap()
         })
     }
 
@@ -210,6 +213,13 @@ class Page extends Component {
         VibeMap.getNeighborhoods()
             .then(results => {
                 this.props.setNeighborhoods(results.data)
+            })
+    }
+
+    fetchHeamap() {
+        VibeMap.getHeatMap()
+            .then(results => {
+                //this.props.setNeighborhoods(results.data)
             })
     }
 

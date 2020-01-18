@@ -186,7 +186,15 @@ module.exports = {
         8, 6,
         22, 20
       ],
-      "text-offset": [0, -2],
+      "text-offset": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        8,
+        ["literal", [0, -1]],
+        22,
+        ["literal", [0, -4]]
+      ],
       "text-max-width": 12
     },
 
@@ -240,7 +248,7 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 0.2,
-          12, 0.2,
+          12, 0.3,
           20, 0.4
       ],
       // TODO: Scale this on the total number of results vs. size of area...
@@ -249,9 +257,9 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 0.4,
-          12, 0.2,
-          14, 0.25,
-          20, 0.4
+          12, 0.3,
+          14, 0.5,
+          20, 0.5
       ],
       /*
       TODO: One of these approaches should work...
@@ -292,16 +300,18 @@ module.exports = {
       ]
     },
 
+    /*
     tile_layer_layout: {
       'line-cap': 'round',
       'line-join': 'round'
     },
 
     tile_layer_paint: {
-        'line-opacity': 0.6,
+      'line-opacity': 0.6,
       'line-color': 'rgb(53, 175, 109)',
       'line-width': 2
     },
+    */
 
     places_cluster: {
       //   * Blue, 20px circles when point count is less than 100
