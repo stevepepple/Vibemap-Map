@@ -111,7 +111,7 @@ class Page extends Component {
     
         // TODO: should be a switch statement
         if (prevProps.searchTerm !== this.props.searchTerm) {
-            this.fetchEvents()
+            //this.fetchEvents()
             this.fetchPlaces(true)
         }
 
@@ -138,19 +138,20 @@ class Page extends Component {
         if (!isEqual(prevProps.currentLocation, this.props.currentLocation)) {
             // TODO: measure distance between current and previous event
             // If they close together, merge the data in fetchPlaces.
-            this.fetchEvents()
+            //this.fetchEvents()
             this.fetchPlaces(true)
             this.fetchCities()
-            this.fetchNeighborhoods()
+            //this.fetchNeighborhoods()
         }
         
         if (!isEqual(prevProps.zoom, this.props.zoom)) {
         
             this.props.setDistance(helpers.zoomToRadius(this.props.zoom))
             this.fetchPlaces(false)
-            this.fetchEvents()
+            //this.fetchEvents()
+            //this.fetchNeighborhoods()
             this.fetchCities()
-            this.fetchNeighborhoods()
+            
         }
     }
 
@@ -191,10 +192,9 @@ class Page extends Component {
             event_categories: event_categories.categories, 
             place_categories: combined_categories, 
         }, function() {
-            this.fetchEvents()
             this.fetchPlaces()
-            this.fetchNeighborhoods()
-            this.fetchHeamap()
+            //this.fetchEvents()
+            //this.fetchNeighborhoods()
         })
     }
 
@@ -273,7 +273,7 @@ class Page extends Component {
             this.setState({ searching: false }) 
         }
 
-        VibeMap.getPlaces(point, this.props.distance, this.props.activity, this.props.currentVibes, this.props.searchTerm)
+        VibeMap.getPlaces(point, this.props.distance, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
                 this.props.setPlacesData(results.data, refreshResults)
 
@@ -289,8 +289,6 @@ class Page extends Component {
             }, (error) => {
                 console.log(error)
             })
-
-
     }
 
     clearDetails = function() {
