@@ -199,7 +199,10 @@ class Page extends Component {
     }
 
     handleWindowSizeChange = () => {
-        this.setState({ width: window.innerWidth })
+        this.setState({ 
+            height: window.innerHeight,
+            width: window.innerWidth
+        })
     }
 
     fetchCities() {

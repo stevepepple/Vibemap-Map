@@ -25,6 +25,7 @@ class EventCalendar extends Component {
             // TODO: Update from YAML or API list
             vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'outdoors', 'scenic', 'positive', 'unique'],
             localizer: momentLocalizer(moment),
+            height: window.innerHeight,
             events: [
                 {
                     id: 0,
@@ -54,14 +55,18 @@ class EventCalendar extends Component {
     }
 
     EventAgenda({ event }) {
+        //console.log("New agenda event: ", event)
         return (
             <span>
                 <h3>{event.title}</h3>
-                <p>{event.link}</p>
+                {/* 
+                <img width='200' src={event.images[0]}/>
+                <p>Likes {event.likes}</p>
+                */}
+                <a href={event.url}>Event Link</a>
             </span>
         )
     }
-
 
     componentWillMount() {
 
@@ -91,6 +96,16 @@ class EventCalendar extends Component {
         if (!isEqual(prevProps.currentLocation, this.props.currentLocation)) {
             this.fetchEvents()
         }
+
+        window.addEventListener('resize', this.handleWindowSizeChange)
+    }
+
+    handleWindowSizeChange = () => {
+        console.log("Height changed", window.innerHeight)
+        this.setState({
+            height: window.innerHeight,
+            width: window.innerWidth
+        })
     }
 
     /* TODO: Should all of this logic just flow through an event service and component? */
@@ -150,7 +165,7 @@ class EventCalendar extends Component {
                     events={this.state.events}
                     startAccessor='start'
                     endAccessor='end'
-                    style={{ height: 600 }}
+                    style={{ height: this.state.height - 300 }}
                     components={{
                         event: this.Event,
                         agenda: {
