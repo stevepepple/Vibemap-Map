@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import helpers from '../../helpers.js'
 
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions'
+
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 import isEqual from 'react-fast-compare'
 
@@ -109,28 +112,42 @@ class Markers extends Component {
         let markers = <div></div>
         
         if (this.state.has_features) {
+
+            this.state.markers.map(feature => {
+                
+            })
             
             // TODO: @cory this
-            markers = this.state.markers.map(feature => 
-                <Marker 
-                    key={feature.id} 
-                    id={feature.id} 
-                    longitude={feature.geometry.coordinates[0]} 
+            markers = this.state.markers.map(feature => {
+                console.log(feature.id === this.props.detailsId, this.props.detailsId)
+                if (feature.id === this.props.detailsId) {
+                    console.log(feature)
+                }
+
+                let selected = (feature.id === this.props.detailsId)
+
+                return <Marker
+                    key={feature.id}
+                    id={feature.id}
+                    longitude={feature.geometry.coordinates[0]}
                     latitude={feature.geometry.coordinates[1]}>
-                    <div 
+                    <div
                         id={feature.id}
-                        className={feature.className} 
-                        onClick={((e) => this.props.onClick(e, feature))} 
-                        onMouseOver={((e) => this.handleOnMouseOver(e, feature))} 
-                        style={{ height: feature.height, width: feature.width}}>
+                        className={selected ? feature.className + ' selected' : feature.className}
+                        onClick={((e) => this.props.onClick(e, feature))}
+                        onMouseOver={((e) => this.handleOnMouseOver(e, feature))}
+                        style={{ height: feature.height, width: feature.width }}>
                         {/* 
                         <div className='name'>{feature.properties.name}</div>
                         <Vibe feature={feature} />
                         */}
-                        <img src={feature.properties.images[0]} height={'100%'} width={'100%'} />    
+                        <img src={feature.properties.images[0]} height={'100%'} width={'100%'} />
 
-                    </div>                    
+                    </div>
                 </Marker>
+            }
+                
+                
             )            
         }
 
@@ -140,4 +157,10 @@ class Markers extends Component {
     }
 }
 
-export default Markers
+const mapStateToProps = state => {
+    return {
+        detailsId: state.detailsId
+    }
+}
+
+export default connect(mapStateToProps, actions)(Markers)
