@@ -6,7 +6,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && rsync -avzu --delete --progress -h build/ hotspots@app.vibemap.com:/usr/share/nginx/frontend/"
   },
   "dependencies": {
     "@emotion/core": "^10.0.21",
