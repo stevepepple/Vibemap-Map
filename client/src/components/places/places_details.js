@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
-import isEqual from 'react-fast-compare'
+import React, { Component } from 'react'
 
-import { Button, Header, Image, Label, Reveal } from 'semantic-ui-react'
+import isEqual from 'react-fast-compare'
+import MetaTags from 'react-meta-tags'
+
+import { Button, Dimmer, Header, Image, Label, Loader, Reveal, Segment } from 'semantic-ui-react'
 import Directions from '../places/directions'
 import VibeMap from '../../services/VibeMap.js'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
+
+import AppStoreLink from '../elements/AppStoreLink'
 
 import moment from 'moment';
 
@@ -19,7 +23,8 @@ class PlaceDetails extends Component {
             show: props.show,
             id: this.props.id,
             details_data: null,
-            directions: null
+            directions: null, 
+            loading: true
         }
     }
 
@@ -44,7 +49,7 @@ class PlaceDetails extends Component {
         VibeMap.getPlaceDetails(this.props.id)
             .then(result => {
                 // TODO: does this need to be in redux?
-                this.setState({ details_data: result.data })
+                this.setState({ details_data: result.data, loading : false })
                 let point = result.data.geometry.coordinates
                 
                 // TODO: Helper function for coord to lat - long?
@@ -55,6 +60,10 @@ class PlaceDetails extends Component {
 
     render() {
         // TODO: try this same technique in the map
+        if (this.state.loading === true) { 
+            return <Segment><Dimmer active inverted><Loader>Loading</Loader></Dimmer><Image src={process.env.PUBLIC_URL + '/images/short-paragraph.png'} /></Segment>
+        }
+
         if (this.state.details_data == null) { return 'No data for the component.' }
 
         let content = this.state.details_data.properties;
@@ -66,11 +75,26 @@ class PlaceDetails extends Component {
         let categories = content.categories.map((category) => <Label key={category} className={'pink image label ' + category}>{category}</Label>);
         let vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
 
-
-        console.log(content.vibes)
+        let image = content.images[0]
+        let title = content.name + ' - VibeMap'
 
         return (
             <div className='details'>
+
+                <MetaTags>
+                    <title>{title}</title>
+                    <meta property="og:title" content={title} />
+                    <meta property="twitter:title" content={title} />
+
+                    <meta property="og:description" content={content.description} />
+                    <meta property="twitter:description" content={content.description} />
+
+                    <meta property="og:image" content={image} />
+                    <meta name="og:image" content={image} />
+                    <meta name="twitter:image" content={image} />
+                    
+                </MetaTags>
+
                 <Button onClick={this.props.clearDetails}>Back</Button>
 
                 <Header>{content.name}</Header>
@@ -86,9 +110,7 @@ class PlaceDetails extends Component {
                     <Reveal.Content hidden>
                         <Image size='medium' src={content.images[0]} />
                     </Reveal.Content>
-                </Reveal>
-
-                
+                </Reveal>            
 
                 {/* TODO: Render Description at HTML the proper way as stored in Mongo and then as own React component */}
                 <div className='full_description' style={{ 'height': 'auto' }} dangerouslySetInnerHTML={{ __html: content.description }}></div>
@@ -102,6 +124,9 @@ class PlaceDetails extends Component {
                 <p className='small'>Event from {content.source}</p>
 
                 <Directions data={this.state.details_data} />
+
+                <AppStoreLink/>
+
             </div>
         );
     }

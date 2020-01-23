@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Header, Image, Label } from 'semantic-ui-react'
+import { Button, Header, Image, Label, Loader } from 'semantic-ui-react'
 import Directions from '../places/directions'
 import VibeMap from '../../services/VibeMap.js'
 
@@ -15,6 +15,7 @@ class EventDetails extends Component {
             show: props.show,
             id: this.props.id,
             details_data: null,
+            loading: true,
             directions: null
         }
     }
@@ -27,12 +28,16 @@ class EventDetails extends Component {
     componentDidMount = function() {
         //console.log(this.state)
         VibeMap.getEventDetails(this.props.id)
-            .then(result => this.setState({ details_data : result.data }))
+            .then(result => this.setState({ details_data : result.data, loading : false }))
     }
 
     render() {
         // TODO: try this same technique in the map
+        if (this.state.loading === true) { return <Loader content='Loading' /> }
+        
         if (this.state.details_data == null) { return 'No data for the component.' }
+
+        
 
         let content = this.state.details_data.properties;
         let date = moment(content.date)

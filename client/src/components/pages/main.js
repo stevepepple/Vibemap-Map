@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import queryString from 'querystring'
 import isEqual from 'react-fast-compare'
 
-import { Grid } from 'semantic-ui-react'
+import { Advertisement, Grid, Segment } from 'semantic-ui-react'
 //TODO: Move to API
 import foursquare from '../../services/foursquare.js'
 import VibeMap from '../../services/VibeMap.js'
@@ -304,6 +304,8 @@ class Page extends Component {
     render() {
 
         const { width } = this.state
+
+        // TODO: Set this in Redux for global access
         const isMobile = width <= 700
 
         // TODO: best practice is to make this a func? 
@@ -322,8 +324,13 @@ class Page extends Component {
 
         // Adaptive view for mobile users
         if (isMobile) {
-            return (                
-                <MobilePage data={this.props.eventsData} onclick={this.showDetails} places_data={this.props.placesData} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
+            return ( 
+                this.props.detailsShown ? (  
+                        <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />            
+                    
+                ) : (
+                    <MobilePage data={this.props.eventsData} onclick={this.showDetails} places_data={this.props.placesData} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
+                )                          
             )
         } else {
             return (
