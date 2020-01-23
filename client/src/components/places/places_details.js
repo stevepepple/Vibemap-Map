@@ -11,6 +11,10 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
 import AppStoreLink from '../elements/AppStoreLink'
+import ShowMoreText from 'react-show-more-text'
+
+/* TODO: Break this into styles for each component */
+import '../../styles/place_details.scss'
 
 import moment from 'moment';
 
@@ -77,6 +81,9 @@ class PlaceDetails extends Component {
 
         let image = content.images[0]
         let title = content.name + ' - VibeMap'
+        let description = unescape(content.description)
+
+        console.log(description)
 
         return (
             <div className='details'>
@@ -108,20 +115,33 @@ class PlaceDetails extends Component {
                         <Image src='../../styles/image.png' size='small' />
                     </Reveal.Content>
                     <Reveal.Content hidden>
-                        <Image size='medium' src={content.images[0]} />
+                        <Image className='placeImage' fluid src={content.images[0]} />
                     </Reveal.Content>
                 </Reveal>            
 
                 {/* TODO: Render Description at HTML the proper way as stored in Mongo and then as own React component */}
-                <div className='full_description' style={{ 'height': 'auto' }} dangerouslySetInnerHTML={{ __html: content.description }}></div>
+
+                <ShowMoreText
+                    /* Default options */
+                    lines={4}
+                    more='Show more'
+                    less='Show less'
+                    anchorClass=''
+                    onClick={this.executeOnClick}
+                    expanded={false}                
+                >
+                    {description}
+                </ShowMoreText>
 
                 <div>
                     {vibes}
                 </div>
 
+                {/* TODO: Make this a reservation area 
                 <h3>Details & Tickets</h3>
                 <a className='ui button primary' href={content.url} target='_blank'> Check it out</a>
                 <p className='small'>Event from {content.source}</p>
+                */}
 
                 <Directions data={this.state.details_data} />
 

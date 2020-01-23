@@ -39,6 +39,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.8",
+    "react-show-more-text": "^1.3.0",
     "react-store-badges": "^1.1.1",
     "react-tabs": "^2.3.1",
     "react-tooltip": "^3.11.1",
