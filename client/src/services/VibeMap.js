@@ -46,6 +46,31 @@ module.exports = {
         }); 
     },
 
+    getVibes: function () {
+        return new Promise(function (resolve, reject) {
+            let query = querystring.stringify({
+                // lat: this.state.lat,
+                // lon: this.state.lon,
+                //point: point,
+                // distance: this.state.distance,
+                //dist: distanceInMeters,
+                //activity: activity,
+                //days: days,                
+            })
+
+            fetch(ApiUrl + "/v0.2/vibes/?" + query, { headers: ApiHeaders })
+                .then(data => data.json())
+                .then(res => {
+                    clearTimeout(timeout)
+                    console.log('Vibes list: ', res)
+                    resolve({ data: res.results, loading: false, timedOut: false })
+
+                }, (error) => {
+                    console.log(error)
+                });
+        });
+    },
+
     getNeighborhoods: function(){
         return new Promise(function (resolve, reject) {
             let query = querystring.stringify({
@@ -148,7 +173,7 @@ module.exports = {
                 categories: activity,
                 search: search,
                 vibes: vibes,
-                per_page: 50
+                per_page: 100
             }
 
             if (activity) {
@@ -165,7 +190,7 @@ module.exports = {
 
                     clearTimeout(timeout);
                     let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point)
-
+                    console.log('Top Picks sorted: ', places_scored_and_sorted)
                     resolve({ data: places_scored_and_sorted, loading: false, timedOut: false })
 
                 }, (error) => {
@@ -203,7 +228,7 @@ module.exports = {
                 end_date_before: day_end,
                 categories: activity,
                 search: search_term,
-                per_page: 100
+                per_page: 200
             }
 
             if (activity) {
@@ -310,11 +335,19 @@ module.exports = {
             place.properties.event_score = helpers.default.normalize(place.properties.event_score, 0, max_event_score)
             place.properties.vibe_score = helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score)
             place.properties.aggregate_rating = helpers.default.normalize(place.properties.aggregate_rating, 0, max_aggregate_score)
+            
             // Distance is inverted from max and then normalize 1-10
             place.properties.distance = helpers.default.normalize(max_distance - place.properties.distance, 0, max_distance)
-
+            
             // Simple average of the different scores
-            place.properties.average_score = place.properties.event_score + place.properties.vibe_score + place.properties.aggregate_rating + place.properties.distance / 4
+            let scores = [
+                place.properties.event_score, 
+                place.properties.vibe_score, 
+                place.properties.aggregate_rating,
+                place.properties.distance * 0.8 // Only make distance half as important
+            ]
+            
+            place.properties.average_score = scores.reduce((a, b) => a + b, 0) / scores.length
 
             return place
         })
