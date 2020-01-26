@@ -6,8 +6,8 @@ import helpers from '../../helpers';
 
 class ListItem extends React.Component {
 
-    handleHover(id) {
-        console.log("Hovering on: ", this.props.id)
+    handleHover(props) {
+        console.log("Hovering on: ", props, this.props.id)
         helpers.fireEvent(this.props.id, "focus")
     }
 
@@ -41,7 +41,7 @@ class ListItem extends React.Component {
             
             <Item onClick={((e) => this.props.onClick(e, this.props.id))} key={this.props.id} data-id={content.id}>
                 <Item.Image src={this.props.content.images[0]} size='small' />
-                <Item.Content onMouseOver={this.handleHover.bind(this, this.props.id)} onMouseLeave={this.onMouseLeave.bind(this, this.props.id)}>
+                <Item.Content onMouseOver={this.handleHover.bind(this, this.props)} onMouseLeave={this.onMouseLeave.bind(this, this.props.id)}>
                     <Item.Extra className='date'>{date} {start}</Item.Extra>
                     <Item.Header>{title}</Item.Header>                
                     <Item.Extra>

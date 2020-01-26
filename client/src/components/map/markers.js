@@ -61,8 +61,9 @@ class Markers extends Component {
             let categories = feature.properties.sub_categories
         
             feature.size = helpers.scaleMarker(score, max, this.props.zoom)
-            feature.width = feature.size + 'px'
-            feature.height = feature.size + 'px'
+            
+            feature.width = feature.size
+            feature.height = feature.size
 
             feature.className = 'marker'
 
@@ -119,7 +120,7 @@ class Markers extends Component {
             
             // TODO: @cory this
             markers = this.state.markers.map(feature => {
-                console.log(feature.id === this.props.detailsId, this.props.detailsId)
+                                
                 if (feature.id === this.props.detailsId) {
                     console.log(feature)
                 }
@@ -136,7 +137,12 @@ class Markers extends Component {
                         className={selected ? feature.className + ' selected' : feature.className}
                         onClick={((e) => this.props.onClick(e, feature))}
                         onMouseOver={((e) => this.handleOnMouseOver(e, feature))}
-                        style={{ height: feature.height, width: feature.width }}>
+                        style={{ 
+                            height: feature.height, 
+                            width: feature.width,
+                            marginLeft: - feature.width / 2,
+                            marginTop: - feature.height / 2
+                        }}>
                         {/* 
                         <div className='name'>{feature.properties.name}</div>
                         <Vibe feature={feature} />
