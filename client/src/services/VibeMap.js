@@ -161,6 +161,8 @@ module.exports = {
         // Don't allow distance to be negative.
         let distanceInMeters = 1
         if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
+
+        if (activity == 'all') activity = null
         
         // TODO: Load more points at greater distances?        
         return new Promise(function (resolve, reject) {
@@ -214,6 +216,8 @@ module.exports = {
 
         let distanceInMeters = 1
         if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
+
+        if (activity == 'all') activity = null
 
         let day_start = moment().startOf('day').utc().format("YYYY-MM-DD HH:MM")
         let day_end = moment().add(days, 'days').utc().format("YYYY-MM-DD HH:MM")

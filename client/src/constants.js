@@ -69,7 +69,8 @@ export const activty_categories = [
     { key: 'learning', value: 'learning', text: 'Learning', categories: ['learning', 'education'] },
     // TODO: make these vibes? 
     { key: 'immersive', value: 'immersive', text: 'Immersive', categories: ['immersive'] },
-    { key: 'spirtual', value: 'spirtual', text: 'Spirtual', categories: ['spirtual'] }
+    { key: 'spirtual', value: 'spirtual', text: 'Spirtual', categories: ['spirtual'] },
+    { key: 'transit', value: 'transit', text: 'transit', categories: ['spirtual'] }
 ]
 
 // Groupings for All Place Categories
