@@ -6,10 +6,9 @@ import helpers from '../../helpers';
 
 class ListItem extends React.Component {
 
-    handleHover(id) {
-        console.log("Hovering on: ", this.props.id)
+    handleHover(props) {
         // TODO: why is this not working
-        helpers.fireEvent(this.props.id, "focus")
+        helpers.fireEvent(props.id, "mouseover")
     }
 
     onMouseLeave(id) {
@@ -76,9 +75,14 @@ class ListItem extends React.Component {
         /* TODO: Can this be made an abtract component for other types of data, i.e. places */
         return (
             
-            <Item onClick={((e) => this.props.onClick(e, this.props.id))} key={this.props.id} data-id={content.id}>
+            <Item 
+                key={this.props.id}
+                data-id={content.id}    
+                onClick={((e) => this.props.onClick(e, this.props.id))} 
+                onMouseOver={this.handleHover.bind(this, this.props)} 
+                onMouseLeave={this.onMouseLeave.bind(this, this.props.id)}>
                 <Item.Image src={content.images[0]} size='small' />
-                <Item.Content onMouseOver={this.handleHover.bind(this, this.props.id)} onMouseLeave={this.onMouseLeave.bind(this, this.props.id)}>
+                <Item.Content>
                     <Item.Extra className='date'>{date} {start}</Item.Extra>
                     <Item.Header>{title}</Item.Header>                
                     <Item.Extra>
