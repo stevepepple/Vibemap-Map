@@ -83,6 +83,7 @@ class Page extends Component {
         let combined_categories = helpers.findPlaceCategoriess(current.categories)
 
         this.setState({ place_categories: combined_categories })
+        
     }
 
     componentDidMount() {
@@ -193,8 +194,8 @@ class Page extends Component {
             event_categories: event_categories.categories, 
             place_categories: combined_categories, 
         }, function() {
-            this.fetchPlaces()
-            this.fetchEvents()
+            this.fetchPlaces(true)
+            this.fetchEvents(true)
             //this.fetchNeighborhoods()
         })
     }
@@ -277,6 +278,7 @@ class Page extends Component {
         }
 
         // General search
+        console.log('Getting fresh places for: ', this.props.activity, refreshResults)
         VibeMap.getPlaces(point, this.props.distance, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
                 this.props.setPlacesData(results.data, refreshResults)
@@ -335,7 +337,7 @@ class Page extends Component {
                     <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />            
                     
                 ) : (
-                    <MobilePage data={this.props.eventsData} onclick={this.showDetails} places_data={this.props.placesData} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} setLocationParams={this.setLocationParams} />
+                    <MobilePage data={this.props.eventsData} places_data={this.props.placesData} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} setLocationParams={this.setLocationParams} />
                 )                          
             )
         } else {
@@ -352,11 +354,11 @@ class Page extends Component {
                                     this.props.detailsShown ? (
                                         <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
                                     ) : (
-                                        <PlacesList data={this.props.topPicks} type='places' onclick={this.showDetails} />
+                                        <PlacesList data={this.props.topPicks} type='places' />
                                     )
                                 }
 
-                                {/* <EventsList data={this.state.data} onclick={this.showDetails} /> */}
+                                {/* <EventsList data={this.state.data} /> */}
                                 
                             </Grid.Column>
                             <Grid.Column width={11}>

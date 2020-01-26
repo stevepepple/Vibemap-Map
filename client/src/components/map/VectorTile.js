@@ -13,9 +13,7 @@ class VectorTile extends React.Component {
         super(props)
 
         this.state = {
-            filter: "any",
-            markers: [],
-            has_features: false,
+            filter: ["food", "shopping", "outdoors"],
             added_map: false
         }
     }
@@ -23,6 +21,12 @@ class VectorTile extends React.Component {
     componentWillMount() {
         const options = Object.assign({}, this.props);
         console.log('New Heatmap props ', this.props)
+    }
+
+    componentWillReceiveProps(){
+        console.log('Adding tiles with this category: ', this.props.activity)
+
+        if (this.props.activity !== null && this.props.activity !== "") this.setState({ filter : [this.props.activity]})
     }
 
     addHeatMap() {
@@ -48,9 +52,10 @@ class VectorTile extends React.Component {
                     [
                         "match",
                         ["get", "primary_category"],
-                        [this.props.activity],
+                        this.state.filter,
                         true,
-                        false]
+                        false
+                    ]
                 ],
                 "paint": Styles.places_heatmap
             }, 'places')
