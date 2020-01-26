@@ -38,6 +38,8 @@ module.exports = {
       "text-field": ["to-string", ["get", "name"]],
       "text-allow-overlap": false,
       "icon-allow-overlap": true,
+      "text-line-height": 1.0,
+      "text-anchor": "bottom",
       "text-font": ["Roboto Regular"],
       "text-size": [
         "interpolate",
@@ -46,8 +48,8 @@ module.exports = {
         8, 4,
         22, 16
       ],
-      "text-offset": [-0.6, -1.2],
-      "text-max-width": 12      
+      "text-offset": [0, -0.4],
+      "text-max-width": 8     
     },
 
     marker_paint: { 
@@ -63,13 +65,16 @@ module.exports = {
       "text-field": ["to-string", ["get", "name"]],
       "text-allow-overlap": false,
       "text-font": ["Roboto Medium"],
+      "text-line-height": 1.0,
+      "text-letter-spacing": 0,
+      "text-anchor" : "bottom",
       "text-justify": "center",
       "text-size": [
         "interpolate",
         ["linear"],
         ["zoom"],
         8, 6,
-        22, 20
+        22, 18
       ],
       "text-offset": [
         "interpolate",
@@ -80,7 +85,7 @@ module.exports = {
         22,
         ["literal", [0, -4]]
       ],
-      "text-max-width": 12
+      "text-max-width": 8
     },
 
     top_pick_paint: {
@@ -104,15 +109,7 @@ module.exports = {
         8, 6,
         22, 20
       ],
-      "text-offset": [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        8,
-        ["literal", [0, 2]],
-        22,
-        ["literal", [0, 5]]
-      ],
+      "text-offset": [0, 3],
       "text-max-width": 12
     },
 
@@ -123,7 +120,7 @@ module.exports = {
         ["zoom"],
           8, 1,
           10, 20,
-          12, 30,
+          12, 40,
           13, 50,
           14, 70,
           20, 200
