@@ -23,6 +23,8 @@ import ZoomLegend from '../map/ZoomLegend'
 import * as Constants from '../../constants.js'
 import helpers from '../../helpers.js'
 
+import '../../styles/map.scss'
+
 class EventsMap extends React.PureComponent {
 
     constructor(props) {
@@ -139,6 +141,7 @@ class EventsMap extends React.PureComponent {
             // TODO: there's probably a smart way to do this with browser history
             this.setState({ prev_zoom : this.props.zoom })
             this.props.setDetailsShown(true)
+            this.props.setZoom(this.props.zoom + 2)
         }
     }
 
@@ -229,13 +232,13 @@ class EventsMap extends React.PureComponent {
                             trackUserLocation={true}
                         />           
 
-                        {this.props.detailsShown &&
+                        {this.props.detailsShown && this.props.currentPlace.location !== null &&
                             <Marker
-                                longitude={this.props.currentLocation.longitude}
-                                latitude={this.props.currentLocation.latitude}
+                                longitude={this.props.currentPlace.location.longitude}
+                                latitude={this.props.currentPlace.location.latitude}
                                 offsetTop={-2}
                                 offsetLeft={-2}
-                            >
+                            >   
                                 <Selected size={60} />
                             </Marker>
                         }
@@ -316,8 +319,7 @@ class EventsMap extends React.PureComponent {
 
                         <VectorTile
                             id='heat_layer'
-                            type='heatmap'
-                            activity={this.props.activity}
+                            type='heatmap'                            
                             source='tile_layer'
                             source-layer='places'
                             //paint={Styles.places_heatmap}
@@ -359,6 +361,7 @@ const mapStateToProps = state => {
         nearby_places: state.nearby_places,
         currentVibes: state.currentVibes,
         currentLocation: state.currentLocation,
+        currentPlace: state.currentPlace,
         zoom: state.zoom,
         currentDistance: state.currentDistance,
         detailsId: state.detailsId,
