@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 //import Geocoder from "@mapbox/react-geocoder"
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
@@ -14,6 +14,7 @@ import CustomMapController from '../map/map-conroller'
 // TODO: Remove these other map sources
 import Styles from '../../styles/map_styles.js'
 import Markers from '../map/markers'
+import Selected from '../map/selected'
 import VectorTile from '../map/VectorTile'
 //import YouAreHere from '../map/you_are_here.js'
 import ZoomLegend from '../map/ZoomLegend'
@@ -55,7 +56,6 @@ class EventsMap extends React.PureComponent {
         this._onViewportChange = this._onViewportChange.bind(this)
     }
 
-
     // TODO: Move to componentWillUPdate
     componentWillReceiveProps(nextProps){
 
@@ -71,7 +71,6 @@ class EventsMap extends React.PureComponent {
         let has_data = this.props.events_data.length > 0
 
         let zoom = nextProps.zoom
-        if (nextProps.detailsShown === true) this.state.prev_zoom += 1
 
         this.setState({ 
             places_geojson: places_geojson,
@@ -88,6 +87,8 @@ class EventsMap extends React.PureComponent {
     }
 
     _onViewportChange = viewport => {
+
+        console.log('Viewport: ', viewport)
         
         // Keep Redux in sync with current map
         // TODO: how to transtlate greater of viewport width or height to search radius
@@ -146,8 +147,9 @@ class EventsMap extends React.PureComponent {
 
         // There a layer & feature
         if (feature && event.features.length > 0) {
-            let first_feature = event.features[0]
-            if (first_feature.properties.name && first_feature.properties.name.length > 0) {
+            let first_feature = event.features[0]            
+            if (first_feature.properties.name && (first_feature.layer.id === "top_picks" || first_feature.layer.id === "places")) {
+                
                 this.showPopup(first_feature.properties.name, event.lngLat[1], event.lngLat[0])
             }
             
@@ -182,35 +184,6 @@ class EventsMap extends React.PureComponent {
         this.setState({ lens, radius })
     }
 
-    // Iterate through all place categories and create css icons
-    // TODO: this can be done in Mapbox studio once as vectors.
-    createIconStyles = () => {
-
-        let classes = {}
-
-        // TODO: this goes away or should at the least be a helper function
-        Constants.all_categories.map(function (category) {
-
-            if (category.key) {
-                let image = category.icon.prefix + '64' + category.icon.suffix
-                let class_name = '.' + category.key
-                classes[class_name] = { backgroundImage: 'url(' + image + ')'}
-
-                if(category.categories) {
-                    
-                    category.categories.map(function(sub_category){
-                        image = sub_category.icon.prefix + '32' + sub_category.icon.suffix
-                        let sub_class_name = '.' + sub_category.key;
-                        classes[sub_class_name] = { backgroundImage: 'url(' + image + ')'}
-
-                    })
-                }
-            }
-        })
-
-        return classes;
-    }
-
     mapRef = React.createRef();
 
     render() {
@@ -223,10 +196,7 @@ class EventsMap extends React.PureComponent {
 
         return (
 
-            <div>
-                <Global
-                    styles={this.createIconStyles()}
-                />
+            <Fragment>
 
                 <div className = 'map_container'>
                     {/* Floating legend */}
@@ -257,7 +227,19 @@ class EventsMap extends React.PureComponent {
                             style={Styles.geolocateStyle}
                             positionOptions={{ enableHighAccuracy: true }}
                             trackUserLocation={true}
-                        />                
+                        />           
+
+                        {this.props.detailsShown &&
+                            <Marker
+                                longitude={this.props.currentLocation.longitude}
+                                latitude={this.props.currentLocation.latitude}
+                                offsetTop={-2}
+                                offsetLeft={-2}
+                            >
+                                <Selected size={60} />
+                            </Marker>
+                        }
+     
                         
                         <Source
                             id='places_2'
@@ -302,7 +284,7 @@ class EventsMap extends React.PureComponent {
                             >
                                 {this.state.popupInfo.name}
                             </Popup>
-                        }
+                        }                        
 
                         <Markers
                             data={this.props.topPicks}
@@ -335,6 +317,7 @@ class EventsMap extends React.PureComponent {
                         <VectorTile
                             id='heat_layer'
                             type='heatmap'
+                            activity={this.props.activity}
                             source='tile_layer'
                             source-layer='places'
                             //paint={Styles.places_heatmap}
@@ -352,7 +335,7 @@ class EventsMap extends React.PureComponent {
                     </ReactMapGL>
 
                 </div>
-            </div>   
+            </Fragment>   
         )
     }
 }
@@ -370,6 +353,8 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
     //console.log('State in events map:', state)
     return {
+        activity: state.activity,
+        baseZoom: state.baseZoom,
         bearing: state.bearing,
         nearby_places: state.nearby_places,
         currentVibes: state.currentVibes,

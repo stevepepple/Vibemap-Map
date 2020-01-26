@@ -4,6 +4,7 @@ import isEqual from 'react-fast-compare'
 import queryString from 'query-string'
 
 import * as Constants from '../../constants.js'
+import VibeMap from '../../services/VibeMap.js'
 
 import LocationSearchInput from '../map/search'
 
@@ -47,6 +48,7 @@ class Navigation extends React.PureComponent {
         if (params.place) {
             this.props.setDetailsId(params.place)
             this.props.setDetailsShown(true)
+            this.props.setZoom(this.props.zoom + 2)
         }
 
         if (params.activity) {

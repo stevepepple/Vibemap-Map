@@ -25,8 +25,10 @@ class EventsList extends Component {
     }
 
     onClick = (event, id) => {
+        /* TODO: consolidate these details in once place */
         this.props.setDetailsId(id)
         this.props.setDetailsShown(true)
+        this.props.setZoom(this.props.zoom += 2)
     }
 
     render() {
