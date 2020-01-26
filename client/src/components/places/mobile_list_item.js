@@ -26,7 +26,9 @@ class ListItem extends React.Component {
         let start = this.props.content.start_time
         let date = moment(this.props.content.start_date)
         let score = Math.round(this.props.content.score)
-        let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);
+
+        //console.log(this.props.content.categories)    
+        //let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);
 
         let content = this.props.content;
         
@@ -35,7 +37,17 @@ class ListItem extends React.Component {
             vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
         }
 
+        let short_name = null
+        if (content.short_description) {
+            short_name = content.short_description 
+        } else if (typeof (content.categories) == 'object') {
+            short_name = content.categories[0]
+        }
+
+        console.log("Place content: ", content)
+
         /* TODO: Can this be made an abtract component for other types of data, i.e. places */
+        /* TODO: Handle places & evnets */
         return (
             
             <List.Item className={'mobileListItem'} 
@@ -49,16 +61,19 @@ class ListItem extends React.Component {
                     scrollSnapAlign: 'center',
                     width: '100%'
             }}>
-                <Image src={this.props.content.images[0]} size='small' />
-                <List.Content onMouseOver={this.handleHover.bind(this, this.props.id)} onMouseLeave={this.onMouseLeave.bind(this, this.props.id)}>
+                <Image src={this.props.content.images[0]} size='small' verticalAlign='top' />
+                <List.Content 
+                    size='large' verticalAlign='middle'
+                    onMouseOver={this.handleHover.bind(this, this.props.id)} onMouseLeave={this.onMouseLeave.bind(this, this.props.id)}>
+                    <span className='category'>{short_name}</span>
                     <List.Header textAlign='left'>{title}</List.Header>                
                     <Item.Extra>
-                        <div className={date}>{date.format('dddd')} {start}</div>                        
-                        <span className='venue'>{content.hotspots_place.properties.name}</span>                  
-
+                        
+                        {/* 
                         <div>
                             {vibes}
                         </div>
+                        */}
                         {/* 
                         <span className='interested'>
                             <Icon name='user' />
