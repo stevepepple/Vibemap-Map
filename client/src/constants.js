@@ -73,8 +73,11 @@ export const activty_categories = [
 ]
 
 // Groupings for All Place Categories
+// TODO: Sync these with YAML categories from API
 export const place_categories = [
-    { key: 'all', value: 'all', text: 'All Activities', categories: ['Arts & Entertainment', 'Food', 'Bar'] },
+    { key: 'any', value: 'any', text: 'All Activities', categories: ['Arts & Entertainment', 'Food', 'Bar'] },
+    { key: 'cafe', value: 'cafe', text: 'Cafe'},
+    { key: 'comedy', value: 'comedy', text: 'Cafe' },
     { key: 'food', value: 'food', text: 'Eating', categories: ['Food'] },
     { key: 'drinking', value: 'drinking', text: 'Drinking', categories: ['Bar', 'Brewery', 'Lounge'] },
     { key: 'shopping', value: 'shopping', text: 'Shopping', categories: ['Shop & Service'] },

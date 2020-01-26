@@ -53,6 +53,7 @@ class Page extends Component {
             details_shown: false,
             intervalIsSet: false,
             loading: true,
+            num_top_picks: 12,
             timedOut: false,
             time_of_day: 'morning',
             top_picks: [],
@@ -76,7 +77,7 @@ class Page extends Component {
         
         // Search for all categories that match the current selection and concatenate them
         // TODO: set in Redux? 
-        let current = Constants.place_categories.find(item => item.key === 'all')
+        let current = Constants.place_categories.find(item => item.key === 'any')
         
         // Concatanate the default set of categories
         let combined_categories = helpers.findPlaceCategoriess(current.categories)
@@ -111,12 +112,12 @@ class Page extends Component {
     
         // TODO: should be a switch statement
         if (prevProps.searchTerm !== this.props.searchTerm) {
-            //this.fetchEvents()
+            this.fetchEvents()
             this.fetchPlaces(true)
         }
 
         if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
-            //this.fetchEvents()
+            this.fetchEvents()
             this.fetchPlaces(true)
         }
 
@@ -126,19 +127,19 @@ class Page extends Component {
         }
 
         if (!isEqual(prevProps.activity, this.props.activity)) {
-            //this.fetchEvents()
-            this.fetchPlaces()
+            this.fetchEvents()
+            this.fetchPlaces(true)
         }
 
         //console.log("Search for: ", this.props.searchTerm)
         if (!isEqual(prevProps.searchTerm, this.props.searchTerm) && this.props.searchTerm > 2) {
-            this.fetchPlaces()
+            this.fetchPlaces(true)
         }
 
         if (!isEqual(prevProps.currentLocation, this.props.currentLocation)) {
             // TODO: measure distance between current and previous event
             // If they close together, merge the data in fetchPlaces.
-            //this.fetchEvents()
+            this.fetchEvents()
             this.fetchPlaces(true)
             this.fetchCities()
             //this.fetchNeighborhoods()
@@ -148,7 +149,7 @@ class Page extends Component {
         
             this.props.setDistance(helpers.zoomToRadius(this.props.zoom))
             this.fetchPlaces(false)
-            //this.fetchEvents()
+            this.fetchEvents()
             //this.fetchNeighborhoods()
             this.fetchCities()
             
@@ -193,7 +194,7 @@ class Page extends Component {
             place_categories: combined_categories, 
         }, function() {
             this.fetchPlaces()
-            //this.fetchEvents()
+            this.fetchEvents()
             //this.fetchNeighborhoods()
         })
     }
@@ -219,13 +220,6 @@ class Page extends Component {
             })
     }
 
-    fetchHeamap() {
-        VibeMap.getHeatMap()
-            .then(results => {
-                //this.props.setNeighborhoods(results.data)
-            })
-    }
-
     /* TODO: Should all of this logic just flow through an event service and component? */
     // Change to getPlaces
     fetchEvents(position) {
@@ -241,6 +235,8 @@ class Page extends Component {
         VibeMap.getEvents(point, this.props.distance, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
             .then(results => {
                 this.props.setEventsData(results.data)
+
+                console.log(this.props.eventsData)
                 this.setState({ loading: false, timedOut: false })
             }, (error) => {
                 console.log(error)
@@ -266,9 +262,13 @@ class Page extends Component {
                     //this.props.setPlacesData(results.data)
                     // TODO: any reason to store this in redux
                     //this.setState({ top_picks: results.data })
-                    let top_picks = results.data.slice(1, 12)
-                    console.log('top_picks: ', top_picks)
-                    this.props.setTopPicks(top_picks)
+
+                    let top_picks = results.data.splice(1, this.state.num_top_picks)
+
+                    this.props.setTopPicks(top_picks, refreshResults)
+                    this.props.setPlacesData(results.data, refreshResults)
+
+
             }, (error) => {
                 console.log(error)
             })
@@ -276,6 +276,7 @@ class Page extends Component {
             this.setState({ searching: false }) 
         }
 
+        // General search
         VibeMap.getPlaces(point, this.props.distance, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
                 this.props.setPlacesData(results.data, refreshResults)
@@ -283,9 +284,10 @@ class Page extends Component {
                 if(this.state.searching !== true) {
                     // TODO: still join to results?
                     // This won't be needed if top picks work, right? 
-                    let top_picks = this.props.placesData.slice(1, 12)
-                    this.props.setTopPicks(top_picks)
-                    //this.setState({ top_picks: })
+
+                    let top_picks = this.props.placesData.splice(1, this.state.num_top_picks)
+                    this.props.setTopPicks(top_picks, refreshResults)
+                    
                 }
                 
                 this.setState({ loading: false, timedOut: false })
@@ -299,6 +301,10 @@ class Page extends Component {
 
         this.props.setDetailsId(null)
         this.props.setDetailsShown(false)
+
+        let new_zoom = this.props.zoom - 2
+        this.props.setZoom(new_zoom)
+
     }
 
     render() {
@@ -326,10 +332,10 @@ class Page extends Component {
         if (isMobile) {
             return ( 
                 this.props.detailsShown ? (  
-                        <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />            
+                    <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />            
                     
                 ) : (
-                    <MobilePage data={this.props.eventsData} onclick={this.showDetails} places_data={this.props.placesData} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} />
+                    <MobilePage data={this.props.eventsData} onclick={this.showDetails} places_data={this.props.placesData} vibe_categories={this.state.vibe_categories} details_shown={this.state.details_shown} isMobile={isMobile} setLocationParams={this.setLocationParams} />
                 )                          
             )
         } else {
@@ -346,7 +352,7 @@ class Page extends Component {
                                     this.props.detailsShown ? (
                                         <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
                                     ) : (
-                                        <PlacesList data={this.props.placesData} type='places' onclick={this.showDetails} />
+                                        <PlacesList data={this.props.topPicks} type='places' onclick={this.showDetails} />
                                     )
                                 }
 

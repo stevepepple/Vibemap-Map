@@ -1,5 +1,7 @@
-import React, { PureComponent } from 'react'
-import ReactMapGL from 'react-map-gl'
+import React from 'react'
+
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions'
 
 import { _MapContext as MapContext, MapContextProps} from 'react-map-gl'
 
@@ -11,6 +13,7 @@ class VectorTile extends React.Component {
         super(props)
 
         this.state = {
+            filter: "any",
             markers: [],
             has_features: false,
             added_map: false
@@ -19,8 +22,7 @@ class VectorTile extends React.Component {
 
     componentWillMount() {
         const options = Object.assign({}, this.props);
-
-        console.log('Heatmap props ', options.paint)
+        console.log('New Heatmap props ', this.props)
     }
 
     addHeatMap() {
@@ -35,7 +37,7 @@ class VectorTile extends React.Component {
                 'tiles': ["https://tiles.vibemap.com/maps/places/{z}/{x}/{y}.mvt"],
                 'minzoom': 8            
             })
-
+            
             map.addLayer({
                 "id": "heat_layer",
                 "source": "tile_layer",
@@ -46,10 +48,9 @@ class VectorTile extends React.Component {
                     [
                         "match",
                         ["get", "primary_category"],
-                        ['food', 'shop'],
+                        [this.props.activity],
                         true,
-                        false
-                    ]
+                        false]
                 ],
                 "paint": Styles.places_heatmap
             }, 'places')
@@ -81,7 +82,11 @@ class VectorTile extends React.Component {
     render() {
         return <MapContext.Consumer>{this._render.bind(this)}</MapContext.Consumer>;
     }
-
 }
 
-export default VectorTile
+const mapStateToProps = state => ({
+    activity: state.activity,
+})
+
+export default connect(mapStateToProps, actions)(VectorTile)
+
