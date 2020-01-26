@@ -3,6 +3,8 @@ import { connectRouter } from 'connected-react-router'
 
 import _ from 'lodash'
 
+import helpers from '../helpers.js'
+
 import queryString from 'query-string'
 
 export function uiReducer(state = uiState, action) {
@@ -38,9 +40,10 @@ export const detailsId = (state = null, action) => {
 
 export const activity = (state = "", action) => {
   if (action.type == 'SET_ACTIVITY') {
-    if (action.activity == "all"){
+    if (action.activity == "any"){
       action.activity = null
     }
+    console.log("SEt activity: ", action.activity)
     state = action.activity
   }
   return state
@@ -184,8 +187,14 @@ export const placesData = (state = [], action) => {
       // TODO: work with Cory to fix 
       //console.log(place.properties.categories)
       //if (place.properties.categories.length > 1) 
-      place.properties.sub_categories = place.properties.categories
-      place.properties.categories = place.properties.sub_categories[0]
+      
+      //place.properties.sub_categories = place.properties.categories
+
+      let matches = helpers.getCategoryMatch(place.properties.categories)
+      
+      if (matches.length == 0) matches.push('missing')
+
+      place.properties.categories = matches[0]
       //event.properties.score = event.properties.likes
       return place
     })
@@ -226,7 +235,15 @@ export const topPicks = (state = [], action) => {
     })
 
     // Save the processed data to state.
-    state = processed
+    // If request is for fresh results update the map.
+
+    if (action.refreshResults) {
+      state = processed
+    } else {
+      console.log()
+      var merged = _.unionBy(state, processed, 'id')
+      state = merged
+    }
   }
 
   return state
