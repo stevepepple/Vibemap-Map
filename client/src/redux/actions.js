@@ -25,6 +25,11 @@ export const setCurrentLocation = location => ({
   location,
 })
 
+export const setCurrentPlace = place => ({
+  type: 'SET_CURRENT_PLACE',
+  place,
+})
+
 export const setBearing = bearing => ({
   type: 'SET_BEARING',
   bearing,
@@ -86,9 +91,10 @@ export const setPlacesData = (places_data, refreshResults) => ({
   refreshResults
 })
 
-export const setTopPicks = places_data => ({
+export const setTopPicks = (places_data, refreshResults) => ({
   type: 'SET_TOP_PICKS_DATA',
   places_data,
+  refreshResults
 })
 
 export const setNearbyPlaces = places => ({

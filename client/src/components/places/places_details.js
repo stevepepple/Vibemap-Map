@@ -61,18 +61,23 @@ class PlaceDetails extends Component {
                 
                 // TODO: does this need to be in redux?
                 this.setState({ 
-                    details_data: result.data, 
-                    name: result.data.properties.name,
-                    description: result.data.properties.description,
-                    categories: result.data.properties.categories,
-                    images: result.data.properties.images,
-                    vibes: result.data.properties.vibes,
+                    details_data: result.data,                 
                     loading : false })
                 
                 let point = result.data.geometry.coordinates
+                let location = { latitude: point[1], longitude: point[0] }
                 
+                this.props.setCurrentPlace({
+                    name: result.data.properties.name,
+                    description: result.data.properties.description,
+                    categories: result.data.properties.categories,
+                    location: location,
+                    images: result.data.properties.images,
+                    vibes: result.data.properties.vibes,
+                })
                 // TODO: Helper function for coord to lat - long?
-                this.props.setCurrentLocation({ latitude: point[1], longitude: point[0] })            
+                this.props.setCurrentLocation(location)
+                
             })
     }
 
@@ -82,9 +87,11 @@ class PlaceDetails extends Component {
 
         /* TODO: Handle events and places in one place */
         
-        let title = this.state.name + ' - VibeMap'
+        let title = this.props.currentPlace.name + ' - VibeMap'
 
-        let description = unescape(this.state.description)
+        let name = this.props.currentPlace.name
+
+        let description = unescape(this.props.currentPlace.description)
 
         /* TODO: Make recommendation is own component */
         let recommendation = 
@@ -97,20 +104,20 @@ class PlaceDetails extends Component {
 
         // TODO: Make these components that handle mapping and errors.
         let categories = null
-        if (this.state.categories.length > 0) {
-            categories = this.state.categories.map((category) => <Label key={category} className={'image label ' + category}>{category}</Label>);
+        if (this.props.currentPlace.categories.length > 0) {
+            categories = this.props.currentPlace.categories.map((category) => <Label key={category} className={'image label ' + category}>{category}</Label>);
         }
 
         let vibes = null
-        if (this.state.vibes.length > 0) {
-            vibes = this.state.vibes.map((vibe) => <Label key={vibe} className={'vibe pink label ' + vibe}>{vibe}</Label>);
+        if (this.props.currentPlace.vibes.length > 0) {
+            vibes = this.props.currentPlace.vibes.map((vibe) => <Label key={vibe} className={'vibe pink label ' + vibe}>{vibe}</Label>);
         }
         
 
         let image = <Image className = 'placeImage' src={ process.env.PUBLIC_URL + '/images/image.png' } fluid />
-
-        if (this.state.images.length > 0) {
-            image = <Image className='placeImage' src={this.state.images[this.state.images.length - 1]} fluid size='medium' />
+        let num_images = this.props.currentPlace.images.length
+        if (num_images > 0) {
+            image = <Image className='placeImage' src={this.props.currentPlace.images[num_images - 1]} fluid size='medium' />
         }
 
         let directions = null
@@ -218,6 +225,7 @@ const mapStateToProps = state => {
         detailsId: state.detailsId,
         nearby_places: state.nearby_places,
         currentLocation: state.currentLocation,
+        currentPlace: state.currentPlace,
         zoom: state.zoom,
         currentDays: state.currentDays,
         currentDistance: state.currentDistance,

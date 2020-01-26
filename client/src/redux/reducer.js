@@ -215,6 +215,21 @@ export const placesData = (state = [], action) => {
   return state
 }
 
+export const currentPlace = (state = {
+  name: null,
+  description: null,
+  categories: [],
+  location: null,
+  vibes: [],
+  images: []
+}, action) => {
+  if (action.type == "SET_CURRENT_PLACE") {
+      return action.place
+  }
+
+  return state
+}
+
 export const topPicks = (state = [], action) => {
 
   if (action.type == 'SET_TOP_PICKS_DATA') {
@@ -236,11 +251,11 @@ export const topPicks = (state = [], action) => {
 
     // Save the processed data to state.
     // If request is for fresh results update the map.
-
+    console.log('Updating top results: ', action.refreshResults)
     if (action.refreshResults) {
+
       state = processed
-    } else {
-      console.log()
+    } else {      
       var merged = _.unionBy(state, processed, 'id')
       state = merged
     }
@@ -283,6 +298,7 @@ export const reducers = (history) => combineReducers({
   geod,
   router: connectRouter(history),
   currentLocation,
+  currentPlace,
   currentDays,
   currentVibes,
   detailsId,
