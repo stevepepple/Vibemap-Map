@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import querystring from 'querystring';
-import { Button, Icon } from 'semantic-ui-react'
+import { Button, Icon, Segment } from 'semantic-ui-react'
 
 
 // Redux stuff
@@ -105,7 +105,7 @@ class Directions extends Component {
 
     render() {
         return (
-            <div>
+            <Segment>
                 <h3>Getting There</h3>
                 <Button.Group>
                     <Button icon>
@@ -125,7 +125,7 @@ class Directions extends Component {
 
                 <a className='ui button primary' href={this.state.link} target='_blank'> Get Directions</a>
 
-            </div>
+            </Segment>
         );
     }
 }

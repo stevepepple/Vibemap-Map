@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import isEqual from 'react-fast-compare'
 import MetaTags from 'react-meta-tags'
 
-import { Button, Dimmer, Header, Image, Label, Loader, Reveal, Segment } from 'semantic-ui-react'
+import { Button, Dimmer, Header, Image, Label, List, Reveal, Placeholder } from 'semantic-ui-react'
 import Directions from '../places/directions'
 import VibeMap from '../../services/VibeMap.js'
 
@@ -27,8 +27,13 @@ class PlaceDetails extends Component {
             show: props.show,
             id: this.props.id,
             details_data: null,
-            directions: null, 
-            loading: true
+            directions: null,                     
+            loading: true,
+            name: null,
+            description: null,
+            categories: [],
+            vibes: [],
+            images: []
         }
     }
 
@@ -52,38 +57,67 @@ class PlaceDetails extends Component {
     getPlaceDetails = function() {
         VibeMap.getPlaceDetails(this.props.id)
             .then(result => {
+                console.log("Place details: ", result)
+                
                 // TODO: does this need to be in redux?
-                this.setState({ details_data: result.data, loading : false })
+                this.setState({ 
+                    details_data: result.data, 
+                    name: result.data.properties.name,
+                    description: result.data.properties.description,
+                    categories: result.data.properties.categories,
+                    images: result.data.properties.images,
+                    vibes: result.data.properties.vibes,
+                    loading : false })
+                
                 let point = result.data.geometry.coordinates
                 
                 // TODO: Helper function for coord to lat - long?
-                this.props.setCurrentLocation({ latitude: point[1], longitude: point[0] })
-                
+                this.props.setCurrentLocation({ latitude: point[1], longitude: point[0] })            
             })
     }
 
     render() {
-        // TODO: try this same technique in the map
-        if (this.state.loading === true) { 
-            return <Segment><Dimmer active inverted><Loader>Loading</Loader></Dimmer><Image src={process.env.PUBLIC_URL + '/images/short-paragraph.png'} /></Segment>
+        
+        if (this.state.loading === false && this.state.details_data == null) { return 'No data for the component.' }
+
+        /* TODO: Handle events and places in one place */
+        
+        let title = this.state.name + ' - VibeMap'
+
+        let description = unescape(this.state.description)
+
+        /* TODO: Make recommendation is own component */
+        let recommendation = 
+            <List.Item className='recomendation'>
+                <Image avatar src={process.env.PUBLIC_URL + '/images/vibe_match.svg'}  />
+                <List.Content>
+                    <List.Header>Totally your vibe!</List.Header>
+                </List.Content>
+            </List.Item>
+
+        // TODO: Make these components that handle mapping and errors.
+        let categories = null
+        if (this.state.categories.length > 0) {
+            categories = this.state.categories.map((category) => <Label key={category} className={'image label ' + category}>{category}</Label>);
         }
 
-        if (this.state.details_data == null) { return 'No data for the component.' }
-
-        let content = this.state.details_data.properties;
-
-        console.log("Place details: ", content)
-        //let date = moment(content.date)
+        let vibes = null
+        if (this.state.vibes.length > 0) {
+            vibes = this.state.vibes.map((vibe) => <Label key={vibe} className={'vibe pink label ' + vibe}>{vibe}</Label>);
+        }
         
-        // TODO: Make these components that handle mapping and errors.
-        let categories = content.categories.map((category) => <Label key={category} className={'pink image label ' + category}>{category}</Label>);
-        let vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
 
-        let image = content.images[0]
-        let title = content.name + ' - VibeMap'
-        let description = unescape(content.description)
+        let image = <Image className = 'placeImage' src={ process.env.PUBLIC_URL + '/images/image.png' } fluid />
 
-        console.log(description)
+        if (this.state.images.length > 0) {
+            image = <Image className='placeImage' src={this.state.images[this.state.images.length - 1]} fluid size='medium' />
+        }
+
+        let directions = null
+
+        if (this.state.details_data) {
+            directions = <Directions data={this.state.details_data} />
+        }
 
         return (
             <div className='details'>
@@ -93,49 +127,75 @@ class PlaceDetails extends Component {
                     <meta property="og:title" content={title} />
                     <meta property="twitter:title" content={title} />
 
-                    <meta property="og:description" content={content.description} />
-                    <meta property="twitter:description" content={content.description} />
+                    <meta property="og:description" content={this.state.description} />
+                    <meta property="twitter:description" content={this.state.description} />
 
-                    <meta property="og:image" content={image} />
-                    <meta name="og:image" content={image} />
-                    <meta name="twitter:image" content={image} />
+                    <meta property="og:image" content={image.src} />
+                    <meta name="og:image" content={image.src} />
+                    <meta name="twitter:image" content={image.src} />
                     
                 </MetaTags>
 
                 <Button onClick={this.props.clearDetails}>Back</Button>
+       
+                {this.state.loading ? (
+                    <Placeholder>
+                        <Placeholder.Header>
+                            <Placeholder.Line length='very short'/>
+                            <Placeholder.Line length='medium' />
+                        </Placeholder.Header>
+                    </Placeholder>
+                ): (
+                    <Header>{this.state.name}</Header>
+                )} 
 
-                <Header>{content.name}</Header>
+                {this.state.loading ? (
+                    <Placeholder>
+                        <Placeholder.Line />
+                        <Placeholder.Line />
+                        <Placeholder.Line />
+                    </Placeholder>
+                ) : (
+                    <List verticalAlign = 'middle'>
+                        <List.Item>
+                            <ShowMoreText
+                                /* Default options */
+                                lines={4}
+                                more='Show more'
+                                less='Show less'
+                                anchorClass=''
+                                onClick={this.executeOnClick}
+                                expanded={false}
+                            >
+                                {description}
+                            </ShowMoreText>
+                        </List.Item>
+                        { recommendation }
+                        <List.Item>{vibes}</List.Item>
+                    </List>
+                )}
+                
+
+                { this.state.loading ? (
+                    <Placeholder>
+                        <Placeholder.Image square />
+                    </Placeholder>
+                ): (
+                    <Reveal animated='fade'>
+                        <Reveal.Content hidden>
+                            {image}
+                        </Reveal.Content>
+                    </Reveal>            
+                )}
                 <div>
                     {categories}
-                </div>
-
-                {/* TODO: Make image a component */}
-                <Reveal animated='fade'>
-                    <Reveal.Content visible>
-                        <Image src='../../styles/image.png' size='small' />
-                    </Reveal.Content>
-                    <Reveal.Content hidden>
-                        <Image className='placeImage' fluid src={content.images[0]} />
-                    </Reveal.Content>
-                </Reveal>            
+                </div>                        
 
                 {/* TODO: Render Description at HTML the proper way as stored in Mongo and then as own React component */}
 
-                <ShowMoreText
-                    /* Default options */
-                    lines={4}
-                    more='Show more'
-                    less='Show less'
-                    anchorClass=''
-                    onClick={this.executeOnClick}
-                    expanded={false}                
-                >
-                    {description}
-                </ShowMoreText>
+                
 
-                <div>
-                    {vibes}
-                </div>
+                
 
                 {/* TODO: Make this a reservation area 
                 <h3>Details & Tickets</h3>
@@ -143,7 +203,7 @@ class PlaceDetails extends Component {
                 <p className='small'>Event from {content.source}</p>
                 */}
 
-                <Directions data={this.state.details_data} />
+                {directions}
 
                 <AppStoreLink/>
 
@@ -162,7 +222,6 @@ const mapStateToProps = state => {
         currentDays: state.currentDays,
         currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,
-        detailsId: state.detailsId,
         pathname: state.router.location.pathname,
         search: state.router.location.search,
         searchTerm: state.searchTerm

@@ -1,4 +1,11 @@
+@import 'variables.scss';
+
 .placeImage {
     max-height: 300px;
     object-fit: cover;
+}
+
+.recomendation .header {
+    font-size: 1em;
+    color: $color-green !important;
 }
