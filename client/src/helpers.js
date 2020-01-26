@@ -28,6 +28,18 @@ const helpers = {
         return new_zoom
     },
 
+    getCategoryMatch(categories) {
+        const all_categories = Constants.place_categories.map(category => category.key)
+        let matches = []
+        categories.map(category => {
+            if (all_categories.includes(category)) {
+                matches.push(category)
+            } 
+        })
+
+        return matches
+    },
+
     normalize : function(val, min, max) { 
         return (val - min) / (max - min) * 10
     },
@@ -173,7 +185,7 @@ const helpers = {
     },
 
     scaleMarker: function(score, max, zoom) {
-        if (!max) { let max = 1000 }
+        if (!max) { let max = 100 }
 
         //TODO: Scale marker to zoom size!
         let marker_scale = scalePow(0.2)
@@ -187,7 +199,7 @@ const helpers = {
             .domain([0, max])
             .range([base_marker, max_marker]);
 
-        return scale(score)
+        return Math.round(scale(score))
     },
 
     getMax: function(items, attribute) {
@@ -247,10 +259,18 @@ const helpers = {
     },
 
     fireEvent: function(id, event) {
-        if(document.getElementById(id) != null) {
+        
+        if(document.getElementById(id) !== null) {
+            let new_event = new Event(event, { bubbles: true, cancelable: false });
+
+            document.getElementById(id).dispatchEvent(new_event);
+
             if (document.getElementById(id).fireEvent) {
-                document.getElementById(id).fireEvent('on' + event);
+
+                
+                document.getElementById(id).fireEvent(event);
             } else {
+                
                 /*
                 var evObj = document.createEvent('Events');
                 evObj.initEvent(event, true, false);
