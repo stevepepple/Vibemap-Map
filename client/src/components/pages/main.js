@@ -3,9 +3,7 @@ import React, { Component } from 'react'
 import queryString from 'querystring'
 import isEqual from 'react-fast-compare'
 
-import { Advertisement, Grid, Segment } from 'semantic-ui-react'
-//TODO: Move to API
-import foursquare from '../../services/foursquare.js'
+import { Grid } from 'semantic-ui-react'
 import VibeMap from '../../services/VibeMap.js'
 
 // TODO: move to services
@@ -49,14 +47,12 @@ class Page extends Component {
             place_categories: ['Arts & Entertainment', 'Food'],
             vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'outdoors', 'scenic', 'positive', 'unique'],
             // TODO: handle conversion math in VibeMap
-            current_item: null,
             details_shown: false,
             intervalIsSet: false,
             loading: true,
             num_top_picks: 12,
             timedOut: false,
             time_of_day: 'morning',
-            top_picks: [],
             width: window.innerWidth,
         }
 
@@ -112,48 +108,51 @@ class Page extends Component {
     componentDidUpdate(prevProps, prevState) {
     
         // TODO: should be a switch statement
-        if (prevProps.searchTerm !== this.props.searchTerm) {
-            this.fetchEvents()
-            this.fetchPlaces(true)
-        }
+        let updateData = false
+        let refreshResults = false
 
-        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
-            this.fetchEvents()
-            this.fetchPlaces(true)
+        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {        
+            updateData = true
+            refreshResults = true
         }
 
         //console.log("Search for: ", this.props.searchTerm)
         if (!isEqual(prevProps.searchTerm, this.props.searchTerm) && this.props.searchTerm > 2) {
-            this.fetchPlaces(true)
+            updateData = true
+            refreshResults = true
         }
 
         if (!isEqual(prevProps.activity, this.props.activity)) {
-            this.fetchEvents()
-            this.fetchPlaces(true)
-        }
-
-        //console.log("Search for: ", this.props.searchTerm)
-        if (!isEqual(prevProps.searchTerm, this.props.searchTerm) && this.props.searchTerm > 2) {
-            this.fetchPlaces(true)
+            updateData = true
+            refreshResults = true
         }
 
         if (!isEqual(prevProps.currentLocation, this.props.currentLocation)) {
             // TODO: measure distance between current and previous event
             // If they close together, merge the data in fetchPlaces.
-            this.fetchEvents()
-            this.fetchPlaces(true)
-            this.fetchCities()
-            //this.fetchNeighborhoods()
+            updateData = true
+            refreshResults = false
+
+            // TODO: Measure distance between locations and if the distance is large refresh results.
         }
         
         if (!isEqual(prevProps.zoom, this.props.zoom)) {
         
             this.props.setDistance(helpers.zoomToRadius(this.props.zoom))
-            this.fetchPlaces(false)
-            this.fetchEvents()
+            
+            updateData = true
+            refreshResults = false
+
             //this.fetchNeighborhoods()
             this.fetchCities()
-            
+        }
+
+        if (this.props.detailsShown == true) updateData = false
+
+        /* TODO: Not sure of the best react pattern for handling refresh state, but this works. */
+        if (updateData == true) {
+            this.fetchEvents(refreshResults)
+            this.fetchPlaces(refreshResults)
         }
     }
 
@@ -237,7 +236,7 @@ class Page extends Component {
             .then(results => {
                 this.props.setEventsData(results.data)
 
-                console.log(this.props.eventsData)
+                console.log('Getting events data: ', this.props.eventsData)
                 this.setState({ loading: false, timedOut: false })
             }, (error) => {
                 console.log(error)
@@ -369,16 +368,6 @@ class Page extends Component {
 
                                 </ErrorBoundary>
 
-                                {/* <EventModal data={this.state.current_item} show={false} details={<EventDetails data={this.state.current_item_item}/>} /> */}
-
-                                {/* TODO: Refactor into component 
-                                    this.state.details_shown ? (
-                                        // TODO: The are more generally recommendations
-                                        <PlaceCards lat={this.state.lat} lon={this.state.lon} />
-                                    ) : (
-                                        null
-                                    )
-                                */}
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
