@@ -7,6 +7,7 @@ export default class Pins extends PureComponent {
   render() {
 
     return <div id='selected_marker'>
+        <div></div>
         <SVG 
           style={{
             height: '3em',
