@@ -51,12 +51,14 @@
     -webkit-border-radius: 50% 50% 50% 50%;
     -moz-border-radius: 50% 50% 50% 50%;
     border-radius: 50% 50% 50% 50%;
+    /*
     background: #D224B6;
     background-image: url('https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_64.png');
+    */
     background-size: cover;  
     border: solid 1.5px #FFFFFF;
     cursor: help;
-    opacity: 0.8;
+    opacity: 1.0;
     /*
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
@@ -64,6 +66,7 @@
     -webkit-box-shadow: $shadow-purple;
     -moz-box-shadow: $shadow-purple;
     box-shadow: $shadow-purple;
+    transition: visibility 0s, opacity 0.5s linear;
 }
 
 .marker.arts {
@@ -98,6 +101,11 @@
     -webkit-box-shadow: $shadow-blue;
     -moz-box-shadow: $shadow-blue;
     box-shadow: $shadow-blue;
+    transition: visibility 0s, opacity 2.5s linear;
+}
+
+.marker.selected svg {
+    transition: visibility 0s, opacity 2.5s linear;
 }
 
 .marker.selected img {
@@ -185,27 +193,35 @@
     height: 2.0em;
 }
 
-.marker .name {
+.mapboxgl-marker .label {
     position: absolute;
-    font-size: 0.7em;
-    font-weight: bold;
-    white-space: nowrap;
-    margin-top: -3em;
-    max-width: 9em;
-    overflow:hidden;
-    text-overflow: ellipsis;
-    width: 10em;
+    text-align:center;
+    z-index: 10;
 }
 
-.marker .vibe {
+.mapboxgl-marker .label .name {
     font-size: 0.8em;
-    margin-top: 4.0em;
-    position: fixed;
+    font-family: "Roboto";
+    font-weight: bold;
+    line-height: 0.8;
+    white-space: nowrap;    
+    overflow:hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    width: 10em;
+    margin-left: -5em;
+    text-shadow: 1px 1px 1px rgba(255,255,255,1), 2px 2px 2px rgba(255,255,255,1), 3px 3px 3px rgba(255,255,255,1), 5px 5px 5px rgba(255,255,255,1);
+}
+
+.mapboxgl-marker .label .vibe {
+    font-size: 0.8em;
     font-style: italic;
     color:  $color-purple;
     font-weight: 600;
     text-shadow: 3px 2px 3px rgba(255,255,255,.8);
     text-align: center;
+    width: 10em;
+    margin-left: -5em;
 }
 
 .marker.popular img,

@@ -2,7 +2,9 @@ import request from 'request-promise'
 import * as Constants from './constants.js'
 
 import { scaleLinear, scalePow } from 'd3-scale'
+
 import * as turf from '@turf/turf'
+import geoViewport from '@mapbox/geo-viewport'
 
 const helpers = {
 
@@ -17,11 +19,52 @@ const helpers = {
         })
     },
 
+    getBounds: function(location, zoom, window) {
+        let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
+        
+        return bounds
+    },
+
+    getRadius: function (location, zoom, window) {
+        let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
+        let diameter = turf.distance(
+            [bounds[0], bounds[1]],
+            [bounds[2], bounds[3]],
+            { unit: 'miles'}
+        )
+
+        let distance = diameter / 2
+        console.log('Radius Distance of Viewport: ', distance)
+
+        return distance
+    },
+
+    getDistanceToPixels(bounds, window) {
+        const left = bounds[0]
+        const bottom = bounds[1]
+        const right = bounds[2]
+        const top = bounds[3]
+
+        const options = { unit: 'miles' }
+        
+        const latitudinal_distance = turf.distance([left, bottom],[right, bottom], options)
+        const longitudinal_distance = turf.distance([left, bottom], [left, top], options)
+
+        let pixel_ratio = latitudinal_distance / window.width
+
+        let pixel_ratio_2 = longitudinal_distance / window.height
+
+        console.log('Each pixel is this far: ', pixel_ratio, pixel_ratio_2)
+        return pixel_ratio
+
+    },
+
     zoomToRadius : function(zoom) {
+        
         // Scale and interpolate radius to zoom siz
         let zoom_to_radius_scale = scalePow(1)
-          .domain([8,  12, 13, 14, 18]) // Zoom size
-          .range([ 40, 7,  3,  3.5,  0.8]) // Scale of search radius
+          .domain([8,  12, 13, 14, 16, 18]) // Zoom size
+          .range([ 40, 7,  3,  3.5, 1.5,  0.8]) // Scale of search radius
 
         let new_zoom = zoom_to_radius_scale(zoom)
         
@@ -184,22 +227,28 @@ const helpers = {
         return combined;
     },
 
-    scaleMarker: function(score, max, zoom) {
+    scaleMarker: function(score, min, max, zoom) {
+        // TODO: Is this max right? 
+        if (!min) { let min = 0 }
         if (!max) { let max = 100 }
 
-        //TODO: Scale marker to zoom size!
-        let marker_scale = scalePow(0.2)
-            .domain([10, 20]) // Zoom size
-            .range([6, 40]) // Scale of marker size
+        // Scale min and max marker size to zoom level
+        let marker_scale = scalePow(1)
+            .domain([8, 20]) // Zoom size
+            .range([10, 40]) // Scale of marker size
 
+        
         let base_marker = marker_scale(zoom)
-        let max_marker = base_marker * 3;
+        let max_marker = base_marker * 3
 
         let scale = scalePow(1)
             .domain([0, max])
             .range([base_marker, max_marker]);
 
-        return Math.round(scale(score))
+    
+        let scaled_size = Math.round(scale(score))
+
+        return Math.round(scaled_size)
     },
 
     getMax: function(items, attribute) {
@@ -212,7 +261,18 @@ const helpers = {
         })
 
         return max;
+    },
 
+    getMin: function (items, attribute) {
+        let min = 100;
+        items.forEach(item => {
+            let value = item['properties'][attribute]
+            if (value < min) {
+                min = value
+            }
+        })
+
+        return min;
     },
 
     /* global setTimeout, clearTimeout */

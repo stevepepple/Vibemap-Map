@@ -32,6 +32,7 @@ module.exports = {
         // Fall back value
         0.2
       ],
+
       // TODO: Make sure important sorting variable is working
       "symbol-sort-key": ["get", "aggregate_rating"],
       // Text
@@ -49,7 +50,8 @@ module.exports = {
         22, 16
       ],
       "text-offset": [0, -0.4],
-      "text-max-width": 8     
+      "text-max-width": 8    ,
+      'visibility': 'visible' 
     },
 
     marker_paint: { 
@@ -60,11 +62,16 @@ module.exports = {
 
     top_pick_layout: {
       // TODO: Make sure important sorting variable is working
-      "symbol-sort-key": ["get", "aggregate_rating"],
+      "icon-image": "",
+      //"icon-image": ["to-string", ["get", "categories"]],
+      "icon-size": ["get", "icon_size"],
+      "symbol-sort-key": ["get", "average_score"],
       // Text
       "text-field": ["to-string", ["get", "name"]],
       "text-allow-overlap": false,
-      "text-font": ["Roboto Medium"],
+      "icon-allow-overlap": false,
+      "text-radial-offset" : ["get", "icon_size"],
+      "text-font": ["Roboto Condensed Bold"],
       "text-line-height": 1.0,
       "text-letter-spacing": 0,
       "text-anchor" : "bottom",
@@ -76,6 +83,7 @@ module.exports = {
         8, 6,
         22, 18
       ],
+      /*
       "text-offset": [
         "interpolate",
         ["linear"],
@@ -83,13 +91,16 @@ module.exports = {
         8,
         ["literal", [0, -1]],
         22,
-        ["literal", [0, -4]]
+        ["literal", [0, -3]]
       ],
-      "text-max-width": 8
+      */
+      "text-max-width": 8,
+      'visibility': 'visible'
+
     },
 
     top_pick_paint: {
-      'text-color': '#811897',
+      'text-color': '#222222',
       'text-halo-color': '#FFFFFF',
       'text-halo-width': 1.2
     },
@@ -100,7 +111,7 @@ module.exports = {
       // Text
       "text-field": ["to-string", ["get", "top_vibe"]],
       "text-allow-overlap": false,
-      "text-font": ["Roboto Regular"],
+      "text-font": ["Roboto Condensed Italic"],
       "text-justify" : "center",
       "text-size": [
         "interpolate",
@@ -109,7 +120,7 @@ module.exports = {
         8, 6,
         22, 20
       ],
-      "text-offset": [0, 3],
+      "text-offset": [0, 2],
       "text-max-width": 12
     },
 
@@ -119,8 +130,8 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 1,
-          10, 20,
-          12, 40,
+          10, 10,
+          12, 30,
           13, 50,
           14, 70,
           20, 200
@@ -130,7 +141,7 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 0.2,
-          12, 0.3,
+          11, 0.3,
           20, 0.4
       ],
       // TODO: Scale this on the total number of results vs. size of area...
@@ -140,7 +151,7 @@ module.exports = {
         ["zoom"],
           8, 0.4,
           12, 0.2,
-          14, 0.4,
+          14, 0.3,
           20, 0.5
       ],
       
@@ -160,7 +171,7 @@ module.exports = {
         "hsla(240, 80%, 94%, 0)",
         0.3,
         "hsla(286, 100%, 50%, 0.2)",
-        0.5,
+        0.4,
         "hsla(179, 100%, 50%, 0.6)",
         0.99,
         "hsla(50, 100%, 50%, 0.9)",

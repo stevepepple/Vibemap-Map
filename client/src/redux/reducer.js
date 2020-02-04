@@ -7,6 +7,8 @@ import helpers from '../helpers.js'
 
 import queryString from 'query-string'
 
+import * as turf from '@turf/turf'
+
 export function uiReducer(state = uiState, action) {
   switch(action.type) {
     
@@ -38,6 +40,13 @@ export const detailsId = (state = null, action) => {
   return state
 }
 
+export const mapReady = (state = false, action) => {
+  if (action.type == 'SET_MAP_READY') {
+    state = action.ready
+  }
+  return state
+}
+
 export const activity = (state = "", action) => {
   if (action.type == 'SET_ACTIVITY') {
     if (action.activity == "any"){
@@ -56,6 +65,38 @@ export const currentLocation = (state = { latitude: 0, longitude: 0 }, action) =
     action.location.latitude = parseFloat(action.location.latitude)
     action.location.longitude = parseFloat(action.location.longitude)
     state = action.location
+  }
+  return state
+}
+
+export const viewport = (state = {}, action) => {
+  if (action.type == 'SET_VIEWPORT') {
+    
+    state = action.viewport
+  }
+  return state
+}
+
+export const windowSize = (state = { width: 1024, height: 768 }, action) => {
+  if (action.type == 'SET_WINDOW_SIZE') {
+    console.log("Set windows size: ", action.size)
+    state = action.size
+  }
+  return state
+}
+
+export const bounds = (state = [], action) => {
+  if (action.type == 'SET_BOUNDS') {
+    console.log("SETTING BOUNDS: ", action.bounds)
+    state = action.bounds
+  }
+  return state
+}
+
+export const pixelDistance = (state = [], action) => {
+  if (action.type == 'SET_PIXEL_DISTANCE') {
+    console.log('SET_PIXEL_DISTANCE', action)
+    state = action.distance
   }
   return state
 }
@@ -103,6 +144,13 @@ export const searchTerm = (state = "", action) => {
 export const currentVibes = (state = ['chill'], action) => {
   if (action.type == 'SET_CURRENT_VIBES') {
     state = action.vibes
+  }
+  return state
+}
+
+export const topVibes = (state = [], action) => {
+  if (action.type == 'SET_TOP_VIBES') {
+    state = action.top_vibes
   }
   return state
 }
@@ -233,27 +281,32 @@ export const currentPlace = (state = {
 export const topPicks = (state = [], action) => {
 
   if (action.type == 'SET_TOP_PICKS_DATA') {
+
+    // Save the processed data to state.
+    // If request is for fresh results update the map.
+    console.log('Updating top results: ', action)
+
     // TODO: Map and process, but plan to moe this logic to API
     let processed = action.places_data.map(place => {
       // TODO: work with Cory to fix these categories according to the schema
       place.properties.sub_categories = place.properties.categories
       place.properties.top_vibe = null
+
+      // Give every point a cluster attribute. 
+      place.properties.cluster = null
       if (place.properties.vibes.length > 0) {
         place.properties.top_vibe = place.properties.vibes[0]
       }
 
       if (place.properties.sub_categories && place.properties.sub_categories.length > 0) {
-        place.properties.categories = place.properties.sub_categories[0]  
+        place.properties.categories = place.properties.sub_categories[0]
       }
-      
+
       return place
     })
 
-    // Save the processed data to state.
-    // If request is for fresh results update the map.
-    console.log('Updating top results: ', action.refreshResults)
     if (action.refreshResults) {
-
+      
       state = processed
     } else {      
       var merged = _.unionBy(state, processed, 'id')
@@ -294,6 +347,7 @@ export const geod = (state = {}, action) => {
 export const reducers = (history) => combineReducers({
   activity,
   bearing,
+  bounds,
   cities,
   geod,
   router: connectRouter(history),
@@ -306,10 +360,15 @@ export const reducers = (history) => combineReducers({
   distance,
   name,
   eventsData,
+  mapReady,
   nearby_places,
+  pixelDistance,
   placesData,
   searchTerm,
   topPicks,
+  topVibes,
   uiState,
+  viewport,
+  windowSize,
   zoom
 });

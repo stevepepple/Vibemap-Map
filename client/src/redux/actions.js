@@ -15,6 +15,12 @@ export const setDetailsId = id => ({
   id,
 })
 
+export const setMapReady = ready => ({
+  type: 'SET_MAP_READY',
+  ready,
+})
+
+
 export const activateGeod = geod => ({
   type: 'ACTIVATE_GEOD',
   geod,
@@ -23,6 +29,26 @@ export const activateGeod = geod => ({
 export const setCurrentLocation = location => ({
   type: 'SET_CURRENT_LOCATION',
   location,
+})
+
+export const setWindowSize = size => ({
+  type: 'SET_WINDOW_SIZE',
+  size,
+})
+
+export const setViewport = viewport => ({
+  type: 'SET_VIEWPORT',
+  viewport,
+})
+
+export const setBounds = bounds => ({
+  type: 'SET_BOUNDS',
+  bounds,
+})
+
+export const setPixelDistance = distance => ({
+  type: 'SET_PIXEL_DISTANCE',
+  distance,
 })
 
 export const setCurrentPlace = place => ({
@@ -63,6 +89,11 @@ export const setSearchTerm = term => ({
 export const setCurrentVibes = vibes => ({
   type: 'SET_CURRENT_VIBES',
   vibes,
+})
+
+export const setTopVibes = top_vibes => ({
+  type: 'SET_TOP_VIBES',
+  top_vibes,
 })
 
 export const setEventLocation = location => ({

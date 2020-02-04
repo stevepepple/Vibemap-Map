@@ -19,8 +19,7 @@ class VectorTile extends React.Component {
     }
 
     componentWillMount() {
-        const options = Object.assign({}, this.props);
-        console.log('New Heatmap props ', this.props)
+        const options = Object.assign({}, this.props)
     }
 
     componentWillReceiveProps(){
@@ -39,7 +38,7 @@ class VectorTile extends React.Component {
             map.addSource('tile_layer', {
                 'type': 'vector',
                 'tiles': ["https://tiles.vibemap.com/maps/places/{z}/{x}/{y}.mvt"],
-                'minzoom': 8            
+                'minzoom': 8
             })
             
             map.addLayer({
