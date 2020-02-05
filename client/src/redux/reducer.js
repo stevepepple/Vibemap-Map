@@ -60,8 +60,9 @@ export const activity = (state = "", action) => {
 
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
-export const currentLocation = (state = { latitude: 0, longitude: 0 }, action) => {
+export const currentLocation = (state = { latitude: 0, longitude: 0, name : null, distance_changed : 0 }, action) => {
   if (action.type == 'SET_CURRENT_LOCATION') {
+    console.log("SET_CURRENT_LOCATION", action.location.latitude, action.location.longitude, action.distance_changed)
     action.location.latitude = parseFloat(action.location.latitude)
     action.location.longitude = parseFloat(action.location.longitude)
     state = action.location
