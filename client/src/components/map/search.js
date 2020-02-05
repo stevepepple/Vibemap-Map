@@ -93,8 +93,6 @@ class LocationSearchInput extends React.Component {
         
         let item = this.state.locations.find(o => o.value == value)
 
-        console.log("Changed select box", value, item, typeof item)
-
         // User picked an item from the list
         if (typeof item == 'object') {
 

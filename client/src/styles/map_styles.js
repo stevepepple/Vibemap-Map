@@ -39,6 +39,7 @@ module.exports = {
       "text-field": ["to-string", ["get", "name"]],
       "text-allow-overlap": false,
       "icon-allow-overlap": true,
+      "icon-ignore-placement": true,
       "text-line-height": 1.0,
       "text-anchor": "bottom",
       "text-font": ["Roboto Regular"],
@@ -135,7 +136,7 @@ module.exports = {
         8, 6,
         22, 20
       ],
-      "text-offset": [0, ["get, 'icon-size"]],
+      "text-offset": [0, ["get, 'icon_size"]],
       "text-max-width": 12
     },
 
