@@ -52,6 +52,7 @@ export const activty_categories = [
     // Eating
     { key: 'food', value: 'food', text: 'Eating', label: { color: 'pink', icon: 'food', circular: true }, categories: ['food', 'restuarant'] },
     // Drinking
+    { key: 'drink', value: 'drink', text: 'Drink', label: { color: 'pink', icon: 'glass martini', circular: true }, categories: ['drinking', 'drinks'] },
     { key: 'drinking', value: 'drinking', text: 'Drinking', label: { color: 'pink', icon: 'glass martini', circular: true }, categories: ['drinking', 'drinks'] },
     // Music
     { key: 'music', value: 'music', text: 'Music', label: { color: 'violet', icon: 'music', circular: true }, categories: ['music'] },
@@ -69,7 +70,7 @@ export const activty_categories = [
     { key: 'learning', value: 'learning', text: 'Learning', categories: ['learning', 'education'] },
     // TODO: make these vibes? 
     { key: 'immersive', value: 'immersive', text: 'Immersive', categories: ['immersive'] },
-    { key: 'spirtual', value: 'spirtual', text: 'Spirtual', categories: ['spirtual'] },
+    { key: 'spiritual', value: 'spiritual', text: 'Spiritual', categories: ['spirtual'] },
     { key: 'transit', value: 'transit', text: 'transit', categories: ['spirtual'] }
 ]
 

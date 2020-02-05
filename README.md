@@ -20,12 +20,14 @@ This application used React Router to serve page components. See `components/pag
 ## To Deploy
 Push the changes to the Azure instance of the repo: 
 
-    get push dev master
+    git push dev master
     
     ssh hotspots@app.vibemap.com
 
 Create the react app build: 
 
+    cd client
+    npm run build
 
 ## Services
 Javascript modules that handle business logic. 
