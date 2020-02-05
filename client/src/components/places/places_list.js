@@ -11,6 +11,7 @@ import { Global, css } from '@emotion/core'
 import ListItem from './list_item.js'
 import * as Constants from '../../constants.js'
 import TimeAndTemp from '../weather/timeAndTemp'
+import TopVibes from '../elements/topVibes'
 
 class PlacesList extends Component {
 
@@ -62,7 +63,7 @@ class PlacesList extends Component {
                             color: '#FFFFFF !important'
                         }
                     }}
-                />
+                />            
 
                 <TimeAndTemp />
 
@@ -75,6 +76,8 @@ class PlacesList extends Component {
                         leading: true,
                     })} 
                     value={searchTerm} />
+
+                <TopVibes/>
                 
                 {has_items? (
                     <Item.Group divided relaxed className='events_list'>
