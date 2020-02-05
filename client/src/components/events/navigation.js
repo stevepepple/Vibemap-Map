@@ -62,7 +62,7 @@ class Navigation extends React.PureComponent {
         }
 
         if (params.latitude && params.longitude) {
-            this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude })
+            this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude, distance_changed: 0 })
         }
 
         if (params.zoom) {
@@ -96,6 +96,12 @@ class Navigation extends React.PureComponent {
             console.log("Set search: ", this.props.searchTerm)
             // TODO: set URL
             this.updateURL("search", this.props.searchTerm)
+        }
+
+        if (!isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)) {
+            // TODO: set URL
+            this.updateURL("latitude", this.props.currentLocation.latitude)
+            this.updateURL("longitude", this.props.currentLocation.longitude)
         }
 
         if (!isEqual(prevProps.detailsId, this.props.detailsId)) {

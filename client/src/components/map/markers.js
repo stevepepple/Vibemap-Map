@@ -41,11 +41,6 @@ class Markers extends Component {
 
         let scored_markers = features.map((feature) => {
             
-
-            //let id = feature._id
-            //let src = feature.properties.image
-            //let likes = feature.properties.likes
-
             // TODO: Vibe Score and average score are confusing. 
             let score = feature.properties.average_score
             let max = helpers.getMax(features, 'average_score')
@@ -53,7 +48,6 @@ class Markers extends Component {
 
             // Make less high scored marker in cluster smaller
             if (feature.properties.in_cluster === true && feature.properties.top_in_cluster === false ) {
-                console.log(feature.properties.name, score)
                 score = score - 1
             }
 
@@ -67,42 +61,7 @@ class Markers extends Component {
             feature.width = feature.size
             feature.height = feature.size
 
-            feature.className = 'marker'
-
-            let categories = feature.properties.sub_categories
-
-            /*
-            if(categories && categories.length > 0 && typeof(categories) == "object") {
-                
-                categories = categories.map(function (category) {
-                    return category.toLowerCase()
-                })
-
-                if (categories !== null) {
-                    feature.className = feature.className + ' ' + categories.join(' ')
-                }
-            } else {
-                if (categories !== null) {
-                    feature.className = feature.className + ' ' + categories
-                }
-            }
-
-            if(categories && categories.length > 0 && typeof(categories) == "object") {
-                
-                categories = categories.map(function (category) {
-                    return category.toLowerCase()
-                })
-
-                if (categories !== null) {
-                    feature.className = feature.className + ' ' + categories.join(' ')
-                }
-            } else {
-                if (categories !== null) {
-                    feature.className = feature.className + ' ' + categories
-                }
-            }
-            */
-            
+            feature.className = 'marker'            
             return feature
         })
 
@@ -172,10 +131,7 @@ class Markers extends Component {
                         
                     </div>
                 </Marker>
-            }
-                
-                
-            )            
+            })            
         }
 
         return (

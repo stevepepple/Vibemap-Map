@@ -197,7 +197,7 @@ module.exports = {
                 ordering: '-aggregate_rating',
                 point: point,
                 dist: distanceInMeters,
-                in_bbox: bounds.toString(),
+                //in_bbox: bounds.toString(),
                 categories: activity,
                 search: search,
                 vibes: vibes,
@@ -250,16 +250,13 @@ module.exports = {
 
         let day_start = moment().startOf('day').utc().format("YYYY-MM-DD HH:MM")
         let day_end = moment().add(days, 'days').utc().format("YYYY-MM-DD HH:MM")
-
-        console.log("Searching with these bounds: ", bounds.toString())
-
         
         // TODO: Load more points at greater distances?        
         return new Promise(function (resolve, reject) {
             let params = {
                 ordering: '-aggregate_rating',
                 point: point,
-                in_bbox: bounds.toString(),
+                //in_bbox: bounds.toString(),
                 dist: distanceInMeters,
                 start_date_after: day_start,
                 end_date_before: day_end,
@@ -320,8 +317,6 @@ module.exports = {
                 vibe_matches = helpers.default.matchLists(vibes, place.properties.vibes)
             }
 
-            // console.log('Place vibes: ', place.properties.vibes)
-
             vibe_bonus = vibe_matches * vibe_match_bonus
             place.properties.vibe_score += vibe_bonus
 
@@ -376,14 +371,12 @@ module.exports = {
         })
 
         let places_scored = places.map((place) => {
-            
+
+            // Normalize all scores
             place.properties.event_score = helpers.default.normalize(place.properties.event_score, 0, max_event_score)
             place.properties.vibe_score = helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score)
             place.properties.aggregate_rating = helpers.default.normalize(place.properties.aggregate_rating, 0, max_aggregate_score)
 
-            // Create a scaled icon; TODO: Share logic with markers
-            place.properties.icon_size = helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score)
-            
             // Distance is inverted from max and then normalize 1-10
             place.properties.distance = helpers.default.normalize(max_distance - place.properties.distance, 0, max_distance)
             
@@ -392,17 +385,21 @@ module.exports = {
                 place.properties.event_score, 
                 place.properties.vibe_score, 
                 place.properties.aggregate_rating,
-                place.properties.distance * 0.2 // Only make distance half as important
+                place.properties.distance * 0.4 // Only make distance half as important
             ]
             
             // Average out the scores
             place.properties.average_score = scores.reduce((a, b) => a + b, 0) / scores.length
 
+            // Create a scaled icon; TODO: Share logic with markers
+
+            // Normalize the icon size to match photo markers.
+            place.properties.icon_size = helpers.default.scaleIconSize(place.properties.average_score, 10)
+            
             //console.log('Score for place: ', place.properties.name)
             //console.log('Vibe: ', place.properties.vibe_score)
             //console.log('Rating: ', place.properties.aggregate_rating)
             //console.log('Distance: ', place.properties.distance)
-
             return place
         })
 

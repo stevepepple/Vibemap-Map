@@ -25,8 +25,9 @@ const helpers = {
         return bounds
     },
 
-    getRadius: function (location, zoom, window) {
-        let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
+    getRadius: function (bounds) {
+        console.log("GET RADIUS FOR THESE BOUNDS: ", bounds)
+        //let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
         let diameter = turf.distance(
             [bounds[0], bounds[1]],
             [bounds[2], bounds[3]],
@@ -69,6 +70,14 @@ const helpers = {
         let new_zoom = zoom_to_radius_scale(zoom)
         
         return new_zoom
+    },
+
+    scaleIconSize: function(score, max) {
+        let scale = scalePow(1)
+            .domain([0, max])
+            .range([2, 8])
+        
+        return scale(score)
     },
 
     getCategoryMatch(categories) {

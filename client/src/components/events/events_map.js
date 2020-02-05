@@ -115,7 +115,7 @@ class EventsMap extends React.PureComponent {
 
         // Update Location in one
         if (setLocation) {
-            this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude })
+            this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude, distance_changed: distance })
             this.props.setLocationParams(this.props.currentLocation)
         }
 

@@ -72,10 +72,13 @@ class LocationSearchInput extends React.Component {
                            
                         })
 
-
-                        this.setState({ 
-                            results: new_locations 
-                        })
+                        if (new_locations.length > 0) {
+                            this.props.setCurrentLocation({ latitude: new_locations[0].centerpoint[0], longitude: new_locations[0].centerpoint[1] })
+                            this.setState({
+                                results: new_locations
+                            })
+                        }
+                        
 
                     })
             });    
@@ -90,9 +93,11 @@ class LocationSearchInput extends React.Component {
         
         let item = this.state.locations.find(o => o.value == value)
 
-        console.log("Changed select box", value, item)
+        console.log("Changed select box", value, item, typeof item)
 
-        if(item) {
+        // User picked an item from the list
+        if (typeof item == 'object') {
+
             if (item.zoom_start) {
                 this.props.setZoom(item.zoom_start)
             }
@@ -116,6 +121,7 @@ class LocationSearchInput extends React.Component {
                 })
                 .then(best => {
                     //this.props.setPosition(this.state.best.lat, this.state.best.lng)
+                    console.log('Best result: ', best)
                     this.props.setCurrentLocation({ latitude: this.state.best.lat, longitude: this.state.best.lng })
                 })
                 .catch(error => console.error('Error', error));

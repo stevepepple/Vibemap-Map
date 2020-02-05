@@ -62,15 +62,27 @@ module.exports = {
 
     top_pick_layout: {
       // TODO: Make sure important sorting variable is working
-      "icon-image": "",
-      //"icon-image": ["to-string", ["get", "categories"]],
-      "icon-size": ["get", "icon_size"],
+      //"icon-image": "",
+      "icon-image": ["to-string", ["get", "categories"]],
+      "icon-size": [
+        "interpolate",
+        ["linear"],["zoom"],
+        8, 0.4,
+        22, ["get", "icon_size"]
+      ],
       "symbol-sort-key": ["get", "average_score"],
       // Text
       "text-field": ["to-string", ["get", "name"]],
       "text-allow-overlap": false,
-      "icon-allow-overlap": false,
-      "text-radial-offset" : ["get", "icon_size"],
+      "icon-allow-overlap": true,
+      "icon-ignore-placement": true,
+      "text-ignore-placement": true,
+      "text-radial-offset" : [
+        "interpolate",
+        ["linear"], ["zoom"],
+        8, 0.4,
+        18, ["get", "icon_size"]
+      ],
       "text-font": ["Roboto Condensed Bold"],
       "text-line-height": 1.0,
       "text-letter-spacing": 0,
@@ -91,7 +103,7 @@ module.exports = {
         8,
         ["literal", [0, -1]],
         22,
-        ["literal", [0, -3]]
+        ["literal", [0, - ["get, 'icon-size"]]]
       ],
       */
       "text-max-width": 8,
@@ -110,9 +122,12 @@ module.exports = {
       "symbol-sort-key": ["get", "aggregate_rating"],
       // Text
       "text-field": ["to-string", ["get", "top_vibe"]],
-      "text-allow-overlap": false,
       "text-font": ["Roboto Condensed Italic"],
       "text-justify" : "center",
+      "text-allow-overlap": false,
+      "icon-allow-overlap": true,
+      "icon-ignore-placement": true,
+      "text-ignore-placement": true,
       "text-size": [
         "interpolate",
         ["linear"],
@@ -120,7 +135,7 @@ module.exports = {
         8, 6,
         22, 20
       ],
-      "text-offset": [0, 2],
+      "text-offset": [0, ["get, 'icon-size"]],
       "text-max-width": 12
     },
 
