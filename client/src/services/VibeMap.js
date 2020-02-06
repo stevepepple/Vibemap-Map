@@ -106,48 +106,13 @@ module.exports = {
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout);
-                    
+                    console.log("Got events data: ", res)
                     resolve({ data: res, loading: false, timedOut: false })
 
                 }, (error) => {
                     console.log(error)
                 });
         });
-    },
-
-    getEvents: function(point, bounds, activity, days, search_term) {
-        
-        //let distanceInMeters = distance * Constants.METERS_PER_MILE
-
-        let day_start = moment().startOf('day').format("YYYY-MM-DD HH:MM")
-        let day_end = moment().add(days, 'days').format("YYYY-MM-DD HH:MM")
-
-        return new Promise(function (resolve, reject) {
-            let query = querystring.stringify({
-                // lat: this.state.lat,
-                // lon: this.state.lon,
-                point: point,
-                // distance: this.state.distance,
-                //dist: distanceInMeters,
-                //activity: activity,
-                //days: days,                
-                ordering: "likes--",
-                start_date_after: day_start,
-                end_date_before: day_end,
-                search: search_term,
-                per_page: 100
-            });
-
-            fetch(ApiUrl + "/v0.2/events/?" + query, { headers: ApiHeaders })
-                .then(data => data.json())
-                .then(res => {
-                    clearTimeout(timeout);
-                    resolve({ data: res.results.features, loading: false, timedOut: false })
-                    
-                }, (error) => {
-                    console.log(error)
-                });    
-        });    
     },
 
     getEventDetails: function(id){
@@ -204,9 +169,7 @@ module.exports = {
                 per_page: 200
             }
 
-            if (activity) {
-                params["category"] = activity
-            }
+            if (activity) params["category"] = activity            
 
             let center_point = point.split(',').map(value => parseFloat(value))
 
@@ -245,6 +208,7 @@ module.exports = {
 
         let distanceInMeters = 1
         if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
+        let center_point = point.split(',').map(value => parseFloat(value))
 
         if (activity == 'all') activity = null
 
@@ -269,8 +233,6 @@ module.exports = {
                 params["category"] = activity
             }
 
-            let center_point = point.split(',').map(value => parseFloat(value))
-
             let query = querystring.stringify(params);
 
             fetch(ApiUrl + "/v0.2/places/?" + query, { headers: ApiHeaders })
@@ -290,6 +252,116 @@ module.exports = {
         })
     },
 
+    getEvents: function (point, distance, bounds, activity, days, search_term) {
+
+        let distanceInMeters = distance * Constants.METERS_PER_MILE
+        let center_point = point.split(',').map(value => parseFloat(value))
+
+        let day_start = moment().startOf('day').format("YYYY-MM-DD HH:MM")
+        let day_end = moment().add(days, 'days').format("YYYY-MM-DD HH:MM")
+
+        return new Promise(function (resolve, reject) {
+            let query = querystring.stringify({
+                point: point,
+                dist: distanceInMeters,
+                activity: activity,
+                //days: days,                
+                ordering: "likes--",
+                start_date_after: day_start,
+                end_date_before: day_end,
+                search: search_term,
+                per_page: 100
+            });
+
+            fetch(ApiUrl + "/v0.2/events/?" + query, { headers: ApiHeaders })
+                .then(data => data.json())
+                .then(res => {
+                    clearTimeout(timeout);
+
+                    // Apply some temporary scoring to events to make them show up better.
+                    console.log(res.results.features[0])
+                    let scored = module.exports.scoreEvents(res.results.features, center_point)
+
+                    resolve({ data: scored, loading: false, timedOut: false })
+
+                }, (error) => {
+                    console.log(error)
+                });
+        })
+    },
+
+    scoreEvents: function(events, center_point, vibes) {
+        
+        let max_distance = 1
+        let max_likes = 1
+        let max_vibe_score = 1
+
+        let vibe_match_bonus = 10
+        
+        events.map((event) => {
+
+            // TODO: TEMP until events return vibes
+            if (event.properties.vibes === undefined) event.properties.vibes = ['chill']            
+    
+            // Give direct vibe matches bonus points
+            let vibe_matches = 0
+            let vibe_bonus = 0
+            
+            event.properties.vibe_score = event.properties.vibes.length
+
+            if (vibes && event.properties.vibes) {
+                vibe_matches = helpers.default.matchLists(vibes, event.properties.vibes)
+            }
+
+            // Match Categories to Top Level Ones
+            let matches = helpers.default.getCategoryMatch(event.properties.categories)
+            if (matches.length == 0) matches.push('missing')
+            event.properties.categories = matches[0]        
+
+            if (center_point) {
+                let point = turf.point(event.geometry.coordinates)
+                event.properties.distance = turf.distance(center_point, point)            
+            } else {
+                event.properties.distance = null
+            }
+            
+            // Calculate max scores
+            if (event.properties.likes > max_likes) max_likes = event.properties.likes
+            if (event.properties.vibe_score > max_vibe_score) max_vibe_score = event.properties.vibe_score
+            if (event.properties.distance > max_distance) max_distance = event.properties.distance
+        })
+
+        // Normalize all scores
+        let events_scored = events.map((event) => {
+
+            event.properties.likes = helpers.default.normalize(event.properties.likes, 0, max_likes)
+            event.properties.vibe_score = helpers.default.normalize(event.properties.vibe_score, 0, max_vibe_score)
+            
+            // Distance is inverted from max and then normalize 1-10
+            event.properties.distance = helpers.default.normalize(max_distance - event.properties.distance, 0, max_distance)
+
+            // Simple average of the different scores
+            let scores = [
+                event.properties.likes,
+                event.properties.vibe_score,            
+                event.properties.distance * 0.4 // Only make distance half as important
+            ]
+            //console.log('EVENT SCORES: ', scores)
+            // Average out the scores
+            event.properties.average_score = scores.reduce((a, b) => a + b, 0) / scores.length
+            // Create a scaled icon; TODO: Share logic with markers
+            // Normalize the icon size to match photo markers.
+            event.properties.icon_size = helpers.default.scaleIconSize(event.properties.average_score, 10)
+            
+            return event
+        })
+
+        let events_sorted = events_scored.sort((a, b) => b.properties.average_score - a.properties.average_score)
+
+        return events_sorted
+
+    },
+
     scorePlaces: function(places, center_point, vibes) {
         let max_event_score = 1
         let max_vibe_score = 1
@@ -301,6 +373,8 @@ module.exports = {
         let vibe_match_bonus = 10
 
         let place = places.map((place) => {
+            
+            place.properties.place_type = 'place'
             place.properties.aggregate_rating = parseFloat(place.properties.aggregate_rating)
 
             // Give place a vibe score
@@ -314,14 +388,11 @@ module.exports = {
             let vibe_bonus = 0
 
             if (vibes && place.properties.vibes) {
-                vibe_matches = helpers.default.matchLists(vibes, place.properties.vibes)
+                vibe_matches = helpers.default.matchLists(vibes, place.properties.vibes)            
+                // TODO: Places that match vibe get a bonus
+                vibe_bonus = vibe_matches * vibe_match_bonus
+                place.properties.vibe_score += vibe_bonus
             }
-
-            vibe_bonus = vibe_matches * vibe_match_bonus
-            place.properties.vibe_score += vibe_bonus
-
-
-            // TODO: Places that match vibe get a bonus
 
             // Give place an event score
             // TODO: Sum of events is a stand in for a better metric of a places relevance
@@ -329,7 +400,6 @@ module.exports = {
             
             // TODO: why is this needed for icon points
             place.properties.id = place.id
-
 
             if (place.properties.num_events > 0) {
                 let likes = place.properties.hotspots_events.features[0].properties.likes
@@ -343,12 +413,11 @@ module.exports = {
                 place.properties.event_score = 0
             }
 
+            // TODO: This all goes away but this category change shoudl definetly go elsewhere
             if (place.properties.aggregate_rating >= 2) {
 
                 if (place.properties.categories == undefined || place.properties.categories.length == 0) {
-                    place.properties.categories = ["missing"]
-                    // TODO: Fix missing and duplicate places.
-                    //console.log("missing: ", place.properties.name)
+                    place.properties.categories = ["missing"]                    
                 }
 
             } else {
@@ -366,10 +435,11 @@ module.exports = {
                 place.properties.distance = turf.distance(center_point, point)
 
                 if (place.properties.distance > max_distance) max_distance = place.properties.distance
-            }    
+            }
 
         })
 
+        // Normalize each place by the top scores across all results
         let places_scored = places.map((place) => {
 
             // Normalize all scores
@@ -403,12 +473,26 @@ module.exports = {
             return place
         })
 
-        let places_scored_and_sorted = places_scored.sort((a, b) => {
-            return b.properties.average_score - a.properties.average_score
-        })
+        let places_scored_and_sorted = places_scored.sort((a, b) => b.properties.average_score - a.properties.average_score)
 
         return places_scored_and_sorted
     },
+
+    getEventScore: function(events) {
+        console.log("Event: ", events[2])
+        let scored = events.map((event) => {
+            // TODO: Have the API provide a value for this.
+            event.properties.place_type = 'event'
+
+            
+            
+
+            return event
+        })
+
+        return scored
+    },
+    
 
     clusterPlaces: function(places, cluster_size) {
         
