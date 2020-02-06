@@ -113,7 +113,7 @@ class EventCalendar extends Component {
     fetchEvents(position) {
 
         let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
-        if (this.state.timedOut == true) {
+        if (this.state.timedOut === true) {
             this.setState({ timedOut: false })
         }
 

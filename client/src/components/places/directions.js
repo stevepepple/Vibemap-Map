@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import request from 'request-promise'
+
 import PropTypes from 'prop-types';
 import querystring from 'querystring';
 import { Button, Icon, Segment } from 'semantic-ui-react'
@@ -31,20 +33,22 @@ class Directions extends Component {
                     eta: null
                 }
             },
-            lon: this.props.data.geometry.coordinates[0],
-            lat: this.props.data.geometry.coordinates[1],
-            date: this.props.data.properties.date,
-            address: this.props.data.properties.address,
-            venue: this.props.data.properties.venue
+            //date: this.props.data.properties.date,
+            //address: this.props.data.properties.address,
+            //venue: this.props.data.properties.venue
         }
     }
 
     componentWillMount() {
-        this.getDirections();
+        
     }
 
     componentWillReceiveProps(nextProps) {
 
+        if (this.props.detailsShown == true && this.props.currentPlace.location) {
+            this.getDirections()
+        } 
+        
     }
 
     // Will set active mode: this.setState({ active_mode: event.. })
@@ -54,16 +58,18 @@ class Directions extends Component {
 
         return new Promise((resolve, reject) => {
             let query = querystring.stringify({
-                startcoord: this.props.start.lat + ',' + this.props.start.lon,
-                endcoord: this.state.lat + ',' + this.state.lon,
-                time: this.state.date,
+                startcoord: this.props.currentLocation.latitude + ',' + this.props.currentLocation.longitude,
+                endcoord: this.props.currentPlace.location.latitude + ',' + this.props.currentPlace.location.longitude,
+                time: new Date(),
                 time_type: 'arrival',
                 key: constants.CITY_MAPPER_SECRET
-            });
+            })
 
+            // Was /api/directions
             fetch("/api/directions?" + query)
-                .then(data => data.json())
+                .then(data => data.json()) // Was: data.json()
                 .then(res => {
+                    console.log('City Mapper Response: ', res)
                     let modes = { ...this.state.modes }
                     let minutes = res.data.travel_time_minutes
                     if (minutes) {
@@ -91,15 +97,20 @@ class Directions extends Component {
         // API instructions are here: https://citymapper.com/tools/1053/launch-citymapper-for-directions
         let api = 'https://citymapper.com/directions/'
 
+        console.log("Current Place !!!", this.props.currentPlace)
+
         let query = querystring.stringify({
             arriveby: this.state.date,
-            endcoord: this.state.lat + ',' + this.state.lon,
-            startaddress: this.state.address,
-            endname: this.state.venue,
-            set_region: 'us-sf',
+            startcoord: this.props.currentLocation.latitude + ',' + this.props.currentLocation.longitude,
+            endcoord: this.props.currentPlace.location.latitude + ',' + this.props.currentPlace.location.longitude,
+            //startaddress: this.state.address,
+            //endname: this.state.venue,
+            //set_region: 'us-sf',
         });
 
         let url = api + '?' + query;
+
+        console.log('Directions URL', url)
         this.setState({ link : url })
     }
 
@@ -133,7 +144,9 @@ class Directions extends Component {
 const mapStateToProps = state => {
     return {
         name : state.name,
-        start: state.currentLocation
+        currentLocation: state.currentLocation,
+        currentPlace: state.currentPlace,
+        detailsShown: state.detailsShown
     }
 };
 
