@@ -55,16 +55,12 @@ class EventsMap extends React.PureComponent {
         let events_geojson = turf.featureCollection(nextProps.events_data)
         let top_picks_geojson = turf.featureCollection(nextProps.topPicks)
 
-        // TODO: Store this UI state in Redux? 
-        let has_data = this.props.events_data.length > 0
-
         let zoom = nextProps.zoom
 
         this.setState({ 
             places_geojson: places_geojson,
             events_geojson: events_geojson,
             top_picks_geojson: top_picks_geojson,
-            has_data: has_data,
             viewport: {
                 bearing: nextProps.bearing,
                 latitude: nextProps.currentLocation.latitude,
@@ -151,7 +147,7 @@ class EventsMap extends React.PureComponent {
         // There a layer & feature
         if (feature && event.features.length > 0) {
             let first_feature = event.features[0]            
-            if (first_feature.properties.name && (first_feature.layer.id === "top_picks" || first_feature.layer.id === "places")) {
+            if (first_feature.properties.name && (first_feature.layer.id === "top_picks" || first_feature.layer.id === "places" || first_feature.layer.id === "events")) {
                 
                 this.showPopup(first_feature.properties.name, event.lngLat[1], event.lngLat[0])
             }
@@ -171,14 +167,13 @@ class EventsMap extends React.PureComponent {
         })
     }
 
-
     mapRef = React.createRef();
 
     render() {
 
         let has_places_data = this.props.places_data.length > 0
         let has_events_data = this.props.events_data.length > 0
-
+        let has_top_pick_data = this.props.topPicks.length > 0
 
         const mapController = new CustomMapController()
 
@@ -227,60 +222,88 @@ class EventsMap extends React.PureComponent {
                                 <Selected size={60} />
                             </Marker>
                         }
-     
-                        <Source
-                            id='top_picks'
-                            type="geojson"
-                            data={this.state.top_picks_geojson}
-                            cluster={false}>
 
-                            {/* TODO: Use this option for displaying top pick labels */}
-                            <Layer
-                                id="top_picks"
-                                type="symbol"
-                                layout={Styles.top_pick_layout}
-                                paint={Styles.top_pick_paint}
-                            />
+                        {has_top_pick_data &&
+                            <Fragment>
+                                <Source
+                                    id='top_picks'
+                                    type="geojson"
+                                    data={this.props.top_picks_geojson}
+                                    cluster={false}>
 
+                                    <Layer
+                                        id="top_picks"
+                                        type="symbol"
+                                        layout={Styles.top_pick_layout}
+                                        paint={Styles.top_pick_paint}
+                                    />
 
-                            <Layer
-                                id="top_vibes"
-                                type="symbol"
-                                layout={Styles.top_vibe_layout}
-                                paint={Styles.top_pick_paint}
-                            />
-                        </Source>
+                                    <Layer
+                                        id="top_vibes"
+                                        type="symbol"
+                                        layout={Styles.top_vibe_layout}
+                                        paint={Styles.top_pick_paint}
+                                    />
+                                </Source>
+                                
+                                <Markers
+                                    data={this.props.topPicks}
+                                    currentVibes={this.props.currentVibes}
+                                    zoom={this.props.zoom}
+                                    onClick={this._onClick}
+                                    showPopup={this.showPopup} />
+                            </Fragment>
+
+                        }
                         
-                        <Source
-                            id='places_2'
-                            type="geojson"
-                            data={this.state.places_geojson}
-                            cluster={false}>
+                        {has_places_data &&
+                            <Source
+                                id='places_source'
+                                type="geojson"
+                                data={this.state.places_geojson}
+                                cluster={false}>
 
-                            {/* 
-                            <Layer
-                                id='heat'
-                                type='heatmap'
-                                paint={Styles.places_heatmap}
-                                isLayerChecked={true}
-                            />                                                    
-                            */}
+                                {/* 
+                                <Layer
+                                    id='heat'
+                                    type='heatmap'
+                                    paint={Styles.places_heatmap}
+                                    isLayerChecked={true}
+                                />                                                    
+                                */}
 
-                            <Layer
-                                id='places_circle'
-                                type='circle'
-                                paint={Styles.places_circle}
-                                isLayerChecked={true}
-                            />
-                                                        
-                            <Layer
-                                id="places"
-                                type="symbol"
-                                layout={Styles.marker_layout}
-                                paint={Styles.marker_paint}
-                            />
-                            
-                        </Source>
+                                <Layer
+                                    id='places_circle'
+                                    type='circle'
+                                    paint={Styles.places_circle}
+                                    isLayerChecked={true}
+                                />
+
+                                <Layer
+                                    id="places_markers"
+                                    type="symbol"
+                                    layout={Styles.marker_layout}
+                                    paint={Styles.marker_paint}
+                                />
+
+                            </Source>
+                        }
+
+                        {has_events_data &&
+                            <Source
+                                id='events'
+                                type="geojson"
+                                data={this.state.events_geojson}
+                                cluster={false}>
+
+                                <Layer
+                                    id="events"
+                                    type="symbol"
+                                    layout={Styles.marker_layout}
+                                    paint={Styles.marker_paint}
+                                />
+                            </Source>
+                        }
 
                         {/* Only render popup if it's not null */}
                         {this.state.popupInfo &&
@@ -296,31 +319,14 @@ class EventsMap extends React.PureComponent {
                                 {this.state.popupInfo.name}
                             </Popup>
                         }                        
-
-                        <Markers
-                            data={this.props.topPicks}
-                            currentVibes={this.props.currentVibes}
-                            zoom={this.props.zoom}
-                            onClick={this._onClick}
-                            showPopup={this.showPopup} />
                         
-
                         <VectorTile
                             id='heat_layer'
-                            type='heatmap'                            
+                            type='heatmap'
                             source='tile_layer'
-                            source-layer='places'
-                            //paint={Styles.places_heatmap}
-                        />
-
-                        {/*
-                        <Source
-                            id='events'
-                            type="geojson"
-                            data={this.state.events_geojson}
-                            cluster={false}>
-                        </Source>
-                        */}
+                            source-layer='places'                            
+                        />                        
+                        
 
                     </ReactMapGL>
 
@@ -329,7 +335,6 @@ class EventsMap extends React.PureComponent {
         )
     }
 }
-
 
 
 const mapStateToProps = state => {

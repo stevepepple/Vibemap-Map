@@ -48,12 +48,13 @@ class Page extends Component {
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'outdoors', 'scenic', 'positive', 'unique'],
+            vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cool', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'fun', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'outdoors', 'scenic', 'positive', 'unique'],
             // TODO: handle conversion math in VibeMap
             intervalIsSet: false,
             loading: true,
             num_top_picks: 12,
             timedOut: false,
+            mergeTopPicks: false,
             time_of_day: 'morning',
             // Used for mobile adaptive layout
             width: window.innerWidth,
@@ -110,13 +111,12 @@ class Page extends Component {
 
     componentDidUpdate(prevProps, prevState) {
 
-    
         // TODO: One-time recommended nearby search if the user has selected a place.
 
         // TODO: should be a switch statement
         let mapReady = this.props.mapReady
         let updateData = false
-        let refreshResults = false
+        let refreshResults = false        
         let locationChanged = false
         let distanceChanged = false
 
@@ -135,6 +135,12 @@ class Page extends Component {
             updateData = true
             refreshResults = true
         }
+
+        if (!isEqual(prevProps.placeType, this.props.placeType)) {
+            console.log('CURRENT PLACE TYPE: ', this.props.placeType)
+            updateData = true
+            refreshResults = true
+        }
         
         if (!isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)) {
             // TODO: measure distance between current and previous event
@@ -144,26 +150,21 @@ class Page extends Component {
             console.log("Distance changed by: ", this.props.currentLocation.distance_change)
             // TODO: Only refesh if the map moved by a significant jump...
             refreshResults = true
+    
 
             // TODO: Measure distance between locations and if the distance is large refresh results.
         }
         
         if (!isEqual(prevProps.zoom, this.props.zoom)) {
-        
             updateData = true
             refreshResults = false            
         }
 
-        if (this.props.detailsShown == true) updateData = false
+        if (this.props.detailsShown === true) updateData = false
 
         /* TODO: Not sure of the best react pattern for handling refresh state, but this works. */
-        if (mapReady == true && updateData == true) {
-            console.log("MAP IS READY & UPDATE NEEDED")
-
-            // TODO: Add preferece for places or events
-            this.fetchPlaces(refreshResults)
-            this.fetchEvents(refreshResults)
-
+        if (mapReady === true && updateData === true) {
+        
             // TODO: There's probably a better place for these hooks. 
             let bounds = helpers.getBounds(this.props.currentLocation, this.props.zoom, this.props.windowSize)
 
@@ -171,6 +172,29 @@ class Page extends Component {
             this.props.setDistance(helpers.getRadius(bounds))
             // Get the ratio of distance for each pixel on the screen; used for clustering
             this.props.setPixelDistance(helpers.getDistanceToPixels(bounds, this.props.windowSize))
+
+            console.log("MAP IS READY & UPDATE NEEDED")
+
+            // TODO: Add preferece for places or events
+            switch (this.props.placeType) {
+                case 'events':
+                    console.log('Only showing events')
+                    this.setState({ mergeTopPicks: false })
+                    this.fetchEvents(refreshResults)
+                    break
+                case 'places':
+                    console.log('Only showing places')
+                    this.setState({ mergeTopPicks: false })
+                    this.fetchPlaces(refreshResults)
+                    break
+                // i.e. both
+                default:
+                    console.log('Showing Places and Events')
+                    this.setState({ mergeTopPicks : true})
+                    this.fetchEvents(refreshResults)
+                    this.fetchPlaces(refreshResults)
+                    break
+            }
 
         }
     }
@@ -244,21 +268,27 @@ class Page extends Component {
 
     /* TODO: Should all of this logic just flow through an event service and component? */
     // Change to getPlaces
-    fetchEvents(position) {
+    fetchEvents(position, refreshResults) {
 
         let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
-        if(this.state.timedOut == true) {
+        if(this.state.timedOut === true) {
             this.setState({ timedOut: false })
         }
     
         /* Get current events, then set them in the state */
         /* TODO: package args into spread object? */
         
-        VibeMap.getEvents(point, this.props.bounds, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
-            .then(results => {
+        VibeMap.getEvents(point, this.props.distance, this.props.bounds, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
+            .then(results => {                
+
+                let top_picks = results.data.splice(1, this.state.num_top_picks)
+
+                console.log("Event top picks: ", top_picks)
+
+                // TODO: If both events and places, how to merge the results
+                this.props.setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
                 this.props.setEventsData(results.data)
 
-                console.log('Getting events data: ', this.props.eventsData)
                 this.setState({ loading: false, timedOut: false })
             }, (error) => {
                 console.log(error)
@@ -271,7 +301,7 @@ class Page extends Component {
 
         let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
 
-        if (this.state.timedOut == true) this.setState({ timedOut: false, searching: false })
+        if (this.state.timedOut === true) this.setState({ timedOut: false, searching: false })
 
         /* Get nearby places, then set them in the Redux state */
         // If there a search term or vibes do a top pick search
@@ -284,7 +314,12 @@ class Page extends Component {
 
                     let top_picks = results.data.splice(1, this.state.num_top_picks)
 
-                    this.props.setTopPicks(top_picks, refreshResults)
+                    if (results.top_vibes) {
+                        this.props.setTopVibes(results.top_vibes)
+                    }
+                    
+
+                    this.props.setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
                     this.props.setPlacesData(results.data, refreshResults)
 
 
@@ -296,12 +331,12 @@ class Page extends Component {
         }
 
         // General search     
-           
         VibeMap.getPlaces(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
 
                 let cluster_size = this.props.pixelDistance * 40
 
+                // TODO: Can this be dispatched from a central place? 
                 this.props.setTopVibes(results.top_vibes)
 
                 if(this.state.searching !== true) {                    
@@ -312,7 +347,8 @@ class Page extends Component {
                     // Size cluster for 20 px appart at each level
                     
                     let top_picks_clustered = VibeMap.clusterPlaces(top_picks, cluster_size)
-                    this.props.setTopPicks(top_picks_clustered, refreshResults)
+                    this.props.setTopPicks(top_picks_clustered, refreshResults, this.state.mergeTopPicks)
+                    
                     this.props.setPlacesData(results.data, refreshResults)
                 } else {
                     // TODO: Only show places with vibe affinity during search
@@ -379,7 +415,7 @@ class Page extends Component {
                                     /* TODO: Refactor into component */
                                     this.props.detailsShown ? (
                                         <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
-                                    ) : (
+                                    ) : (                                        
                                         <PlacesList data={this.props.topPicks} type='places' />
                                     )
                                 }
@@ -389,10 +425,8 @@ class Page extends Component {
                             </Grid.Column>
                             <Grid.Column width={11}>
                                 
-                                <ErrorBoundary>
-
+                                <ErrorBoundary>                                    
                                     {events_map}
-
                                 </ErrorBoundary>
 
                             </Grid.Column>
@@ -421,6 +455,7 @@ const mapStateToProps = state => ({
     mapReady: state.mapReady,
     pixelDistance: state.pixelDistance,
     placesData: state.placesData,
+    placeType: state.placeType,
     searchTerm: state.searchTerm,
     search: state.router.location.search,
     topPicks: state.topPicks,

@@ -14,18 +14,28 @@ class VectorTile extends React.Component {
 
         this.state = {
             filter: ["food", "shopping", "outdoors"],
-            added_map: false
+            added_map: false,
+            update_layer: true
         }
     }
 
-    componentWillMount() {
-        const options = Object.assign({}, this.props)
+    static getDerivedStateFromProps(nextProps, prevState){
+        console.log('getDerivedState: ', nextProps, prevState)
+        if (nextProps.activity !== prevState.activity) {
+            return { activity: nextProps.activity };
+        } else {
+            return null
+        }
     }
 
-    componentWillReceiveProps(){
-        console.log('Adding tiles with this category: ', this.props.activity)
-
-        if (this.props.activity !== null && this.props.activity !== "") this.setState({ filter : [this.props.activity]})
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.activity !== this.props.activity) {
+            if (this.props.activity == 'all') {
+                this.setState({ filter: ["food", "shopping", "outdoors"] })
+            } else {
+                this.setState({ update_layer: true, activity: this.props.activity, filter: [this.props.activity] })
+            }
+        }
     }
 
     addHeatMap() {
@@ -57,30 +67,33 @@ class VectorTile extends React.Component {
                     ]
                 ],
                 "paint": Styles.places_heatmap
-            }, 'places')
+            })
 
             /* TODO: Measure density here or get from backend with JSON tiles response. */
-            var features = map.queryRenderedFeatures({ layers: ['places'] });
-            console.log('This many features: ', features)
-
+            //var features = map.queryRenderedFeatures({ layers: ['places'] });            
 
             this.setState({ added_map: true })
         }
-        //return map && map.style && map.getSource(this.id);
-        
+        //return map && map.style && map.getSource(this.id);   
+    }
+
+    updateMap() {
+        //this._map.setFilter('collisions', ['all', 'test'])        
     }
 
     _render(context: MapContextProps) {
-        if (!this.map) {
-            this._map = context.map
+        
+        this._map = context.map
 
-            if(this.state.added_map === false) {
-                this.addHeatMap()
-            }
-
-            //this._map.on('styledata', this._updateLayer);
+        if(this.state.added_map === false) {
+            console.log("ADDING HEATMAP")
+            this.addHeatMap()
+        } 
+        
+        if (this._map.style._loaded && this.state.update_layer) {
+            //this._map.setFilter("heat_layer", ['==', 'primary_category', this.state.activity])
         }
-        return null;
+            
     }
 
     render() {

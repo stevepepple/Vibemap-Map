@@ -91,6 +91,11 @@ export const setCurrentVibes = vibes => ({
   vibes,
 })
 
+export const setPlaceType = (value) => ({
+  type: 'SET_PLACE_TYPE',
+  value,
+})
+
 export const setTopVibes = top_vibes => ({
   type: 'SET_TOP_VIBES',
   top_vibes,
@@ -122,10 +127,11 @@ export const setPlacesData = (places_data, refreshResults) => ({
   refreshResults
 })
 
-export const setTopPicks = (places_data, refreshResults) => ({
+export const setTopPicks = (places_data, refreshResults, mergeTopPicks) => ({
   type: 'SET_TOP_PICKS_DATA',
   places_data,
-  refreshResults
+  refreshResults,
+  mergeTopPicks
 })
 
 export const setNearbyPlaces = places => ({

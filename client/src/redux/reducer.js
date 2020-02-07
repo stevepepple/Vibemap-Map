@@ -149,6 +149,15 @@ export const currentVibes = (state = ['chill'], action) => {
   return state
 }
 
+export const placeType = (state = 'both', action) => {
+  if (action.type == 'SET_PLACE_TYPE') {
+    console.log("SET_PLACE_TYPE", action)
+    state = action.value
+  }
+  return state
+}
+
+
 export const topVibes = (state = [], action) => {
   if (action.type == 'SET_TOP_VIBES') {
     state = action.top_vibes
@@ -306,12 +315,14 @@ export const topPicks = (state = [], action) => {
       return place
     })
 
-    if (action.refreshResults) {
-      
-      state = processed
-    } else {      
+    if (action.refreshResults === false || action.mergeTopPicks === true) {    
       var merged = _.unionBy(state, processed, 'id')
-      state = merged
+      let merged_sorted = merged.sort((a, b) => b.properties.average_score - a.properties.average_score)
+      state = merged_sorted
+
+    } else {
+      state = processed
+
     }
   }
 
@@ -365,6 +376,7 @@ export const reducers = (history) => combineReducers({
   nearby_places,
   pixelDistance,
   placesData,
+  placeType,
   searchTerm,
   topPicks,
   topVibes,
