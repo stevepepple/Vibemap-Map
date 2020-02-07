@@ -123,7 +123,7 @@ class EventsMap extends React.PureComponent {
 
     // Set details when marker or icon is clicked
     _onClick = (event, feature) => {
-        //console.log("Clicked this: ", event, feature)
+        console.log("Clicked this: ", event, feature)
         let id = null
         if (feature && feature.id) {
             id = feature.id
@@ -133,6 +133,7 @@ class EventsMap extends React.PureComponent {
         
         if (id !== null) {
             this.props.setDetailsId(id)
+            this.props.setDetailsType(feature.properties.place_type)
             // TODO: there's probably a smart way to do this with browser history
             this.setState({ prev_zoom : this.props.zoom })
             this.props.setDetailsShown(true)
@@ -351,6 +352,7 @@ const mapStateToProps = state => {
         zoom: state.zoom,
         currentDistance: state.currentDistance,
         detailsId: state.detailsId,
+        detailsType: state.detailsType,
         detailsShown: state.detailsShown,
         mapReady: state.mapReady,
         pathname: state.router.location.pathname,

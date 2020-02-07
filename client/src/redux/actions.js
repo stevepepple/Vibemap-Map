@@ -15,6 +15,11 @@ export const setDetailsId = id => ({
   id,
 })
 
+export const setDetailsType = place_type => ({
+  type: 'SET_DETAILS_TYPE',
+  place_type,
+})
+
 export const setMapReady = ready => ({
   type: 'SET_MAP_READY',
   ready,

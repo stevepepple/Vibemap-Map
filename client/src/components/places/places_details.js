@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import isEqual from 'react-fast-compare'
 import MetaTags from 'react-meta-tags'
 
-import { Button, Dimmer, Header, Image, Label, List, Reveal, Placeholder } from 'semantic-ui-react'
+import { Button, Header, Image, Label, List, Reveal, Placeholder } from 'semantic-ui-react'
 import Directions from '../places/directions'
 import VibeMap from '../../services/VibeMap.js'
 
@@ -42,8 +42,7 @@ class PlaceDetails extends Component {
         // Do something
     }
 
-    componentDidMount = function() {
-        console.log("UPdated place ID: ", this.props.id)
+    componentDidMount = function() {        
         this.getPlaceDetails()
     }
 
@@ -55,28 +54,35 @@ class PlaceDetails extends Component {
     }
 
     getPlaceDetails = function() {
-        VibeMap.getPlaceDetails(this.props.id)
+        VibeMap.getPlaceDetails(this.props.detailsId, this.props.detailsType)
             .then(result => {
                 console.log("Place details: ", result)
+
+                // Handle Error
+                if (result.data.detail === 'Not found.') {
+                    this.setState({ details_data: null, loading: false})
+                } else  {
+                    this.setState({ details_data: result.data, loading: false })
+                    let point = result.data.geometry.coordinates
+                    let location = { latitude: point[1], longitude: point[0] }
+
+                    // TEMPORARILY HANDLE MISSING VIBES
+                    if (typeof result.data.properties.vibes === 'undefined') {
+                        result.data.properties.vibes = []
+                    }
+
+                    this.props.setCurrentPlace({
+                        name: result.data.properties.name,
+                        description: result.data.properties.description,
+                        categories: result.data.properties.categories,
+                        location: location,
+                        images: result.data.properties.images,
+                        vibes: result.data.properties.vibes,
+                    })
+                    // TODO: Helper function for coord to lat - long?
+                    this.props.setCurrentLocation(location)
+                }                                                
                 
-                // TODO: does this need to be in redux?
-                this.setState({ 
-                    details_data: result.data,                 
-                    loading : false })
-                
-                let point = result.data.geometry.coordinates
-                let location = { latitude: point[1], longitude: point[0] }
-                
-                this.props.setCurrentPlace({
-                    name: result.data.properties.name,
-                    description: result.data.properties.description,
-                    categories: result.data.properties.categories,
-                    location: location,
-                    images: result.data.properties.images,
-                    vibes: result.data.properties.vibes,
-                })
-                // TODO: Helper function for coord to lat - long?
-                this.props.setCurrentLocation(location)
                 
             })
     }
@@ -112,7 +118,6 @@ class PlaceDetails extends Component {
         if (this.props.currentPlace.vibes.length > 0) {
             vibes = this.props.currentPlace.vibes.map((vibe) => <Label key={vibe} className={'vibe pink label ' + vibe}>{vibe}</Label>);
         }
-        
 
         let image = <Image className = 'placeImage' src={ process.env.PUBLIC_URL + '/images/image.png' } fluid />
         let num_images = this.props.currentPlace.images.length
@@ -153,7 +158,7 @@ class PlaceDetails extends Component {
                         </Placeholder.Header>
                     </Placeholder>
                 ): (
-                    <Header>{this.state.name}</Header>
+                    <Header>{name}</Header>
                 )} 
 
                 {this.state.loading ? (
@@ -200,10 +205,6 @@ class PlaceDetails extends Component {
 
                 {/* TODO: Render Description at HTML the proper way as stored in Mongo and then as own React component */}
 
-                
-
-                
-
                 {/* TODO: Make this a reservation area 
                 <h3>Details & Tickets</h3>
                 <a className='ui button primary' href={content.url} target='_blank'> Check it out</a>
@@ -223,6 +224,7 @@ const mapStateToProps = state => {
     return {
         activity: state.activity,
         detailsId: state.detailsId,
+        detailsType: state.detailsType,
         nearby_places: state.nearby_places,
         currentLocation: state.currentLocation,
         currentPlace: state.currentPlace,

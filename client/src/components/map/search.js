@@ -106,6 +106,7 @@ class LocationSearchInput extends React.Component {
 
             this.props.setCurrentLocation({ latitude: item.centerpoint[1], longitude: item.centerpoint[0] })
             this.props.setDetailsId(null)
+            this.props.setDetailsType(null)
             this.props.setDetailsShown(false)
         } else {
             geocodeByAddress(value)

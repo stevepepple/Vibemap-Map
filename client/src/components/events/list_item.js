@@ -39,7 +39,7 @@ class ListItem extends React.Component {
         /* TODO: Can this be made an abtract component for other types of data, i.e. places */
         return (
             
-            <Item onClick={((e) => this.props.onClick(e, this.props.id))} key={this.props.id} data-id={content.id}>
+            <Item onClick={((e) => this.props.onClick(e, this.props.id, content.type))} key={this.props.id} data-id={content.id}>
                 <Item.Image src={this.props.content.images[0]} size='small' />
                 <Item.Content onMouseOver={this.handleHover.bind(this, this.props)} onMouseLeave={this.onMouseLeave.bind(this, this.props.id)}>
                     <Item.Extra className='date'>{date} {start}</Item.Extra>

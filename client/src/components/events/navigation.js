@@ -52,6 +52,11 @@ class Navigation extends Component {
 
         if (params.place) {
             this.props.setDetailsId(params.place)
+            if(params.type) {
+                this.props.setDetailsType(params.type)
+            }
+            
+            // TODO: Also need to know the type
             this.props.setDetailsShown(true)
             this.props.setZoom(this.props.zoom + 2)
         }
@@ -92,9 +97,7 @@ class Navigation extends Component {
 
     // Sync URL params with React Router history in Redux store
     componentDidUpdate(prevProps, prevState) {    
-        
-        console.log("NAVIGATION UPDATED!!!", this.props)
-        
+                
         let new_history = queryString.stringify(this.state.params)    
         push(new_history)
 
@@ -111,8 +114,11 @@ class Navigation extends Component {
         }
 
         if (!isEqual(prevProps.detailsId, this.props.detailsId)) {
-            console.log("Set place ID: ", this.props.detailsId)
             this.updateURL("place", this.props.detailsId)
+        }
+
+        if (!isEqual(prevProps.detailsType, this.props.detailsType)) {
+            this.updateURL("type", this.props.detailsType)
         }
 
         if (!isEqual(prevProps.zoom, this.props.zoom)) {
@@ -194,8 +200,6 @@ class Navigation extends Component {
             </Form.Group> 
         </Form>
 
-        console.log("CURRENT VIBES: ", this.props.currentVibes)
-
         return (
             <React.Fragment>
                 {this.props.isMobile? (
@@ -244,6 +248,7 @@ const mapStateToProps = state => {
     return {
         activity: state.activity,
         detailsId: state.detailsId,
+        detailsType: state.detailsType,
         nearby_places: state.nearby_places,
         currentLocation: state.currentLocation,
         zoom: state.zoom,

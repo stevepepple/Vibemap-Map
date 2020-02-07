@@ -365,9 +365,10 @@ class Page extends Component {
         this.props.history.replace('')
 
         this.props.setDetailsId(null)
+        this.props.setDetailsType(null)
         this.props.setDetailsShown(false)
 
-        let new_zoom = this.props.zoom - 2
+        let new_zoom = this.props.zoom - 1
         this.props.setZoom(new_zoom)
     }
 
@@ -450,6 +451,7 @@ const mapStateToProps = state => ({
     currentVibes: state.currentVibes,
     detailsShown: state.detailsShown,
     detailsId: state.detailsId,
+    detailsType: state.detailsType,
     distance: state.distance,
     eventsData: state.eventsData,
     mapReady: state.mapReady,

@@ -40,6 +40,14 @@ export const detailsId = (state = null, action) => {
   return state
 }
 
+export const detailsType = (state = "place", action) => {
+  if (action.type == 'SET_DETAILS_TYPE') {
+    console.log("SET_DETAILS_TYPE: ", action.place_type)
+    state = action.place_type
+  }
+  return state
+}
+
 export const mapReady = (state = false, action) => {
   if (action.type == 'SET_MAP_READY') {
     state = action.ready
@@ -368,6 +376,7 @@ export const reducers = (history) => combineReducers({
   currentDays,
   currentVibes,
   detailsId,
+  detailsType,
   detailsShown,
   distance,
   name,

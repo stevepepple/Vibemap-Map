@@ -130,9 +130,9 @@ module.exports = {
     },
 
     // TODO: Include a way to query by time of day
-    getPlaceDetails: function (id) {
+    getPlaceDetails: function (id, type) {
         return new Promise(function (resolve, reject) {
-            fetch(ApiUrl + "/v0.2/places/" + id, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.2/"+ type + "/" + id, { headers: ApiHeaders })
                 .then(data => data.json())
                 .then(result => {
                     clearTimeout(timeout);
@@ -182,10 +182,10 @@ module.exports = {
                     clearTimeout(timeout);
 
                     let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point)
-
+                    let top_vibes = module.exports.getTopVibes(res.results.features)
                     let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
                     
-                    resolve({ data: clustered, loading: false, timedOut: false })
+                    resolve({ data: clustered, top_vibes: top_vibes, loading: false, timedOut: false })
 
                 }, (error) => {
                     console.log(error)
@@ -303,6 +303,8 @@ module.exports = {
             // TODO: TEMP until events return vibes
             if (event.properties.vibes === undefined) event.properties.vibes = ['chill']            
     
+            event.properties.place_type = 'events'
+            
             // Give direct vibe matches bonus points
             let vibe_matches = 0
             let vibe_bonus = 0
@@ -374,7 +376,7 @@ module.exports = {
 
         let place = places.map((place) => {
             
-            place.properties.place_type = 'place'
+            place.properties.place_type = 'places'
             place.properties.aggregate_rating = parseFloat(place.properties.aggregate_rating)
 
             // Give place a vibe score
@@ -477,22 +479,6 @@ module.exports = {
 
         return places_scored_and_sorted
     },
-
-    getEventScore: function(events) {
-        console.log("Event: ", events[2])
-        let scored = events.map((event) => {
-            // TODO: Have the API provide a value for this.
-            event.properties.place_type = 'event'
-
-            
-            
-
-            return event
-        })
-
-        return scored
-    },
-    
 
     clusterPlaces: function(places, cluster_size) {
         

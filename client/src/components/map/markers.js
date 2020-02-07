@@ -43,6 +43,7 @@ class Markers extends Component {
             
             // TODO: Vibe Score and average score are confusing. 
             let score = feature.properties.average_score
+
             let max = helpers.getMax(features, 'average_score')
             let min = helpers.getMin(features, 'average_score')
 
