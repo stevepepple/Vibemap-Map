@@ -1,31 +1,52 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 
-
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
+import { store } from '../../redux/store'
 
-import { Dimmer, Input, Item, Loader, Segment } from 'semantic-ui-react'
+import { Container, Dimmer, Form, Input, Item, Loader, Segment, Dropdown } from 'semantic-ui-react'
 import { Global, css } from '@emotion/core'
+
+import helpers from '../../helpers.js'
 
 import ListItem from './list_item.js'
 import * as Constants from '../../constants.js'
 import TimeAndTemp from '../weather/timeAndTemp'
-import TopVibes from '../elements/topVibes'
 
 class PlacesList extends Component {
 
     constructor(props) {
         super(props)
         this.onClick = this.onClick.bind(this)
+
+        this.state = {
+            place_type_options: [
+                { key: 'both', value: 'both', text: 'Places & Events' },
+                { key: 'places', value: 'places', text: 'Places' },
+                { key: 'events', value: 'events', text: 'Events' }
+            ]
+        }
     }
 
     onChange = (e, { value }) => {
         this.props.setSearchTerm(value)
     }
 
-    onClick = (event, id) => {
+    handlePlaceType = (e, { value }) => {
+        console.log("UPDATING PLACE TYPE", value)
+        this.props.setPlaceType(value)
+    }
+
+    handleActivityChange = (event, { value }) => {
+        this.setState({ current_activity: value })
+        this.props.setActivity(value)
+    }
+
+    onClick = (event, id, type) => {
+        console.log("GETTING DETAILS FOR : ", id, type)
         this.props.setDetailsId(id)
+        this.props.setDetailsType(type)
         this.props.setDetailsShown(true)
     }
 
@@ -38,13 +59,16 @@ class PlacesList extends Component {
 
         if (has_items) {
             // TODO: @cory, sorting should happen on the server. 
+            // And we should be able to sort by distance, relevance, tc. 
             let sorted = this.props.data.sort((a, b) => (a.properties.score > b.properties.score) ? -1 : 1)
             items = sorted.map((place) => {
-                return <ListItem key={place.id} id={place.id} link={place.properties.link} onClick={this.onClick} content={place.properties} />
+                // ID
+                // Link
+                // onClick
+                // Properies
+                return <ListItem key={place.id} id={place.id} type={place.properties.place_type} link={place.properties.url} onClick={this.onClick} properties={place.properties} />
             })
             
-        } else {
-             
         }
 
         return (
@@ -65,19 +89,56 @@ class PlacesList extends Component {
                     }}
                 />            
 
-                <TimeAndTemp />
-
-                <Input 
-                    fluid 
-                    placeholder='Search...' 
-                    icon='search' 
-                    iconPosition='left' 
-                    onChange={_.debounce(this.onChange, 500, {
-                        leading: true,
-                    })} 
-                    value={searchTerm} />
-
-                <TopVibes/>
+                <TimeAndTemp />                
+                
+                <Segment vertical>
+                    <Form>
+                        <Form.Field widths='equal'>
+                            <Input
+                                fluid
+                                placeholder='Search...'
+                                icon='search'
+                                iconPosition='left'
+                                onChange={_.debounce(this.onChange, 500, {
+                                    leading: true,
+                                })}
+                                value={searchTerm} />
+                        </Form.Field>
+                        <Form.Field widths='equal'>
+                            <Dropdown
+                                search
+                                placeholder='Pick Activity'
+                                selection
+                                onChange={this.handleActivityChange}
+                                options={Constants.activty_categories}
+                                value={this.props.activity}
+                            />
+                        </Form.Field>
+                        <Form.Group widths='equal'>                            
+                            <Dropdown                                
+                                icon='map pin'
+                                labeled
+                                fluid
+                                button
+                                compact
+                                className='icon small'
+                                onChange={this.handlePlaceType}
+                                options={this.state.place_type_options}
+                                value={this.props.placeType}
+                            />
+                            <Dropdown
+                                text='Filters...'
+                                icon='filter'
+                                fluid
+                                labeled
+                                button
+                                compact
+                                className='icon small'
+                            />
+                        </Form.Group>
+                    </Form>
+                </Segment>
+                
                 
                 {has_items? (
                     <Item.Group divided relaxed className='events_list'>
@@ -97,9 +158,12 @@ class PlacesList extends Component {
 
 const mapStateToProps = state => {
     return {
+        activity: state.activity,
         searchTerm: state.searchTerm,
         detailsId: state.detailsId,
-        detailsShown: state.detailsShown
+        detailsType: state.detailsType,
+        detailsShown: state.detailsShown,
+        placeType: state.placeType
     }
 }
 
