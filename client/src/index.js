@@ -4,6 +4,11 @@ import './index.css';
 import App from './App';    
 import * as serviceWorker from './serviceWorker';
 
+// Internationalization support 
+import { I18nextProvider } from "react-i18next";
+import i18n from './i18n'
+
+
 import { Provider } from 'react-redux';
 import { store, history } from './redux/store';
 import { ConnectedRouter } from 'connected-react-router'
@@ -11,8 +16,10 @@ import { ConnectedRouter } from 'connected-react-router'
 ReactDOM.render(
     <Provider store={store}>
         { /* ConnectedRouter links Redux state with React Router */}
-        <ConnectedRouter history={history}> 
-            <App />
+        <ConnectedRouter history={history}>
+            <I18nextProvider i18n={i18n}>
+                <App />
+            </I18nextProvider>
         </ConnectedRouter>
     </Provider>,
     document.getElementById('root')

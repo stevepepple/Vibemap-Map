@@ -5,13 +5,22 @@ import { Menu, Dropdown } from 'semantic-ui-react'
 import MainPage from './components/pages/main';
 import EventCalendar from './components/pages/calendar';
 
+import { withTranslation } from 'react-i18next';
+
+
 import './styles/App.css';
 
 class App extends Component {
-  state = { activeItem: 'home' }
+  state = { 
+    activeItem: 'home',
+    value: 'es'
+  }
 
   render() {
     const { activeItem } = this.state
+
+    const { t } = this.props;
+
 
     return (
       <div className="App">
@@ -46,4 +55,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withTranslation()(App);
