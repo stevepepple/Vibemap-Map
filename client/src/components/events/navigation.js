@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Grid, Dropdown, Form, Segment } from 'semantic-ui-react'
 import isEqual from 'react-fast-compare'
+
+// MOve query string and 
+import helpers from '../../helpers.js'
 import queryString from 'query-string'
 
 import * as Constants from '../../constants.js'
@@ -13,6 +16,8 @@ import { store } from '../../redux/store'
 import * as actions from '../../redux/actions'
 import { push } from 'connected-react-router'
 
+import TopVibes from '../elements/topVibes'
+
 import '../../styles/navigation.scss'
 
 
@@ -21,7 +26,7 @@ const datePicker = {
     lineHeight: '2em'
 }
 
-class Navigation extends React.PureComponent {
+class Navigation extends Component {
     constructor(props) {
         super(props)
 
@@ -56,7 +61,6 @@ class Navigation extends React.PureComponent {
         }
 
         // TODO: Set days from params?
-
         if (params.search) {
             this.props.setSearchTerm(params.search)
         }
@@ -87,15 +91,17 @@ class Navigation extends React.PureComponent {
     }
 
     // Sync URL params with React Router history in Redux store
-    componentDidUpdate(prevProps, prevState) {
-
+    componentDidUpdate(prevProps, prevState) {    
+        
+        console.log("NAVIGATION UPDATED!!!", this.props)
+        
         let new_history = queryString.stringify(this.state.params)    
         push(new_history)
 
         if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {
             console.log("Set search: ", this.props.searchTerm)
             // TODO: set URL
-            this.updateURL("search", this.props.searchTerm)
+            helpers.updateURL("search", this.props.searchTerm)
         }
 
         if (!isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)) {
@@ -106,13 +112,23 @@ class Navigation extends React.PureComponent {
 
         if (!isEqual(prevProps.detailsId, this.props.detailsId)) {
             console.log("Set place ID: ", this.props.detailsId)
-            // TODO: set URL
             this.updateURL("place", this.props.detailsId)
         }
 
         if (!isEqual(prevProps.zoom, this.props.zoom)) {
-            // TODO: set URL
             this.updateURL("zoom", this.props.zoom)
+        }
+
+        if (!isEqual(prevProps.activity, this.props.activity)) { 
+            console.log("SET activity : ", this.props.activity)
+            this.updateURL("activity", this.props.activity)            
+        }
+
+        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
+            console.log("SET VIBES : ", this.props.currentVibes)
+            this.updateURL("activity", this.props.currentVibes)            
+            //this.setState({ vibes: this.props.currentVibes })
+            this.props.setCurrentVibes(this.props.currentVibes)
         }
 
         if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {
@@ -151,14 +167,9 @@ class Navigation extends React.PureComponent {
         this.updateURL("days", value)
     }
 
-    handleActivityChange = (event, { value }) => {
-        this.setState({ current_activity : value })
-        this.props.setActivity(value)
-        this.updateURL("activity", value)
-    }
-
     handleVibeChange = (event, { value }) => {
         this.setState({ vibes: value })
+        console.log('UPdated vibes: ', value)
         this.props.setCurrentVibes(value)  
         this.updateURL("vibes", value)
     }
@@ -173,7 +184,7 @@ class Navigation extends React.PureComponent {
                     button
                     className='icon'
                     compact
-                    icon='calendar'
+                    icon='calendar'                
                     labeled
                     onChange={this.handleDaysChange}
                     options={this.state.options}
@@ -182,6 +193,8 @@ class Navigation extends React.PureComponent {
                 />
             </Form.Group> 
         </Form>
+
+        console.log("CURRENT VIBES: ", this.props.currentVibes)
 
         return (
             <React.Fragment>
@@ -194,38 +207,29 @@ class Navigation extends React.PureComponent {
                     
                     <div className='navigation'>
                             <Grid stackable stretched verticalAlign='middle'>
-                            <Grid.Column width={7}>
+                            <Grid.Column width={6}>
                                 {search}
                             </Grid.Column>
-                            <Grid.Column width={9}>
+                            <Grid.Column width={4}>
+                                <TopVibes />
+                            </Grid.Column>
+                            <Grid.Column width={6}>
                                 {/* TODO: replace location input with search able dropdown */}
-                                <Form><Form.Group>
-                                    <Dropdown
-                                        placeholder='Activity'
-                                        search
-                                        className='icon'                                    
-                                        icon='bullseye' // TODO: Map currently selected to icon
-                                        selection
-                                        onChange={this.handleActivityChange}
-                                        options={Constants.activty_categories}
-                                        value={this.props.activity}
-                                    />
-
-                                    <Dropdown
-                                        placeholder="What&#39;s your vibe?"
-                                        fluid
-                                        multiple                                
-                                        compact
-                                        label="Vibe"
-                                        search
-                                        selection
-                                        onChange={this.handleVibeChange}
-                                        //value={['local']}
-                                        options={this.state.vibe_options}
-                                        value={this.props.currentVibes}
-                                    />
-                                </Form.Group></Form>                                
-
+                                {/* TODO: for some reason the dropdown as a problem with prop changes. */}                                
+                                <Dropdown
+                                    placeholder="What&#39;s your vibe?"
+                                    fluid
+                                    multiple                                
+                                    compact
+                                    label="Vibe"
+                                    search
+                                    selection
+                                    closeOnChange
+                                    onChange={this.handleVibeChange}
+                                    //value={['local']}
+                                    options={this.state.vibe_options}
+                                    value={this.props.currentVibes}
+                                />
                             </Grid.Column>
                         </Grid>
                     </div >
@@ -246,7 +250,6 @@ const mapStateToProps = state => {
         currentDays: state.currentDays,
         currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,
-        detailsId: state.detailsId,
         pathname: state.router.location.pathname,
         search: state.router.location.search,
         searchTerm: state.searchTerm
