@@ -14,6 +14,8 @@ import ListItem from './list_item.js'
 import * as Constants from '../../constants.js'
 import TimeAndTemp from '../weather/timeAndTemp'
 
+import { Translation, Trans } from 'react-i18next'
+
 class PlacesList extends Component {
 
     constructor(props) {
@@ -22,19 +24,18 @@ class PlacesList extends Component {
 
         this.state = {
             place_type_options: [
-                { key: 'both', value: 'both', text: 'Places & Events' },
+                { key: 'both', value: 'both', text: 'Everything' },
                 { key: 'places', value: 'places', text: 'Places' },
                 { key: 'events', value: 'events', text: 'Events' }
             ]
         }
-    }
+    }    
 
     onChange = (e, { value }) => {
         this.props.setSearchTerm(value)
     }
 
     handlePlaceType = (e, { value }) => {
-        console.log("UPDATING PLACE TYPE", value)
         this.props.setPlaceType(value)
     }
 
@@ -43,8 +44,7 @@ class PlacesList extends Component {
         this.props.setActivity(value)
     }
 
-    onClick = (event, id, type) => {
-        console.log("GETTING DETAILS FOR : ", id, type)
+    onClick = (event, id, type) => {        
         this.props.setDetailsId(id)
         this.props.setDetailsType(type)
         this.props.setDetailsShown(true)
@@ -57,18 +57,26 @@ class PlacesList extends Component {
 
         let searchTerm = this.props.searchTerm
 
+        // i18n Translations        
+        const activity_placeholder = <Translation>{
+            (t, { i18n }) => t('Pick Activity')
+        }</Translation>
+
+        const place_type_text = <Translation>{
+            (t, { i18n }) => t(this.props.placeType)
+        }</Translation>
+
+        const filters_text = <Translation>{
+            (t, { i18n }) => t('Filters')
+        }</Translation>
+        
         if (has_items) {
             // TODO: @cory, sorting should happen on the server. 
             // And we should be able to sort by distance, relevance, tc. 
             let sorted = this.props.data.sort((a, b) => (a.properties.score > b.properties.score) ? -1 : 1)
-            items = sorted.map((place) => {
-                // ID
-                // Link
-                // onClick
-                // Properies
+            items = sorted.map((place) => {                
                 return <ListItem key={place.id} id={place.id} type={place.properties.place_type} link={place.properties.url} onClick={this.onClick} properties={place.properties} />
             })
-            
         }
 
         return (
@@ -94,20 +102,23 @@ class PlacesList extends Component {
                 <Segment vertical>
                     <Form>
                         <Form.Field widths='equal'>
-                            <Input
-                                fluid
-                                placeholder='Search...'
-                                icon='search'
-                                iconPosition='left'
-                                onChange={_.debounce(this.onChange, 500, {
-                                    leading: true,
-                                })}
-                                value={searchTerm} />
+                            <Translation>{
+                                (t, { i18n }) => <Input
+                                        fluid
+                                        placeholder={t('Search')}
+                                        icon='search'
+                                        iconPosition='left'
+                                        onChange={_.debounce(this.onChange, 500, {
+                                            leading: true,
+                                        })}
+                                        value={searchTerm} />                                
+                            }</Translation>
+                            
                         </Form.Field>
                         <Form.Field widths='equal'>
                             <Dropdown
                                 search
-                                placeholder='Pick Activity'
+                                placeholder={activity_placeholder}
                                 selection
                                 onChange={this.handleActivityChange}
                                 options={Constants.activty_categories}
@@ -124,10 +135,19 @@ class PlacesList extends Component {
                                 className='icon small'
                                 onChange={this.handlePlaceType}
                                 options={this.state.place_type_options}
+                                text={place_type_text}
                                 value={this.props.placeType}
-                            />
+                            >
+                                <Dropdown.Menu>
+                                    {this.state.place_type_options.map((option) => (
+                                        <Translation>{
+                                                (t, { i18n }) => <Dropdown.Item key={option.value} text={t(option.text)} value={option.value} />
+                                        }</Translation>
+                                    ))}
+                                </Dropdown.Menu>
+                            </Dropdown>
                             <Dropdown
-                                text='Filters...'
+                                text={filters_text}
                                 icon='filter'
                                 fluid
                                 labeled

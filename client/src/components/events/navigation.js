@@ -11,6 +11,8 @@ import VibeMap from '../../services/VibeMap.js'
 
 import LocationSearchInput from '../map/search'
 
+import { Translation } from 'react-i18next'
+
 import { connect } from 'react-redux'
 import { store } from '../../redux/store'
 import * as actions from '../../redux/actions'
@@ -19,12 +21,6 @@ import { push } from 'connected-react-router'
 import TopVibes from '../elements/topVibes'
 
 import '../../styles/navigation.scss'
-
-
-const datePicker = {
-    minWidth: '140px',
-    lineHeight: '2em'
-}
 
 class Navigation extends Component {
     constructor(props) {
@@ -174,30 +170,47 @@ class Navigation extends Component {
     }
 
     handleVibeChange = (event, { value }) => {
-        this.setState({ vibes: value })
-        console.log('UPdated vibes: ', value)
+        this.setState({ vibes: value })        
         this.props.setCurrentVibes(value)  
-        this.updateURL("vibes", value)
     }
 
     render() {
 
+        const calendar_current = <Translation>{
+            (t, { i18n }) => t(this.state.options.find(obj => obj.value == this.props.currentDays).text)
+        }</Translation>
+
+        const what_is_your_vibe = <Translation>{
+            (t, { i18n }) => t("What's your vibe")
+        }</Translation>
+
+
         let search = <Form>
-            <Form.Group widths='equal'>
-                <LocationSearchInput className='mobile search'/>
-                {/* TODO: Further investigate why dropdowns are the slowest component on the page */}
-                <Dropdown
-                    button
-                    className='icon'
-                    compact
-                    icon='calendar'                
-                    labeled
-                    onChange={this.handleDaysChange}
-                    options={this.state.options}
-                    text={this.state.options.find(obj => obj.value == this.props.currentDays).text}
-                    style={datePicker}
-                />
-            </Form.Group> 
+            <Form size='small'>
+                <Form.Group>
+                    <LocationSearchInput className='mobile search'/>
+                    {/* TODO: Further investigate why dropdowns are the slowest component on the page */}
+                    <Dropdown
+                        className='icon left tiny datepicker'
+                        button
+                        labeled
+                        icon='calendar'
+                        onChange={this.handleDaysChange}
+                        text={calendar_current}                    
+                    >
+                        <Dropdown.Menu>
+                            {this.state.options.map((option) => (
+                                <Translation>
+                                    { 
+                                    (t, {i18n}) => <Dropdown.Item key={option.value} text={t(option.text)} value={option.value} />
+                                    }
+                                    
+                                </Translation>
+                            ))}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Form.Group>
+            </Form> 
         </Form>
 
         return (
@@ -209,33 +222,30 @@ class Navigation extends Component {
 
                 ) : (
                     
-                    <div className='navigation'>
-                            <Grid stackable stretched verticalAlign='middle'>
-                            <Grid.Column width={6}>
+                    <div className='navigation'>                    
+                        <Grid stackable stretched verticalAlign='middle'>
+                            <Grid.Column width={5}>
                                 {search}
                             </Grid.Column>
-                            <Grid.Column width={4}>
+                            <Grid.Column width={5}>
                                 <TopVibes />
                             </Grid.Column>
                             <Grid.Column width={6}>
                                 {/* TODO: replace location input with search able dropdown */}
                                 {/* TODO: for some reason the dropdown as a problem with prop changes. */}                                
                                 <Dropdown
-                                    placeholder="What&#39;s your vibe?"
-                                    fluid
-                                    multiple                                
-                                    compact
+                                    placeholder={what_is_your_vibe}
+                                    multiple
                                     label="Vibe"
                                     search
                                     selection
                                     closeOnChange
                                     onChange={this.handleVibeChange}
-                                    //value={['local']}
                                     options={this.state.vibe_options}
                                     value={this.props.currentVibes}
                                 />
                             </Grid.Column>
-                        </Grid>
+                        </Grid>                        
                     </div >
                 )}
 

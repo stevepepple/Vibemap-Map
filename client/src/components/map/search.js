@@ -141,8 +141,9 @@ class LocationSearchInput extends React.Component {
                 className='icon select_city'
                 icon='compass'
                 labeled
+                compact
                 floating
-                selection
+                selection                
                 onSearchChange={this.handleSearch}
                 onChange={this.handleSelect}
                 options={options}

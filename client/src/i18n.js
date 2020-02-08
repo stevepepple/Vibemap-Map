@@ -6,8 +6,26 @@ i18n.use(LanguageDetector).init({
   resources: {
     en: {
       translations: {
-        Introduction: "Introduction",
-        CurrentVibe: "Current Vibe",
+        Welcome: "Welcome",
+        "Good afternoon": "Good Afternoon",
+        "Good evening": "Good Evening",
+        "Search": "Search…",
+        
+        Today: "Today",
+        "2 days": "2 days",
+        "3 days": "3 days",
+        "Week": "Week",
+        "2 weeks": "2 weeks",
+
+        "Places": "Places",
+        "Events": "Events",
+        "Everything": "Everything",
+        "both": "Places & Events",
+
+        "Current Vibe": "Current Vibe",
+        "What's your vibe": "What's your vibe",
+        "Pick Activity": "Pick Activity",
+
         message: "Introduction",
         clickToAdd: "Click to check out this vibe",
         "is an internationalization-framework which offers a complete solution to localize your product from web to mobile and desktop":
@@ -23,8 +41,27 @@ i18n.use(LanguageDetector).init({
     },
     es: {
       translations: {
-        Introduction: "Bienvenidos",
-        CurrentVibe: "Vibra Actual",
+        Welcome: "Bienvenidos",
+        "Good afternoon": "Buenas Tardes",
+        "Good evening": "Buenas Tardes",
+        "Search": "Buscar…",
+
+        Today: "Ahora",
+        "2 days": "2 días",
+        "3 days": "3 días",
+        "Week": "Semana",
+        "2 weeks": "Dos Semanas",
+
+        "Places": "Lugares",
+        "Events": "Eventos",
+        "Everything": "Todos",
+        "both": "Todos",
+        "Filters": "Filtros…",
+
+        "Current Vibe": "Vibra Actual",
+        "What's your vibe": "¿Cual es tu vibra?",
+        "Pick Activity": "¿Qué quieres hacer?",
+
       }
     },
     jap: {

@@ -60,8 +60,8 @@ class TopVibes extends Component {
             <div id='topVibes' style={style}>
             
                 <Label size='small' pointing='right'>                    
-                    <Translation i18nKey="CurrentVibe">
-                        {(t, { i18n }) => <p>{t("CurrentVibe")}</p>}
+                    <Translation>
+                        {(t, { i18n }) => <p>{t("Current Vibe")}</p>}
                     </Translation>
                 </Label>
                 
@@ -69,7 +69,7 @@ class TopVibes extends Component {
                 vibes.length > 0 ? (
                     vibes
                 ) : (                    
-                    <Placeholder style={{ display: 'inline', float: 'right', width: '8em'}} ><Placeholder.Line length='short'/></Placeholder>
+                            <Placeholder style={{ display: 'inline', float: 'right', width: '8em' }} ><Placeholder.Line length='short' /><Placeholder.Line length='short' /></Placeholder>
                 )}            
                 
             </div>

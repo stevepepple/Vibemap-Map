@@ -13,6 +13,8 @@ import variables from '../../styles/variables.scss'
 import { isAbsolute } from 'path';
 import { PURPLE } from '../../constants.js';
 
+import { Translation } from 'react-i18next'
+
 
 class TimeAndTemp extends Component {
 
@@ -31,7 +33,7 @@ class TimeAndTemp extends Component {
     componentWillMount() {
 
         this.getWeather()
-        let time_of_day = helpers.getTimeOfDay(moment());
+        let time_of_day = helpers.getTimeOfDay(moment())
         this.setState({ time_of_day })
 
     }
@@ -83,7 +85,9 @@ class TimeAndTemp extends Component {
                     <WeatherIcon name='owm' iconId={this.state.icon_id} style={{ fontSize: '1.8em', marginTop: '-4px' }} /> 
                     <span style={{ fontSize: '1.4em', paddingLeft: '0.4em'}}>{temp}&#176;</span>
                 </div>
-                <span>Good {this.state.time_of_day}!</span>
+                <Translation>{
+                    (t, { i18n }) => <p>{t('Good ' + this.state.time_of_day)} </p>
+                }</Translation>            
                 
             </div>
             
