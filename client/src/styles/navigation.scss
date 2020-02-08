@@ -11,6 +11,11 @@
     padding: 1vmin;
     position: relative;
     z-index: 2000;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.text {
+    font-family: 'Roboto Condensed', sans-serif !important;
 }
 
 .navigation.mobile {
