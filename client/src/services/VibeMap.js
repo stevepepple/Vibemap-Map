@@ -102,7 +102,7 @@ module.exports = {
                 access_token : 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw'
             })
 
-            fetch(mapbox_url + "ck2v5hz4r1md12nqnfff9592e" + "/features/" + "?" + query)
+            fetch(mapbox_url + "ck2v5hz4r1md12nqnfff9592e/features/?" + query)
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout);
@@ -152,7 +152,7 @@ module.exports = {
         let distanceInMeters = 1
         if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
 
-        if (activity == 'all') activity = null
+        if (activity === 'all') activity = null
         
         // TODO: Load more points at greater distances?        
         return new Promise(function (resolve, reject) {
@@ -210,7 +210,7 @@ module.exports = {
         if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
         let center_point = point.split(',').map(value => parseFloat(value))
 
-        if (activity == 'all') activity = null
+        if (activity === 'all') activity = null
 
         let day_start = moment().startOf('day').utc().format("YYYY-MM-DD HH:MM")
         let day_end = moment().add(days, 'days').utc().format("YYYY-MM-DD HH:MM")
@@ -278,8 +278,7 @@ module.exports = {
                 .then(res => {
                     clearTimeout(timeout);
 
-                    // Apply some temporary scoring to events to make them show up better.
-                    console.log(res.results.features[0])
+                    // Apply some temporary scoring to events to make them show up better.                    
                     let scored = module.exports.scoreEvents(res.results.features, center_point)
 
                     resolve({ data: scored, loading: false, timedOut: false })
@@ -313,11 +312,13 @@ module.exports = {
 
             if (vibes && event.properties.vibes) {
                 vibe_matches = helpers.default.matchLists(vibes, event.properties.vibes)
+                vibe_bonus = vibe_matches * vibe_match_bonus
+                event.properties.vibe_score += vibe_bonus
             }
 
             // Match Categories to Top Level Ones
             let matches = helpers.default.getCategoryMatch(event.properties.categories)
-            if (matches.length == 0) matches.push('missing')
+            if (matches.length === 0) matches.push('missing')
             event.properties.categories = matches[0]        
 
             if (center_point) {
@@ -370,8 +371,6 @@ module.exports = {
         let max_aggregate_score = 1
         let max_distance = 1
 
-        let top_vibes = {}
-
         let vibe_match_bonus = 10
 
         let place = places.map((place) => {
@@ -418,7 +417,7 @@ module.exports = {
             // TODO: This all goes away but this category change shoudl definetly go elsewhere
             if (place.properties.aggregate_rating >= 2) {
 
-                if (place.properties.categories == undefined || place.properties.categories.length == 0) {
+                if (place.properties.categories === undefined || place.properties.categories.length === 0) {
                     place.properties.categories = ["missing"]                    
                 }
 
@@ -483,16 +482,13 @@ module.exports = {
     clusterPlaces: function(places, cluster_size) {
         
 
-        let collection = turf.featureCollection(places)
-        
-        //console.log("Turf collection: ", collection)
+        let collection = turf.featureCollection(places)        
 
         // TODO: Adjust cluster measure at each zoom level? 
         let clustered = turf.clustersDbscan(collection, cluster_size, { mutate: true })
         //console.log("Turf cluster: ", clustered)  
 
         let results = []
-        let bonus = 0.2
 
         turf.clusterEach(clustered, 'cluster', function (cluster, clusterValue, currentIndex) {
 
@@ -521,7 +517,7 @@ module.exports = {
                     currentFeature.properties.in_cluster = true
                     currentFeature.properties.top_in_cluster = false
 
-                    if (score_diff == 0) {
+                    if (score_diff === 0) {
                         currentFeature.properties.top_in_cluster = true
                         console.log("Top feature in cluster: ", currentFeature)
                     }

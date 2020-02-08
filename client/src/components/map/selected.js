@@ -1,6 +1,5 @@
-import React, {PureComponent, Fragment} from 'react';
-import {Marker} from 'react-map-gl';
-import SVG from 'react-inlinesvg';
+import React, {PureComponent} from 'react'
+import SVG from 'react-inlinesvg'
 
 // Important for perf: the markers never change, avoid rerender when the map viewport changes
 export default class Pins extends PureComponent {

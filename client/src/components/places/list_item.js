@@ -1,10 +1,8 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 
-import PropTypes from 'prop-types';
-import moment from 'moment';
 import helpers from '../../helpers';
 
-import { Item, Label } from 'semantic-ui-react'
+import { Item } from 'semantic-ui-react'
 
 import CardPlaceLayout from './card_place_layout'
 import CardEventLayout from './card_event_layout'
@@ -22,8 +20,6 @@ class ListItem extends React.Component {
 
     render() {
         let content = this.props.properties
-
-        console.log('THIS TYPE: ', this.props.type)
 
         let place_type = content.place_type
 

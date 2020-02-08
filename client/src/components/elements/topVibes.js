@@ -69,7 +69,7 @@ class TopVibes extends Component {
                 vibes.length > 0 ? (
                     vibes
                 ) : (                    
-                            <Placeholder style={{ display: 'inline', float: 'right', width: '8em' }} ><Placeholder.Line length='short' /><Placeholder.Line length='short' /></Placeholder>
+                            <Placeholder style={{ display: 'inline', float: 'right', width: '8em' }} ><Placeholder.Line length='short' /></Placeholder>
                 )}            
                 
             </div>

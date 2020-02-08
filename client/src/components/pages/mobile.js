@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
-import { Container, Icon } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
 import 'react-tabs/style/react-tabs.css'
 
 /* REDUX STUFF */
@@ -10,7 +10,6 @@ import * as actions from '../../redux/actions'
 // Components
 import Navigation from '../events/navigation.js'
 import EventsMap from '../events/events_map.js'
-import EventsCards from '../events/events_cards.js'
 import MobileList from '../places/mobile_list'
 
 class Mobile extends Component {

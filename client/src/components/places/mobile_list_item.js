@@ -1,16 +1,10 @@
-import React, { Component } from 'react';
-import { Item, Icon, Image, Label, List } from 'semantic-ui-react'
+import React from 'react';
+import { Item, Image, Label, List } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import helpers from '../../helpers';
-import { connect } from 'react-redux'
-
 
 class ListItem extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     handleHover(id) {
         helpers.fireEvent(this.props.id, "focus")
@@ -23,9 +17,9 @@ class ListItem extends React.Component {
     render() {
         
         let title = this.props.content.name;
-        let start = this.props.content.start_time
-        let date = moment(this.props.content.start_date)
-        let score = Math.round(this.props.content.score)
+        //let start = this.props.content.start_time
+        //let date = moment(this.props.content.start_date)
+        //let score = Math.round(this.props.content.score)
 
         //console.log(this.props.content.categories)    
         //let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);

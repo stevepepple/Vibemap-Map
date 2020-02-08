@@ -118,7 +118,7 @@ class Page extends Component {
         let updateData = false
         let refreshResults = false        
         let locationChanged = false
-        let distanceChanged = false
+        //let distanceChanged = false
 
         if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {        
             updateData = true
@@ -282,8 +282,6 @@ class Page extends Component {
             .then(results => {                
 
                 let top_picks = results.data.splice(1, this.state.num_top_picks)
-
-                console.log("Event top picks: ", top_picks)
 
                 // TODO: If both events and places, how to merge the results
                 this.props.setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)

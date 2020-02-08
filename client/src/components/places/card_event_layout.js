@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-import { Item, Icon, Image, Label } from 'semantic-ui-react'
+import { Item, Icon, Label } from 'semantic-ui-react'
 
 function cardPLaceLayout(props) {
 
@@ -11,15 +11,17 @@ function cardPLaceLayout(props) {
     let date = content.start_date
     let score = Math.round(content.average_score)
 
+    /* TODO: THis can be removed? 
     let categories = null
 
     if (typeof (content.categories) == 'object') {
         categories = content.categories.map((category) => <span class={category}>Category</span>)
     } else {
         categories = content.categories
-    }
+    } 
+    */
 
-    // TODO: Move to server side
+    // TODO: Move to server side; or atleast to VibeMap module
     if (name) {
         name = name.split(' | ')
         name = name[0]
@@ -39,14 +41,12 @@ function cardPLaceLayout(props) {
             vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{content.vibes[0] + ' & ' + remainder + ' more'}</Label>
         }
 
-        if (remainder == 0) {
+        if (remainder === 0) {
             vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{content.vibes[0]}</Label>
         }
 
         // vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
     }
-
-    console.log('Layout these props: ', props)
 
     return (
         <Fragment>

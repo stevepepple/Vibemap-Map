@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import request from 'request-promise'
 
-import PropTypes from 'prop-types';
 import querystring from 'querystring';
 import { Button, Icon, Segment } from 'semantic-ui-react'
 
 
 // Redux stuff
 import { connect } from 'react-redux';
-
 import * as constants from '../../constants.js'
-
 
 class Directions extends Component {
 
@@ -32,10 +28,7 @@ class Directions extends Component {
                     icon: 'car', 
                     eta: null
                 }
-            },
-            //date: this.props.data.properties.date,
-            //address: this.props.data.properties.address,
-            //venue: this.props.data.properties.venue
+            }            
         }
     }
 
@@ -45,7 +38,7 @@ class Directions extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        if (this.props.detailsShown == true && this.props.currentPlace.location) {
+        if (this.props.detailsShown === true && this.props.currentPlace.location) {
             this.getDirections()
         } 
         
@@ -134,7 +127,7 @@ class Directions extends Component {
                 
                 <p>This place is nearby and easy to get to. Click here for directions.</p>
 
-                <a className='ui button primary' href={this.state.link} target='_blank'> Get Directions</a>
+                <a className='ui button primary' href={this.state.link} target='_blank' rel="noopener noreferrer"> Get Directions</a>
 
             </Segment>
         );

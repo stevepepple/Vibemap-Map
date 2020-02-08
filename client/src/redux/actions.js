@@ -1,5 +1,3 @@
-import { detailShown } from "./reducer";
-
 export const setUIState = state => ({
   type: 'SET_UI_STATE',
   state,

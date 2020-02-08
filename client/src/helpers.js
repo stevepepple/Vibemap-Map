@@ -1,4 +1,3 @@
-import request from 'request-promise'
 import * as Constants from './constants.js'
 
 import { scaleLinear, scalePow } from 'd3-scale'
@@ -25,8 +24,7 @@ const helpers = {
         return bounds
     },
 
-    getRadius: function (bounds) {
-        console.log("GET RADIUS FOR THESE BOUNDS: ", bounds)
+    getRadius: function (bounds) {        
         //let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
         let diameter = turf.distance(
             [bounds[0], bounds[1]],
@@ -35,7 +33,6 @@ const helpers = {
         )
 
         let distance = diameter / 2
-        console.log('Radius Distance of Viewport: ', distance)
 
         return distance
     },
@@ -44,18 +41,15 @@ const helpers = {
         const left = bounds[0]
         const bottom = bounds[1]
         const right = bounds[2]
-        const top = bounds[3]
+        //const top = bounds[3]
 
         const options = { unit: 'miles' }
         
         const latitudinal_distance = turf.distance([left, bottom],[right, bottom], options)
-        const longitudinal_distance = turf.distance([left, bottom], [left, top], options)
+        //const longitudinal_distance = turf.distance([left, bottom], [left, top], options)
 
         let pixel_ratio = latitudinal_distance / window.width
 
-        let pixel_ratio_2 = longitudinal_distance / window.height
-
-        console.log('Each pixel is this far: ', pixel_ratio, pixel_ratio_2)
         return pixel_ratio
 
     },
@@ -113,7 +107,7 @@ const helpers = {
         } else {
             time_of_day = "morning";
         }
-        console.log(time_of_day)
+        
         return time_of_day;
     },
 
@@ -149,60 +143,6 @@ const helpers = {
         return sorted_locations
     },
 
-    topFoursquareResult: function(results) {
-
-        return new Promise(function (resolve, reject) {
-
-            let places = results.response.groups[0].items;
-
-            // Promist for each Foursquare result
-            let promises = new Array()
-            let all_places = new Array()
-
-            places.map((item) => {
-                let place = item.venue
-                console.log("Does this place exist: ", place.name)
-                promises.push(
-                    request({
-                        url: 'http://localhost:5000/api/place_exists',
-                        method: 'GET',
-                        qs: {
-                            id: place.id,
-                        }
-                    })
-
-                )
-            });
-
-            Promise.all(promises).then(function(results) {
-                let all_places = [];
-
-                // TODO: is there a better, consistent way to handle the batch of responses
-                results.forEach(function(message){
-                    let result = JSON.parse(message);
-
-                    if (result.success === true) {
-                        console.log("Resulting place: ", result.place)
-
-                        // TODO: save to database
-                        request.post('http://localhost:5000/api/places', { form: result.place },
-                            function (err, httpResponse, body) {
-                                if (err) { console.log(err); } 
-                                else { console.log('Saved venue: ', body) }
-                            })
-
-                        all_places.push(result.place)
-                        
-                    }
-                })
-
-                resolve(all_places);
-            });
-            
-        });        
-
-    },
-
     findPlaceCategoriess: function(categories) {
         
         let combined = []
@@ -226,10 +166,8 @@ const helpers = {
 
                     if (top_match || child_match ) {
                         combined.push(sub_category.name)
-                    }
-                    
+                    }                
                 })
-                
             }
         })
 
@@ -238,8 +176,8 @@ const helpers = {
 
     scaleMarker: function(score, min, max, zoom) {
         // TODO: Is this max right? 
-        if (!min) { let min = 0 }
-        if (!max) { let max = 100 }
+        if (!min) { min = 0 }
+        if (!max) { max = 100 }
 
         // Scale min and max marker size to zoom level
         let marker_scale = scalePow(1)

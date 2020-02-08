@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { css } from '@emotion/core'
-
 
 import querystring from 'querystring';
 import WeatherIcon from 'react-icons-weather';
@@ -10,11 +8,7 @@ import moment from 'moment';
 import helpers from '../../helpers.js'
 import variables from '../../styles/variables.scss'
 
-import { isAbsolute } from 'path';
-import { PURPLE } from '../../constants.js';
-
 import { Translation } from 'react-i18next'
-
 
 class TimeAndTemp extends Component {
 
@@ -40,14 +34,10 @@ class TimeAndTemp extends Component {
 
     getWeather() {
 
-        console.log('Current Location: ', this.props.location, this.props)
-
         let query = querystring.stringify({
             lat: this.props.location.lat,
             lon: this.props.location.lon
         });
-
-        console.log(query)
 
         fetch("/api/weather?" + query)
             .then(data => data.json())

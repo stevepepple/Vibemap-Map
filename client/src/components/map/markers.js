@@ -1,15 +1,13 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import helpers from '../../helpers.js'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
-import ReactMapGL, { Marker, Popup } from 'react-map-gl'
+import { Marker } from 'react-map-gl'
 import isEqual from 'react-fast-compare'
 
 import Vibe from '../elements/vibe'
-
-import Styles from '../../styles/map_styles.js'
 
 class Markers extends Component {
 
@@ -117,6 +115,7 @@ class Markers extends Component {
                     */}
                     <div
                         id={feature.id}
+                        title={feature.properties.name}
                         className={selected ? feature.className + ' selected' : feature.className}
                         onClick={((e) => this.props.onClick(e, feature))}
                         onMouseOver={((e) => this.handleOnMouseOver(e, feature))}
@@ -128,7 +127,7 @@ class Markers extends Component {
                             zIndex: feature.vibe_score
                         }}>                        
                                                 
-                        <img src={feature.properties.images[0]} height={'100%'} width={'100%'} />
+                        <img src={feature.properties.images[0]} alt={feature.properties.name} height={'100%'} width={'100%'} />
                         
                     </div>
                 </Marker>

@@ -19,8 +19,7 @@ class VectorTile extends React.Component {
         }
     }
 
-    static getDerivedStateFromProps(nextProps, prevState){
-        console.log('getDerivedState: ', nextProps, prevState)
+    static getDerivedStateFromProps(nextProps, prevState){        
         if (nextProps.activity !== prevState.activity) {
             return { activity: nextProps.activity };
         } else {
@@ -30,7 +29,7 @@ class VectorTile extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.activity !== this.props.activity) {
-            if (this.props.activity == 'all') {
+            if (this.props.activity === 'all') {
                 this.setState({ filter: ["food", "shopping", "outdoors"] })
             } else {
                 this.setState({ update_layer: true, activity: this.props.activity, filter: [this.props.activity] })
@@ -43,7 +42,6 @@ class VectorTile extends React.Component {
         const map = this._map
 
         if (map.style && map.style._loaded) {
-            const MAX_ZOOM_LEVEL = 9
 
             map.addSource('tile_layer', {
                 'type': 'vector',
@@ -85,8 +83,7 @@ class VectorTile extends React.Component {
         
         this._map = context.map
 
-        if(this.state.added_map === false) {
-            console.log("ADDING HEATMAP")
+        if(this.state.added_map === false) {            
             this.addHeatMap()
         } 
         
@@ -106,4 +103,3 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, actions)(VectorTile)
-

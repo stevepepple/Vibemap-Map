@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import { Grid, Dropdown, Form, Segment } from 'semantic-ui-react'
+import { Grid, Dropdown, Form } from 'semantic-ui-react'
 import isEqual from 'react-fast-compare'
 
 // MOve query string and 
 import helpers from '../../helpers.js'
 import queryString from 'query-string'
-
-import * as Constants from '../../constants.js'
-import VibeMap from '../../services/VibeMap.js'
 
 import LocationSearchInput from '../map/search'
 
@@ -46,6 +43,8 @@ class Navigation extends Component {
         let params = queryString.parse(this.props.search)
         this.setState({ params: params })
 
+        console.log("CURRENT PROPS in Nav", this.props)
+
         if (params.place) {
             this.props.setDetailsId(params.place)
             if(params.type) {
@@ -81,8 +80,7 @@ class Navigation extends Component {
                 vibes.push(params.vibes)
             } else {
                 vibes = params.vibes
-            }
-            console.log("VIBEZ: ", vibes)
+            }            
             this.props.setCurrentVibes(vibes)
         }
 
@@ -97,14 +95,11 @@ class Navigation extends Component {
         let new_history = queryString.stringify(this.state.params)    
         push(new_history)
 
-        if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {
-            console.log("Set search: ", this.props.searchTerm)
-            // TODO: set URL
+        if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {            
             helpers.updateURL("search", this.props.searchTerm)
         }
 
-        if (!isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)) {
-            // TODO: set URL
+        if (!isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)) {         
             this.updateURL("latitude", this.props.currentLocation.latitude)
             this.updateURL("longitude", this.props.currentLocation.longitude)
         }
@@ -121,21 +116,16 @@ class Navigation extends Component {
             this.updateURL("zoom", this.props.zoom)
         }
 
-        if (!isEqual(prevProps.activity, this.props.activity)) { 
-            console.log("SET activity : ", this.props.activity)
-            this.updateURL("activity", this.props.activity)            
+        if (!isEqual(prevProps.activity, this.props.activity)) {     
+            this.updateURL("activity", this.props.activity)
         }
 
-        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
-            console.log("SET VIBES : ", this.props.currentVibes)
-            this.updateURL("activity", this.props.currentVibes)            
+        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {            
             //this.setState({ vibes: this.props.currentVibes })
             this.props.setCurrentVibes(this.props.currentVibes)
         }
 
-        if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {
-            console.log("Set search: ", this.props.searchTerm)
-            // TODO: set URL
+        if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {                        
             this.updateURL("search", this.props.searchTerm)
         }
     }
@@ -176,41 +166,27 @@ class Navigation extends Component {
 
     render() {
 
-        const calendar_current = <Translation>{
-            (t, { i18n }) => t(this.state.options.find(obj => obj.value == this.props.currentDays).text)
-        }</Translation>
-
-        const what_is_your_vibe = <Translation>{
-            (t, { i18n }) => t("What's your vibe")
-        }</Translation>
-
-
-        let search = <Form>
-            <Form size='small'>
-                <Form.Group>
-                    <LocationSearchInput className='mobile search'/>
-                    {/* TODO: Further investigate why dropdowns are the slowest component on the page */}
-                    <Dropdown
-                        className='icon left tiny datepicker'
-                        button
-                        labeled
-                        icon='calendar'
-                        onChange={this.handleDaysChange}
-                        text={calendar_current}                    
+        let search = <Form size='small'>
+            <Form.Group>
+                <LocationSearchInput className='mobile search'/>
+                {/* TODO: Further investigate why dropdowns are the slowest component on the page */}
+                <Translation>{
+                (t, { i18n }) => <Dropdown
+                    className='icon left tiny datepicker'
+                    button
+                    labeled
+                    icon='calendar'
+                    onChange={this.handleDaysChange}
+                    text={t(this.state.options.find(obj => obj.value === this.props.currentDays).text)}
                     >
-                        <Dropdown.Menu>
-                            {this.state.options.map((option) => (
-                                <Translation>
-                                    { 
-                                    (t, {i18n}) => <Dropdown.Item key={option.value} text={t(option.text)} value={option.value} />
-                                    }
-                                    
-                                </Translation>
-                            ))}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Form.Group>
-            </Form> 
+                    <Dropdown.Menu>
+                        {this.state.options.map((option) => (
+                            <Dropdown.Item key={option.value} text={t(option.text)} value={option.value} />
+                        ))}
+                    </Dropdown.Menu>
+                </Dropdown>
+                }</Translation>
+            </Form.Group>
         </Form>
 
         return (
@@ -232,18 +208,22 @@ class Navigation extends Component {
                             </Grid.Column>
                             <Grid.Column width={6}>
                                 {/* TODO: replace location input with search able dropdown */}
-                                {/* TODO: for some reason the dropdown as a problem with prop changes. */}                                
-                                <Dropdown
-                                    placeholder={what_is_your_vibe}
-                                    multiple
-                                    label="Vibe"
-                                    search
-                                    selection
-                                    closeOnChange
-                                    onChange={this.handleVibeChange}
-                                    options={this.state.vibe_options}
-                                    value={this.props.currentVibes}
-                                />
+                                {/* TODO: for some reason the dropdown as a problem with prop changes. */}
+                                <Translation>{
+                                    (t, { i18n }) => <Dropdown
+                                        placeholder={t("What's your vibe")}
+                                        multiple
+                                        label="Vibe"
+                                        search
+                                        selection
+                                        closeOnChange
+                                        onChange={this.handleVibeChange}
+                                        options={this.state.vibe_options}
+                                        value={this.props.currentVibes}
+                                    />
+                                }</Translation>
+
+                                
                             </Grid.Column>
                         </Grid>                        
                     </div >

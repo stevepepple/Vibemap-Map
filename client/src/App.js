@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Menu, Dropdown } from 'semantic-ui-react'
 
 import MainPage from './components/pages/main';
@@ -17,10 +17,6 @@ class App extends Component {
   }
 
   render() {
-    const { activeItem } = this.state
-
-    const { t } = this.props;
-
 
     return (
       <div className="App">

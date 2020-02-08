@@ -3,18 +3,15 @@ import _ from 'lodash'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
-import { store } from '../../redux/store'
 
-import { Container, Dimmer, Form, Input, Item, Loader, Segment, Dropdown } from 'semantic-ui-react'
-import { Global, css } from '@emotion/core'
-
-import helpers from '../../helpers.js'
+import { Dimmer, Form, Input, Item, Loader, Segment, Dropdown } from 'semantic-ui-react'
+import { Global } from '@emotion/core'
 
 import ListItem from './list_item.js'
 import * as Constants from '../../constants.js'
 import TimeAndTemp from '../weather/timeAndTemp'
 
-import { Translation, Trans } from 'react-i18next'
+import { Translation } from 'react-i18next'
 
 class PlacesList extends Component {
 
@@ -51,24 +48,10 @@ class PlacesList extends Component {
     }
 
     render() {
-        let has_items = this.props.data.length > 0;
-        let top_item = null;
+        let has_items = this.props.data.length > 0;        
         let items = null;
 
         let searchTerm = this.props.searchTerm
-
-        // i18n Translations        
-        const activity_placeholder = <Translation>{
-            (t, { i18n }) => t('Pick Activity')
-        }</Translation>
-
-        const place_type_text = <Translation>{
-            (t, { i18n }) => t(this.props.placeType)
-        }</Translation>
-
-        const filters_text = <Translation>{
-            (t, { i18n }) => t('Filters')
-        }</Translation>
         
         if (has_items) {
             // TODO: @cory, sorting should happen on the server. 
@@ -116,16 +99,21 @@ class PlacesList extends Component {
                             
                         </Form.Field>
                         <Form.Field widths='equal'>
-                            <Dropdown
-                                search
-                                placeholder={activity_placeholder}
-                                selection
-                                onChange={this.handleActivityChange}
-                                options={Constants.activty_categories}
-                                value={this.props.activity}
-                            />
+                            <Translation>{
+                                (t, { i18n }) => <Dropdown
+                                    search
+                                    placeholder={t('Pick Activity')}
+                                    selection
+                                    onChange={this.handleActivityChange}
+                                    options={Constants.activty_categories}
+                                    value={this.props.activity}
+                                />
+                            }</Translation>
+                            
                         </Form.Field>
-                        <Form.Group widths='equal'>                            
+                        <Form.Group widths='equal'>
+                            <Translation>{
+                                (t, { i18n }) =>
                             <Dropdown                                
                                 icon='map pin'
                                 labeled
@@ -133,28 +121,32 @@ class PlacesList extends Component {
                                 button
                                 compact
                                 className='icon small'
-                                onChange={this.handlePlaceType}
-                                options={this.state.place_type_options}
-                                text={place_type_text}
+                                onChange={this.handlePlaceType}                                
+                                text={t(this.props.placeType)}
                                 value={this.props.placeType}
                             >
                                 <Dropdown.Menu>
                                     {this.state.place_type_options.map((option) => (
-                                        <Translation>{
-                                                (t, { i18n }) => <Dropdown.Item key={option.value} text={t(option.text)} value={option.value} />
-                                        }</Translation>
+                                         <Dropdown.Item key={option.value} text={t(option.text)} value={option.value} />
+                                        
                                     ))}
                                 </Dropdown.Menu>
                             </Dropdown>
-                            <Dropdown
-                                text={filters_text}
-                                icon='filter'
-                                fluid
-                                labeled
-                                button
-                                compact
-                                className='icon small'
-                            />
+                            }</Translation>
+
+                            <Translation>{
+                            (t, { i18n }) => 
+                                <Dropdown
+                                    text={t('Filters')}
+                                    icon='filter'
+                                    fluid
+                                    labeled
+                                    button
+                                    compact
+                                    className='icon small'
+                                />
+                            }</Translation>
+                            
                         </Form.Group>
                     </Form>
                 </Segment>

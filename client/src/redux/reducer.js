@@ -2,12 +2,7 @@ import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
 import _ from 'lodash'
-
 import helpers from '../helpers.js'
-
-import queryString from 'query-string'
-
-import * as turf from '@turf/turf'
 
 export function uiReducer(state = uiState, action) {
   switch(action.type) {
@@ -18,7 +13,7 @@ export function uiReducer(state = uiState, action) {
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
 export const uiState = (state = {}, action) => {
-  if (action.type == 'SET_UI_STATE') {
+  if (action.type === 'SET_UI_STATE') {
     console.log("Setting initial Redux state with: ", action)
     state = action.state
   }
@@ -26,14 +21,14 @@ export const uiState = (state = {}, action) => {
 }
 
 export const detailsShown = (state = false, action) => {
-  if (action.type == 'SET_DETAILS_SHOWN') {
+  if (action.type === 'SET_DETAILS_SHOWN') {
     state = action.show
   }
   return state
 }
 
 export const detailsId = (state = null, action) => {
-  if (action.type == 'SET_DETAILS_ID') {
+  if (action.type === 'SET_DETAILS_ID') {
     console.log("SET_DETAILS_ID: " + action.id)
     state = action.id
   }
@@ -41,7 +36,7 @@ export const detailsId = (state = null, action) => {
 }
 
 export const detailsType = (state = "place", action) => {
-  if (action.type == 'SET_DETAILS_TYPE') {
+  if (action.type === 'SET_DETAILS_TYPE') {
     console.log("SET_DETAILS_TYPE: ", action.place_type)
     state = action.place_type
   }
@@ -49,15 +44,15 @@ export const detailsType = (state = "place", action) => {
 }
 
 export const mapReady = (state = false, action) => {
-  if (action.type == 'SET_MAP_READY') {
+  if (action.type === 'SET_MAP_READY') {
     state = action.ready
   }
   return state
 }
 
 export const activity = (state = "", action) => {
-  if (action.type == 'SET_ACTIVITY') {
-    if (action.activity == "any"){
+  if (action.type === 'SET_ACTIVITY') {
+    if (action.activity === "any"){
       action.activity = null
     }
     console.log("SEt activity: ", action.activity)
@@ -69,7 +64,7 @@ export const activity = (state = "", action) => {
 // reducer takes state and action (in our a javascript object) as parameters
 // then returns a state
 export const currentLocation = (state = { latitude: 0, longitude: 0, name : null, distance_changed : 0 }, action) => {
-  if (action.type == 'SET_CURRENT_LOCATION') {
+  if (action.type === 'SET_CURRENT_LOCATION') {
     console.log("SET_CURRENT_LOCATION", action.location.latitude, action.location.longitude, action.distance_changed)
     action.location.latitude = parseFloat(action.location.latitude)
     action.location.longitude = parseFloat(action.location.longitude)
@@ -79,7 +74,7 @@ export const currentLocation = (state = { latitude: 0, longitude: 0, name : null
 }
 
 export const viewport = (state = {}, action) => {
-  if (action.type == 'SET_VIEWPORT') {
+  if (action.type === 'SET_VIEWPORT') {
     
     state = action.viewport
   }
@@ -87,7 +82,7 @@ export const viewport = (state = {}, action) => {
 }
 
 export const windowSize = (state = { width: 1024, height: 768 }, action) => {
-  if (action.type == 'SET_WINDOW_SIZE') {
+  if (action.type === 'SET_WINDOW_SIZE') {
     console.log("Set windows size: ", action.size)
     state = action.size
   }
@@ -95,15 +90,14 @@ export const windowSize = (state = { width: 1024, height: 768 }, action) => {
 }
 
 export const bounds = (state = [], action) => {
-  if (action.type == 'SET_BOUNDS') {
-    console.log("SETTING BOUNDS: ", action.bounds)
+  if (action.type === 'SET_BOUNDS') {    
     state = action.bounds
   }
   return state
 }
 
 export const pixelDistance = (state = [], action) => {
-  if (action.type == 'SET_PIXEL_DISTANCE') {
+  if (action.type === 'SET_PIXEL_DISTANCE') {
     console.log('SET_PIXEL_DISTANCE', action)
     state = action.distance
   }
@@ -111,7 +105,7 @@ export const pixelDistance = (state = [], action) => {
 }
 
 export const bearing = (state = 0, action) => {
-  if (action.type == 'SET_BEARING') {
+  if (action.type === 'SET_BEARING') {
     console.log("SET BEARING: ", action.bearing)
     state = action.bearing
   }
@@ -119,7 +113,7 @@ export const bearing = (state = 0, action) => {
 }
 
 export const zoom = (state = 14, action) => {
-  if (action.type == 'SET_ZOOM') {
+  if (action.type === 'SET_ZOOM') {
     state = action.zoom
   }
   return state
@@ -127,16 +121,16 @@ export const zoom = (state = 14, action) => {
 
 // TODO: create a mathematical relationship between zoom and distance
 export const distance = (state = 1.4, action) => {
-  if (action.type == 'SET_DISTANCE') {
+  if (action.type === 'SET_DISTANCE') {
     state = action.distance
   }
   return state
 }
 
 // Default state is one day
-export const currentDays = (state = 1, action) => {
-  if (action.type == 'SET_DAYS') {
-    console.log('Setting Days ', action)
+export const currentDays = (state = "1", action) => {
+  if (action.type === 'SET_DAYS') {
+    //console.log('Setting Days ', action)
     state = action.days
   }
   return state
@@ -144,22 +138,22 @@ export const currentDays = (state = 1, action) => {
 
 // Default state is one day
 export const searchTerm = (state = "", action) => {
-  if (action.type == 'SET_SEARCH_TERM') {
+  if (action.type === 'SET_SEARCH_TERM') {
     state = action.term
   }
   return state
 }
 
 export const currentVibes = (state = ['chill'], action) => {
-  if (action.type == 'SET_CURRENT_VIBES') {
+  if (action.type === 'SET_CURRENT_VIBES') {
     state = action.vibes
   }
   return state
 }
 
 export const placeType = (state = 'both', action) => {
-  if (action.type == 'SET_PLACE_TYPE') {
-    console.log("SET_PLACE_TYPE", action)
+  if (action.type === 'SET_PLACE_TYPE') {
+    //console.log("SET_PLACE_TYPE", action)
     state = action.value
   }
   return state
@@ -167,7 +161,7 @@ export const placeType = (state = 'both', action) => {
 
 
 export const topVibes = (state = [], action) => {
-  if (action.type == 'SET_TOP_VIBES') {
+  if (action.type === 'SET_TOP_VIBES') {
     state = action.top_vibes
   }
   return state
@@ -180,8 +174,7 @@ vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy',
 
 
 export const nearby_places = (state = [], action) => {
-  if (action.type == 'SET_NEARBY_PLACES') {
-    let data = []
+  if (action.type === 'SET_NEARBY_PLACES') {
 
     let places = action.places
     /*
@@ -209,7 +202,7 @@ export const nearby_places = (state = [], action) => {
 
 export const cities = (state = [], action) => {
 
-  if (action.cities == 'SET_CITIES') {
+  if (action.cities === 'SET_CITIES') {
     // Save the processed data to state.
     return action.cities
   }
@@ -219,7 +212,7 @@ export const cities = (state = [], action) => {
 
 export const neighborhoods = (state = [], action) => {
 
-  if (action.neighborhoods == 'SET_NEIGHBORHOODS') {
+  if (action.neighborhoods === 'SET_NEIGHBORHOODS') {
     // Save the processed data to state.
     return action.neighborhoods
   }
@@ -229,7 +222,7 @@ export const neighborhoods = (state = [], action) => {
 
 export const eventsData = (state = [], action) => {
 
-  if (action.type == 'SET_EVENTS_DATA') {
+  if (action.type === 'SET_EVENTS_DATA') {
     // TODO: Map and process, but plan to move this logic to API
     let processed = action.events_data.map(event => {
       event.properties.score = event.properties.likes
@@ -245,7 +238,7 @@ export const eventsData = (state = [], action) => {
 
 export const placesData = (state = [], action) => {
 
-  if (action.type == 'SET_PLACES_DATA') {
+  if (action.type === 'SET_PLACES_DATA') {
     // TODO: Map and process, but plan to moe this logic to API
     let processed = action.places_data.map(place => {
       // TODO: Score places with more categories higher
@@ -258,7 +251,7 @@ export const placesData = (state = [], action) => {
 
       let matches = helpers.getCategoryMatch(place.properties.categories)
       
-      if (matches.length == 0) matches.push('missing')
+      if (matches.length === 0) matches.push('missing')
 
       place.properties.categories = matches[0]
       //event.properties.score = event.properties.likes
@@ -289,7 +282,7 @@ export const currentPlace = (state = {
   vibes: [],
   images: []
 }, action) => {
-  if (action.type == "SET_CURRENT_PLACE") {
+  if (action.type === "SET_CURRENT_PLACE") {
       return action.place
   }
 
@@ -298,12 +291,10 @@ export const currentPlace = (state = {
 
 export const topPicks = (state = [], action) => {
 
-  if (action.type == 'SET_TOP_PICKS_DATA') {
+  if (action.type === 'SET_TOP_PICKS_DATA') {
 
     // Save the processed data to state.
     // If request is for fresh results update the map.
-    console.log('Updating top results: ', action)
-
     // TODO: Map and process, but plan to moe this logic to API
     let processed = action.places_data.map(place => {
       // TODO: work with Cory to fix these categories according to the schema
@@ -361,7 +352,6 @@ export const geod = (state = {}, action) => {
     default:
       return state;
   }
-
 }
 
 export const reducers = (history) => combineReducers({
@@ -393,4 +383,4 @@ export const reducers = (history) => combineReducers({
   viewport,
   windowSize,
   zoom
-});
+})

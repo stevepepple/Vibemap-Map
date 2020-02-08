@@ -1,13 +1,13 @@
 import React from 'react';
-import { Search, Dropdown } from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react'
 
 /* REDUX STUFF */
 import { connect } from 'react-redux'
-import * as actions from '../../redux/actions';
+import * as actions from '../../redux/actions'
 
 import helpers from '../../helpers.js'
 
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
 
 class LocationSearchInput extends React.Component {
@@ -65,11 +65,9 @@ class LocationSearchInput extends React.Component {
 
                         // TODO: This is probably not the right way to do this
                         let new_locations = results.map(address => {
-
                             if (address.formatted_address) {
                                 return { key: address.place_id, id: address.place_id, text: address.formatted_address, centerpoint: [address.geometry.location.lat(), address.geometry.location.lng()], value: address.formatted_address }
                             }
-                           
                         })
 
                         if (new_locations.length > 0) {
@@ -91,7 +89,7 @@ class LocationSearchInput extends React.Component {
 
     handleSelect = (e, { value }) => {
         
-        let item = this.state.locations.find(o => o.value == value)
+        let item = this.state.locations.find(o => o.value === value)
 
         // User picked an item from the list
         if (typeof item == 'object') {
@@ -160,9 +158,5 @@ const mapStateToProps = state => ({
     currentLocation: state.currentLocation,
     zoom: state.zoom
 });
-
-const mapDispatchToProps = dispatch => ({
-    setLocation: location => dispatch(actions.setCurrentLocation(location))
-})
 
 export default connect(mapStateToProps, actions)(LocationSearchInput);

@@ -1,14 +1,12 @@
 import React, { Fragment } from 'react'
 
-import { Item, Icon, Image, Label } from 'semantic-ui-react'
+import { Item, Icon, Label } from 'semantic-ui-react'
 
 function cardPLaceLayout(props) {
 
     let content = props.properties
 
-    let name = content.name;
-    let start = content.start_time
-    let date = content.start_date
+    let name = content.name;    
     let score = Math.round(content.average_score)
 
     let categories = null
@@ -39,7 +37,7 @@ function cardPLaceLayout(props) {
             vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{content.vibes[0] + ' & ' + remainder + ' more'}</Label>
         }
 
-        if (remainder == 0) {
+        if (remainder === 0) {
             vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{content.vibes[0]}</Label>
         }
 
@@ -50,7 +48,10 @@ function cardPLaceLayout(props) {
         <Fragment>
             <Item.Image src={content.images[0]} size='small' />
             <Item.Content>
-                <Item.Extra className='date'>{date} {start}</Item.Extra>
+                {categories &&
+                    <Item.Extra className='date'>{categories}</Item.Extra>
+                }
+                            
                 <Item.Header>{name}</Item.Header>
                 <Item.Extra>
                     <div>
