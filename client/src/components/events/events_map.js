@@ -49,9 +49,7 @@ class EventsMap extends React.PureComponent {
         // TODO: make valid GeoJSON in Redux?
         let places_geojson = turf.featureCollection(nextProps.places_data)
         let events_geojson = turf.featureCollection(nextProps.events_data)
-        let top_picks_geojson = turf.featureCollection(nextProps.topPicks)
-
-        console.log('Has top picks: ', top_picks_geojson)
+        let top_picks_geojson = turf.featureCollection(nextProps.topPicks)        
 
         let zoom = nextProps.zoom
 
@@ -226,7 +224,7 @@ class EventsMap extends React.PureComponent {
                                 <Source
                                     id='top_picks'
                                     type="geojson"
-                                    data={this.props.top_picks_geojson}
+                                    data={this.state.top_picks_geojson}
                                     cluster={false}>
 
                                     <Layer
@@ -243,13 +241,12 @@ class EventsMap extends React.PureComponent {
                                         paint={Styles.top_pick_paint}
                                     />
                                 </Source>
-                                
                                 <Markers
                                     data={this.props.topPicks}
                                     currentVibes={this.props.currentVibes}
                                     zoom={this.props.zoom}
                                     onClick={this._onClick}
-                                    showPopup={this.showPopup} />
+                                    showPopup={this.showPopup} />                                
                             </Fragment>
 
                         }
