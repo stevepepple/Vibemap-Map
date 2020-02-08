@@ -37,6 +37,10 @@ input.search {
     padding-left: 5vmin;
 }
 
+.datepicker .text {
+    line-height: 2em;
+}
+
 .ui.search > .text.default {
     color: $color-dark-gray !important;
 }

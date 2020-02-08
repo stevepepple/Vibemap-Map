@@ -117,7 +117,7 @@ class Page extends Component {
         let mapReady = this.props.mapReady
         let updateData = false
         let refreshResults = false        
-        let locationChanged = false
+        let locationChanged = false        
         //let distanceChanged = false
 
         if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {        
@@ -173,7 +173,8 @@ class Page extends Component {
             // Get the ratio of distance for each pixel on the screen; used for clustering
             this.props.setPixelDistance(helpers.getDistanceToPixels(bounds, this.props.windowSize))
 
-            console.log("MAP IS READY & UPDATE NEEDED")
+            // Reset mergeTopPicks; if the results shoudl change
+            if (refreshResults) this.setState({ mergeTopPicks: false })
 
             // TODO: Add preferece for places or events
             switch (this.props.placeType) {

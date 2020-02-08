@@ -77,12 +77,12 @@ module.exports = {
       "text-allow-overlap": false,
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
-      "text-ignore-placement": true,
+      "text-ignore-placement": false,
       "text-radial-offset" : [
         "interpolate",
         ["linear"], ["zoom"],
         8, 0.4,
-        18, ["get", "icon_size"]
+        16, ["get", "icon_size"]
       ],
       "text-font": ["Roboto Condensed Bold"],
       "text-line-height": 1.0,
@@ -136,7 +136,7 @@ module.exports = {
         8, 6,
         22, 20
       ],
-      "text-offset": [0, ["get, 'icon_size"]],
+      "text-offset": [0, 4],
       "text-max-width": 12
     },
 
@@ -146,8 +146,8 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 1,
-          10, 10,
-          12, 30,
+          10, 24,
+          12, 40,
           13, 50,
           14, 70,
           20, 200
