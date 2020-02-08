@@ -22,27 +22,27 @@ export const METERS_PER_MILE = 1609.34
 export const PURPLE = '#811897'
 
 export const zoom_levels = {
-    0: '1:500 M ~ world',
-    1: '1:250 M ~ continent',
-    2: '1:150 M ~ subcontinental',
-    3: '1:70 M  ~ largest country',
-    4: '1:35 M  ~ large country',
-    5: '1:15 M	~ African country',
-    6: '1:10 M	~ large European country',
-    7: '1:4 M ~ large US state',
-    8: '1:2 M ~ small US state',
-    9: '1:1 M ~ large metro',
-    10: '1:500 K ~ small metro',
-    11: '1:250 K ~ city',
-    12: '1:150 K ~ town',
-    13: '1:70 K	~ village',
-    14: '1:35 K ~ neighborhood',
-    15: '1:15 K ~ small road',
-    16: '1:8 K ~ street',
-    17: '1:4 K ~ block',
-    18: '1:2 K ~	buildings & trees',
-    19: '1:1 K ~ street detail',
-    20: '1:1 K ~ rooftop'
+    0: 'World ~ 1:500 M',
+    1: 'Continent ~ 1:250 M',
+    2: 'Subcontinental ~ 1:150 M',
+    3: 'Largest country ~ 1:70 M',
+    4: 'Large country ~ 1:35 M',
+    5: 'African country ~ 1:15 M',
+    6: 'Large European country ~ 1:10 M',
+    7: 'Large US state ~ 1:4 M',
+    8: 'Small US state ~ 1:2 M',
+    9: 'Large metro ~ 1:1 M',
+    10: 'Small metro ~ 1:500 K',
+    11: 'City ~ 1:250 K',
+    12: 'Town ~ 1:150 K',
+    13: 'Village ~ 1:70 K',
+    14: 'Neighborhood ~ 1:35 K',
+    15: 'Small road ~ 1:15 K',
+    16: 'Street ~ 1:8 K',
+    17: 'Block ~ 1:4 K',
+    18: 'Buildings & trees ~ 1:2 K',
+    19: 'Street detail ~ 1:1 K',
+    20: 'Rooftop ~ 1:1 K'
 }
 
 /* TODO: Move to react Store? */

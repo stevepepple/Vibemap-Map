@@ -11,7 +11,7 @@ export default class ZoomLegend extends React.Component {
         // Give a sense of scale to each zoom level; rounded to whole integer
         let zoom_level = Constants.zoom_levels[zoom_rounded]
         return (
-            <div id='scale'>{zoom_rounded} : {zoom_level} </div>
+            <div id='scale'> Scale of {zoom_level}; level {zoom_rounded}</div>
         );
     }
 }
