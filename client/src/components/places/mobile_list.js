@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
-import { Button, Card, Grid, Dimmer, GridColumn, Icon, List, Loader, Segment, Tab } from 'semantic-ui-react'
-import { Global, css } from '@emotion/core'
+import { List, Segment } from 'semantic-ui-react'
+import { Global } from '@emotion/core'
 
 import MobileListItem from './mobile_list_item.js'
-import * as Constants from '../../constants.js'
 
 class MobileList extends Component {
 
@@ -30,15 +29,14 @@ class MobileList extends Component {
 
     render() {
 
-        let has_items = this.props.data.length > 0;
-        let top_item = null;
+        let has_items = this.props.data.length > 0;        
         let items = null;
 
         if (has_items) {
             // TODO: @cory, sorting should happen on the server. 
             let sorted = this.props.data.sort((a, b) => (a.properties.score > b.properties.score) ? -1 : 1)
             items = sorted.map((event) => {
-                return <MobileListItem key={event.id} id={event.id} link={event.properties.link} onClick={this.onClick} content={event.properties} />
+                return <MobileListItem key={event.id} id={event.id} type={event.type} link={event.properties.link} onClick={this.onClick} content={event.properties} />
             })
             
         } else {

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 //import Geocoder from "@mapbox/react-geocoder"
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
@@ -7,7 +7,6 @@ import * as turf from '@turf/turf'
 
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup } from 'react-map-gl'
 import CustomMapController from '../map/map-conroller'
-
 
 // TODO: Remove these other map sources
 import Styles from '../../styles/map_styles.js'
@@ -19,7 +18,6 @@ import ZoomLegend from '../map/ZoomLegend'
 
 // TODO: load from common .env
 import * as Constants from '../../constants.js'
-import helpers from '../../helpers.js'
 
 import '../../styles/map.scss'
 
@@ -47,13 +45,13 @@ class EventsMap extends React.PureComponent {
     // TODO: Move to componentWillUPdate
     componentWillReceiveProps(nextProps){
 
-        // TODO: @cory Hack to group event and places heatmap, until the venues database is updated.
-        let combined_places = nextProps.places_data.concat(nextProps.events_data)
         // Make it valide geoJSON
         // TODO: make valid GeoJSON in Redux?
         let places_geojson = turf.featureCollection(nextProps.places_data)
         let events_geojson = turf.featureCollection(nextProps.events_data)
         let top_picks_geojson = turf.featureCollection(nextProps.topPicks)
+
+        console.log('Has top picks: ', top_picks_geojson)
 
         let zoom = nextProps.zoom
 
@@ -91,7 +89,6 @@ class EventsMap extends React.PureComponent {
         let distance = turf.distance(original_location, new_location)
 
         let setLocation = false
-        let setZoom = false
         let setBearing = false
 
         // TODO: there's still a problem in how the new and old values sync...
