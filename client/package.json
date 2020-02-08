@@ -48,7 +48,7 @@
     "redux": "^4.0.5",
     "request-promise": "^4.2.5",
     "save": "^2.4.0",
-    "semantic-ui-react": "^0.83.0",
+    "semantic-ui-react": "^0.83.0"
   },
   "eslintConfig": {
     "extends": "react-app"
