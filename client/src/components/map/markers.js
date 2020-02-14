@@ -20,8 +20,7 @@ class Markers extends Component {
         }
     }
 
-    componentDidMount() {
-        console.log("MOUNTED MARKERS: ", this.props)
+    componentDidMount() {        
         let has_features = (this.props.data.length > 0) ? true : false
         if (has_features) {
             this.setState({ markers: this.scoreMarkers(this.props.data) })    
@@ -35,9 +34,7 @@ class Markers extends Component {
         
         if (has_features && prevState.has_features === false) {
             this.setState({ has_features })
-        }
-
-        console.log("Has Feature and Will Update: ", has_features)
+        }        
 
         if (has_features && !update) {
             // Comes from Redux state but that's not entirely clear
@@ -56,8 +53,7 @@ class Markers extends Component {
             let max = helpers.getMax(features, 'average_score')
             let min = helpers.getMin(features, 'average_score')
 
-            // Make less high scored marker in cluster smaller
-            console.log('Marker is in cluster? ', feature.properties.in_cluster)
+            // Make less high scored marker in cluster smaller            
             if (feature.properties.in_cluster === true && feature.properties.top_in_cluster === false ) {
                 
                 score = max / 2
@@ -144,7 +140,7 @@ class Markers extends Component {
                         
                     </div>
                 </Marker>
-                console.log("Adding this markers: ",)
+                
                 return(marker)
             })            
         }
