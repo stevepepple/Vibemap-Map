@@ -20,6 +20,14 @@ class Markers extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log("MOUNTED MARKERS: ", this.props)
+        let has_features = (this.props.data.length > 0) ? true : false
+        if (has_features) {
+            this.setState({ markers: this.scoreMarkers(this.props.data) })    
+        }
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot){
         
         let has_features = (this.props.data.length > 0) ? true : false
@@ -29,6 +37,8 @@ class Markers extends Component {
             this.setState({ has_features })
         }
 
+        console.log("Has Feature and Will Update: ", has_features)
+
         if (has_features && !update) {
             // Comes from Redux state but that's not entirely clear
             this.setState({ markers: this.scoreMarkers(this.props.data)})    
@@ -36,6 +46,7 @@ class Markers extends Component {
     }
 
     scoreMarkers(features) {
+        console.log("ADDING THESE MARKERS: ", features)
 
         let scored_markers = features.map((feature) => {
             
@@ -46,8 +57,10 @@ class Markers extends Component {
             let min = helpers.getMin(features, 'average_score')
 
             // Make less high scored marker in cluster smaller
+            console.log('Marker is in cluster? ', feature.properties.in_cluster)
             if (feature.properties.in_cluster === true && feature.properties.top_in_cluster === false ) {
-                score = score - 1
+                
+                score = max / 2
             }
 
             //let orginal_score = feature.properties.score
@@ -60,7 +73,7 @@ class Markers extends Component {
             feature.width = feature.size
             feature.height = feature.size
 
-            feature.className = 'marker'            
+            feature.className = 'marker'
             return feature
         })
 
@@ -102,10 +115,10 @@ class Markers extends Component {
                     console.log(feature)
                 }
 
-                let selected = (feature.id === this.props.detailsId)                
+                let selected = (feature.id === this.props.detailsId)
 
-                // TODO: How to set z-index of parent marker based on score. 
-                return <Marker
+                // TODO: How to set z-index of parent marker based on score.
+                let marker = <Marker
                     key={feature.id}
                     id={feature.id}
                     longitude={feature.geometry.coordinates[0]}
@@ -131,6 +144,8 @@ class Markers extends Component {
                         
                     </div>
                 </Marker>
+                console.log("Adding this markers: ",)
+                return(marker)
             })            
         }
 
