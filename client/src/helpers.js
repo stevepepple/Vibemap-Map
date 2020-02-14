@@ -18,8 +18,9 @@ const helpers = {
         })
     },
 
-    getBounds: function(location, zoom, window) {
-        let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
+    getBounds: function(location, zoom, size) {
+        console.log("Bounds for: ", location, zoom, size)
+        let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [size.width, size.height])
         
         return bounds
     },
@@ -33,6 +34,8 @@ const helpers = {
         )
 
         let distance = diameter / 2
+
+        console.log("RADIUS is ", distance, " miles")
 
         return distance
     },
@@ -86,7 +89,7 @@ const helpers = {
         return matches
     },
 
-    normalize : function(val, min, max) { 
+    normalize : function(val, min, max) {         
         return (val - min) / (max - min) * 10
     },
 
@@ -182,21 +185,33 @@ const helpers = {
         // Scale min and max marker size to zoom level
         let marker_scale = scalePow(1)
             .domain([8, 20]) // Zoom size
-            .range([10, 40]) // Scale of marker size
-
+            .range([10, 30]) // Scale of marker size
         
         let base_marker = marker_scale(zoom)
         let max_marker = base_marker * 3
 
         let scale = scalePow(1)
             .domain([0, max])
-            .range([base_marker, max_marker]);
+            .range([base_marker, max_marker])
+                
+        let scaled_size = Math.round(scale(score))        
 
-    
-        let scaled_size = Math.round(scale(score))
-
-        return Math.round(scaled_size)
+        return scaled_size
     },
+    
+    scaleSelectedMarker: function (zoom) {
+        // TODO: Is this max right?         
+
+        // Scale em size of svg marker to zoom level
+        let scale = scalePow(1)
+            .domain([8, 12, 20]) // Zoom size
+            .range([0.1, 1, 5]) // Scale of marker size
+    
+        let scaled_size = Math.round(scale(zoom))
+
+        return scaled_size
+    },
+
 
     getMax: function(items, attribute) {
         let max = 0;
@@ -207,11 +222,11 @@ const helpers = {
             }
         })
 
-        return max;
+        return max
     },
 
     getMin: function (items, attribute) {
-        let min = 100;
+        let min = 100
         items.forEach(item => {
             let value = item['properties'][attribute]
             if (value < min) {
@@ -219,7 +234,7 @@ const helpers = {
             }
         })
 
-        return min;
+        return min
     },
 
     /* global setTimeout, clearTimeout */
@@ -287,6 +302,14 @@ const helpers = {
                 document.getElementById(id).dispatchEvent(new_event);
             }
         }
+    },
+
+    toTitleCase: function(str) {
+        str = str.toLowerCase().split(' ');
+        for (var i = 0; i < str.length; i++) {
+            str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+        }
+        return str.join(' ');
     }
 }
 
