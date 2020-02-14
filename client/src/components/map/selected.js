@@ -5,14 +5,13 @@ import SVG from 'react-inlinesvg'
 export default class Pins extends PureComponent {
   render() {
 
-    return <div id='selected_marker'>
-        <div></div>
+    return <div id='selected_marker'>        
         <SVG 
           style={{
-            height: '3em',
-            marginLeft: '-1em',
-            marginTop: '-1em',
-            width: '3em'        
+            height: this.props.size + 'em',
+            marginLeft: '-' + this.props.size / 2 + 'em',
+            marginTop: '-' + this.props.size / 2 + 'em',
+            width: this.props.size + 'em'
           }}
           src={process.env.PUBLIC_URL + '/images/selected.svg'} />
     </div>
