@@ -26,9 +26,9 @@ class ListItem extends React.Component {
         let card_layout = null
 
         if (place_type === 'events') {
-            card_layout = <CardEventLayout properties={this.props.properties} />
+            card_layout = <CardEventLayout properties={this.props.properties} index={this.props.index} max={this.props.max} />
         } else {
-            card_layout = <CardPlaceLayout properties={this.props.properties}/>
+            card_layout = <CardPlaceLayout properties={this.props.properties} index={this.props.index} max={this.props.max} />
         }
         
         /* TODO: Can this be made an abtract component for other types of data, i.e. places */

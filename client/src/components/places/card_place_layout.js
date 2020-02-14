@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
-
 import { Item, Icon, Label } from 'semantic-ui-react'
+
+import helpers from '../../helpers';
 
 function cardPLaceLayout(props) {
 
@@ -14,7 +15,7 @@ function cardPLaceLayout(props) {
     if (typeof (content.categories) == 'object') {
         categories = content.categories.map((category) => <span class={category}>Category</span>)
     } else {
-        categories = content.categories
+        categories = helpers.toTitleCase(content.categories) 
     }
 
     // TODO: Move to server side
@@ -33,15 +34,30 @@ function cardPLaceLayout(props) {
         let remainder = content.vibes.length - 1
         vibes = null
 
+        let first_vibe = helpers.toTitleCase(content.vibes[0])
+
         if (remainder > 0) {
-            vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{content.vibes[0] + ' & ' + remainder + ' more'}</Label>
+            vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe}<Label.Detail>{remainder}</Label.Detail></Label>
         }
 
         if (remainder === 0) {
-            vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{content.vibes[0]}</Label>
+            vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe}</Label>
         }
 
         // vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
+    }
+
+    // TODO: Make this a component and internationalize it.    
+    let top_icon = <Icon name='heartbeat' />
+    let recommendation = <span className='interested'>{score} Good Vibes</span>
+
+    switch (props.index) {
+        case 0:
+            recommendation = <span className='interested top_match'>{top_icon} {score} Totally Your Vibe</span>
+            break;
+    
+        default:
+            break;
     }
 
     return (
@@ -58,10 +74,7 @@ function cardPLaceLayout(props) {
                         {vibes}
                     </div>
                     {venue}
-                    <span className='interested'>
-                        <Icon name='user' />
-                        {score} VibeMap Score
-                        </span>
+                    {recommendation}
                 </Item.Extra>
             </Item.Content>
         </Fragment>    

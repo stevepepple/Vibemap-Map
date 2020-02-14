@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import isEqual from 'react-fast-compare'
 import MetaTags from 'react-meta-tags'
 
-import { Button, Divider, Header, Image, Label, List, Reveal, Placeholder } from 'semantic-ui-react'
+import { Button, Divider, Header, Icon, Image, Label, List, Reveal, Placeholder } from 'semantic-ui-react'
 import Directions from '../places/directions'
 import VibeMap from '../../services/VibeMap.js'
 
@@ -102,7 +102,7 @@ class PlaceDetails extends Component {
         /* TODO: Make recommendation is own component */
         let recommendation = 
             <List.Item className='recomendation'>
-                <Image avatar tiny src='https://github.com/stevepepple/Hotspots-Map/blob/master/client/public/images/vibe_match.png?raw=true' />
+                <Icon name='heartbeat' color='green' />                
                 <List.Content>
                     <List.Header>Totally your vibe!</List.Header>
                 </List.Content>

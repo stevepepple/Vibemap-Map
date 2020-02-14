@@ -22,13 +22,18 @@ html, body, #root, div.App, div.App > div {
     max-height: 3em;
 }
 
+#navigation {
+    height: 6%;
+    min-height: 6em;
+}
+
 /* Container */
 .content {
     /*
     padding-left: 14vmin;
     padding-right: 14vmin;
     */
-    height: 88%;
+    height: 80%;
 }
 
 .collapsed.row.stretched { margin: 0 1rem; }
@@ -93,7 +98,7 @@ html, body, #root, div.App, div.App > div {
 }
 
 .ui.items {
-    height: 72vh;
+    height: 62vh;
     overflow: auto; 
 }
 
@@ -129,6 +134,15 @@ html, body, #root, div.App, div.App > div {
     transform: scale(1);
     will-change: transform;
     transition: all 0.2s ease-in-out 0s;
+}
+
+.ui.items .extra, 
+.ui.items .interested {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.ui.items .top_match {
+    color: $color-green;
 }
 
 .details {

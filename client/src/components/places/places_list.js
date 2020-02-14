@@ -4,6 +4,8 @@ import _ from 'lodash'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
+import helpers from '../../helpers';
+
 import { Dimmer, Form, Input, Item, Loader, Segment, Dropdown } from 'semantic-ui-react'
 import { Global } from '@emotion/core'
 
@@ -33,10 +35,12 @@ class PlacesList extends Component {
     }
 
     handlePlaceType = (e, { value }) => {
+        console.log("CHANGED PLACE TYPE: ", value)
         this.props.setPlaceType(value)
     }
 
     handleActivityChange = (event, { value }) => {
+        console.log("CHANGED ACTIVITY: ", value)
         this.setState({ current_activity: value })
         this.props.setActivity(value)
     }
@@ -57,8 +61,9 @@ class PlacesList extends Component {
             // TODO: @cory, sorting should happen on the server. 
             // And we should be able to sort by distance, relevance, tc. 
             let sorted = this.props.data.sort((a, b) => (a.properties.score > b.properties.score) ? -1 : 1)
-            items = sorted.map((place) => {                
-                return <ListItem key={place.id} id={place.id} type={place.properties.place_type} link={place.properties.url} onClick={this.onClick} properties={place.properties} />
+            let max = helpers.getMax(this.props.data, 'score')
+            items = sorted.map((place, index) => {                
+                return <ListItem key={place.id} id={place.id} type={place.properties.place_type} link={place.properties.url} onClick={this.onClick} properties={place.properties} index={index} max={max}/>
             })
         }
 
@@ -111,24 +116,22 @@ class PlacesList extends Component {
                             }</Translation>
                             
                         </Form.Field>
-                        <Form.Group widths='equal'>
+                        <Form.Group widths='equal'>                                                        
                             <Translation>{
-                                (t, { i18n }) =>
-                            <Dropdown                                
+                                (t, { i18n }) => <Dropdown 
                                 icon='map pin'
                                 labeled
                                 fluid
                                 button
                                 compact
-                                className='icon small'
-                                onChange={this.handlePlaceType}                                
+                                className='icon small'                                
                                 text={t(this.props.placeType)}
                                 value={this.props.placeType}
+                                    onChange={this.handlePlaceType}
                             >
                                 <Dropdown.Menu>
                                     {this.state.place_type_options.map((option) => (
-                                         <Dropdown.Item key={option.value} text={t(option.text)} value={option.value} />
-                                        
+                                        <Dropdown.Item key={option.value} onClick={this.handlePlaceType} text={t(option.text)} value={option.value} />
                                     ))}
                                 </Dropdown.Menu>
                             </Dropdown>
@@ -149,11 +152,10 @@ class PlacesList extends Component {
                             
                         </Form.Group>
                     </Form>
-                </Segment>
-                
+                </Segment>                
                 
                 {has_items? (
-                    <Item.Group divided relaxed className='events_list'>
+                    <Item.Group divided relaxed size='small' className='events_list'>
                         {items}
                     </Item.Group>
                 ) : (
@@ -161,7 +163,6 @@ class PlacesList extends Component {
                         <Dimmer active inverted><Loader inverted><h3>Have you ever stopped to smell the roses near Grand Avenue?</h3></Loader></Dimmer>
                     </Segment>
                 )}
-                     
                 
             </Segment>
         );
