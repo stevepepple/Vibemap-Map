@@ -48,7 +48,7 @@ class Page extends Component {
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cool', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'fun', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'outdoors', 'scenic', 'positive', 'unique'],
+            vibe_categories: ['adventurous', 'artsy', 'atmosphere', 'authentic', 'civic', 'chill', 'cool', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'fun', 'healthy', 'hidden gem', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'new', 'outdoors', 'positive', 'scenic', 'sweet', 'trending', 'unique'],
             // TODO: handle conversion math in VibeMap
             intervalIsSet: false,
             loading: true,
@@ -166,8 +166,7 @@ class Page extends Component {
         if (mapReady === true && updateData === true) {
         
             // TODO: There's probably a better place for these hooks. 
-            let bounds = helpers.getBounds(this.props.currentLocation, this.props.zoom, this.props.windowSize)
-
+            let bounds = helpers.getBounds(this.props.currentLocation, this.props.zoom, this.props.mapSize)
             this.props.setBounds(bounds)
             this.props.setDistance(helpers.getRadius(bounds))
             // Get the ratio of distance for each pixel on the screen; used for clustering
@@ -245,12 +244,10 @@ class Page extends Component {
     }
 
     handleWindowSizeChange = () => {
-        /*
         this.props.setWindowSize({
             height: window.innerHeight,
             width: window.innerWidth
-        })
-        */
+        })        
     }
 
     fetchCities() {
@@ -408,7 +405,7 @@ class Page extends Component {
                     {navigation}
 
                     {/* 16 column grid */}
-                    <Grid className='content'>
+                    <Grid className='content'>                       
                         <Grid.Row stretched className='collapsed'>
                             <Grid.Column floated='left' width={5} className='list_details'>
                                 {
@@ -423,12 +420,10 @@ class Page extends Component {
                                 {/* <EventsList data={this.state.data} /> */}
                                 
                             </Grid.Column>
-                            <Grid.Column width={11}>
-                                
+                            <Grid.Column width={11}>                                
                                 <ErrorBoundary>                                    
                                     {events_map}
                                 </ErrorBoundary>
-
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -454,6 +449,7 @@ const mapStateToProps = state => ({
     distance: state.distance,
     eventsData: state.eventsData,
     mapReady: state.mapReady,
+    mapSize: state.mapSize,
     pixelDistance: state.pixelDistance,
     placesData: state.placesData,
     placeType: state.placeType,

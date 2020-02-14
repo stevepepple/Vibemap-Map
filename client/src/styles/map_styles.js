@@ -17,10 +17,20 @@ module.exports = {
       width: 30
     },
 
+    top_marker: {
+      // Icon Style
+      "icon-size": [
+        "interpolate",
+        ["linear"], ["zoom"],
+        8, 0.4,
+        22, 100
+      ],
+    },
+
     marker_layout :  {
       // Icon Style
       "icon-image": ["to-string", ["get", "categories"]],
-      //"icon-padding": 1,
+      "icon-padding": 2,
       "icon-size": [
         "case",
         [">", ["get", "aggregate_rating"], 4.9],
@@ -37,12 +47,13 @@ module.exports = {
       "symbol-sort-key": ["get", "aggregate_rating"],
       // Text
       "text-field": ["to-string", ["get", "name"]],
+      //"text-field": ["to-string", ["get", "top_vibe"]],
       "text-allow-overlap": false,
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
       "text-line-height": 1.0,
       "text-anchor": "bottom",
-      "text-font": ["Roboto Regular"],
+      "text-font": ["Roboto Condensed"],
       "text-size": [
         "interpolate",
         ["linear"],
@@ -51,6 +62,7 @@ module.exports = {
         22, 16
       ],
       "text-offset": [0, -0.4],
+      "text-padding": 2,
       "text-max-width": 8    ,
       'visibility': 'visible' 
     },
@@ -77,12 +89,12 @@ module.exports = {
       "text-allow-overlap": false,
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
-      "text-ignore-placement": false,
+      "text-ignore-placement": true,
       "text-radial-offset" : [
         "interpolate",
         ["linear"], ["zoom"],
         8, 0.4,
-        16, ["get", "icon_size"]
+        18, ["+", ["get", "icon_size"], 0.4]
       ],
       "text-font": ["Roboto Condensed Bold"],
       "text-line-height": 1.0,
@@ -94,7 +106,7 @@ module.exports = {
         ["linear"],
         ["zoom"],
         8, 6,
-        22, 18
+        22, 20
       ],
       /*
       "text-offset": [
@@ -119,16 +131,16 @@ module.exports = {
     },
 
     top_vibe_layout: {
-      // TODO: Make sure important sorting variable is working
-      "symbol-sort-key": ["get", "aggregate_rating"],
       // Text
       "text-field": ["to-string", ["get", "top_vibe"]],
       "text-font": ["Roboto Condensed Italic"],
       "text-justify" : "center",
-      "text-allow-overlap": false,
+      "text-anchor": "bottom",
+      "text-allow-overlap": true,
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
       "text-ignore-placement": true,
+      "symbol-sort-key": ["get", "average_score"],
       "text-size": [
         "interpolate",
         ["linear"],
@@ -136,7 +148,12 @@ module.exports = {
         8, 6,
         22, 20
       ],
-      "text-offset": [0, 4],
+      "text-radial-offset": [
+        "interpolate",
+        ["linear"], ["zoom"],
+        8, 0.4,
+        18, ["-", ["get", "icon_size"], 1.6]
+      ],
       "text-max-width": 12
     },
 
