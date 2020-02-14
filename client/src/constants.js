@@ -71,8 +71,7 @@ export const activty_categories = [
     // TODO: make these vibes? 
     { key: 'immersive', value: 'immersive', text: 'Immersive', categories: ['immersive'] },
     { key: 'spiritual', value: 'spiritual', text: 'Spiritual', categories: ['spirtual'] },
-    { key: 'transit', value: 'transit', text: 'transit', categories: ['transit'] },
-    { key: 'transit', value: 'hotel', text: 'hotel', categories: ['hotel'] }
+    { key: 'transit', value: 'transit', text: 'transit', categories: ['transit'] }   
 ]
 
 // Groupings for All Place Categories
@@ -92,7 +91,8 @@ export const place_categories = [
     { key: 'immersive', value: 'immersive', text: 'Immersive', categories: ['Arts & Entertainment'] },
     { key: 'outdoors', value: 'outdoors', text: 'Outdoors', categories: ['Outdoors & Recreation', 'Zoo'] },
     { key: 'spirtual', value: 'spirtual', text: 'Spirtual', categories: ['spirtual'] },
-    { key: 'san-francisco-bart', value: 'BART', text: 'BART', categories: ['transit'] }
+    { key: 'san-francisco-bart', value: 'BART', text: 'BART', categories: ['transit'] },
+    { key: 'hotel', value: 'hotel', text: 'hotel', categories: ['hotel'] }
 ]
 
 export const all_categories = [
