@@ -347,7 +347,7 @@ module.exports = {
             let scores = [
                 event.properties.likes,
                 event.properties.vibe_score,            
-                event.properties.distance * 0.4 // Only make distance half as important
+                event.properties.distance * 0.6 // Only make distance partially important
             ]
             //console.log('EVENT SCORES: ', scores)
             // Average out the scores
@@ -449,6 +449,7 @@ module.exports = {
             place.properties.aggregate_rating = helpers.default.normalize(place.properties.aggregate_rating, 0, max_aggregate_score)
 
             // Distance is inverted from max and then normalize 1-10
+            // TODO: There might be something off about this score; should come from backend
             place.properties.distance = helpers.default.normalize(max_distance - place.properties.distance, 0, max_distance)
             
             // Simple average of the different scores
@@ -456,7 +457,7 @@ module.exports = {
                 place.properties.event_score, 
                 place.properties.vibe_score, 
                 place.properties.aggregate_rating,
-                place.properties.distance * 0.4 // Only make distance half as important
+                place.properties.distance * 0.6 // Only make distance half as important
             ]
             
             // Average out the scores
