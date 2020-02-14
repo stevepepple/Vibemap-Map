@@ -18,6 +18,7 @@ import ZoomLegend from '../map/ZoomLegend'
 
 // TODO: load from common .env
 import * as Constants from '../../constants.js'
+import helpers from '../../helpers.js'
 
 import '../../styles/map.scss'
 
@@ -67,7 +68,7 @@ class EventsMap extends React.PureComponent {
     }
 
     componentDidMount() {
-        this.props.setWindowSize({
+        this.props.setMapSize({
             height: this.map.current.offsetHeight,
             width: this.map.current.offsetWidth
         })
@@ -120,15 +121,20 @@ class EventsMap extends React.PureComponent {
     _onClick = (event, feature) => {
         console.log("Clicked this: ", event, feature)
         let id = null
+        let place_type = null
+
+        // Handle one or more features
         if (feature && feature.id) {
             id = feature.id
+            place_type = feature.properties.place_type
         } else if (event.features.length > 0 && event.features[0].hasOwnProperty('properties') && event.features[0].properties.id) {
             id = event.features[0].properties.id 
+            place_type = event.features[0].properties.place_type
         }
         
         if (id !== null) {
             this.props.setDetailsId(id)
-            this.props.setDetailsType(feature.properties.place_type)
+            this.props.setDetailsType(place_type)
             // TODO: there's probably a smart way to do this with browser history
             this.setState({ prev_zoom : this.props.zoom })
             this.props.setDetailsShown(true)
@@ -161,9 +167,7 @@ class EventsMap extends React.PureComponent {
                 longitude: longitude
             }
         })
-    }
-
-    mapRef = React.createRef();
+    }    
 
     render() {
 
@@ -213,42 +217,10 @@ class EventsMap extends React.PureComponent {
                                 longitude={this.props.currentPlace.location.longitude}
                                 latitude={this.props.currentPlace.location.latitude}
                                 offsetTop={-2}
-                                offsetLeft={-2}
+                                offsetLeft={-2}                                
                             >   
-                                <Selected size={60} />
+                                <Selected size={helpers.scaleSelectedMarker(this.props.zoom)} />
                             </Marker>
-                        }
-
-                        {has_top_pick_data &&
-                            <Fragment>
-                                <Source
-                                    id='top_picks'
-                                    type="geojson"
-                                    data={this.state.top_picks_geojson}
-                                    cluster={false}>
-
-                                    <Layer
-                                        id="top_picks"
-                                        type="symbol"
-                                        layout={Styles.top_pick_layout}
-                                        paint={Styles.top_pick_paint}
-                                    />
-
-                                    <Layer
-                                        id="top_vibes"
-                                        type="symbol"
-                                        layout={Styles.top_vibe_layout}
-                                        paint={Styles.top_pick_paint}
-                                    />
-                                </Source>
-                                <Markers
-                                    data={this.props.topPicks}
-                                    currentVibes={this.props.currentVibes}
-                                    zoom={this.props.zoom}
-                                    onClick={this._onClick}
-                                    showPopup={this.showPopup} />                                
-                            </Fragment>
-
                         }
                         
                         {has_places_data &&
@@ -313,7 +285,40 @@ class EventsMap extends React.PureComponent {
                             >
                                 {this.state.popupInfo.name}
                             </Popup>
-                        }                        
+                        }
+
+                        {has_top_pick_data &&
+                            <Fragment>
+                                <Source
+                                    id='top_picks'
+                                    type="geojson"
+                                    data={this.state.top_picks_geojson}
+                                    cluster={false}>
+
+                                    <Layer
+                                        id="top_picks"
+                                        type="symbol"
+                                        layout={Styles.top_pick_layout}
+                                        paint={Styles.top_pick_paint}
+                                    />
+
+                                    <Layer
+                                        id="top_vibes"
+                                        type="symbol"
+                                        layout={Styles.top_vibe_layout}
+                                        paint={Styles.top_pick_paint}
+                                    />
+                                </Source>
+                                <Markers
+                                    data={this.props.topPicks}
+                                    currentVibes={this.props.currentVibes}
+                                    zoom={this.props.zoom}
+                                    onClick={this._onClick}
+                                    showPopup={this.showPopup} />
+                            </Fragment>
+
+                        }
+                   
                         
                         <VectorTile
                             id='heat_layer'
@@ -349,6 +354,7 @@ const mapStateToProps = state => {
         detailsType: state.detailsType,
         detailsShown: state.detailsShown,
         mapReady: state.mapReady,
+        mapSize: state.mapSize,
         pathname: state.router.location.pathname,
         params: state.params,
         search: state.router.location.search,
