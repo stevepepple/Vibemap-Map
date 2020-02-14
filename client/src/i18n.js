@@ -18,7 +18,9 @@ i18n.use(LanguageDetector).init({
         "2 weeks": "2 weeks",
 
         "Places": "Places",
+        "places": "Places",
         "Events": "Events",
+        "events": "Events",
         "Everything": "Everything",
         "both": "Places & Events",
 
