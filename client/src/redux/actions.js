@@ -34,8 +34,18 @@ export const setCurrentLocation = location => ({
   location,
 })
 
-export const setWindowSize = size => ({
+export const setHeaderSize = size => ({
+  type: 'SET_HEADER_SIZE',
+  size,
+})
+
+export const setWindowSize = size => ({  
   type: 'SET_WINDOW_SIZE',
+  size,
+})
+
+export const setMapSize = size => ({
+  type: 'SET_MAP_SIZE',
   size,
 })
 

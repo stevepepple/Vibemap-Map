@@ -89,6 +89,22 @@ export const windowSize = (state = { width: 1024, height: 768 }, action) => {
   return state
 }
 
+export const mapSize = (state = { width: 800, height: 600 }, action) => {
+  if (action.type === 'SET_MAP_SIZE') {
+    console.log("Set map size: ", action.size)
+    state = action.size
+  }
+  return state
+}
+
+export const headerSize = (state = { width: 0, height: 0 }, action) => {
+  if (action.type === 'SET_HEADER_SIZE') {
+    console.log("Set header size: ", action.size)
+    state = action.size
+  }
+  return state
+}
+
 export const bounds = (state = [], action) => {
   if (action.type === 'SET_BOUNDS') {    
     state = action.bounds
@@ -151,7 +167,7 @@ export const currentVibes = (state = ['chill'], action) => {
   return state
 }
 
-export const placeType = (state = 'both', action) => {
+export const placeType = (state = 'places', action) => {
   if (action.type === 'SET_PLACE_TYPE') {
     //console.log("SET_PLACE_TYPE", action)
     state = action.value
@@ -369,9 +385,11 @@ export const reducers = (history) => combineReducers({
   detailsType,
   detailsShown,
   distance,
-  name,
   eventsData,
+  headerSize,
   mapReady,
+  mapSize,
+  name,
   nearby_places,
   pixelDistance,
   placesData,
