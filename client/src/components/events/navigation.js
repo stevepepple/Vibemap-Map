@@ -35,6 +35,15 @@ class Navigation extends Component {
             vibes: [],
             vibe_options : []
         }
+
+        this.navRef = React.createRef()
+    }
+
+    componentDidMount() {
+        this.props.setHeaderSize({
+            height: this.navRef.current.offsetHeight,
+            width: this.navRef.current.offsetWidth
+        })
     }
 
     componentWillMount() {
@@ -43,7 +52,7 @@ class Navigation extends Component {
         let params = queryString.parse(this.props.search)
         this.setState({ params: params })
 
-        console.log("CURRENT PROPS in Nav", this.props)
+        console.log("CURRENT PROPS in Nav", this.props)        
 
         if (params.place) {
             this.props.setDetailsId(params.place)
@@ -96,7 +105,7 @@ class Navigation extends Component {
         push(new_history)
 
         if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {            
-            helpers.updateURL("search", this.props.searchTerm)
+            this.updateURL("search", this.props.searchTerm)
         }
 
         if (!isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)) {         
@@ -192,13 +201,13 @@ class Navigation extends Component {
         return (
             <React.Fragment>
                 {this.props.isMobile? (
-                    <div className='navigation mobile'>
+                    <div className='navigation mobile' ref={this.navRef}>
                         {search}
                     </div>
 
                 ) : (
                     
-                    <div className='navigation'>                    
+                    <div id='navigation' className='navigation' ref={this.navRef}>                    
                         <Grid stackable stretched verticalAlign='middle'>
                             <Grid.Column width={5}>
                                 {search}

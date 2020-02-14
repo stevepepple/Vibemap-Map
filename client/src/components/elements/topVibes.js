@@ -27,10 +27,8 @@ class TopVibes extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        let top = this.props.topVibes.slice(1, 4)
-
-        top.map((vibe) => vibe)
-        this.setState({ vibes: top })
+        
+        //this.setState({ vibes: top })
 
     }
 
@@ -51,10 +49,12 @@ class TopVibes extends Component {
             //padding: '1em',
             //paddingTop: '0.2em',
             fontSize: '1.1em',
-        }
+        }        
 
+        let top_vibes = this.props.topVibes.slice(1, 4)
+        top_vibes.map((vibe) => vibe)
         
-        let vibes = this.state.vibes.map((vibe) => <Label key={vibe[0]} onClick={((e) => this.handleClick(e, vibe[0]))} color={this.state.colors[vibe[0]]} title={'clickToAdd'} className={'vibe label ' + vibe[0]}>{vibe[0]}<Label.Detail>{vibe[1]}</Label.Detail></Label>)
+        let vibes = top_vibes.map((vibe) => <Label key={vibe[0]} onClick={((e) => this.handleClick(e, vibe[0]))} color={this.state.colors[vibe[0]]} title={'clickToAdd'} className={'vibe label ' + vibe[0]}>{vibe[0]}<Label.Detail>{vibe[1]}</Label.Detail></Label>)
 
         return (
             <div id='topVibes' style={style}>
@@ -66,10 +66,10 @@ class TopVibes extends Component {
                 </Label>
                 
                 { /* Show loading if vibes aren't there*/
-                vibes.length > 0 ? (
+                top_vibes.length > 0 ? (
                     vibes
                 ) : (                    
-                            <Placeholder style={{ display: 'inline', float: 'right', width: '8em' }} ><Placeholder.Line length='short' /></Placeholder>
+                    <Placeholder style={{ display: 'inline', float: 'right', width: '8em' }} ><Placeholder.Line length='short' /></Placeholder>
                 )}            
                 
             </div>
