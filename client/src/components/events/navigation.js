@@ -83,7 +83,6 @@ class Navigation extends Component {
         }
 
         if (params.vibes) {
-            console.log('SET VIBE PARMS: ', params.vibesF)
             let vibes = []
             if (typeof(params.vibes) == "string") {
                 vibes.push(params.vibes)
