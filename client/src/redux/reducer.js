@@ -83,7 +83,7 @@ export const viewport = (state = {}, action) => {
 
 export const windowSize = (state = { width: 1024, height: 768 }, action) => {
   if (action.type === 'SET_WINDOW_SIZE') {
-    console.log("Set windows size: ", action.size)
+    //console.log("Set windows size: ", action.size)
     state = action.size
   }
   return state
@@ -293,6 +293,7 @@ export const placesData = (state = [], action) => {
 export const currentPlace = (state = {
   name: null,
   description: null,
+  address: null,
   categories: [],
   location: null,
   vibes: [],
@@ -308,7 +309,6 @@ export const currentPlace = (state = {
 export const topPicks = (state = [], action) => {
 
   if (action.type === 'SET_TOP_PICKS_DATA') {
-
     // Save the processed data to state.
     // If request is for fresh results update the map.
     // TODO: Map and process, but plan to moe this logic to API
