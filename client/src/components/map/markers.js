@@ -136,7 +136,7 @@ class Markers extends Component {
                             zIndex: feature.vibe_score
                         }}>                        
                                                 
-                        <img src={feature.properties.images[0]} alt={feature.properties.name} height={'100%'} width={'100%'} />
+                        <img src={feature.properties.images[0]} height={'100%'} width={'100%'} />
                         
                     </div>
                 </Marker>
