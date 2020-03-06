@@ -30,7 +30,7 @@ module.exports = {
     marker_layout :  {
       // Icon Style
       "icon-image": ["to-string", ["get", "categories"]],
-      "icon-padding": 2,
+      "icon-padding": 1,
       "icon-size": [
         "case",
         [">", ["get", "aggregate_rating"], 4.9],
@@ -46,11 +46,12 @@ module.exports = {
       // TODO: Make sure important sorting variable is working
       "symbol-sort-key": ["get", "aggregate_rating"],
       // Text
-      "text-field": ["to-string", ["get", "name"]],
+      "text-field": ["to-string", ["get", "short_name"]],
       //"text-field": ["to-string", ["get", "top_vibe"]],
       "text-allow-overlap": false,
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
+      "text-ignore-placement": false,
       "text-line-height": 1.0,
       "text-anchor": "bottom",
       "text-font": ["Roboto Condensed"],
@@ -61,9 +62,9 @@ module.exports = {
         8, 4,
         22, 16
       ],
-      "text-offset": [0, -0.4],
-      "text-padding": 2,
-      "text-max-width": 8    ,
+      "text-offset": [0, -0.8],
+      "text-padding": 1,
+      "text-max-width": 10    ,
       'visibility': 'visible' 
     },
 
@@ -85,16 +86,16 @@ module.exports = {
       ],
       "symbol-sort-key": ["get", "average_score"],
       // Text
-      "text-field": ["to-string", ["get", "name"]],
+      "text-field": ["to-string", ["get", "short_name"]],
       "text-allow-overlap": false,
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
-      "text-ignore-placement": true,
+      "text-ignore-placement": false,
       "text-radial-offset" : [
         "interpolate",
         ["linear"], ["zoom"],
         8, 0.4,
-        18, ["+", ["get", "icon_size"], 0.4]
+        20, ["+", ["get", "icon_size"], 0.8]
       ],
       "text-font": ["Roboto Condensed Bold"],
       "text-line-height": 1.0,
@@ -136,7 +137,7 @@ module.exports = {
       "text-font": ["Roboto Condensed Italic"],
       "text-justify" : "center",
       "text-anchor": "bottom",
-      "text-allow-overlap": true,
+      "text-allow-overlap": false,
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
       "text-ignore-placement": true,

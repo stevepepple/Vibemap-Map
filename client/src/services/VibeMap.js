@@ -2,6 +2,7 @@ const Constants = require('../constants')
 const querystring = require('querystring')
 const moment = require('moment')
 const helpers = require('../helpers.js')
+const truncate = require('truncate')
 const turf = require('@turf/turf')
 
 const ApiHeaders = new Headers({
@@ -34,7 +35,7 @@ module.exports = {
                 //days: days,                
             })
 
-            fetch(ApiUrl + "/v0.2/boundaries/?" + query, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.3/boundaries/?" + query)
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout);
@@ -58,7 +59,7 @@ module.exports = {
                 //days: days,                
             })
 
-            fetch(ApiUrl + "/v0.2/vibes/?" + query, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.3/vibes/?" + query)
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout)
@@ -105,6 +106,7 @@ module.exports = {
             fetch(mapbox_url + "ck2v5hz4r1md12nqnfff9592e/features/?" + query)
                 .then(data => data.json())
                 .then(res => {
+                    
                     clearTimeout(timeout);
                     console.log("Got events data: ", res)
                     resolve({ data: res, loading: false, timedOut: false })
@@ -117,7 +119,7 @@ module.exports = {
 
     getEventDetails: function(id){
         return new Promise(function (resolve, reject) {
-            fetch(ApiUrl + "/v0.2/events/" + id, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.3/events/" + id)
                 .then(data => data.json())
                 .then(result => {
                     clearTimeout(timeout);
@@ -131,8 +133,9 @@ module.exports = {
 
     // TODO: Include a way to query by time of day
     getPlaceDetails: function (id, type) {
+        if(type == null || type == undefined) type = 'places'
         return new Promise(function (resolve, reject) {
-            fetch(ApiUrl + "/v0.2/"+ type + "/" + id, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.3/"+ type + "/" + id)
                 .then(data => data.json())
                 .then(result => {
                     clearTimeout(timeout);
@@ -175,13 +178,13 @@ module.exports = {
 
             let query = querystring.stringify(params);
 
-            fetch(ApiUrl + "/v0.2/places/?" + query, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.3/places/?" + query)
                 .then(data => data.json())
                 .then(res => {
 
                     clearTimeout(timeout);
 
-                    let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point)
+                    let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point, vibes)
                     let top_vibes = module.exports.getTopVibes(res.results.features)
                     let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
                     
@@ -235,7 +238,7 @@ module.exports = {
 
             let query = querystring.stringify(params);
 
-            fetch(ApiUrl + "/v0.2/places/?" + query, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.3/places/?" + query)
                 .then(data => data.json())
                 .then(res => {
 
@@ -251,6 +254,59 @@ module.exports = {
                 });
         })
     },
+
+    // TODO: Include a way to query by time of day
+    searchPlaces: function (search_term) {
+
+        // TODO: Load more points at greater distances?        
+        return new Promise(function (resolve, reject) {
+            let params = {
+                search: search_term,
+                per_page: 3
+            }
+
+            let query = querystring.stringify(params);
+
+            fetch(ApiUrl + "/v0.3/places/?" + query)
+                .then(data => data.json())
+                .then(res => {
+
+                    clearTimeout(timeout);
+                    if (res.status > 400) {
+                        return this.setState(() => {
+                            return { data: null, loading: false, timedOut: false, message: res.status };
+                        });
+                    }
+                    
+                    let search_results = res.results.features.map((place) => {                        
+                        let result = {
+                            title: place.properties.name,
+                            id: place.id,
+                            key: place.id,
+                            description: place.properties.address,
+                            new: false
+                        }
+                
+                        return result
+                    })
+
+                    search_results.push({
+                        title : search_term,
+                        key: null,
+                        description : 'Add a new listing with this name.',
+                        new: true
+                    })
+
+                    
+                    resolve({ data: res.results.features, search_results: search_results, loading: false, timedOut: false })
+
+                }, (error) => {
+                    console.log(error)
+
+                });
+        })
+    },
+
 
     getEvents: function (point, distance, bounds, activity, days, search_term) {
 
@@ -273,7 +329,7 @@ module.exports = {
                 per_page: 100
             });
 
-            fetch(ApiUrl + "/v0.2/events/?" + query, { headers: ApiHeaders })
+            fetch(ApiUrl + "/v0.3/events/?" + query)
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout);
@@ -302,6 +358,7 @@ module.exports = {
             // TODO: TEMP until events return vibes
             if (event.properties.vibes === undefined) event.properties.vibes = ['chill']            
     
+            event.properties.short_name = truncate(event.properties.name, Constants.TRUCATE_LENGTH)
             event.properties.place_type = 'events'
             
             // Give direct vibe matches bonus points
@@ -372,26 +429,41 @@ module.exports = {
         let max_distance = 1
 
         let vibe_match_bonus = 10
+        let vibe_rank_bonus = 5
 
-        let place = places.map((place) => {
+        let places_scored = places.map((place) => {
             
             place.properties.place_type = 'places'
+            place.properties.short_name = truncate(place.properties.name, Constants.TRUCATE_LENGTH)
             place.properties.aggregate_rating = parseFloat(place.properties.aggregate_rating)
+            if (place.properties.categories === undefined || place.properties.categories.length === 0) {
+                place.properties.categories = ["missing"]
+            }
 
             // Give place a vibe score
-            place.properties.vibe_score = place.properties.vibes.length
-
+            if (place.properties.vibes.length > 0) {
+                place.properties.vibe_score = place.properties.vibes.length
+            } else {
+                console.log('No vibes for: ', place.properties.name)
+                place.properties.vibe_score = 0
+            }
+            
             place.properties.cluster = null
             // TODO: Add cluster scores
 
             // Give direct vibe matches bonus points
             let vibe_matches = 0
+            let average_rank = 0
             let vibe_bonus = 0
 
             if (vibes && place.properties.vibes) {
-                vibe_matches = helpers.default.matchLists(vibes, place.properties.vibes)            
+                vibe_matches = helpers.default.matchLists(vibes, place.properties.vibes)
+                average_rank = helpers.default.rankVibes(vibes, place.properties.vibes)
+                
                 // TODO: Places that match vibe get a bonus
-                vibe_bonus = vibe_matches * vibe_match_bonus
+                vibe_bonus = vibe_matches * vibe_match_bonus + average_rank * vibe_rank_bonus
+
+                //console.log('HAS VIBES: ', vibes, place.properties.vibes, vibe_bonus)
                 place.properties.vibe_score += vibe_bonus
             }
 
@@ -414,17 +486,6 @@ module.exports = {
                 place.properties.event_score = 0
             }
 
-            // TODO: This all goes away but this category change shoudl definetly go elsewhere
-            if (place.properties.aggregate_rating >= 2) {
-
-                if (place.properties.categories === undefined || place.properties.categories.length === 0) {
-                    place.properties.categories = ["missing"]                    
-                }
-
-            } else {
-                place.properties.aggregate_rating = 2
-            }
-
             if (place.properties.aggregate_rating > max_aggregate_score)  max_aggregate_score = place.properties.aggregate_rating
 
             if (place.properties.vibe_score > max_vibe_score) max_vibe_score = place.properties.vibe_score
@@ -438,11 +499,13 @@ module.exports = {
                 if (place.properties.distance > max_distance) max_distance = place.properties.distance
             }
 
+            return place
+
         })
 
         // Normalize each place by the top scores across all results
-        let places_scored = places.map((place) => {
-
+        let places_scored_averaged = places_scored.map((place) => {
+            
             // Normalize all scores
             place.properties.event_score = helpers.default.normalize(place.properties.event_score, 0, max_event_score)
             place.properties.vibe_score = helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score)
@@ -450,21 +513,20 @@ module.exports = {
 
             // Distance is inverted from max and then normalize 1-10
             // TODO: There might be something off about this score; should come from backend
-            place.properties.distance = helpers.default.normalize(max_distance - place.properties.distance, 0, max_distance)
+            place.properties.distance_score = helpers.default.normalize(max_distance - place.properties.distance, 0, max_distance)
             
             // Simple average of the different scores
             let scores = [
                 place.properties.event_score, 
                 place.properties.vibe_score, 
                 place.properties.aggregate_rating,
-                place.properties.distance * 0.6 // Only make distance half as important
+                place.properties.distance_score * 0.6 // Only make distance half as important
             ]
             
             // Average out the scores
             place.properties.average_score = scores.reduce((a, b) => a + b, 0) / scores.length
 
             // Create a scaled icon; TODO: Share logic with markers
-
             // Normalize the icon size to match photo markers.
             place.properties.icon_size = helpers.default.scaleIconSize(place.properties.average_score, 10)
             
@@ -474,15 +536,23 @@ module.exports = {
             //console.log('Distance: ', place.properties.distance)
             return place
         })
+        
+        let places_scored_and_sorted = places_scored_averaged.sort((a, b) => b.properties.distance_score - a.properties.distance_score)
 
-        let places_scored_and_sorted = places_scored.sort((a, b) => b.properties.average_score - a.properties.average_score)
+        // See scores
+        places_scored_and_sorted.map((place) => {
+            //console.log(place.properties.name)
+            //console.log(' - event score: ', place.properties.event_score)
+            //console.log(' - vibe_score: ', place.properties.vibe_score)
+            //console.log(' - aggregate rating: ', place.properties.aggregate_rating)
+            //console.log(' - distance: ', place.properties.distance_score)
+        })
 
         return places_scored_and_sorted
     },
 
     clusterPlaces: function(places, cluster_size) {
         
-
         let collection = turf.featureCollection(places)        
 
         // TODO: Adjust cluster measure at each zoom level? 
@@ -497,9 +567,10 @@ module.exports = {
             if (clusterValue !== 'null') {
                 let center = turf.center(cluster)
 
-                let max = helpers.default.getMax(cluster.features, 'vibe_score')
+                let max = helpers.default.getMax(cluster.features, 'average_score')
                 let size = cluster.features.length
                 console.log('--- Max score for cluster: ', max)
+                console.log('--- Center of cluster: ', center)
                 console.log('--- Size of cluster: ', size)
 
                 // TODO: Handle sorting & sizing based on score and distance. 
@@ -543,9 +614,11 @@ module.exports = {
 
         // Put larger markers on top
         // TODO: Also set the details for the cluster
+        // TODO: Define sorting one place so it dones't get messed up
         results = results.sort((a, b) => {
-            return a.properties.vibe_score - b.properties.vibe_score
+            return b.properties.average_score - a.properties.average_score
         })
+
 
         return results
 

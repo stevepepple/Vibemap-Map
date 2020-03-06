@@ -48,7 +48,7 @@ class Page extends Component {
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categories: ['adventurous', 'artsy', 'atmosphere', 'authentic', 'civic', 'chill', 'cool', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'fun', 'healthy', 'hidden gem', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'new', 'outdoors', 'positive', 'scenic', 'sweet', 'trending', 'unique'],
+            vibe_categories: ['adventurous', 'artsy', 'atmosphere', 'authentic', 'bold', 'civic', 'chill', 'classic', 'cool', 'comfortable', 'cozy', 'creative', 'dance', 'dive', 'diverse', 'energetic', 'exclusive', 'family', 'festive', 'free', 'friendly', 'fun', 'healthy', 'hidden', 'interactive', 'inspired', 'intimate', 'local', 'lively', 'magical', 'new', 'oldschool', 'outdoors', 'peaceful', 'playful', 'popular', 'positive', 'public', 'romantic', 'queer', 'quiet', 'raunchy', 'scenic', 'soul', 'sweet', 'transformative', 'trending', 'vibrant', 'unique', 'wild', 'zen'],
             // TODO: handle conversion math in VibeMap
             intervalIsSet: false,
             loading: true,
@@ -151,13 +151,16 @@ class Page extends Component {
             // TODO: Only refesh if the map moved by a significant jump...
             refreshResults = true
     
-
             // TODO: Measure distance between locations and if the distance is large refresh results.
         }
         
         if (!isEqual(prevProps.zoom, this.props.zoom)) {
+            
             updateData = true
-            refreshResults = false            
+            // Only refresh if it a whole step up or down            
+            let zoom_diff = this.props.zoom - prevProps.zoom
+            if ( zoom_diff >= 1 ) refreshResults = true            
+
         }
 
         if (this.props.detailsShown === true) updateData = false
@@ -307,14 +310,15 @@ class Page extends Component {
             // TODO: add search variable.
             VibeMap.getPicks(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentVibes, this.props.searchTerm)
                 .then(results => {
-
-                    let top_picks = results.data.splice(1, this.state.num_top_picks)
-
+                    let cluster_size = this.props.pixelDistance * 10
+                    console.log('Cluster size for distance: ', cluster_size)
                     if (results.top_vibes) {
                         this.props.setTopVibes(results.top_vibes)
                     }
-                    
 
+                    let top_picks = results.data.splice(1, this.state.num_top_picks)
+
+                    console.log()
                     this.props.setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
                     this.props.setPlacesData(results.data, refreshResults)
 
@@ -329,8 +333,7 @@ class Page extends Component {
         // General search     
         VibeMap.getPlaces(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
-
-                let cluster_size = this.props.pixelDistance * 40
+                let cluster_size = this.props.pixelDistance * 20
 
                 // TODO: Can this be dispatched from a central place? 
                 this.props.setTopVibes(results.top_vibes)
@@ -405,7 +408,7 @@ class Page extends Component {
                     {navigation}
 
                     {/* 16 column grid */}
-                    <Grid className='content'>                       
+                    <Grid id='content' className='content'>                       
                         <Grid.Row stretched className='collapsed'>
                             <Grid.Column floated='left' width={5} className='list_details'>
                                 {
