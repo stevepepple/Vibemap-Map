@@ -21,6 +21,8 @@ export const METERS_PER_MILE = 1609.34
 
 export const PURPLE = '#811897'
 
+export const TRUCATE_LENGTH = 18
+
 export const zoom_levels = {
     0: 'World ~ 1:500 M',
     1: 'Continent ~ 1:250 M',

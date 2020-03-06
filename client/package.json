@@ -53,6 +53,7 @@
     "request-promise": "^4.2.5",
     "save": "^2.4.0",
     "semantic-ui-react": "^0.83.0",
+    "truncate": "^2.1.0",
     "typescript": "^3.7.5"
   },
   "eslintConfig": {
