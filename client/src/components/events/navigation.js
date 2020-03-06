@@ -83,7 +83,7 @@ class Navigation extends Component {
         }
 
         if (params.vibes) {
-            
+            console.log('SET VIBE PARMS: ', params.vibesF)
             let vibes = []
             if (typeof(params.vibes) == "string") {
                 vibes.push(params.vibes)
@@ -125,6 +125,10 @@ class Navigation extends Component {
             this.updateURL("zoom", this.props.zoom)
         }
 
+        if (!isEqual(prevProps.vibes, this.props.vibes)) {
+            this.updateURL("vibes", this.props.vibes)
+        }
+
         if (!isEqual(prevProps.activity, this.props.activity)) {     
             this.updateURL("activity", this.props.activity)
         }
@@ -132,6 +136,7 @@ class Navigation extends Component {
         if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {            
             //this.setState({ vibes: this.props.currentVibes })
             this.props.setCurrentVibes(this.props.currentVibes)
+            this.updateURL("vibes", this.props.currentVibes)
         }
 
         if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) {                        
