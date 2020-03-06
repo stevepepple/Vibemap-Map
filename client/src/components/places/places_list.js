@@ -56,13 +56,11 @@ class PlacesList extends Component {
         let items = null;
 
         let searchTerm = this.props.searchTerm
-        
+
         if (has_items) {
             // TODO: @cory, sorting should happen on the server. 
-            // And we should be able to sort by distance, relevance, tc. 
-            let sorted = this.props.data.sort((a, b) => (a.properties.score > b.properties.score) ? -1 : 1)
             let max = helpers.getMax(this.props.data, 'score')
-            items = sorted.map((place, index) => {                
+            items = this.props.data.map((place, index) => {                                
                 return <ListItem key={place.id} id={place.id} type={place.properties.place_type} link={place.properties.url} onClick={this.onClick} properties={place.properties} index={index} max={max}/>
             })
         }

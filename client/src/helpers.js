@@ -19,9 +19,8 @@ const helpers = {
     },
 
     getBounds: function(location, zoom, size) {
-        console.log("Bounds for: ", location, zoom, size)
-        let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [size.width, size.height])
-        
+        let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [size.width, size.height], 512)
+        console.log("Got bounds for: ", location, zoom, size, bounds)
         return bounds
     },
 
@@ -32,6 +31,15 @@ const helpers = {
             [bounds[2], bounds[3]],
             { unit: 'miles'}
         )
+
+        let width = turf.distance(
+            [bounds[0], bounds[3]],
+            [bounds[2], bounds[3]],
+            { unit: 'miles' }
+        )
+        
+        console.log('Diameter is: ', diameter)
+        console.log('Width is: ', width)
 
         let distance = diameter / 2
 
@@ -117,12 +125,30 @@ const helpers = {
     // Counts the number of matches between the two lists and return and integer
     matchLists: function(listA, listB ) {
         let matches = 0;
-        //console.log(listA, listB)
+        
         if (listA.length > 0 && listB.length > 0) {
             matches = listA.filter((word) => { return listB.includes(word) }).length
         }
 
         return matches;
+    },
+
+    rankVibes: function(listA, listB) {
+        let rankings = []
+
+        rankings = listA.map((word) => {
+            let score = 0
+            
+            if (listB.includes(word)) {
+                score = listB.length - listB.indexOf(word)
+            }
+            
+            return score
+        })
+
+        const average = rankings.reduce((a, b) => a + b, 0) / rankings.length
+
+        return average
     },
 
     sortLocations: function(locations, currentLocation) {
@@ -305,11 +331,16 @@ const helpers = {
     },
 
     toTitleCase: function(str) {
-        str = str.toLowerCase().split(' ');
-        for (var i = 0; i < str.length; i++) {
-            str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+        if (typeof(str) == "string") {
+            str = str.toLowerCase().split(' ');
+            for (var i = 0; i < str.length; i++) {
+                str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+            }
+            return str.join(' ');
+        } else {
+            return str
         }
-        return str.join(' ');
+        
     }
 }
 
