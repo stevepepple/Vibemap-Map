@@ -267,7 +267,7 @@ class EventsMap extends React.Component {
                                 data={this.state.places_geojson}
                                 cluster={true}
                                 clusterMaxZoom={14}
-                                clusterRadius={50}
+                                clusterRadius={60}
                                 ref={this._sourceRef}>
                                 <Layer {...clusterLayer} />
                                 <Layer {...clusterCountLayer} />
@@ -287,7 +287,7 @@ class EventsMap extends React.Component {
                                     type="symbol"
                                     layout={mapStyles.marker_layout}
                                     paint={mapStyles.marker_paint}/>
-                                }                        
+                                                                                            
                             </Source>
                         }
 
@@ -315,18 +315,19 @@ class EventsMap extends React.Component {
                                     cluster={false}>
 
                                     <Layer
-                                        id="top_picks"
+                                        id="photo_markers"
                                         type="symbol"
                                         layout={mapStyles.top_pick_layout}
                                         paint={mapStyles.top_pick_paint}
                                     />
-
+                                    
                                     <Layer
                                         id="top_vibes"
                                         type="symbol"
                                         layout={mapStyles.top_vibe_layout}
                                         paint={mapStyles.top_pick_paint}
-                                    />
+                                    />                        
+                                    
                                 </Source>
                                 {/* TODO: this state should be synced with the top_picks react state */}
                                 {this.props.layers.photo_markers &&
