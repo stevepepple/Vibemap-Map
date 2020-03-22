@@ -29,13 +29,13 @@ const helpers = {
         let diameter = turf.distance(
             [bounds[0], bounds[1]],
             [bounds[2], bounds[3]],
-            { unit: 'miles'}
+            { units: 'miles'}
         )
 
         let width = turf.distance(
             [bounds[0], bounds[3]],
             [bounds[2], bounds[3]],
-            { unit: 'miles' }
+            { units: 'miles' }
         )
         
         console.log('Diameter is: ', diameter)
