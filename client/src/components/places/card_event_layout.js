@@ -2,6 +2,8 @@ import React, { Fragment } from 'react'
 
 import { Item, Icon, Label } from 'semantic-ui-react'
 
+import moment from 'moment'
+
 function cardPLaceLayout(props) {
 
     let content = props.properties
@@ -32,6 +34,8 @@ function cardPLaceLayout(props) {
         venue = <span className='venue'>{content.venue}</span>
     }
 
+    let date_time = <span>{}</span>
+
     let vibes = null;
     if (typeof content.vibes !== "undefined") {
         let remainder = content.vibes.length - 1
@@ -52,7 +56,7 @@ function cardPLaceLayout(props) {
         <Fragment>
             <Item.Image src={content.images[0]} size='small' />
             <Item.Content>
-                <Item.Extra className='date'>{date} {start}</Item.Extra>
+                <Item.Extra className='date'>{moment(date).format('h:mm a')} {moment(date).format('dddd')}</Item.Extra>
                 <Item.Header>{name}</Item.Header>
                 <Item.Extra>
                     <div>
