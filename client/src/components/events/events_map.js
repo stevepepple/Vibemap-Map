@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
-//import Geocoder from "@mapbox/react-geocoder"
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
 import * as turf from '@turf/turf'
+
 
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup } from 'react-map-gl'
 import CustomMapController from '../map/map-conroller'
@@ -13,6 +13,8 @@ import Styles from '../../styles/map_styles.js'
 import Markers from '../map/markers'
 import Selected from '../map/selected'
 import VectorTile from '../map/VectorTile'
+import LayersFilter from '../map/LayersFilter'
+import { clusterLayer, clusterCountLayer, unclusteredPointLayer } from '../map/layers';
 //import YouAreHere from '../map/you_are_here.js'
 import ZoomLegend from '../map/ZoomLegend'
 
@@ -22,7 +24,7 @@ import helpers from '../../helpers.js'
 
 import '../../styles/map.scss'
 
-class EventsMap extends React.PureComponent {
+class EventsMap extends React.Component {
 
     constructor(props) {
         super(props)
@@ -31,7 +33,9 @@ class EventsMap extends React.PureComponent {
         this.state = {
             lens : {"type": "FeatureCollection", "features": []},
             popupInfo: null,
-            has_data: false
+            has_data: false,
+            layers: props.layers,
+            mapStyles : Styles
         }
 
         this.map = React.createRef()
@@ -46,6 +50,7 @@ class EventsMap extends React.PureComponent {
     // TODO: Move to componentWillUPdate
     componentWillReceiveProps(nextProps){
 
+        
         // Make it valide geoJSON
         // TODO: make valid GeoJSON in Redux?
         let places_geojson = turf.featureCollection(nextProps.places_data)
@@ -65,13 +70,16 @@ class EventsMap extends React.PureComponent {
                 zoom: zoom
             }
         })        
-    }
+    }    
 
     componentDidMount() {
-        this.props.setMapSize({
+        let size = {
             height: this.map.current.offsetHeight,
             width: this.map.current.offsetWidth
-        })
+        }
+
+        // These both need size at the same time
+        this.props.setMapSize(size)
 
         this.props.setMapReady(true)
     }
@@ -115,7 +123,7 @@ class EventsMap extends React.PureComponent {
         if (setBearing) this.props.setZoom(viewport.zoom)
 
         this.setState({ viewport })   
-    }
+    }    
 
     // Set details when marker or icon is clicked
     _onClick = (event, feature) => {
@@ -176,15 +184,22 @@ class EventsMap extends React.PureComponent {
         let has_top_pick_data = this.props.topPicks.length > 0
 
         const mapController = new CustomMapController()
+        const mapStyles = this.state.mapStyles
+
+        // Marker are better controled with a layout style
+        mapStyles.marker_layout.visibility = this.props.layers.places_markers ? "visible" : "none"
+        
+        //this._map.setLayoutProperty('place_markers', 'visibility', mapStyles.marker_layout.visibility);
+
+        
+        let heat_map_visibility = this.props.layers.heatmap ? 'visible' : 'none'
 
         return (
-
             <Fragment>
-
                 <div className = 'map_container' ref={this.map}>
-                    {/* Floating legend */}
+                    {/* Floating legend */}                    
 
-                    <ZoomLegend zoom={this.props.zoom} />
+                    <LayersFilter/>
 
                     {/* TODO: Move to it's own class <Map> */}
                     <ReactMapGL
@@ -192,7 +207,7 @@ class EventsMap extends React.PureComponent {
                         controller={mapController}
                         width={'100%'}
                         height={'100%'}
-                        transition={{ "duration": 300, "delay": 0 }}
+                        transition={{ "duration": 300, "delay": 0 }}                        
                         mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
                         mapStyle={Constants.MAPBOX_STYLE}
                         onClick={this._onClick}
@@ -207,12 +222,13 @@ class EventsMap extends React.PureComponent {
                         />
 
                         <GeolocateControl
-                            style={Styles.geolocateStyle}
+                            style={mapStyles.geolocateStyle}
                             positionOptions={{ enableHighAccuracy: true }}
                             trackUserLocation={true}
-                        />           
+                        />
 
                         {this.props.detailsShown && this.props.currentPlace.location !== null &&
+                            /* Current place marker */
                             <Marker
                                 longitude={this.props.currentPlace.location.longitude}
                                 latitude={this.props.currentPlace.location.latitude}
@@ -228,35 +244,38 @@ class EventsMap extends React.PureComponent {
                                 id='places_source'
                                 type="geojson"
                                 data={this.state.places_geojson}
-                                cluster={false}>
-
-                                {/* 
-                                <Layer
-                                    id='heat'
-                                    type='heatmap'
-                                    paint={Styles.places_heatmap}
-                                    isLayerChecked={true}
-                                />                                                    
-                                */}
+                                cluster={false}>                                
 
                                 <Layer
                                     id='places_circle'
                                     type='circle'
-                                    paint={Styles.places_circle}
-                                    isLayerChecked={true}
-                                />
+                                    paint={mapStyles.places_circle}
+                                    isLayerChecked={true} />
 
                                 <Layer
                                     id="places_markers"
+                                    key="places_markers"
                                     type="symbol"
-                                    layout={Styles.marker_layout}
-                                    paint={Styles.marker_paint}
-                                />
-
+                                    layout={mapStyles.marker_layout}
+                                    paint={mapStyles.marker_paint} />
                             </Source>
                         }
 
-                        {has_events_data &&
+                        {this.props.layers.clusters && 
+                            <Source
+                                type="geojson"
+                                data={this.state.places_geojson}
+                                cluster={true}
+                                clusterMaxZoom={14}
+                                clusterRadius={60}
+                                ref={this._sourceRef}>
+                                <Layer {...clusterLayer} />
+                                <Layer {...clusterCountLayer} />
+                                <Layer {...unclusteredPointLayer} />
+                            </Source>
+                        }
+
+                        {has_events_data && 
                             <Source
                                 id='events'
                                 type="geojson"
@@ -266,9 +285,9 @@ class EventsMap extends React.PureComponent {
                                 <Layer
                                     id="events"
                                     type="symbol"
-                                    layout={Styles.marker_layout}
-                                    paint={Styles.marker_paint}
-                                />
+                                    layout={mapStyles.marker_layout}
+                                    paint={mapStyles.marker_paint}/>
+                                                                                            
                             </Source>
                         }
 
@@ -296,37 +315,39 @@ class EventsMap extends React.PureComponent {
                                     cluster={false}>
 
                                     <Layer
-                                        id="top_picks"
+                                        id="photo_markers"
                                         type="symbol"
-                                        layout={Styles.top_pick_layout}
-                                        paint={Styles.top_pick_paint}
+                                        layout={mapStyles.top_pick_layout}
+                                        paint={mapStyles.top_pick_paint}
                                     />
-
+                                    
                                     <Layer
                                         id="top_vibes"
                                         type="symbol"
-                                        layout={Styles.top_vibe_layout}
-                                        paint={Styles.top_pick_paint}
-                                    />
+                                        layout={mapStyles.top_vibe_layout}
+                                        paint={mapStyles.top_pick_paint}
+                                    />                        
+                                    
                                 </Source>
-                                <Markers
-                                    data={this.props.topPicks}
-                                    currentVibes={this.props.currentVibes}
-                                    zoom={this.props.zoom}
-                                    onClick={this._onClick}
-                                    showPopup={this.showPopup} />
+                                {/* TODO: this state should be synced with the top_picks react state */}
+                                {this.props.layers.photo_markers &&
+                                    <Markers
+                                        data={this.props.topPicks}
+                                        currentVibes={this.props.currentVibes}
+                                        zoom={this.props.zoom}
+                                        onClick={this._onClick}
+                                        showPopup={this.showPopup} />
+                                }                            
                             </Fragment>
-
                         }
-                   
                         
                         <VectorTile
                             id='heat_layer'
                             type='heatmap'
                             source='tile_layer'
-                            source-layer='places'                            
-                        />                        
-                        
+                            source-layer='places'
+                            visibility={heat_map_visibility}
+                        />
 
                     </ReactMapGL>
 
@@ -337,31 +358,30 @@ class EventsMap extends React.PureComponent {
 }
 
 
-const mapStateToProps = state => {
-    //console.log('State in events map:', state)
-    return {
-        activity: state.activity,
-        baseZoom: state.baseZoom,
-        bearing: state.bearing,
-        bounds: state.bounds,
-        nearby_places: state.nearby_places,
-        currentVibes: state.currentVibes,
-        currentLocation: state.currentLocation,
-        currentPlace: state.currentPlace,
-        zoom: state.zoom,
-        currentDistance: state.currentDistance,
-        detailsId: state.detailsId,
-        detailsType: state.detailsType,
-        detailsShown: state.detailsShown,
-        mapReady: state.mapReady,
-        mapSize: state.mapSize,
-        pathname: state.router.location.pathname,
-        params: state.params,
-        search: state.router.location.search,
-        topPicks: state.topPicks,
-        windowSize: state.windowSize,
-        viewport: state.viewport
-    }
-}
+const mapStateToProps = state => ({
+    activity: state.activity,
+    baseZoom: state.baseZoom,
+    bearing: state.bearing,
+    bounds: state.bounds,
+    nearby_places: state.nearby_places,
+    currentVibes: state.currentVibes,
+    currentLocation: state.currentLocation,
+    currentPlace: state.currentPlace,
+    layers: state.layers,
+    layersChanged: state.layersChanged,
+    zoom: state.zoom,
+    currentDistance: state.currentDistance,
+    detailsId: state.detailsId,
+    detailsType: state.detailsType,
+    detailsShown: state.detailsShown,
+    mapReady: state.mapReady,
+    mapSize: state.mapSize,
+    pathname: state.router.location.pathname,
+    params: state.params,
+    search: state.router.location.search,
+    topPicks: state.topPicks,
+    windowSize: state.windowSize,
+    viewport: state.viewport
+})
 
 export default connect(mapStateToProps, actions)(EventsMap)

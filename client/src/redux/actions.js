@@ -23,6 +23,10 @@ export const setMapReady = ready => ({
   ready,
 })
 
+export const setBoundsReady = ready => ({
+  type: 'SET_BOUNDS_READY',
+  ready,
+})
 
 export const activateGeod = geod => ({
   type: 'ACTIVATE_GEOD',
@@ -42,6 +46,17 @@ export const setHeaderSize = size => ({
 export const setWindowSize = size => ({  
   type: 'SET_WINDOW_SIZE',
   size,
+})
+
+
+export const setLayers = layers => ({
+  type: 'SET_LAYERS',
+  layers,
+})
+
+export const setLayersChanged = changed => ({
+  type: 'SET_LAYERS_CHANGED',
+  changed,
 })
 
 export const setMapSize = size => ({

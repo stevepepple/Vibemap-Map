@@ -11,7 +11,6 @@ import { Global } from '@emotion/core'
 
 import ListItem from './list_item.js'
 import * as Constants from '../../constants.js'
-import TimeAndTemp from '../weather/timeAndTemp'
 
 import { Translation } from 'react-i18next'
 
@@ -81,9 +80,7 @@ class PlacesList extends Component {
                             color: '#FFFFFF !important'
                         }
                     }}
-                />            
-
-                <TimeAndTemp />                
+                />                                 
                 
                 <Segment vertical>
                     <Form>
@@ -100,32 +97,21 @@ class PlacesList extends Component {
                                         value={searchTerm} />                                
                             }</Translation>
                             
-                        </Form.Field>
-                        <Form.Field widths='equal'>
-                            <Translation>{
-                                (t, { i18n }) => <Dropdown
-                                    search
-                                    placeholder={t('Pick Activity')}
-                                    selection
-                                    onChange={this.handleActivityChange}
-                                    options={Constants.activty_categories}
-                                    value={this.props.activity}
-                                />
-                            }</Translation>
-                            
-                        </Form.Field>
-                        <Form.Group widths='equal'>                                                        
+                        </Form.Field>                        
+                        <Form.Group widths='equal'>                                
+
                             <Translation>{
                                 (t, { i18n }) => <Dropdown 
-                                icon='map pin'
-                                labeled
+                                icon='map pin'                                
                                 fluid
                                 button
+                                labeled                             
                                 compact
-                                className='icon small'                                
+                                className='icon basic small'
+                                style={{ width : '10em', marginLeft: '0.4em' }}                       
                                 text={t(this.props.placeType)}
                                 value={this.props.placeType}
-                                    onChange={this.handlePlaceType}
+                                onChange={this.handlePlaceType}
                             >
                                 <Dropdown.Menu>
                                     {this.state.place_type_options.map((option) => (
@@ -134,7 +120,22 @@ class PlacesList extends Component {
                                 </Dropdown.Menu>
                             </Dropdown>
                             }</Translation>
+                            
+                            <Translation>{
+                                (t, { i18n }) => <Dropdown
+                                    search
+                                    // TODO: map this icon: icon={this.props.activity}                                    
+                                    fluid    
+                                    labeled                                
+                                    placeholder={t('Pick Activity')}
+                                    selection
+                                    onChange={this.handleActivityChange}
+                                    options={Constants.activty_categories}
+                                    value={this.props.activity}
+                                />
+                            }</Translation>
 
+                            {/* 
                             <Translation>{
                             (t, { i18n }) => 
                                 <Dropdown
@@ -147,6 +148,7 @@ class PlacesList extends Component {
                                     className='icon small'
                                 />
                             }</Translation>
+                            */}
                             
                         </Form.Group>
                     </Form>

@@ -5,6 +5,7 @@ import { Menu, Dropdown } from 'semantic-ui-react'
 import MainPage from './components/pages/main';
 import EventCalendar from './components/pages/calendar';
 import ProfileLookUp from './components/pages/profile';
+import VibeGenerator from './components/pages/vibe_generator';
 
 import { withTranslation } from 'react-i18next';
 
@@ -42,6 +43,7 @@ class App extends Component {
               <Route path="/calendar" component={EventCalendar} />
               <Route path="/places" component={MainPage} />
               <Route path="/profile" component={ProfileLookUp} />
+              <Route path="/generator" component={VibeGenerator} />
               <Route path="/" component={MainPage} />
             </Switch>
 

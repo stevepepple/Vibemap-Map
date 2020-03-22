@@ -157,7 +157,8 @@ module.exports = {
 
         if (activity === 'all') activity = null
         
-        // TODO: Load more points at greater distances?        
+        // TODO: Load more points at greater distances?   
+        // TODO: Load fewer points, once scoring is on the backend.     
         return new Promise(function (resolve, reject) {
             let params = {
                 // lat: this.state.lat,
@@ -169,19 +170,17 @@ module.exports = {
                 categories: activity,
                 search: search,
                 vibes: vibes,
-                per_page: 200
+                per_page: 100
             }
 
             if (activity) params["category"] = activity            
-
+            
             let center_point = point.split(',').map(value => parseFloat(value))
-
             let query = querystring.stringify(params);
 
             fetch(ApiUrl + "/v0.3/places/?" + query)
                 .then(data => data.json())
                 .then(res => {
-
                     clearTimeout(timeout);
 
                     let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point, vibes)
@@ -210,6 +209,7 @@ module.exports = {
     getPlaces: function (point, distance, bounds, activity, days, vibes, search_term) {
 
         let distanceInMeters = 1
+        console.log('getting places for distance: ', distance)
         if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
         let center_point = point.split(',').map(value => parseFloat(value))
 
@@ -229,7 +229,7 @@ module.exports = {
                 end_date_before: day_end,
                 categories: activity,
                 search: search_term,
-                per_page: 100
+                per_page: 200
             }
 
             if (activity) {
@@ -315,6 +315,8 @@ module.exports = {
 
         let day_start = moment().startOf('day').format("YYYY-MM-DD HH:MM")
         let day_end = moment().add(days, 'days').format("YYYY-MM-DD HH:MM")
+
+        console.log('DAY END SEARCH: ', day_end)
 
         return new Promise(function (resolve, reject) {
             let query = querystring.stringify({
@@ -403,8 +405,8 @@ module.exports = {
             // Simple average of the different scores
             let scores = [
                 event.properties.likes,
-                event.properties.vibe_score,            
-                event.properties.distance * 0.6 // Only make distance partially important
+                event.properties.vibe_score,         
+                event.properties.distance * 0.2 // Only make distance partially important
             ]
             //console.log('EVENT SCORES: ', scores)
             // Average out the scores
@@ -467,6 +469,10 @@ module.exports = {
                 place.properties.vibe_score += vibe_bonus
             }
 
+            // Don't show markers without photos
+            if (place.properties.images.length > 0) vibe_bonus += vibe_match_bonus
+
+
             // Give place an event score
             // TODO: Sum of events is a stand in for a better metric of a places relevance
             place.properties.num_events = place.properties.hotspots_events.features.length
@@ -509,22 +515,27 @@ module.exports = {
             // Normalize all scores
             place.properties.event_score = helpers.default.normalize(place.properties.event_score, 0, max_event_score)
             place.properties.vibe_score = helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score)
-            place.properties.aggregate_rating = helpers.default.normalize(place.properties.aggregate_rating, 0, max_aggregate_score)
+
+            place.properties.aggregate_rating = helpers.default.normalize(place.properties.aggregate_rating, 3, max_aggregate_score)
 
             // Distance is inverted from max and then normalize 1-10
             // TODO: There might be something off about this score; should come from backend
             place.properties.distance_score = helpers.default.normalize(max_distance - place.properties.distance, 0, max_distance)
             
             // Simple average of the different scores
+            let reasons = ['events', 'vibe', 'rating', 'distance']
             let scores = [
                 place.properties.event_score, 
                 place.properties.vibe_score, 
                 place.properties.aggregate_rating,
-                place.properties.distance_score * 0.6 // Only make distance half as important
+                place.properties.distance_score * 0.4 // Only make distance half as important
             ]
-            
+            let largest_index = scores.indexOf(Math.max(...scores))
+
             // Average out the scores
-            place.properties.average_score = scores.reduce((a, b) => a + b, 0) / scores.length
+            place.properties.average_score = scores.reduce((a, b) => a + b, 0) / scores.length            
+            // Add a reason code
+            place.properties.reason = reasons[largest_index]
 
             // Create a scaled icon; TODO: Share logic with markers
             // Normalize the icon size to match photo markers.
@@ -537,16 +548,20 @@ module.exports = {
             return place
         })
         
-        let places_scored_and_sorted = places_scored_averaged.sort((a, b) => b.properties.distance_score - a.properties.distance_score)
+        // Resort by average score
+        let places_scored_and_sorted = places_scored_averaged.sort((a, b) => b.properties.average_score - a.properties.average_score)
 
-        // See scores
+        /* TODO: for debugging only
+         See scores
         places_scored_and_sorted.map((place) => {
-            //console.log(place.properties.name)
-            //console.log(' - event score: ', place.properties.event_score)
-            //console.log(' - vibe_score: ', place.properties.vibe_score)
-            //console.log(' - aggregate rating: ', place.properties.aggregate_rating)
-            //console.log(' - distance: ', place.properties.distance_score)
+            console.log(place.properties.name)
+            console.log(' - event score: ', place.properties.event_score)
+            console.log(' - vibe_score: ', place.properties.vibe_score)
+            console.log(' - aggregate rating: ', place.properties.aggregate_rating)
+            console.log(' - distance: ', place.properties.distance_score)
+            console.log(' - reason: ', place.properties.reason)
         })
+        */
 
         return places_scored_and_sorted
     },

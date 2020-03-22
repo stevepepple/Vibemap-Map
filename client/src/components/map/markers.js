@@ -53,10 +53,10 @@ class Markers extends Component {
             let max = helpers.getMax(features, 'average_score')
             let min = helpers.getMin(features, 'average_score')
 
-            // Make less high scored marker in cluster smaller            
+            // Make less high scored marker in cluster smaller 
             if (feature.properties.in_cluster === true && feature.properties.top_in_cluster === false ) {
                 
-                score = max / 2
+                score = max / 4
             }
 
             //let orginal_score = feature.properties.score

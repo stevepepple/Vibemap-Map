@@ -65,6 +65,10 @@ class Navigation extends Component {
             this.props.setZoom(this.props.zoom + 2)
         }
 
+        if (params.place_type) {
+            this.props.setPlaceType(params.place_type)
+        }
+
         if (params.activity) {
             this.props.setActivity(params.activity)
         }
@@ -126,6 +130,10 @@ class Navigation extends Component {
 
         if (!isEqual(prevProps.vibes, this.props.vibes)) {
             this.updateURL("vibes", this.props.vibes)
+        }
+
+        if (!isEqual(prevProps.placeType, this.props.placeType)) {
+            this.updateURL("place_type", this.props.placeType)
         }
 
         if (!isEqual(prevProps.activity, this.props.activity)) {     
@@ -259,6 +267,7 @@ const mapStateToProps = state => {
         currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,
         pathname: state.router.location.pathname,
+        placeType: state.placeType,
         search: state.router.location.search,
         searchTerm: state.searchTerm
     }

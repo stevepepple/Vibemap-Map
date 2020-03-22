@@ -27,6 +27,20 @@ export const detailsShown = (state = false, action) => {
   return state
 }
 
+export const mapReady = (state = false, action) => {
+  if (action.type === 'SET_MAP_READY') {
+    state = action.ready
+  }
+  return state
+}
+
+export const boundsReady = (state = false, action) => {
+  if (action.type === 'SET_BOUNDS_READY') {
+    state = action.ready
+  }
+  return state
+}
+
 export const detailsId = (state = null, action) => {
   if (action.type === 'SET_DETAILS_ID') {
     console.log("SET_DETAILS_ID: " + action.id)
@@ -39,13 +53,6 @@ export const detailsType = (state = "place", action) => {
   if (action.type === 'SET_DETAILS_TYPE') {
     console.log("SET_DETAILS_TYPE: ", action.place_type)
     state = action.place_type
-  }
-  return state
-}
-
-export const mapReady = (state = false, action) => {
-  if (action.type === 'SET_MAP_READY') {
-    state = action.ready
   }
   return state
 }
@@ -97,6 +104,23 @@ export const mapSize = (state = { width: 800, height: 600 }, action) => {
   return state
 }
 
+export const layers = (state = { clusters: false, heatmap: true, places_markers: true, photo_markers: true }, action) => {
+  if (action.type === 'SET_LAYERS') {    
+    state = action.layers
+  }
+  return state
+}
+
+export const layersChanged = (state = false, action) => {
+  if (action.type === 'SET_LAYERS_CHANGED') {
+    // Always change he state to the opposite.
+
+    state = !state
+    console.log('Changed Layer State', state)
+  }
+  return state
+}
+
 export const headerSize = (state = { width: 0, height: 0 }, action) => {
   if (action.type === 'SET_HEADER_SIZE') {
     console.log("Set header size: ", action.size)
@@ -138,6 +162,7 @@ export const zoom = (state = 14, action) => {
 // TODO: create a mathematical relationship between zoom and distance
 export const distance = (state = 1.4, action) => {
   if (action.type === 'SET_DISTANCE') {
+    console.log('SET_DISTANCE: ', action.distance)
     state = action.distance
   }
   return state
@@ -295,12 +320,18 @@ export const currentPlace = (state = {
   description: null,
   address: null,
   categories: [],
+  hours: null,
+  instagram: null,
+  phone: null,
   location: null,
+  reason: null,
+  tips: [],
   vibes: [],
   images: []
 }, action) => {
   if (action.type === "SET_CURRENT_PLACE") {
-      return action.place
+    console.log('SET_CURRENT_PLACE: ', action)
+    return action.place
   }
 
   return state
@@ -357,7 +388,6 @@ export const name = (state = 'Steve', action) => {
   }
 }
 
-
 export const geod = (state = {}, action) => {
 
   switch (action.type) {
@@ -374,6 +404,7 @@ export const reducers = (history) => combineReducers({
   activity,
   bearing,
   bounds,
+  boundsReady,
   cities,
   geod,
   router: connectRouter(history),
@@ -387,6 +418,8 @@ export const reducers = (history) => combineReducers({
   distance,
   eventsData,
   headerSize,
+  layers,
+  layersChanged,
   mapReady,
   mapSize,
   name,

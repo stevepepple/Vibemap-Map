@@ -63,8 +63,8 @@ module.exports = {
         22, 16
       ],
       "text-offset": [0, -0.8],
-      "text-padding": 1,
-      "text-max-width": 10    ,
+      "text-padding": 4,
+      "text-max-width": 10,
       'visibility': 'visible' 
     },
 
@@ -88,7 +88,7 @@ module.exports = {
       // Text
       "text-field": ["to-string", ["get", "short_name"]],
       "text-allow-overlap": false,
-      "icon-allow-overlap": true,
+      "icon-allow-overlap": false,
       "icon-ignore-placement": true,
       "text-ignore-placement": false,
       "text-radial-offset" : [
@@ -122,7 +122,6 @@ module.exports = {
       */
       "text-max-width": 8,
       'visibility': 'visible'
-
     },
 
     top_pick_paint: {
