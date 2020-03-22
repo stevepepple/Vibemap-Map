@@ -23,6 +23,13 @@ export const PURPLE = '#811897'
 
 export const TRUCATE_LENGTH = 18
 
+export const RECOMMENDATION_REASONS = {
+    'events': 'This place is happening',
+    'rating' : 'People like this spot',
+    'vibe': 'Totally your vibe',
+    'distance': 'Good bet near you',
+}
+
 export const zoom_levels = {
     0: 'World ~ 1:500 M',
     1: 'Continent ~ 1:250 M',
@@ -81,11 +88,13 @@ export const activty_categories = [
 export const place_categories = [
     { key: 'any', value: 'any', text: 'All Activities', categories: ['Arts & Entertainment', 'Food', 'Bar'] },
     { key: 'cafe', value: 'cafe', text: 'Cafe'},
-    { key: 'comedy', value: 'comedy', text: 'Cafe' },
+    { key: 'comedy', value: 'comedy', text: 'Comedy' },
+    { key: 'community', value: 'community', text: 'Community' },
     { key: 'food', value: 'food', text: 'Eating', categories: ['Food'] },
     { key: 'drinking', value: 'drinking', text: 'Drinking', categories: ['Bar', 'Brewery', 'Lounge'] },
+    { key: 'health', value: 'health', text: 'Health' },
     { key: 'shopping', value: 'shopping', text: 'Shopping', categories: ['Shop & Service'] },
-    { key: 'arts', value: 'arts', text: 'Arts', categories: ['Arts & Entertainment'] },
+    { key: 'art', value: 'art', text: 'Arts', categories: ['Arts & Entertainment'] },
     { key: 'music', value: 'music', text: 'Music', categories: ['Music Venue', 'Performing Arts Venue', 'Nightclub', 'Concert Hall', 'Music Festival', 'Music Schools', 'Music Stores', 'Country Dance Club', 'Dance Studio', 'Salsa Club', 'Samba School', 'Recording Studios', 'Bar'] },
     { key: 'comedy', value: 'comedy', text: 'Stories & Laughing', categories: ['Comedy Club', 'Bar', 'Nightclub'] },
     { key: 'games', value: 'games', text: 'Games & Sports', categories: ['Outdoors & Recreation'] },
