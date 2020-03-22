@@ -15,18 +15,25 @@ class VectorTile extends React.Component {
         this.state = {
             filter: ["food", "shopping", "outdoors"],
             added_map: false,
-            update_layer: true
+            update_layer: true,
+            visibility: "visible"
         }
     }
 
-    static getDerivedStateFromProps(nextProps, prevState){        
+    // TODO: Important: Use this in other modules; as other life cylce methonds are deprecated
+    static getDerivedStateFromProps(nextProps, prevState){    
+        
+        if (nextProps.visibility !== prevState.visibility) {
+            return { visibility: nextProps.visibility}
+        }
+
         if (nextProps.activity !== prevState.activity) {
             return { activity: nextProps.activity };
         } else {
             return null
         }
     }
-
+        
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.activity !== this.props.activity) {
             if (this.props.activity === 'all') {
@@ -34,6 +41,10 @@ class VectorTile extends React.Component {
             } else {
                 this.setState({ update_layer: true, activity: this.props.activity, filter: [this.props.activity] })
             }
+        }
+
+        if (prevProps.visibility !== this.props.visibility || prevProps.layersChanged !== this.props.layersChanged) {   
+            this.updateMap()
         }
     }
 
@@ -63,8 +74,9 @@ class VectorTile extends React.Component {
                         true,
                         false
                     ]
-                ],
-                "paint": Styles.places_heatmap
+                ],                
+                "paint": Styles.places_heatmap,
+                //"layout": { 'visibility' : this.state.visibility }
             })
 
             /* TODO: Measure density here or get from backend with JSON tiles response. */
@@ -76,7 +88,24 @@ class VectorTile extends React.Component {
     }
 
     updateMap() {
-        //this._map.setFilter('collisions', ['all', 'test'])        
+        let map = this._map        
+
+        let layer = map.getLayer('heat_layer')
+
+        //this._map.setFilter('collisions', ['all', 'test']) 
+        //map.setFilter(layer.id, ['==', 'primary_category', this.state.activity])
+
+        // TODO: this works fine but has a slight side effect that make the places layer work. 
+        map.setLayoutProperty(layer.id, 'visibility', this.state.visibility);
+
+        console.log('layers changed: ', this.props.layers)
+
+        Object.keys(this.props.layers).map((key) => {
+            let visibility = this.props.layers[key]  ? "visible" : "none"
+            map.setLayoutProperty(key, 'visibility', visibility);
+        })
+            
+       
     }
 
     _render(context: MapContextProps) {
@@ -100,6 +129,8 @@ class VectorTile extends React.Component {
 
 const mapStateToProps = state => ({
     activity: state.activity,
+    layers: state.layers,
+    layersChanged: state.layersChanged
 })
 
 export default connect(mapStateToProps, actions)(VectorTile)
