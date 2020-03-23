@@ -516,7 +516,7 @@ module.exports = {
             place.properties.event_score = helpers.default.normalize(place.properties.event_score, 0, max_event_score)
             place.properties.vibe_score = helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score)
 
-            place.properties.aggregate_rating = helpers.default.normalize(place.properties.aggregate_rating, 3, max_aggregate_score)
+            place.properties.aggregate_rating = helpers.default.normalize(place.properties.aggregate_rating, 2, max_aggregate_score)
 
             // Distance is inverted from max and then normalize 1-10
             // TODO: There might be something off about this score; should come from backend
