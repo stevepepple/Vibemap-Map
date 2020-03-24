@@ -48,7 +48,7 @@ class Page extends Component {
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categories: ['adventurous', 'artsy', 'atmosphere', 'authentic', 'bold', 'civic', 'chill', 'classic', 'cool', 'comfortable', 'cowork', 'cozy', 'creative', 'dance', 'dive', 'diverse', 'energetic', 'exclusive', 'family', 'festive', 'free', 'friendly', 'fun', 'gay', 'healthy', 'hidden', 'historic', 'interactive', 'inspired', 'intimate', 'local', 'lively', 'magical', 'new', 'oldschool', 'outdoors', 'peaceful', 'playful', 'popular', 'positive', 'public', 'romantic', 'queer', 'quiet', 'raunchy', 'scenic', 'soul', 'sweet', 'transformative', 'trending', 'vibrant', 'unique', 'wild', 'women-owned', 'zen'],
+            vibe_categories: ['adventurous', 'artsy', 'atmosphere', 'authentic', 'bold', 'civic', 'chill', 'classic', 'cool', 'comfortable', 'cowork', 'cozy', 'creative', 'dance', 'dive', 'diverse', 'energetic', 'exclusive', 'family', 'festive', 'free', 'friendly', 'fun', 'gay', 'healthy', 'hidden', 'historic', 'interactive', 'inspired', 'intimate', 'local', 'lively', 'magical', 'new', 'oldschool', 'outdoors', 'peaceful', 'playful', 'popular', 'positive', 'public', 'romantic', 'queer', 'quiet', 'raunchy', 'retro', 'scenic', 'soul', 'sweet', 'transformative', 'trending', 'vibrant', 'unique', 'wild', 'women-owned', 'zen'],
             // TODO: handle conversion math in VibeMap
             intervalIsSet: false,
             loading: true,
@@ -279,7 +279,7 @@ class Page extends Component {
     
         /* Get current events, then set them in the state */
         /* TODO: package args into spread object? */        
-        VibeMap.getEvents(point, this.props.distance, this.props.bounds, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
+        VibeMap.getEvents(point, this.props.distance, this.props.bounds, this.state.event_categories, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {                
 
                 let top_picks = results.data.splice(1, this.state.num_top_picks)
@@ -326,9 +326,6 @@ class Page extends Component {
         } else {
             this.setState({ searching: false }) 
         }
-
-        // General search     
-        console.log('Getting places from this far away: ', this.props.distance)
 
         VibeMap.getPlaces(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
