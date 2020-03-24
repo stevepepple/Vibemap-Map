@@ -45,18 +45,6 @@ html, body, #root, div.App, div.App > div {
     margin-top: 20vmin;
 }
 
-.mapboxgl-ctrl,
-.mapboxgl-ctrl-group {
-    position: absolute;
-    right: 1em;
-    top: 1em;
-    width: auto;
-}
-
-.mapboxgl-ctrl-geolocate {
-    width: 40px;
-}
-
 .mobile .ui.menu {
     margin: 0px;
 }
