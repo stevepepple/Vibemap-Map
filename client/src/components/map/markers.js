@@ -42,8 +42,8 @@ class Markers extends Component {
         }
     }
 
-    scoreMarkers(features) {
-        console.log("ADDING THESE MARKERS: ", features)
+    scoreMarkers(features) {        
+
 
         let scored_markers = features.map((feature) => {
             
@@ -54,8 +54,7 @@ class Markers extends Component {
             let min = helpers.getMin(features, 'average_score')
 
             // Make less high scored marker in cluster smaller 
-            if (feature.properties.in_cluster === true && feature.properties.top_in_cluster === false ) {
-                
+            if (feature.properties.in_cluster === true && feature.properties.top_in_cluster === 'false' ) {                
                 score = max / 4
             }
 
@@ -98,7 +97,8 @@ class Markers extends Component {
                 // If the marker is the top in it's cluster show a special label
                 let label = null
 
-                if (in_cluster === false || top_in_cluster === true) {
+                // top in cluster is a string/boolean because of map box styles
+                if (in_cluster === false || top_in_cluster === 'true') {
                     label = <div className='label' style={{ marginTop: - (feature.height - 8) + 'px' }}>
                         <div className='name'>{feature.properties.name}</div>
 

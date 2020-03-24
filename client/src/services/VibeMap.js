@@ -184,11 +184,12 @@ module.exports = {
                     clearTimeout(timeout);
                     let places = module.exports.formatPlaces(res.results.features)
                     let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])                    
-                    let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
+                    // TODO: clustering could happen before and after identification of picks; for now just do it after
+                    //let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
                 
                     let top_vibes = module.exports.getTopVibes(places)                
                     
-                    resolve({ data: clustered, top_vibes: top_vibes, loading: false, timedOut: false })
+                    resolve({ data: places_scored_and_sorted, top_vibes: top_vibes, loading: false, timedOut: false })
 
                 }, (error) => {
                     console.log(error)
@@ -245,6 +246,7 @@ module.exports = {
                     clearTimeout(timeout);
                     let places = module.exports.formatPlaces(res.results.features)
                     let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])
+                    //let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
                 
                     let top_vibes = module.exports.getTopVibes(res.results.features)
                     // TODO: remove this quick way of export the current data results to a map
@@ -442,9 +444,7 @@ module.exports = {
 
                     vibe_bonus = vibe_matches * vibe_match_bonus + average_rank * vibe_rank_bonus
 
-                    fields.vibes_score += vibe_bonus
-
-                    console.log(vibe_matches, average_rank, vibe_bonus, fields.vibes_score)
+                    fields.vibes_score += vibe_bonus                    
                 }
                 // Set max vibe score
                 if (fields.vibes_score > max_scores['vibes']) {
@@ -511,8 +511,6 @@ module.exports = {
         // Resort by average score 
         let places_scored_and_sorted = places_scored_averaged.sort((a, b) => b.properties.average_score - a.properties.average_score)
 
-        console.log('places_scored_and_sortedL ', places_scored_and_sorted)
-        return places_scored_and_sorted
         
         /* TODO: for debugging only 
         places_scored_and_sorted.map((place) => {
@@ -523,7 +521,8 @@ module.exports = {
             console.log(' - reason: ', place.properties.reason)
         })
         */
-
+        
+        return places_scored_and_sorted
         
     },
 
@@ -532,48 +531,54 @@ module.exports = {
         let collection = turf.featureCollection(places)
 
         // TODO: Adjust cluster measure at each zoom level? 
-        let clustered = turf.clustersDbscan(collection, cluster_size, { mutate: true })
-        //console.log("Turf cluster: ", clustered)
+        let clustered = turf.clustersDbscan(collection, cluster_size, { mutate: false, minPoints: 2 })
+        console.log("Turf cluster: ", clustered, cluster_size)
 
         let results = []
 
         turf.clusterEach(clustered, 'cluster', function (cluster, clusterValue, currentIndex) {
-
+            console.log('clusterValue: ', clusterValue)
             // Only adjust clusters
             if (clusterValue !== 'null') {
                 let center = turf.center(cluster)
 
-                let max = helpers.default.getMax(cluster.features, 'average_score')
+                let max_score = helpers.default.getMax(cluster.features, 'average_score')
                 let size = cluster.features.length
 
-                /* For testing purposes:
-                console.log('--- Max score for cluster: ', max)
+                /* For testing purposes: */
+                console.log('--- Max score for cluster: ', max_score)
                 console.log('--- Center of cluster: ', center)
-                console.log('--- Size of cluster: ', size)
-                */
+                console.log('--- Size of cluster: ', size)                
 
                 // TODO: Handle sorting & sizing based on score and distance. 
                 turf.featureEach(cluster, function (currentFeature, featureIndex) {
-                    let vibes_score = currentFeature.properties.vibes_score
-                    let score_diff = max - vibes_score            
+
+                    let fields = currentFeature.properties
+                    let vibes_score = fields.vibes_score
+                    let score_diff = max_score - vibes_score            
 
                     let distance = turf.rhumbDistance(center, currentFeature)
                     let bearing = turf.rhumbBearing(center, currentFeature)
                     let destination = turf.rhumbDestination(center, distance * 2, bearing)
 
                     // Move the point based on the rhumb distance and bearing from the cluster center.
-                    currentFeature.properties.offset = destination.geometry
+                    fields.offset = destination.geometry
 
                     // Give point more cluster attributes
-                    currentFeature.properties.in_cluster = true
-                    currentFeature.properties.top_in_cluster = false
+                    fields.in_cluster = true
+                    fields.top_in_cluster = 'false'
 
-                    if (score_diff === 0) {
-                        currentFeature.properties.top_in_cluster = true
+                    console.log('clustered place: ', fields.name, fields.icon_size, fields.top_vibe)
+
+                    if (fields.average_score  >= max_score) {
+                        fields.top_in_cluster = 'true'
                         console.log("Top feature in cluster: ", currentFeature)
+                    } else {
+                        fields.icon_size = fields.icon_size / 1.5
                     }
                     //currentFeature.properties.vibe_score = (vibe_score - score_diff) * bonus
 
+                    currentFeature.properties = fields
                     results.push(currentFeature)
                     //=currentFeature
                     //=featureIndex
@@ -584,7 +589,9 @@ module.exports = {
             } else {
                 turf.featureEach(cluster, function (currentFeature, featureIndex) {
                     currentFeature.properties.in_cluster = false
-                    currentFeature.properties.top_in_cluster = false
+                    currentFeature.properties.top_in_cluster = 'true'
+
+                    console.log('Not in cluster: ', currentFeature.properties.name)
                     results.push(currentFeature)
                 })
             }

@@ -30,21 +30,21 @@ module.exports = {
     marker_layout :  {
       // Icon Style
       "icon-image": ["to-string", ["get", "categories"]],
-      "icon-padding": 1,
+      "icon-padding": 2,
       "icon-size": [
         "case",
-        [">", ["get", "aggregate_rating"], 4.9],
+        [">", ["get", "average_score"], 4.9],
+        0.8,
+        [">", ["get", "average_score"], 3.5],
         0.7,
-        [">", ["get", "aggregate_rating"], 3.9],
+        [">", ["get", "average_score"], 2],
         0.6,
-        [">", ["get", "aggregate_rating"], 3],
-        0.4,
         // Fall back value
-        0.2
+        0.4
       ],
 
       // TODO: Make sure important sorting variable is working
-      "symbol-sort-key": ["get", "aggregate_rating"],
+      "symbol-sort-key": ["get", "average_score"],
       // Text
       "text-field": ["to-string", ["get", "short_name"]],
       //"text-field": ["to-string", ["get", "top_vibe"]],
@@ -82,20 +82,30 @@ module.exports = {
         "interpolate",
         ["linear"],["zoom"],
         8, 0.4,
-        22, ["get", "icon_size"]
+        22, 3
+        // 22, ["get", "icon_size"]
       ],
       "symbol-sort-key": ["get", "average_score"],
       // Text
-      "text-field": ["to-string", ["get", "short_name"]],
+      "text-field": [
+        
+        "match", 
+        ["get", "top_in_cluster"], 
+        ["false"], 
+        "",
+        ["to-string", ["get", "short_name"]]
+      ],
       "text-allow-overlap": false,
       "icon-allow-overlap": false,
-      "icon-ignore-placement": true,
+      "icon-ignore-placement": false,
       "text-ignore-placement": false,
       "text-radial-offset" : [
         "interpolate",
         ["linear"], ["zoom"],
-        8, 0.4,
-        20, ["+", ["get", "icon_size"], 0.8]
+        8, 0.6,
+        12, ["-", ["get", "icon_size"], 0],
+        15, ["+", ["get", "icon_size"], 0],
+        20, ["+", ["get", "icon_size"], 0.2]
       ],
       "text-font": ["Roboto Condensed Bold"],
       "text-line-height": 1.0,
@@ -109,18 +119,7 @@ module.exports = {
         8, 6,
         22, 20
       ],
-      /*
-      "text-offset": [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        8,
-        ["literal", [0, -1]],
-        22,
-        ["literal", [0, - ["get, 'icon-size"]]]
-      ],
-      */
-      "text-max-width": 8,
+      "text-max-width": 10,
       'visibility': 'visible'
     },
 
@@ -132,12 +131,17 @@ module.exports = {
 
     top_vibe_layout: {
       // Text
-      "text-field": ["to-string", ["get", "top_vibe"]],
+      "text-field": [
+        // Dont show labels for clustered markers
+        //["match", ["get", "top_in_cluster"], [true], null],
+        "to-string", ["get", "top_vibe"]
+      ],
+   
       "text-font": ["Roboto Condensed Italic"],
       "text-justify" : "center",
       "text-anchor": "bottom",
       "text-allow-overlap": false,
-      "icon-allow-overlap": true,
+      "icon-allow-overlap": false,
       "icon-ignore-placement": true,
       "text-ignore-placement": true,
       "symbol-sort-key": ["get", "average_score"],
@@ -152,6 +156,8 @@ module.exports = {
         "interpolate",
         ["linear"], ["zoom"],
         8, 0.4,
+        12, ["-", ["get", "icon_size"], 1.5],
+        15, ["-", ["get", "icon_size"], 1.0],
         18, ["-", ["get", "icon_size"], 1.6]
       ],
       "text-max-width": 12

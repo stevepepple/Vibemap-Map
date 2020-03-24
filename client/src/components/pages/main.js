@@ -41,6 +41,7 @@ class Page extends Component {
         // State includes some globals only for the main page; 
         // Most other UI state is managed by Redux
         this.state = {
+            clusterSize: 80,
             top_event: [],
             items: [],
             // TODO: set state form YAML
@@ -52,7 +53,7 @@ class Page extends Component {
             // TODO: handle conversion math in VibeMap
             intervalIsSet: false,
             loading: true,
-            num_top_picks: 20,
+            num_top_picks: 12,
             timedOut: false,
             mergeTopPicks: false,
             time_of_day: 'morning',
@@ -147,8 +148,15 @@ class Page extends Component {
             updateData = true
             // Only refresh if it a whole step up or down            
             let zoom_diff = this.props.zoom - prevProps.zoom
-            if (zoom_diff >= 1) refreshResults = true
+            if (zoom_diff >= 0.4) refreshResults = true            
         }
+
+        if (!isEqual(prevProps.pixelDistance, this.props.pixelDistance)) {
+            // TODO: establish reproducable relationship between custer distance and icon size
+            this.setState({ clusterSize: this.props.pixelDistance * 60 })
+        }
+
+        
         
         // Reset mergeTopPicks; if the results shoudl change
         if (refreshResults) this.setState({ mergeTopPicks: false })
@@ -161,6 +169,7 @@ class Page extends Component {
         if (this.props.mapReady === true && !isEqual(prevProps.mapReady, this.props.mapReady)) {
             this.getBounds()
         }
+
         if (this.props.boundsReady === false) updateData = false
         // Only update data if the map and searh radius area ready. 
         if (this.props.mapReady && this.props.boundsReady && !isEqual(prevProps.boundsReady, this.props.boundsReady)) {
@@ -308,16 +317,17 @@ class Page extends Component {
             
             // TODO: add search variable.
             VibeMap.getPicks(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentVibes, this.props.searchTerm)
-                .then(results => {
-                    let cluster_size = this.props.pixelDistance * 10
-                    console.log('Cluster size for distance: ', cluster_size)
+                .then(results => {                                        
+
                     if (results.top_vibes) {
                         this.props.setTopVibes(results.top_vibes)
                     }
 
                     let top_picks = results.data.splice(1, this.state.num_top_picks)
                     
-                    this.props.setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
+                    let top_picks_clustered = VibeMap.clusterPlaces(top_picks, this.state.clusterSize)                                    
+                    
+                    this.props.setTopPicks(top_picks_clustered, refreshResults, this.state.mergeTopPicks)
                     this.props.setPlacesData(results.data, refreshResults)
 
             }, (error) => {
@@ -329,7 +339,6 @@ class Page extends Component {
 
         VibeMap.getPlaces(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
-                let cluster_size = this.props.pixelDistance * 20
 
                 // TODO: Can this be dispatched from a central place? 
                 this.props.setTopVibes(results.top_vibes)
@@ -341,7 +350,8 @@ class Page extends Component {
                     // Example of DBSCAN clustering algorithm
                     // Size cluster for 20 px appart at each level
                     
-                    let top_picks_clustered = VibeMap.clusterPlaces(top_picks, cluster_size)
+                    let top_picks_clustered = VibeMap.clusterPlaces(top_picks, this.state.clusterSize)                    
+
                     this.props.setTopPicks(top_picks_clustered, refreshResults, this.state.mergeTopPicks)
                     
                     this.props.setPlacesData(results.data, refreshResults)

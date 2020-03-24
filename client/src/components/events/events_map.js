@@ -197,7 +197,8 @@ class EventsMap extends React.Component {
         return (
             <Fragment>
                 <div className = 'map_container' ref={this.map}>
-                    {/* Floating legend */}                    
+                    {/* Floating legend */}    
+                    <ZoomLegend zoom={this.props.zoom}/>          
 
                     <LayersFilter/>
 
@@ -227,13 +228,48 @@ class EventsMap extends React.Component {
                             trackUserLocation={true}
                         />
 
+                        {has_top_pick_data &&
+                            <Fragment>
+                                <Source
+                                    id='top_picks'
+                                    type="geojson"
+                                    data={this.state.top_picks_geojson}
+                                    cluster={false}>
+
+                                    <Layer
+                                        id="photo_markers"
+                                        type="symbol"
+                                        layout={mapStyles.top_pick_layout}
+                                        paint={mapStyles.top_pick_paint}
+                                    />
+
+                                    <Layer
+                                        id="top_vibes"
+                                        type="symbol"
+                                        layout={mapStyles.top_vibe_layout}
+                                        paint={mapStyles.top_pick_paint}
+                                    />
+
+                                </Source>
+                                {/* TODO: this state should be synced with the top_picks react state */}
+                                {this.props.layers.photo_markers &&
+                                    <Markers
+                                        data={this.props.topPicks}
+                                        currentVibes={this.props.currentVibes}
+                                        zoom={this.props.zoom}
+                                        onClick={this._onClick}
+                                        showPopup={this.showPopup} />
+                                }
+                            </Fragment>
+                        }
+
                         {this.props.detailsShown && this.props.currentPlace.location !== null &&
                             /* Current place marker */
                             <Marker
                                 longitude={this.props.currentPlace.location.longitude}
                                 latitude={this.props.currentPlace.location.latitude}
                                 offsetTop={-2}
-                                offsetLeft={-2}                                
+                                offsetLeft={-2}
                             >   
                                 <Selected size={helpers.scaleSelectedMarker(this.props.zoom)} />
                             </Marker>
@@ -244,18 +280,20 @@ class EventsMap extends React.Component {
                                 id='places_source'
                                 type="geojson"
                                 data={this.state.places_geojson}
-                                cluster={false}>                                
+                                cluster={false}>
 
                                 <Layer
                                     id='places_circle'
                                     type='circle'
+                                    beforeId='places_markers'
                                     paint={mapStyles.places_circle}
                                     isLayerChecked={true} />
 
                                 <Layer
-                                    id="places_markers"
-                                    key="places_markers"
-                                    type="symbol"
+                                    id='places_markers'
+                                    key='places_markers'
+                                    beforeId='photo_markers'
+                                    type='symbol'
                                     layout={mapStyles.marker_layout}
                                     paint={mapStyles.marker_paint} />
                             </Source>
@@ -304,41 +342,6 @@ class EventsMap extends React.Component {
                             >
                                 {this.state.popupInfo.name}
                             </Popup>
-                        }
-
-                        {has_top_pick_data &&
-                            <Fragment>
-                                <Source
-                                    id='top_picks'
-                                    type="geojson"
-                                    data={this.state.top_picks_geojson}
-                                    cluster={false}>
-
-                                    <Layer
-                                        id="photo_markers"
-                                        type="symbol"
-                                        layout={mapStyles.top_pick_layout}
-                                        paint={mapStyles.top_pick_paint}
-                                    />
-                                    
-                                    <Layer
-                                        id="top_vibes"
-                                        type="symbol"
-                                        layout={mapStyles.top_vibe_layout}
-                                        paint={mapStyles.top_pick_paint}
-                                    />                        
-                                    
-                                </Source>
-                                {/* TODO: this state should be synced with the top_picks react state */}
-                                {this.props.layers.photo_markers &&
-                                    <Markers
-                                        data={this.props.topPicks}
-                                        currentVibes={this.props.currentVibes}
-                                        zoom={this.props.zoom}
-                                        onClick={this._onClick}
-                                        showPopup={this.showPopup} />
-                                }                            
-                            </Fragment>
                         }
                         
                         <VectorTile
