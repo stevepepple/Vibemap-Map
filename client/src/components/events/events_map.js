@@ -5,7 +5,7 @@ import * as actions from '../../redux/actions'
 import * as turf from '@turf/turf'
 
 
-import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup } from 'react-map-gl'
+import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup, ScaleControl } from 'react-map-gl'
 import CustomMapController from '../map/map-conroller'
 
 // TODO: Remove these other map sources
@@ -227,6 +227,8 @@ class EventsMap extends React.Component {
                             positionOptions={{ enableHighAccuracy: true }}
                             trackUserLocation={true}
                         />
+
+                        <ScaleControl maxWidth={200} unit='imperial' />
 
                         {has_top_pick_data &&
                             <Fragment>
