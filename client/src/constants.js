@@ -61,7 +61,6 @@ export const activty_categories = [
     // Eating
     { key: 'food', value: 'food', text: 'Eating', label: { color: 'pink', icon: 'food', circular: true }, categories: ['food', 'restuarant'] },
     // Drinking
-    { key: 'drink', value: 'drink', text: 'Drink', label: { color: 'pink', icon: 'glass martini', circular: true }, categories: ['drinking', 'drinks'] },
     { key: 'drinking', value: 'drinking', text: 'Drinking', label: { color: 'pink', icon: 'glass martini', circular: true }, categories: ['drinking', 'drinks'] },
     // Music
     { key: 'music', value: 'music', text: 'Music', label: { color: 'violet', icon: 'music', circular: true }, categories: ['music'] },
