@@ -183,9 +183,9 @@ module.exports = {
                 .then(res => {
                     clearTimeout(timeout);
                     let places = module.exports.formatPlaces(res.results.features)
-                    let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])
+                    let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])                    
                     let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
-
+                
                     let top_vibes = module.exports.getTopVibes(places)                
                     
                     resolve({ data: clustered, top_vibes: top_vibes, loading: false, timedOut: false })
@@ -242,9 +242,10 @@ module.exports = {
             fetch(ApiUrl + "/v0.3/places/?" + query)
                 .then(data => data.json())
                 .then(res => {
-
                     clearTimeout(timeout);
-                    let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])
+                    let places = module.exports.formatPlaces(res.results.features)
+                    let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])
+                
                     let top_vibes = module.exports.getTopVibes(res.results.features)
                     // TODO: remove this quick way of export the current data results to a map
                     //console.log(JSON.stringify(res))
@@ -308,8 +309,7 @@ module.exports = {
         })
     },
 
-
-    getEvents: function (point, distance, bounds, activity, days, search_term) {
+    getEvents: function (point, distance, bounds, activity, days, vibes, search_term) {
 
         let distanceInMeters = distance * Constants.METERS_PER_MILE
         let center_point = point.split(',').map(value => parseFloat(value))
@@ -338,7 +338,9 @@ module.exports = {
                     clearTimeout(timeout);
 
                     // Apply some temporary scoring to events to make them show up better.                    
-                    let scored = module.exports.scoreEvents(res.results.features, center_point)
+                    // TODO: format events
+                    let event_places = module.exports.formatEvents(res.results.features)
+                    let scored = module.exports.scorePlaces(event_places, center_point, vibes, ['vibes', 'distance', 'likes'])
 
                     resolve({ data: scored, loading: false, timedOut: false })
 
@@ -348,81 +350,28 @@ module.exports = {
         })
     },
 
-    scoreEvents: function(events, center_point, vibes) {
-        
-        let max_distance = 1
-        let max_likes = 1
-        let max_vibe_score = 1
+    formatEvents: function (events) {
+        let formatted = events.map((event) => {
+            let fields = event.properties
 
-        let vibe_match_bonus = 10
-        
-        events.map((event) => {
-
-            // TODO: TEMP until events return vibes
-            if (event.properties.vibes === undefined) event.properties.vibes = ['chill']            
-    
-            event.properties.short_name = truncate(event.properties.name, Constants.TRUCATE_LENGTH)
-            event.properties.place_type = 'events'
-            
-            // Give direct vibe matches bonus points
-            let vibe_matches = 0
-            let vibe_bonus = 0
-            
-            event.properties.vibe_score = event.properties.vibes.length
-
-            if (vibes && event.properties.vibes) {
-                vibe_matches = helpers.default.matchLists(vibes, event.properties.vibes)
-                vibe_bonus = vibe_matches * vibe_match_bonus
-                event.properties.vibe_score += vibe_bonus
+            // Add fields for presentation
+            fields.place_type = 'events'
+            fields.short_name = truncate(fields.name, Constants.TRUCATE_LENGTH)
+            fields.aggregate_rating = parseFloat(fields.aggregate_rating)
+            if (fields.categories === undefined || fields.categories.length === 0) {
+                fields.categories = ["missing"]
             }
 
-            // Match Categories to Top Level Ones
-            let matches = helpers.default.getCategoryMatch(event.properties.categories)
-            if (matches.length === 0) matches.push('missing')
-            event.properties.categories = matches[0]
+            if (fields.vibes === undefined) fields.vibes = ['chill']
 
-            if (center_point) {
-                let point = turf.point(event.geometry.coordinates)
-                event.properties.distance = turf.distance(center_point, point)            
-            } else {
-                event.properties.distance = null
-            }
-            
-            // Calculate max scores
-            if (event.properties.likes > max_likes) max_likes = event.properties.likes
-            if (event.properties.vibe_score > max_vibe_score) max_vibe_score = event.properties.vibe_score
-            if (event.properties.distance > max_distance) max_distance = event.properties.distance
-        })
+            fields.cluster = null
+            // TODO: why is this needed for icon points
+            fields.id = event.id
 
-        // Normalize all scores
-        let events_scored = events.map((event) => {
-
-            event.properties.likes = helpers.default.normalize(event.properties.likes, 0, max_likes)
-            event.properties.vibe_score = helpers.default.normalize(event.properties.vibe_score, 0, max_vibe_score)
-            
-            // Distance is inverted from max and then normalize 1-10
-            event.properties.distance = helpers.default.normalize(max_distance - event.properties.distance, 0, max_distance)
-
-            // Simple average of the different scores
-            let scores = [
-                event.properties.likes,
-                event.properties.vibe_score,
-                event.properties.distance * 0.2 // Only make distance partially important
-            ]
-            //console.log('EVENT SCORES: ', scores)
-            // Average out the scores
-            event.properties.average_score = scores.reduce((a, b) => a + b, 0) / scores.length
-            // Create a scaled icon; TODO: Share logic with markers
-            // Normalize the icon size to match photo markers.
-            event.properties.icon_size = helpers.default.scaleIconSize(event.properties.average_score, 10)
-            
+            event.properties = fields
             return event
         })
-
-        let events_sorted = events_scored.sort((a, b) => b.properties.average_score - a.properties.average_score)
-
-        return events_sorted
-
+        return formatted
     },
 
     formatPlaces: function(places) {
@@ -478,25 +427,36 @@ module.exports = {
                 // Give place a vibe score
                 let [vibe_matches, average_rank, vibe_bonus] = [0, 0, 0]
 
-                fields.vibe_score = 0
-                if (fields.vibes.length > 0) fields.vibe_score = fields.vibes.length
+                fields.vibes_score = 0
+                // TODO: TEMP until events return vibes
+                if (fields.vibes === undefined) fields.vibes = ['chill']
+                if (fields.vibes.length > 0) fields.vibes_score = fields.vibes.length
 
                 // TODO: Don't show markers without photos; this will analyze the vibe and quality of the image
                 if (fields.images.length > 0) vibe_bonus += vibe_match_bonus
-
+                
                 // Give direct vibe matches bonus points            
-                if (vibes && fields.vibes) {
+                if (vibes.length > 0 && fields.vibes) {
                     vibe_matches = helpers.default.matchLists(vibes, fields.vibes)
                     average_rank = helpers.default.rankVibes(vibes, fields.vibes)                    
-                    
+
                     vibe_bonus = vibe_matches * vibe_match_bonus + average_rank * vibe_rank_bonus
 
-                    fields.vibe_score += vibe_bonus
+                    fields.vibes_score += vibe_bonus
+
+                    console.log(vibe_matches, average_rank, vibe_bonus, fields.vibes_score)
                 }
                 // Set max vibe score
-                if (fields.vibe_score > max_scores['vibes']) {
-                    max_scores['vibes'] = fields.vibe_score                    
+                if (fields.vibes_score > max_scores['vibes']) {
+                    max_scores['vibes'] = fields.vibes_score                    
                 } 
+            }
+
+            if (scoreby.includes('likes')) {
+                // Set max aggregate score
+                if (fields.likes > max_scores['likes']) {
+                    max_scores['likes'] = fields.likes
+                }
             }
 
             if (scoreby.includes('aggregate_rating')) {
@@ -505,9 +465,7 @@ module.exports = {
                     max_scores['aggregate_rating'] = fields.aggregate_rating
                 }                 
             }
-            
-            console.log('set max score: ', max_scores)
-
+                        
             place.properties = fields
             return place
         })
@@ -516,53 +474,57 @@ module.exports = {
         let places_scored_averaged = places_scored.map((place) => {
             let fields = place.properties
 
-            if (scoreby.includes('vibes')) {
-                // Normalize all scores
-                fields.vibe_score = helpers.default.normalize(fields.vibe_score, 0, max_scores['vibes'])
-            }
+            if (scoreby.includes('vibes')) fields.vibes_score = helpers.default.normalize(fields.vibes_score, 0, max_scores['vibes'])
 
-            fields.aggregate_rating = helpers.default.normalize(fields.aggregate_rating, 2, max_scores['aggregate_rating'])
+            if (scoreby.includes('likes')) fields.likes_score = helpers.default.normalize(fields.likes, 0, max_scores['likes'])
 
+            if (scoreby.includes('aggregate_rating')) fields.aggregate_rating_score = helpers.default.normalize(fields.aggregate_rating, 2, max_scores['aggregate_rating'])
+            
             // Distance is inverted from max and then normalize 1-10
             // TODO: There might be something off about this score; should come from backend
-            let max_distance = max_scores['distance']
-            fields.distance_score = helpers.default.normalize(max_distance - fields.distance, 0, max_distance)
-            
-            // Simple average of the different scores
-            let reasons = ['events', 'vibe', 'rating', 'distance']
-            let scores = [
-                fields.vibe_score, 
-                fields.aggregate_rating,
-                fields.distance_score * 0.4 // Only make distance half as important
-            ]
-            let largest_index = scores.indexOf(Math.max(...scores))
+            if (scoreby.includes('distance')) {
+                let max_distance = max_scores['distance']
+                fields.distance_score = helpers.default.normalize(max_distance - fields.distance, 0, max_distance)
 
-            // Average out the scores
-            fields.average_score = scores.reduce((a, b) => a + b, 0) / scores.length            
+                fields.distance_score = fields.distance_score * distance_factor
+            }
+
+            let reasons = scoreby
+        
+            let scores = scoreby.map((field) => fields[field + '_score'])
+
+            let largest_index = scores.indexOf(Math.max.apply(null, scores))
+            
+            fields.average_score = scores.reduce((a, b) => a + b, 0) / scores.length
+
             // Add a reason code
             fields.reason = reasons[largest_index]
 
             // Create a scaled icon; TODO: Share logic with markers
             // Normalize the icon size to match photo markers.
             fields.icon_size = helpers.default.scaleIconSize(fields.average_score, 10)
-            
+           
             place.properties = fields
             return place
         })
-        
+
         // Resort by average score 
         let places_scored_and_sorted = places_scored_averaged.sort((a, b) => b.properties.average_score - a.properties.average_score)
 
-        /* TODO: for debugging only */
+        console.log('places_scored_and_sortedL ', places_scored_and_sorted)
+        return places_scored_and_sorted
+        
+        /* TODO: for debugging only 
         places_scored_and_sorted.map((place) => {
             console.log(place.properties.name)
-            console.log(' - vibe_score: ', place.properties.vibe_score)
-            console.log(' - aggregate rating: ', place.properties.aggregate_rating)
+            console.log(' - vibes_score: ', place.properties.vibes_score)
+            console.log(' - aggregate rating: ', place.properties.aggregate_rating_score)
             console.log(' - distance: ', place.properties.distance_score)
             console.log(' - reason: ', place.properties.reason)
-        })                
+        })
+        */
 
-        return places_scored_and_sorted
+        
     },
 
     clusterPlaces: function(places, cluster_size) {
@@ -592,8 +554,8 @@ module.exports = {
 
                 // TODO: Handle sorting & sizing based on score and distance. 
                 turf.featureEach(cluster, function (currentFeature, featureIndex) {
-                    let vibe_score = currentFeature.properties.vibe_score
-                    let score_diff = max - vibe_score            
+                    let vibes_score = currentFeature.properties.vibes_score
+                    let score_diff = max - vibes_score            
 
                     let distance = turf.rhumbDistance(center, currentFeature)
                     let bearing = turf.rhumbBearing(center, currentFeature)
@@ -635,7 +597,6 @@ module.exports = {
         results = results.sort((a, b) => {
             return b.properties.average_score - a.properties.average_score
         })
-
 
         return results
 
