@@ -3,7 +3,6 @@ import { Grid, Dropdown, Form } from 'semantic-ui-react'
 import isEqual from 'react-fast-compare'
 
 // MOve query string and 
-import * as Constants from '../../constants.js'
 import helpers from '../../helpers.js'
 import queryString from 'query-string'
 
@@ -188,7 +187,7 @@ class Navigation extends Component {
     handleSignatureVibe = (e, {value}) => {
         
         let vibes = []
-        const current = this.state.signature_vibes.find(({ key }) => key === value);
+        const current = this.props.signatureVibes.find(({ key }) => key === value);
         
         if (current !== undefined || current !== null) vibes = current.vibes            
 
