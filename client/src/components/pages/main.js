@@ -49,7 +49,7 @@ class Page extends Component {
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categories: ['adventurous', 'artsy', 'atmosphere', 'authentic', 'bold', 'civic', 'chill', 'classic', 'cool', 'comfortable', 'cowork', 'cozy', 'creative', 'dance', 'dive', 'diverse', 'energetic', 'exclusive', 'family', 'festive', 'free', 'friendly', 'fun', 'gay', 'healthy', 'hidden', 'historic', 'interactive', 'inspired', 'intimate', 'local', 'lively', 'magical', 'new', 'oldschool', 'outdoors', 'peaceful', 'playful', 'popular', 'positive', 'public', 'romantic', 'queer', 'quiet', 'raunchy', 'retro', 'scenic', 'soul', 'sweet', 'transformative', 'trending', 'vibrant', 'unique', 'wild', 'women-owned', 'zen'],
+            vibe_categories: Constants.all_vibes,
             // TODO: handle conversion math in VibeMap
             intervalIsSet: false,
             loading: true,
@@ -154,9 +154,7 @@ class Page extends Component {
         if (!isEqual(prevProps.pixelDistance, this.props.pixelDistance)) {
             // TODO: establish reproducable relationship between custer distance and icon size
             this.setState({ clusterSize: this.props.pixelDistance * 60 })
-        }
-
-        
+        }    
         
         // Reset mergeTopPicks; if the results shoudl change
         if (refreshResults) this.setState({ mergeTopPicks: false })

@@ -3,6 +3,7 @@ import { Grid, Dropdown, Form } from 'semantic-ui-react'
 import isEqual from 'react-fast-compare'
 
 // MOve query string and 
+import * as Constants from '../../constants.js'
 import helpers from '../../helpers.js'
 import queryString from 'query-string'
 
@@ -10,12 +11,11 @@ import LocationSearchInput from '../map/search'
 
 import { Translation } from 'react-i18next'
 
+
 import { connect } from 'react-redux'
 import { store } from '../../redux/store'
 import * as actions from '../../redux/actions'
 import { push } from 'connected-react-router'
-
-import TopVibes from '../elements/topVibes'
 
 import '../../styles/navigation.scss'
 
@@ -33,7 +33,8 @@ class Navigation extends Component {
             ],
             params: {},
             vibes: [],
-            vibe_options : []
+            vibe_options : [],
+            signature_vibes: Constants.signature_vibes,
         }
 
         this.navRef = React.createRef()
@@ -165,6 +166,11 @@ class Navigation extends Component {
         store.dispatch(push({ search: string }))
     }
 
+    renderVibesLabel = (label) => ({
+        size: 'mini',
+        content: label.text,        
+    })
+
     setVibeOptions = (props) => {
         let options = this.props.vibes.map(function (vibe) {
             return { key: vibe, value: vibe, text: vibe }
@@ -180,9 +186,21 @@ class Navigation extends Component {
         this.updateURL("days", value)
     }
 
+    handleSignatureVibe = (e, {value}) => {
+        // TODO: Set the vibe values
+        let vibes = []
+        const current = this.state.signature_vibes.find(({ key }) => key === value);
+        
+        if (current !== undefined || current !== null) vibes = current.vibes            
+
+        this.setState({ vibes: vibes })
+        this.props.setCurrentVibes(vibes)
+
+    }
+
     handleVibeChange = (event, { value }) => {
         this.setState({ vibes: value })        
-        this.props.setCurrentVibes(value)  
+        this.props.setCurrentVibes(value)
     }
 
     render() {
@@ -219,28 +237,42 @@ class Navigation extends Component {
 
                 ) : (
                     
-                    <div id='navigation' className='navigation' ref={this.navRef}>                    
+                    <div id='navigation' className='navigation' ref={this.navRef}>
                         <Grid stackable stretched verticalAlign='middle'>
                             <Grid.Column width={5}>
                                 {search}
                             </Grid.Column>
-                            <Grid.Column width={5}>
-                                <TopVibes />
+                            <Grid.Column width={3}>
+                                <Translation>{
+                                    (t, { i18n }) => <Dropdown
+                                        clearable
+                                        search
+                                        // TODO: map this icon: icon={this.props.activity}
+                                        fluid
+                                        labeled
+                                        placeholder={t('Signature Vibes')}
+                                        selection
+                                        onChange={this.handleSignatureVibe}
+                                        options={this.state.signature_vibes}
+                                    />
+                                }</Translation>
                             </Grid.Column>
-                            <Grid.Column width={6}>
+                            <Grid.Column width={8}>
                                 {/* TODO: replace location input with search able dropdown */}
                                 {/* TODO: for some reason the dropdown as a problem with prop changes. */}
                                 <Translation>{
                                     (t, { i18n }) => <Dropdown
+                                        clearable    
                                         placeholder={t("What's your vibe")}
                                         multiple
                                         label="Vibe"
-                                        search
+                                        search                                        
                                         selection
                                         closeOnChange
                                         onChange={this.handleVibeChange}
                                         options={this.state.vibe_options}
                                         value={this.props.currentVibes}
+                                        renderLabel={this.renderVibesLabel}
                                     />
                                 }</Translation>
 

@@ -8,6 +8,8 @@ import * as actions from '../../redux/actions'
 import isEqual from 'react-fast-compare'
 import queryString from 'querystring'
 
+import * as Constants from '../../constants.js'
+
 import '../../styles/events_page.scss'
 
 import VibeMap from '../../services/VibeMap.js'
@@ -19,32 +21,15 @@ class VibeGenerator extends Component {
             data: [],
             loaded: false,
             current: 'quiet',
-            options: [{
-                key: 'buzzing',
-                text: 'Buzzing',
-                value: 'buzzing',
-                vibes: ['buzzing', 'celbration', 'colorful', 'crowded', 'crazy', 'futuristic', 'innovative', 'interative', 'joyful', 'magic', 'nightlife', 'popular', 'outrageous', 'elevated']
-            },{
-                key: 'quiet',
-                text: 'Quiet Energy',
-                value: 'quiet',
-                vibes: ['chill', 'cozy', 'comfy', 'rejuvenating', 'serene', 'quiet', 'peaceful', 'restorative', 'sober', 'soothing', 'dark']
-            },
-            {
-                key: 'wild',
-                text: 'Wildside',
-                value: 'wild',
-                vibes: ['boozy', 'alternative', 'campy', 'colorful', 'crazy', 'energy', 'fierce', 'flavorful', 'grimy', 'hip', 'intense', 'kitchy', 'kinky', 'rugged', 'public', 'outrageous', 'party']
-            }],
+            options: Constants.signature_vibes,
+            placeholder: "Loading",
             colors: {
-                'quiet': { name: 'teal', color_list: ['rgba(95,153,241,1)', 'rgba(220,248,151,1)', 'rgba(136,235,177,1)']},
-                'buzzing': { name: 'yellow', color_list: ['#FFB600', '#FDF5A7', '#FD7900']},
-                'wild': { name: 'purple', color_list: ['#C511D5', '#FDF5A7', '#0AAE9B'] } 
-            },
-            placeholder: "Loading"
+                'quiet': { name: 'teal', color_list: ['rgba(95,153,241,1)', 'rgba(220,248,151,1)', 'rgba(136,235,177,1)'] },
+                'buzzing': { name: 'yellow', color_list: ['#FFB600', '#FDF5A7', '#FD7900'] },
+                'wild': { name: 'purple', color_list: ['#C511D5', '#FDF5A7', '#0AAE9B'] }
+            }
         }
     }
-
 
     componentDidUpdate(prevProps, prevState) {
 

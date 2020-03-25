@@ -16,6 +16,8 @@ import VectorTile from '../map/VectorTile'
 import LayersFilter from '../map/LayersFilter'
 import { clusterLayer, clusterCountLayer, unclusteredPointLayer } from '../map/layers';
 //import YouAreHere from '../map/you_are_here.js'
+
+import TopVibes from '../elements/topVibes'
 import ZoomLegend from '../map/ZoomLegend'
 
 // TODO: load from common .env
@@ -227,6 +229,8 @@ class EventsMap extends React.Component {
                             positionOptions={{ enableHighAccuracy: true }}
                             trackUserLocation={true}
                         />
+
+                        <TopVibes />
 
                         <ScaleControl maxWidth={200} unit='imperial' />
 

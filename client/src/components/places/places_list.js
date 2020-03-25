@@ -5,12 +5,12 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
 import helpers from '../../helpers';
+import * as Constants from '../../constants.js'
 
 import { Dimmer, Form, Input, Item, Loader, Segment, Dropdown } from 'semantic-ui-react'
 import { Global } from '@emotion/core'
 
 import ListItem from './list_item.js'
-import * as Constants from '../../constants.js'
 
 import { Translation } from 'react-i18next'
 
