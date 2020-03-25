@@ -3,7 +3,6 @@ import { Grid, Dropdown, Form } from 'semantic-ui-react'
 import isEqual from 'react-fast-compare'
 
 // MOve query string and 
-import * as Constants from '../../constants.js'
 import helpers from '../../helpers.js'
 import queryString from 'query-string'
 
@@ -34,7 +33,7 @@ class Navigation extends Component {
             params: {},
             vibes: [],
             vibe_options : [],
-            signature_vibes: Constants.signature_vibes,
+            signature_vibes: [],
         }
 
         this.navRef = React.createRef()
@@ -48,12 +47,9 @@ class Navigation extends Component {
     }
 
     componentWillMount() {
-        this.setVibeOptions()        
 
         let params = queryString.parse(this.props.search, { ignoreQueryPrefix: true })
         this.setState({ params: params })
-
-        console.log("CURRENT PROPS in Nav", this.props)        
 
         if (params.place) {
             this.props.setDetailsId(params.place)
@@ -93,7 +89,10 @@ class Navigation extends Component {
                 vibes.push(params.vibes)
             } else {
                 vibes = params.vibes
-            }            
+            }
+            console.log('Vibes from url: ', vibes)
+
+            this.setState({ vibes: vibes })
             this.props.setCurrentVibes(vibes)
         }
 
@@ -141,8 +140,17 @@ class Navigation extends Component {
             this.updateURL("activity", this.props.activity)
         }
 
+        if (!isEqual(prevProps.allVibes, this.props.allVibes)) {
+            
+            let vibe_options = this.props.allVibes.map(function (vibe) {
+                return { key: vibe, value: vibe, text: vibe }
+            })            
+
+            this.setState({ vibe_options : vibe_options})
+        }
+
         if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {            
-            //this.setState({ vibes: this.props.currentVibes })
+            this.setState({ vibes: this.props.currentVibes })
             this.props.setCurrentVibes(this.props.currentVibes)
             this.updateURL("vibes", this.props.currentVibes)
         }
@@ -169,17 +177,7 @@ class Navigation extends Component {
     renderVibesLabel = (label) => ({
         size: 'mini',
         content: label.text,        
-    })
-
-    setVibeOptions = (props) => {
-        let options = this.props.vibes.map(function (vibe) {
-            return { key: vibe, value: vibe, text: vibe }
-        })
-  
-        this.setState({ vibe_options: options })
-        // Update redux with the default value
-        this.props.setCurrentVibes(this.state.vibes)
-    }
+    })    
     
     handleDaysChange = (e, { value }) => {
         this.props.setDays(value)
@@ -188,13 +186,16 @@ class Navigation extends Component {
 
     handleSignatureVibe = (e, {value}) => {
         
-        let vibes = []
-        const current = this.state.signature_vibes.find(({ key }) => key === value);
-        
-        if (current !== undefined || current !== null) vibes = current.vibes            
+        let vibes = [] 
 
-        this.setState({ vibes: vibes })
-        this.props.setCurrentVibes(vibes)
+        if (value && value != '') {
+            const current = this.props.signatureVibes.find(({ key }) => key === value);
+
+            if (current !== undefined || current !== null) vibes = current.vibes
+
+            this.setState({ vibes: vibes })
+            this.props.setCurrentVibes(vibes)
+        }    
     }
 
     handleVibeChange = (event, { value }) => {
@@ -252,7 +253,7 @@ class Navigation extends Component {
                                         placeholder={t('Signature Vibes')}
                                         selection
                                         onChange={this.handleSignatureVibe}
-                                        options={this.state.signature_vibes}
+                                        options={this.props.signatureVibes}
                                     />
                                 }</Translation>
                             </Grid.Column>
@@ -288,6 +289,7 @@ class Navigation extends Component {
 const mapStateToProps = state => {
     return {
         activity: state.activity,
+        allVibes: state.allVibes,
         detailsId: state.detailsId,
         detailsType: state.detailsType,
         nearby_places: state.nearby_places,
@@ -299,7 +301,8 @@ const mapStateToProps = state => {
         pathname: state.router.location.pathname,
         placeType: state.placeType,
         search: state.router.location.search,
-        searchTerm: state.searchTerm
+        searchTerm: state.searchTerm,
+        signatureVibes: state.signatureVibes
     }
 }
 

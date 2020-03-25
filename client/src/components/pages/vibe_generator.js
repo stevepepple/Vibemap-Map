@@ -8,7 +8,7 @@ import * as actions from '../../redux/actions'
 import isEqual from 'react-fast-compare'
 import queryString from 'querystring'
 
-import * as Constants from '../../constants.js'
+import { Translation } from 'react-i18next'
 
 import '../../styles/events_page.scss'
 
@@ -20,15 +20,32 @@ class VibeGenerator extends Component {
         this.state = {
             data: [],
             loaded: false,
-            current: 'quiet',
-            options: Constants.signature_vibes,
+            current: 'buzzing',
+            options: [],
             placeholder: "Loading",
             colors: {
-                'quiet': { name: 'teal', color_list: ['rgba(95,153,241,1)', 'rgba(220,248,151,1)', 'rgba(136,235,177,1)'] },
                 'buzzing': { name: 'yellow', color_list: ['#FFB600', '#FDF5A7', '#FD7900'] },
-                'wild': { name: 'purple', color_list: ['#C511D5', '#FDF5A7', '#0AAE9B'] }
-            }
+                'chill': { name: 'teal', color_list: ['#9EE8B5', '#F3FED5', '#4A2BC1'] },
+                'dreamy': { name: 'gray', color_list: ['#B0E3F5', '#EEEEEE', '#3B5465']},
+                'oldschool': { name: 'blue', color_list: ['#EE8031', '#E0E9E6', '#181D63'] },
+                'playful': { name: 'green', color_list: ['#261298', '#D03C32', '#E6E4AC'] },
+                'quiet': { name: 'teal', color_list: ['rgba(95,153,241,1)', 'rgba(220,248,151,1)', 'rgba(136,235,177,1)'] },
+                'together': { name: 'red', color_list: ['#DD9710', '#F4EDAE', '#8611E1'] },
+                'solidarity': { name: 'teal', color_list: ['#DD9710', '#F4EDAE', '#8611E1'] },
+                'wild': { name: 'purple', color_list: ['#C511D5', '#FDF5A7', '#0AAE9B'] },
+                'wonderful': { name: 'blue', color_list: ['#C511D5', '#FDF5A7', '#0AAE9B'] }
+            },
+            vibes: []
         }
+    }
+
+    componentDidMount() {
+        VibeMap.getVibes()
+            .then(results => {
+                this.props.setSignatureVibes(results.data['signature_vibes'])
+            })
+
+        this.setColors(this.state.current)
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -36,15 +53,22 @@ class VibeGenerator extends Component {
         if (!isEqual(prevProps.detailsId, this.props.detailsId)) {        
             this.getPlaceDetails()
         }
+
+        if (!isEqual(prevProps.signatureVibes, this.props.signatureVibes)) {
+            this.setState({ options: this.props.signatureVibes })
+        }
     }
 
     onChange = (e, { value }) => {
-        console.log('handleChange: ', value)
 
         let root = document.documentElement;
 
         this.setState({ current: value })
 
+        this.setColors(value)
+    }
+
+    setColors(value) {
         let colors = this.state.colors[value]['color_list']
 
         document.documentElement.style.setProperty('--color-1', colors[0]);
@@ -53,23 +77,25 @@ class VibeGenerator extends Component {
     }
 
     render() {
-        let colors = { 
-            'quiet' : 'teal',
-            'vibrant': 'orange'
+
+        let color = this.state.colors[this.state.current]['name']
+        let vibes = []
+        let vibe_options =[]
+        if (this.state.options.length > 0) {
+
+            vibes = this.state.options.find(o => o.value === this.state.current)['vibes']
+            vibe_options = vibes.map(vibe => ({ 'key': vibe, 'value': vibe, 'text' : vibe }))
+
+            console.log('vibes for current: ', vibes, vibe_options)
         }
-
-        let color = colors[this.state.current]
-
-        let vibes = this.state.options.find(o => o.value === this.state.current)['vibes']
-        console.log("vibes: ", vibes)
         return (
             <Grid columns='equal' style={{ paddingTop: '8%'}}>
                 <Grid.Column>
-                    <Segment basic>                        
+                    <Segment basic>
                     </Segment>
                 </Grid.Column>
                 <Grid.Column width={10}>
-                    <Segment padded>                    
+                    <Segment padded>
                         <Grid columns='equal'>
                             <Grid.Column width={6}>   
                                 <Form size='small'>
@@ -91,12 +117,23 @@ class VibeGenerator extends Component {
                                 </Form>
                                 <br/>
                                 <Container>
-                                    <p>{vibes.map((vibe) =>
-                                        <span>{vibe + ' '}</span>
+                                    <p>{vibes.map((vibe, i) => 
+                                        (i === vibes.length - 1) ? <span key={vibe}>{vibe}</span> : <span key={vibe}>{vibe + ', '}</span>
                                     )}</p>
                                 </Container>
+                                <Translation>{
+                                    (t, { i18n }) => <blockquote>
+                                    <p> {t(this.state.current)} </p>
+                                    </blockquote>
+                                }</Translation>
+
                                 <br/>
-                                <Dropdown button text='Pick Vibes' selection/>
+                                <Dropdown 
+                                    button 
+                                    text='Pick Vibes' 
+                                    selection
+                                    options={vibe_options}
+                                    />
                                 
                             </Grid.Column>
                             <Grid.Column width={10}>
@@ -124,7 +161,8 @@ const mapStateToProps = state => {
         currentPlace: state.currentPlace,
         detailsId: state.detailsId,
         detailsType: state.detailsType,
-        detailsShown: state.detailsShown
+        detailsShown: state.detailsShown,
+        signatureVibes: state.signatureVibes
     }
 }
 

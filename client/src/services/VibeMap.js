@@ -59,12 +59,12 @@ module.exports = {
                 //days: days,
             })
 
-            fetch(ApiUrl + "/v0.3/vibes/?" + query)
+            fetch(ApiUrl + "/v0.3/vibe-list/?" + query)
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout)
                     console.log('Vibes list: ', res)
-                    resolve({ data: res.results, loading: false, timedOut: false })
+                    resolve({ data: res, loading: false, timedOut: false })
 
                 }, (error) => {
                     console.log(error)
@@ -211,7 +211,6 @@ module.exports = {
     getPlaces: function (point, distance, bounds, activity, days, vibes, search_term) {
 
         let distanceInMeters = 1
-        console.log('getting places for distance: ', distance)
         if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
         let center_point = point.split(',').map(value => parseFloat(value))
 
@@ -403,8 +402,6 @@ module.exports = {
         let max_scores = {}
         scoreby.map((field) => max_scores[field] = 1)
 
-        console.log(max_scores)
-
         const vibe_match_bonus = 10
         const vibe_rank_bonus = 5
         const distance_factor = 0.4 // Weight distance different than other fields
@@ -530,12 +527,10 @@ module.exports = {
 
         // TODO: Adjust cluster measure at each zoom level? 
         let clustered = turf.clustersDbscan(collection, cluster_size, { mutate: false, minPoints: 2 })
-        console.log("Turf cluster: ", clustered, cluster_size)
 
         let results = []
 
         turf.clusterEach(clustered, 'cluster', function (cluster, clusterValue, currentIndex) {
-            console.log('clusterValue: ', clusterValue)
             // Only adjust clusters
             if (clusterValue !== 'null') {
                 let center = turf.center(cluster)
@@ -543,10 +538,11 @@ module.exports = {
                 let max_score = helpers.default.getMax(cluster.features, 'average_score')
                 let size = cluster.features.length
 
-                /* For testing purposes: */
+                /* For testing purposes: 
                 console.log('--- Max score for cluster: ', max_score)
                 console.log('--- Center of cluster: ', center)
                 console.log('--- Size of cluster: ', size)
+                */
 
                 // TODO: Handle sorting & sizing based on score and distance. 
                 turf.featureEach(cluster, function (currentFeature, featureIndex) {
@@ -566,11 +562,8 @@ module.exports = {
                     fields.in_cluster = true
                     fields.top_in_cluster = 'false'
 
-                    console.log('clustered place: ', fields.name, fields.icon_size, fields.top_vibe)
-
                     if (fields.average_score  >= max_score) {
                         fields.top_in_cluster = 'true'
-                        console.log("Top feature in cluster: ", currentFeature)
                     } else {
                         fields.icon_size = fields.icon_size / 1.5
                     }
@@ -589,7 +582,6 @@ module.exports = {
                     currentFeature.properties.in_cluster = false
                     currentFeature.properties.top_in_cluster = 'true'
 
-                    console.log('Not in cluster: ', currentFeature.properties.name)
                     results.push(currentFeature)
                 })
             }

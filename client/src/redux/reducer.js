@@ -129,7 +129,7 @@ export const headerSize = (state = { width: 0, height: 0 }, action) => {
 
 export const bounds = (state = [], action) => {
   if (action.type === 'SET_BOUNDS') {    
-    state = action.bounds
+    state = action.bounds    
   }
   return state
 }
@@ -201,6 +201,20 @@ export const placeType = (state = 'places', action) => {
 export const topVibes = (state = [], action) => {
   if (action.type === 'SET_TOP_VIBES') {
     state = action.top_vibes
+  }
+  return state
+}
+
+export const signatureVibes = (state = [], action) => {
+  if (action.type === 'SET_SIGNATURE_VIBES') {
+    state = action.signatureVibes
+  }
+  return state
+}
+
+export const allVibes = (state = [], action) => {
+  if (action.type === 'SET_ALL_VIBES') {
+    state = action.allVibes
   }
   return state
 }
@@ -358,7 +372,7 @@ export const topPicks = (state = [], action) => {
       return place
     })
 
-    if (action.refreshResults === false || action.mergeTopPicks === true) {    
+    if (action.refreshResults === false || action.mergeTopPicks === true) {
       var merged = _.unionBy(state, processed, 'id')
       let merged_sorted = merged.sort((a, b) => b.properties.average_score - a.properties.average_score)
       state = merged_sorted
@@ -399,6 +413,7 @@ export const geod = (state = {}, action) => {
 
 export const reducers = (history) => combineReducers({
   activity,
+  allVibes,
   bearing,
   bounds,
   boundsReady,
@@ -427,6 +442,7 @@ export const reducers = (history) => combineReducers({
   searchTerm,
   topPicks,
   topVibes,
+  signatureVibes,
   uiState,
   viewport,
   windowSize,

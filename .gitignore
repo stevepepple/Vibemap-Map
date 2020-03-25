@@ -3,11 +3,10 @@
 /node_modules
 /client/node_modules
 /client/build
+/client/debug.log
 
 .idea/
 
 .DS_Store
 client/src/styles/icons/
 app_certificate
-client/debug.log
-client/debug.log

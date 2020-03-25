@@ -110,7 +110,7 @@ class PlaceDetails extends Component {
         /* TODO: Make recommendation is own component */
         if (this.props.currentPlace.reason === undefined) this.props.currentPlace.reason = 'vibe'
         let reason = Constants.RECOMMENDATION_REASONS[this.props.currentPlace.reason]
-        console.log(this.props.currentPlace.reason, Constants.RECOMMENDATION_REASONS)
+        
         let recommendation = 
             <List.Item className='recomendation'>
                 <Icon name='heartbeat' color='green' />                

@@ -32,7 +32,7 @@ class LayersFilter extends React.Component {
         const layers = this.props.layers
         
         const rows = Object.keys(layers).map((key) => 
-            <Grid.Row stretched>
+            <Grid.Row key={key} stretched>
                 <Segment vertical>
                     <Checkbox
                         label={key}
