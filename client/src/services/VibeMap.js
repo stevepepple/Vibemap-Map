@@ -32,7 +32,7 @@ module.exports = {
                 // distance: this.state.distance,
                 //dist: distanceInMeters,
                 //activity: activity,
-                //days: days,                
+                //days: days,
             })
 
             fetch(ApiUrl + "/v0.3/boundaries/?" + query)
@@ -56,7 +56,7 @@ module.exports = {
                 // distance: this.state.distance,
                 //dist: distanceInMeters,
                 //activity: activity,
-                //days: days,                
+                //days: days,
             })
 
             fetch(ApiUrl + "/v0.3/vibes/?" + query)
@@ -187,7 +187,7 @@ module.exports = {
                     // TODO: clustering could happen before and after identification of picks; for now just do it after
                     //let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
                 
-                    let top_vibes = module.exports.getTopVibes(places)                
+                    let top_vibes = module.exports.getTopVibes(places)
                     
                     resolve({ data: places_scored_and_sorted, top_vibes: top_vibes, loading: false, timedOut: false })
 
@@ -262,7 +262,6 @@ module.exports = {
     // TODO: Include a way to query by time of day
     searchPlaces: function (search_term) {
 
-        // TODO: Load more points at greater distances?
         return new Promise(function (resolve, reject) {
             let params = {
                 search: search_term,
@@ -339,8 +338,7 @@ module.exports = {
                 .then(res => {
                     clearTimeout(timeout);
 
-                    // Apply some temporary scoring to events to make them show up better.                    
-                    // TODO: format events
+                    // Apply some temporary scoring to events to make them show up better.
                     let event_places = module.exports.formatEvents(res.results.features)
                     let scored = module.exports.scorePlaces(event_places, center_point, vibes, ['vibes', 'distance', 'likes'])
 
@@ -437,18 +435,18 @@ module.exports = {
                 // TODO: Don't show markers without photos; this will analyze the vibe and quality of the image
                 if (fields.images.length > 0) vibe_bonus += vibe_match_bonus
                 
-                // Give direct vibe matches bonus points            
+                // Give direct vibe matches bonus points
                 if (vibes.length > 0 && fields.vibes) {
                     vibe_matches = helpers.default.matchLists(vibes, fields.vibes)
-                    average_rank = helpers.default.rankVibes(vibes, fields.vibes)                    
+                    average_rank = helpers.default.rankVibes(vibes, fields.vibes)
 
                     vibe_bonus = vibe_matches * vibe_match_bonus + average_rank * vibe_rank_bonus
 
-                    fields.vibes_score += vibe_bonus                    
+                    fields.vibes_score += vibe_bonus
                 }
                 // Set max vibe score
                 if (fields.vibes_score > max_scores['vibes']) {
-                    max_scores['vibes'] = fields.vibes_score                    
+                    max_scores['vibes'] = fields.vibes_score
                 } 
             }
 
@@ -463,9 +461,9 @@ module.exports = {
                 // Set max aggregate score
                 if (fields.aggregate_rating > max_scores['aggregate_rating']) {
                     max_scores['aggregate_rating'] = fields.aggregate_rating
-                }                 
+                }
             }
-                        
+
             place.properties = fields
             return place
         })
@@ -548,14 +546,14 @@ module.exports = {
                 /* For testing purposes: */
                 console.log('--- Max score for cluster: ', max_score)
                 console.log('--- Center of cluster: ', center)
-                console.log('--- Size of cluster: ', size)                
+                console.log('--- Size of cluster: ', size)
 
                 // TODO: Handle sorting & sizing based on score and distance. 
                 turf.featureEach(cluster, function (currentFeature, featureIndex) {
 
                     let fields = currentFeature.properties
                     let vibes_score = fields.vibes_score
-                    let score_diff = max_score - vibes_score            
+                    let score_diff = max_score - vibes_score
 
                     let distance = turf.rhumbDistance(center, currentFeature)
                     let bearing = turf.rhumbBearing(center, currentFeature)

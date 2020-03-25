@@ -187,7 +187,7 @@ class Navigation extends Component {
     }
 
     handleSignatureVibe = (e, {value}) => {
-        // TODO: Set the vibe values
+        
         let vibes = []
         const current = this.state.signature_vibes.find(({ key }) => key === value);
         
