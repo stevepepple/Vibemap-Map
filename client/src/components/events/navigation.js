@@ -195,7 +195,6 @@ class Navigation extends Component {
 
         this.setState({ vibes: vibes })
         this.props.setCurrentVibes(vibes)
-
     }
 
     handleVibeChange = (event, { value }) => {
@@ -275,7 +274,6 @@ class Navigation extends Component {
                                         renderLabel={this.renderVibesLabel}
                                     />
                                 }</Translation>
-
                                 
                             </Grid.Column>
                         </Grid>                        

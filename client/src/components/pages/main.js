@@ -345,9 +345,7 @@ class Page extends Component {
                     // This won't be needed if top picks work, right? 
                     let top_picks = results.data.splice(1, this.state.num_top_picks)
                     
-                    // Example of DBSCAN clustering algorithm
-                    // Size cluster for 20 px appart at each level
-                    
+                    // Example of DBSCAN clustering algorithm                                    
                     let top_picks_clustered = VibeMap.clusterPlaces(top_picks, this.state.clusterSize)                    
 
                     this.props.setTopPicks(top_picks_clustered, refreshResults, this.state.mergeTopPicks)
