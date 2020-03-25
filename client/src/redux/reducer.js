@@ -129,7 +129,7 @@ export const headerSize = (state = { width: 0, height: 0 }, action) => {
 
 export const bounds = (state = [], action) => {
   if (action.type === 'SET_BOUNDS') {    
-    state = action.bounds
+    state = action.bounds    
   }
   return state
 }
@@ -372,7 +372,7 @@ export const topPicks = (state = [], action) => {
       return place
     })
 
-    if (action.refreshResults === false || action.mergeTopPicks === true) {    
+    if (action.refreshResults === false || action.mergeTopPicks === true) {
       var merged = _.unionBy(state, processed, 'id')
       let merged_sorted = merged.sort((a, b) => b.properties.average_score - a.properties.average_score)
       state = merged_sorted

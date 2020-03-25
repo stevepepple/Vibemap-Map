@@ -151,18 +151,17 @@ class Page extends Component {
 
         if (!isEqual(prevProps.zoom, this.props.zoom)) {
             updateData = true
-            // Only refresh if it a whole step up or down            
-            let zoom_diff = this.props.zoom - prevProps.zoom
+            this.getBounds()
+            // Only refresh if it a whole step up or down
+            let zoom_diff = Math.abs(this.props.zoom - prevProps.zoom)
+            console.log('Zoom changed: ', zoom_diff, this.props.bounds)
             if (zoom_diff >= 0.4) refreshResults = true            
         }
 
         if (!isEqual(prevProps.pixelDistance, this.props.pixelDistance)) {
             // TODO: establish reproducable relationship between custer distance and icon size
             this.setState({ clusterSize: this.props.pixelDistance * 60 })
-        }    
-        
-        // Reset mergeTopPicks; if the results shoudl change
-        if (refreshResults) this.setState({ mergeTopPicks: false })
+        }
 
         /* Handle UI State and Data Loading */
         if (this.props.detailsShown === true) updateData = false
@@ -179,6 +178,10 @@ class Page extends Component {
             updateData = true
         }
 
+        // Reset mergeTopPicks; if the results shoudl change
+        if (refreshResults) this.setState({ mergeTopPicks: false })
+
+        console.log('updateData, refreshResults: ', updateData, refreshResults)
         /* Once map and radius are ready, fetch data */        
         if (updateData === true) this.getPlacesOrEvents(refreshResults)
 
@@ -266,6 +269,8 @@ class Page extends Component {
         this.props.setBounds(bounds)
         this.props.setDistance(helpers.getRadius(bounds))
         this.props.setBoundsReady(true)
+
+        return bounds
     }
 
     getPlacesOrEvents(refreshResults) {

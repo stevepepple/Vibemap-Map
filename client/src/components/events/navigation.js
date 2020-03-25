@@ -186,13 +186,16 @@ class Navigation extends Component {
 
     handleSignatureVibe = (e, {value}) => {
         
-        let vibes = []
-        const current = this.props.signatureVibes.find(({ key }) => key === value);
-        
-        if (current !== undefined || current !== null) vibes = current.vibes            
+        let vibes = [] 
 
-        this.setState({ vibes: vibes })
-        this.props.setCurrentVibes(vibes)
+        if (value && value != '') {
+            const current = this.props.signatureVibes.find(({ key }) => key === value);
+
+            if (current !== undefined || current !== null) vibes = current.vibes
+
+            this.setState({ vibes: vibes })
+            this.props.setCurrentVibes(vibes)
+        }    
     }
 
     handleVibeChange = (event, { value }) => {
