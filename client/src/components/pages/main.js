@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import queryString from 'querystring'
+import qs from 'qs'
 import isEqual from 'react-fast-compare'
 
 import { Grid } from 'semantic-ui-react'
@@ -85,10 +85,12 @@ class Page extends Component {
     }
 
     componentDidMount() {
-        // Set global state with user's location
-        let params = queryString.parse(this.props.search)
+        // Set global state with user's location from query string
+        let params = qs.parse(this.props.search, { ignoreQueryPrefix: true })
         
         // TODO: There should be a button for "Near Me"
+        console.log("location from URL", params.latitude, params.longitude, params)
+
         if (params.latitude && params.longitude) {
             this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude })
         } else {
@@ -191,12 +193,12 @@ class Page extends Component {
     // Put the location in the URL
     setLocationParams = location => {
         // Slice remove the question mark
-        let params = queryString.parse(this.props.search.slice(1))
+        let params = qs.parse(this.props.search, { ignoreQueryPrefix: true })
 
         params["latitude"] = location.latitude
         params["longitude"] = location.longitude
         
-        let string = queryString.stringify(params)
+        let string = qs.stringify(params)
         store.dispatch(push({ search: string }))
     }
 

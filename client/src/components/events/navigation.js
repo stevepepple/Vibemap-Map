@@ -50,7 +50,7 @@ class Navigation extends Component {
     componentWillMount() {
         this.setVibeOptions()        
 
-        let params = queryString.parse(this.props.search)
+        let params = queryString.parse(this.props.search, { ignoreQueryPrefix: true })
         this.setState({ params: params })
 
         console.log("CURRENT PROPS in Nav", this.props)        
