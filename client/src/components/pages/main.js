@@ -48,8 +48,7 @@ class Page extends Component {
             event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
-            place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categories: Constants.all_vibes,
+            place_categories: ['Arts & Entertainment', 'Food'],            
             // TODO: handle conversion math in VibeMap
             intervalIsSet: false,
             loading: true,
@@ -85,12 +84,14 @@ class Page extends Component {
     }
 
     componentDidMount() {
+
+        // Load vibes from API
+        this.fetchVibes()
+
         // Set global state with user's location from query string
         let params = qs.parse(this.props.search, { ignoreQueryPrefix: true })
         
-        // TODO: There should be a button for "Near Me"
-        console.log("location from URL", params.latitude, params.longitude, params)
-
+        // If no coordinates are in the url, get the user's locations
         if (params.latitude && params.longitude) {
             this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude })
         } else {
@@ -102,7 +103,9 @@ class Page extends Component {
                         // TODO: what if the user disallows location
                     }
                 })
-        }
+        }        
+
+        // Get the list of vibes
         
         // Handle scree resizing
         window.addEventListener('resize', this.handleWindowSizeChange)
@@ -236,6 +239,14 @@ class Page extends Component {
         VibeMap.getCities()
             .then(results => {
                 this.props.setCities(results.data)
+            })
+    }
+
+    fetchVibes() {
+        VibeMap.getVibes()
+            .then(results => {                
+                this.props.setSignatureVibes(results.data['signature_vibes'])
+                this.props.setAllVibes(results.data['all_vibes'])                
             })
     }
 
@@ -385,8 +396,7 @@ class Page extends Component {
         // TODO: best practice is to make this a func? 
         let navigation = <Navigation 
             setActivity={ this.setActivity } 
-            days={ this.props.currentDays } 
-            vibes={this.state.vibe_categories} 
+            days={ this.props.currentDays }             
             activities = { this.state.event_categories } 
             activity={this.state.activity}
             isMobile = { isMobile } />
@@ -442,6 +452,7 @@ class Page extends Component {
 
 const mapStateToProps = state => ({
     activity: state.activity,
+    allVibes: state.allVibes,
     bounds: state.bounds,
     boundsReady: state.boundsReady,
     cities: state.cities,
@@ -463,6 +474,7 @@ const mapStateToProps = state => ({
     placeType: state.placeType,
     searchTerm: state.searchTerm,
     search: state.router.location.search,
+    signatureVibes: state.router.location.signatureVibes,
     topPicks: state.topPicks,
     topVibes: state.topVibes,
     windowSize: state.windowSize,

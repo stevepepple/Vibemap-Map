@@ -205,6 +205,20 @@ export const topVibes = (state = [], action) => {
   return state
 }
 
+export const signatureVibes = (state = [], action) => {
+  if (action.type === 'SET_SIGNATURE_VIBES') {
+    state = action.signatureVibes
+  }
+  return state
+}
+
+export const allVibes = (state = [], action) => {
+  if (action.type === 'SET_ALL_VIBES') {
+    state = action.allVibes
+  }
+  return state
+}
+
 /* TODO: Read from API or YAML
 export const vibeCategories = (
 vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'outdoors', 'scenic', 'positive', 'unique']
@@ -399,6 +413,7 @@ export const geod = (state = {}, action) => {
 
 export const reducers = (history) => combineReducers({
   activity,
+  allVibes,
   bearing,
   bounds,
   boundsReady,
@@ -427,6 +442,7 @@ export const reducers = (history) => combineReducers({
   searchTerm,
   topPicks,
   topVibes,
+  signatureVibes,
   uiState,
   viewport,
   windowSize,

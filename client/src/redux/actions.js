@@ -114,6 +114,11 @@ export const setSearchTerm = term => ({
   term,
 })
 
+export const setAllVibes = allVibes => ({
+  type: 'SET_ALL_VIBES',
+  allVibes,
+})
+
 export const setCurrentVibes = vibes => ({
   type: 'SET_CURRENT_VIBES',
   vibes,
@@ -122,6 +127,11 @@ export const setCurrentVibes = vibes => ({
 export const setPlaceType = (value) => ({
   type: 'SET_PLACE_TYPE',
   value,
+})
+
+export const setSignatureVibes = signatureVibes => ({
+  type: 'SET_SIGNATURE_VIBES',
+  signatureVibes,
 })
 
 export const setTopVibes = top_vibes => ({
