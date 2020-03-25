@@ -1,5 +1,14 @@
 @import 'variables.scss';
 
+:root {
+  --heatmap_1: rgba(218,95,241,0.1);
+  --heatmap_2: rgba(95,153,241,0.3);
+  --heatmap_3: rgba(136,235,177,0.6);
+  --heatmap_4: rgba(220,248,151,0.8);
+  --heatmap_5: rgba(255,213,0,1);
+  --heatmap_6: rgba(255,153,0,1);
+}
+
 /* Map */
 .map_container, .mapboxgl-map {
     
@@ -49,29 +58,44 @@
     background-color: $color-purple;
     color: #FFFFFF;
     */
-    top: 4em;
-    right: 5.4vmin;
-    font-size: 0.8em;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 800;
+    top: 2em;
+    right: 5.3vmin;
+    font-size: 1em;
+    font-family: 'Roboto Condensed', sans-serif;    
+    font-weight: 700;
     z-index: 20;
     opacity: 0.6;
     padding: 0.4em;
     padding-left: 0.8em;
-    padding-right: 0.8em;
-    border-radius: 10vmin;
+    padding-right: 0.8em;    
+    text-shadow: 1px 1px 1px rgba(255,255,255,1), 1px 1px 1px rgba(255,255,255,1), 1px 1px 1px rgba(255,255,255,1), -1px 1px 1px rgba(255,255,255,1);
 }
 
 .map_container #heatmap_scale {
     left: 1em;
-    top: 1em;
-    width: 10em;
-    height: 1em;
-    background-color: red;
-    border: solid 1px #FFFFFF;
+    top: 4em;
+    width: 12em;
+    height: 1.4em;
+    background: linear-gradient(45deg, var(--heatmap_1), var(--heatmap_2), var(--heatmap_3), var(--heatmap_4), var(--heatmap_5));
+    border: solid 2px #FFFFFF;
     position: absolute;
     z-index: 100;
 }
+
+#heatmap_scale .mild,
+#heatmap_scale .wild {
+    text-shadow: 1px 1px 1px rgba(255,255,255,1), 1px 1px 1px rgba(255,255,255,1), 1px 1px 1px rgba(255,255,255,1), -1px 1px 1px rgba(255,255,255,1);
+    position: absolute;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1em;
+    font-weight: 700;
+    top: 1.2em;
+}
+
+#heatmap_scale .wild {
+    right: 0;    
+}
+
 
 
 .mobile .map_container #scale {

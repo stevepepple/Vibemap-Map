@@ -126,7 +126,7 @@ module.exports = {
     top_pick_paint: {
       'text-color': '#222222',
       'text-halo-color': '#FFFFFF',
-      'text-halo-width': 1.2
+      'text-halo-width': 1.4
     },
 
     top_vibe_layout: {
@@ -136,7 +136,6 @@ module.exports = {
         //["match", ["get", "top_in_cluster"], [true], null],
         "to-string", ["get", "top_vibe"]
       ],
-   
       "text-font": ["Roboto Condensed Italic"],
       "text-justify" : "center",
       "text-anchor": "bottom",
@@ -156,7 +155,7 @@ module.exports = {
         "interpolate",
         ["linear"], ["zoom"],
         8, 0.4,
-        12, ["-", ["get", "icon_size"], 1.5],
+        12, ["-", ["get", "icon_size"], 1.3],
         15, ["-", ["get", "icon_size"], 1.0],
         18, ["-", ["get", "icon_size"], 1.6]
       ],
