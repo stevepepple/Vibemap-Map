@@ -24,7 +24,7 @@ html, body, #root, div.App, div.App > div {
 
 #navigation {
     height: 6%;
-    min-height: 6em;
+    min-height: 7em;
 }
 
 /* Container */
@@ -43,18 +43,6 @@ html, body, #root, div.App, div.App > div {
     text-align: center;
     font-size: 1.5em;
     margin-top: 20vmin;
-}
-
-.mapboxgl-ctrl,
-.mapboxgl-ctrl-group {
-    position: absolute;
-    right: 1em;
-    top: 1em;
-    width: auto;
-}
-
-.mapboxgl-ctrl-geolocate {
-    width: 40px;
 }
 
 .mobile .ui.menu {
@@ -98,7 +86,7 @@ html, body, #root, div.App, div.App > div {
 }
 
 .ui.items {
-    height: 62vh;
+    height: 68vh;
     overflow: auto; 
 }
 

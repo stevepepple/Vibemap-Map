@@ -5,12 +5,12 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
 import helpers from '../../helpers';
+import * as Constants from '../../constants.js'
 
 import { Dimmer, Form, Input, Item, Loader, Segment, Dropdown } from 'semantic-ui-react'
 import { Global } from '@emotion/core'
 
 import ListItem from './list_item.js'
-import * as Constants from '../../constants.js'
 
 import { Translation } from 'react-i18next'
 
@@ -44,14 +44,14 @@ class PlacesList extends Component {
         this.props.setActivity(value)
     }
 
-    onClick = (event, id, type) => {        
+    onClick = (event, id, type) => { 
         this.props.setDetailsId(id)
         this.props.setDetailsType(type)
         this.props.setDetailsShown(true)
     }
 
     render() {
-        let has_items = this.props.data.length > 0;        
+        let has_items = this.props.data.length > 0
         let items = null;
 
         let searchTerm = this.props.searchTerm
@@ -59,7 +59,7 @@ class PlacesList extends Component {
         if (has_items) {
             // TODO: @cory, sorting should happen on the server. 
             let max = helpers.getMax(this.props.data, 'score')
-            items = this.props.data.map((place, index) => {                                
+            items = this.props.data.map((place, index) => {
                 return <ListItem key={place.id} id={place.id} type={place.properties.place_type} link={place.properties.url} onClick={this.onClick} properties={place.properties} index={index} max={max}/>
             })
         }
@@ -78,37 +78,40 @@ class PlacesList extends Component {
                         '.ui.inverted.purple.buttons .active.button': {
                             backgroundColor: Constants.PURPLE + '!important',
                             color: '#FFFFFF !important'
+                        },
+                        '.dropdown i.icon' : {
+                            margin: '0px !important'
                         }
                     }}
-                />                                 
+                />
                 
                 <Segment vertical>
                     <Form>
                         <Form.Field widths='equal'>
                             <Translation>{
                                 (t, { i18n }) => <Input
-                                        fluid
-                                        placeholder={t('Search')}
-                                        icon='search'
-                                        iconPosition='left'
-                                        onChange={_.debounce(this.onChange, 500, {
-                                            leading: true,
-                                        })}
-                                        value={searchTerm} />                                
+                                    fluid
+                                    placeholder={t('Search')}
+                                    icon='search'
+                                    iconPosition='left'
+                                    onChange={_.debounce(this.onChange, 500, {
+                                        leading: true,
+                                    })}
+                                    value={searchTerm} />
                             }</Translation>
                             
-                        </Form.Field>                        
-                        <Form.Group widths='equal'>                                
+                        </Form.Field>
+                        <Form.Group widths='equal'>
 
                             <Translation>{
                                 (t, { i18n }) => <Dropdown 
-                                icon='map pin'                                
+                                icon='map pin'
                                 fluid
                                 button
-                                labeled                             
+                                labeled
                                 compact
                                 className='icon basic small'
-                                style={{ width : '10em', marginLeft: '0.4em' }}                       
+                                style={{ width : '10em', lineHeight: '2.4em', marginLeft: '0.4em' }}
                                 text={t(this.props.placeType)}
                                 value={this.props.placeType}
                                 onChange={this.handlePlaceType}
@@ -124,9 +127,9 @@ class PlacesList extends Component {
                             <Translation>{
                                 (t, { i18n }) => <Dropdown
                                     search
-                                    // TODO: map this icon: icon={this.props.activity}                                    
+                                    // TODO: map this icon: icon={this.props.activity}
                                     fluid    
-                                    labeled                                
+                                    labeled
                                     placeholder={t('Pick Activity')}
                                     selection
                                     onChange={this.handleActivityChange}
@@ -152,7 +155,7 @@ class PlacesList extends Component {
                             
                         </Form.Group>
                     </Form>
-                </Segment>                
+                </Segment>
                 
                 {has_items? (
                     <Item.Group divided relaxed size='small' className='events_list'>

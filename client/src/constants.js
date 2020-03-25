@@ -61,7 +61,6 @@ export const activty_categories = [
     // Eating
     { key: 'food', value: 'food', text: 'Eating', label: { color: 'pink', icon: 'food', circular: true }, categories: ['food', 'restuarant'] },
     // Drinking
-    { key: 'drink', value: 'drink', text: 'Drink', label: { color: 'pink', icon: 'glass martini', circular: true }, categories: ['drinking', 'drinks'] },
     { key: 'drinking', value: 'drinking', text: 'Drinking', label: { color: 'pink', icon: 'glass martini', circular: true }, categories: ['drinking', 'drinks'] },
     // Music
     { key: 'music', value: 'music', text: 'Music', label: { color: 'violet', icon: 'music', circular: true }, categories: ['music'] },
@@ -105,6 +104,160 @@ export const place_categories = [
     { key: 'san-francisco-bart', value: 'BART', text: 'BART', categories: ['transit'] },
     { key: 'hotel', value: 'hotel', text: 'hotel', categories: ['hotel'] }
 ]
+
+export const all_vibes = ['absurd', 'adventurous', 'afterhours', 'affordable', 'active', 'activist', 'airy', 'alternative', 'art', 'artsy', 'artisanal', 'authentic', 'beautiful', 'belonging', 'bittersweet', 'big', 'bike', 'black', 'blissful', 'bold', 'bookish', 'boozy', 'busy', 'buzzing', 'calm', 'campy', 'casual', 'celebration', 'cheap', 'children', 'chill', 'cinematic', 'civic', 'classic', 'classy', 'cold', 'colorful', 'community', 'conversational', 'cool', 'comfy', 'cozy', 'crowded', 'cultural', 'craft', 'crazy', 'creative', 'dance', 'dark', 'dating', 'decorative', 'delightful', 'diverse', 'diy', 'dramatic', 'drinks', 'eclectic', 'educational', 'elegant', 'elevated', 'emotional', 'energy', 'entertaining', 'entrepreneurial', 'exciting', 'exclusive', 'experiential', 'experimental', 'family', 'fancy', 'fantastic', 'fashion', 'favorite', 'feminist', 'festive', 'fierce', 'film', 'flavorful', 'floral', 'folk', 'free', 'friendly', 'fun', 'funky', 'funny', 'futuristic', 'fresh', 'games', 'garden', 'gay', 'generous', 'gentle', 'grimy', 'happy', 'healthy', 'hearty', 'hiking', 'hipster', 'historic', 'holistic', 'hip', 'inclusive', 'indie', 'innovative', 'inspired', 'intense', 'interactive', 'intergenerational', 'international', 'interesting', 'intimate', 'joyful', 'kitschy', 'kindness', 'kinky', 'lax', 'laugh', 'live', 'lively', 'loud', 'local', 'love', 'magical', 'messy', 'mindful', 'mingle', 'modern', 'natural', 'nerdy', 'new', 'nightlife', 'novel', 'oasis', 'offbeat', 'old', 'oldschool', 'open', 'outdoors', 'outrageous', 'participatory', 'passionate', 'party', 'peaceful', 'perspective', 'photo', 'playful', 'popular', 'positive', 'posh', 'pretty', 'public', 'queer', 'quiet', 'quirky', 'raunchy', 'rebel', 'refreshing', 'relaxing', 'rejuvenating', 'raucous', 'restorative', 'reuse', 'retro', 'rock', 'romantic', 'rugged', 'safe', 'saucy', 'savory', 'scenic', 'serene', 'self-care', 'sensual', 'silly', 'simple', 'singing', 'small', 'social', 'sober', 'soothing', 'soulful', 'special', 'spicy', 'spontaneous', 'strange', 'subversive', 'sunny', 'sweet', 'tasty', 'tourist', 'transformative', 'transgender', 'transit', 'trendy', 'vegan', 'views', 'urban', 'ugly', 'underground', 'unexpected', 'unique', 'upscale', 'vast', 'vibe', 'vibrant', 'vintage', 'volunteer', 'walk', 'warm', 'weekend', 'whimsical', 'wild', 'weird', 'young', 'zen']
+
+// TODO: This should be loaded from the API
+// Currently copying the values from here: 
+// https://github.com/stevepepple/Hotspot-Analysis/blob/develop/etl/config/classifiers_vibes.yml
+export const signature_vibes = [{
+    'key': 'buzzing',
+    'label': { 'color': 'yellow' },
+    'text': 'Buzzing',
+    'value': 'buzzing',
+    'vibes': ['buzzing',
+        'energy',
+        'popular',
+        'interactive',
+        'spontaneous',
+        'vibrant']
+},
+{
+    'key': 'dreamy',
+    'label': { 'color': 'purple' },
+    'text': 'Dreamy',
+    'value': 'dreamy',
+    'vibes': ['colorful',
+        'cozy',
+        'dreamy',
+        'futuristic',
+        'inspired',
+        'magical',
+        'peaceful',
+        'utopian',
+        'visionary']
+},
+{
+    'key': 'chill',
+    'label': { 'color': 'blue' },
+    'text': 'Laid Back',
+    'value': 'chill',
+    'vibes': ['chill',
+        'cool',
+        'carefree',
+        'peaceful',
+        'quiet',
+        'refreshing',
+        'scenic',
+        'serene']
+},
+{
+    'key': 'oldschool',
+    'label': { 'color': 'red' },
+    'text': 'Old School',
+    'value': 'oldschool',
+    'vibes': ['classic',
+        'folk',
+        'heritage',
+        'legacy',
+        'old',
+        'oldschool',
+        'nostalgic',
+        'retro',
+        'sentimental',
+        'traditional']
+},
+{
+    'key': 'playful',
+    'label': { 'color': 'green' },
+    'text': 'Playtime',
+    'value': 'playful',
+    'vibes': ['elevated',
+        'exciting',
+        'passionate',
+        'playful',
+        'happy',        
+        'dance',        
+        'historic',
+        'interactive',
+        'outdoors']
+},
+{
+    'key': 'solidarity',
+    'label': { 'color': 'red' },
+    'text': 'Solidarity',
+    'value': 'solidarity',
+    'vibes': ['bold',
+        'courageous',
+        'curious',
+        'diverse',
+        'harmonious',
+        'inspired',
+        'proud',
+        'queer',
+        'transformative',
+        'trust']
+},
+{
+    'key': 'wild',
+    'label': { 'color': 'pink' },
+    'text': 'Wildside,',
+    'value': 'wild',
+    'vibes': ['boozy',
+        'adventurous',
+        'alternative',
+        'campy',
+        'colorful',
+        'crazy',
+        'dive',
+        'energy',
+        'farout',
+        'fierce',
+        'flavorful',
+        'fun',
+        'grimy',
+        'hip',
+        'intense',
+        'kitschy',
+        'kinky',
+        'raunchy',
+        'rugged',
+        'public',
+        'outrageous',
+        'party',
+        'rebel',
+        'wild']
+},
+{
+    'key': 'together',
+    'label': { 'color': 'orange' },
+    'text': 'Togetherness,',
+    'value': 'together',
+    'vibes': ['commited',
+        'feeling',
+        'friendly',
+        'intimate',
+        'love',
+        'passionate',
+        'romantic',
+        'sensual',
+        'together',
+        'trust',
+        'warm']
+},
+{
+    'key': 'wonderful',
+    'label': { 'color': 'blue' },
+    'text': 'Full of Wonder,',
+    'value': 'wonderful',
+    'vibes': ['amazing',
+        'grateful',
+        'friendly',
+        'helpful',
+        'generous',
+        'giving']
+}]
+
 
 export const all_categories = [
     {

@@ -32,7 +32,7 @@ module.exports = {
                 // distance: this.state.distance,
                 //dist: distanceInMeters,
                 //activity: activity,
-                //days: days,                
+                //days: days,
             })
 
             fetch(ApiUrl + "/v0.3/boundaries/?" + query)
@@ -56,7 +56,7 @@ module.exports = {
                 // distance: this.state.distance,
                 //dist: distanceInMeters,
                 //activity: activity,
-                //days: days,                
+                //days: days,
             })
 
             fetch(ApiUrl + "/v0.3/vibes/?" + query)
@@ -157,8 +157,8 @@ module.exports = {
 
         if (activity === 'all') activity = null
         
-        // TODO: Load more points at greater distances?   
-        // TODO: Load fewer points, once scoring is on the backend.     
+        // TODO: Load more points at greater distances?
+        // TODO: Load fewer points, once scoring is on the backend.
         return new Promise(function (resolve, reject) {
             let params = {
                 // lat: this.state.lat,
@@ -173,7 +173,7 @@ module.exports = {
                 per_page: 100
             }
 
-            if (activity) params["category"] = activity            
+            if (activity) params["category"] = activity
             
             let center_point = point.split(',').map(value => parseFloat(value))
             let query = querystring.stringify(params);
@@ -182,12 +182,14 @@ module.exports = {
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout);
-
-                    let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point, vibes)
-                    let top_vibes = module.exports.getTopVibes(res.results.features)
-                    let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
+                    let places = module.exports.formatPlaces(res.results.features)
+                    let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])                    
+                    // TODO: clustering could happen before and after identification of picks; for now just do it after
+                    //let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
+                
+                    let top_vibes = module.exports.getTopVibes(places)
                     
-                    resolve({ data: clustered, top_vibes: top_vibes, loading: false, timedOut: false })
+                    resolve({ data: places_scored_and_sorted, top_vibes: top_vibes, loading: false, timedOut: false })
 
                 }, (error) => {
                     console.log(error)
@@ -218,7 +220,7 @@ module.exports = {
         let day_start = moment().startOf('day').utc().format("YYYY-MM-DD HH:MM")
         let day_end = moment().add(days, 'days').utc().format("YYYY-MM-DD HH:MM")
         
-        // TODO: Load more points at greater distances?        
+        // TODO: Load more points at greater distances?
         return new Promise(function (resolve, reject) {
             let params = {
                 ordering: '-aggregate_rating',
@@ -241,9 +243,11 @@ module.exports = {
             fetch(ApiUrl + "/v0.3/places/?" + query)
                 .then(data => data.json())
                 .then(res => {
-
                     clearTimeout(timeout);
-                    let places_scored_and_sorted = module.exports.scorePlaces(res.results.features, center_point)
+                    let places = module.exports.formatPlaces(res.results.features)
+                    let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])
+                    //let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
+                
                     let top_vibes = module.exports.getTopVibes(res.results.features)
                     // TODO: remove this quick way of export the current data results to a map
                     //console.log(JSON.stringify(res))
@@ -258,7 +262,6 @@ module.exports = {
     // TODO: Include a way to query by time of day
     searchPlaces: function (search_term) {
 
-        // TODO: Load more points at greater distances?        
         return new Promise(function (resolve, reject) {
             let params = {
                 search: search_term,
@@ -307,8 +310,7 @@ module.exports = {
         })
     },
 
-
-    getEvents: function (point, distance, bounds, activity, days, search_term) {
+    getEvents: function (point, distance, bounds, activity, days, vibes, search_term) {
 
         let distanceInMeters = distance * Constants.METERS_PER_MILE
         let center_point = point.split(',').map(value => parseFloat(value))
@@ -323,7 +325,7 @@ module.exports = {
                 point: point,
                 dist: distanceInMeters,
                 activity: activity,
-                //days: days,                
+                //days: days,
                 ordering: "likes--",
                 start_date_after: day_start,
                 end_date_before: day_end,
@@ -336,8 +338,9 @@ module.exports = {
                 .then(res => {
                     clearTimeout(timeout);
 
-                    // Apply some temporary scoring to events to make them show up better.                    
-                    let scored = module.exports.scoreEvents(res.results.features, center_point)
+                    // Apply some temporary scoring to events to make them show up better.
+                    let event_places = module.exports.formatEvents(res.results.features)
+                    let scored = module.exports.scorePlaces(event_places, center_point, vibes, ['vibes', 'distance', 'likes'])
 
                     resolve({ data: scored, loading: false, timedOut: false })
 
@@ -347,269 +350,233 @@ module.exports = {
         })
     },
 
-    scoreEvents: function(events, center_point, vibes) {
-        
-        let max_distance = 1
-        let max_likes = 1
-        let max_vibe_score = 1
+    formatEvents: function (events) {
+        let formatted = events.map((event) => {
+            let fields = event.properties
 
-        let vibe_match_bonus = 10
-        
-        events.map((event) => {
-
-            // TODO: TEMP until events return vibes
-            if (event.properties.vibes === undefined) event.properties.vibes = ['chill']            
-    
-            event.properties.short_name = truncate(event.properties.name, Constants.TRUCATE_LENGTH)
-            event.properties.place_type = 'events'
-            
-            // Give direct vibe matches bonus points
-            let vibe_matches = 0
-            let vibe_bonus = 0
-            
-            event.properties.vibe_score = event.properties.vibes.length
-
-            if (vibes && event.properties.vibes) {
-                vibe_matches = helpers.default.matchLists(vibes, event.properties.vibes)
-                vibe_bonus = vibe_matches * vibe_match_bonus
-                event.properties.vibe_score += vibe_bonus
+            // Add fields for presentation
+            fields.place_type = 'events'
+            fields.short_name = truncate(fields.name, Constants.TRUCATE_LENGTH)
+            fields.aggregate_rating = parseFloat(fields.aggregate_rating)
+            if (fields.categories === undefined || fields.categories.length === 0) {
+                fields.categories = ["missing"]
             }
 
-            // Match Categories to Top Level Ones
-            let matches = helpers.default.getCategoryMatch(event.properties.categories)
-            if (matches.length === 0) matches.push('missing')
-            event.properties.categories = matches[0]        
+            if (fields.vibes === undefined) fields.vibes = ['chill']
 
-            if (center_point) {
-                let point = turf.point(event.geometry.coordinates)
-                event.properties.distance = turf.distance(center_point, point)            
-            } else {
-                event.properties.distance = null
-            }
-            
-            // Calculate max scores
-            if (event.properties.likes > max_likes) max_likes = event.properties.likes
-            if (event.properties.vibe_score > max_vibe_score) max_vibe_score = event.properties.vibe_score
-            if (event.properties.distance > max_distance) max_distance = event.properties.distance
-        })
+            fields.cluster = null
+            // TODO: why is this needed for icon points
+            fields.id = event.id
 
-        // Normalize all scores
-        let events_scored = events.map((event) => {
-
-            event.properties.likes = helpers.default.normalize(event.properties.likes, 0, max_likes)
-            event.properties.vibe_score = helpers.default.normalize(event.properties.vibe_score, 0, max_vibe_score)
-            
-            // Distance is inverted from max and then normalize 1-10
-            event.properties.distance = helpers.default.normalize(max_distance - event.properties.distance, 0, max_distance)
-
-            // Simple average of the different scores
-            let scores = [
-                event.properties.likes,
-                event.properties.vibe_score,         
-                event.properties.distance * 0.2 // Only make distance partially important
-            ]
-            //console.log('EVENT SCORES: ', scores)
-            // Average out the scores
-            event.properties.average_score = scores.reduce((a, b) => a + b, 0) / scores.length
-            // Create a scaled icon; TODO: Share logic with markers
-            // Normalize the icon size to match photo markers.
-            event.properties.icon_size = helpers.default.scaleIconSize(event.properties.average_score, 10)
-            
+            event.properties = fields
             return event
         })
-
-        let events_sorted = events_scored.sort((a, b) => b.properties.average_score - a.properties.average_score)
-
-        return events_sorted
-
+        return formatted
     },
 
-    scorePlaces: function(places, center_point, vibes) {
-        let max_event_score = 1
-        let max_vibe_score = 1
-        let max_aggregate_score = 1
-        let max_distance = 1
-
-        let vibe_match_bonus = 10
-        let vibe_rank_bonus = 5
-
-        let places_scored = places.map((place) => {
+    formatPlaces: function(places) {
+        let formatted = places.map((place) => {
+            let fields = place.properties
             
-            place.properties.place_type = 'places'
-            place.properties.short_name = truncate(place.properties.name, Constants.TRUCATE_LENGTH)
-            place.properties.aggregate_rating = parseFloat(place.properties.aggregate_rating)
-            if (place.properties.categories === undefined || place.properties.categories.length === 0) {
-                place.properties.categories = ["missing"]
+            // Add fields for presentation
+            fields.place_type = 'places'
+            fields.short_name = truncate(fields.name, Constants.TRUCATE_LENGTH)
+            fields.aggregate_rating = parseFloat(fields.aggregate_rating)
+            if (fields.categories === undefined || fields.categories.length === 0) {
+                fields.categories = ["missing"]
             }
-
-            // Give place a vibe score
-            if (place.properties.vibes.length > 0) {
-                place.properties.vibe_score = place.properties.vibes.length
-            } else {
-                console.log('No vibes for: ', place.properties.name)
-                place.properties.vibe_score = 0
-            }
-            
-            place.properties.cluster = null
-            // TODO: Add cluster scores
-
-            // Give direct vibe matches bonus points
-            let vibe_matches = 0
-            let average_rank = 0
-            let vibe_bonus = 0
-
-            if (vibes && place.properties.vibes) {
-                vibe_matches = helpers.default.matchLists(vibes, place.properties.vibes)
-                average_rank = helpers.default.rankVibes(vibes, place.properties.vibes)
-                
-                // TODO: Places that match vibe get a bonus
-                vibe_bonus = vibe_matches * vibe_match_bonus + average_rank * vibe_rank_bonus
-
-                //console.log('HAS VIBES: ', vibes, place.properties.vibes, vibe_bonus)
-                place.properties.vibe_score += vibe_bonus
-            }
-
-            // Don't show markers without photos
-            if (place.properties.images.length > 0) vibe_bonus += vibe_match_bonus
-
-
-            // Give place an event score
-            // TODO: Sum of events is a stand in for a better metric of a places relevance
-            place.properties.num_events = place.properties.hotspots_events.features.length
-            
+            fields.cluster = null
             // TODO: why is this needed for icon points
-            place.properties.id = place.id
+            fields.id = place.id
 
-            if (place.properties.num_events > 0) {
-                let likes = place.properties.hotspots_events.features[0].properties.likes
-                // TODO: Whats an appropriate ceiling to rank against
-                let like_score = 0
-                if(likes) like_score = likes / 100
-
-                // Simple sum of score works for now
-                place.properties.event_score = place.properties.num_events + likes
-            } else {
-                place.properties.event_score = 0
-            }
-
-            if (place.properties.aggregate_rating > max_aggregate_score)  max_aggregate_score = place.properties.aggregate_rating
-
-            if (place.properties.vibe_score > max_vibe_score) max_vibe_score = place.properties.vibe_score
-
-            if (place.properties.event_score > max_event_score) max_event_score = place.properties.event_score
-        
-            if(center_point) {
-                let point = turf.point(place.geometry.coordinates)
-                place.properties.distance = turf.distance(center_point, point)
-
-                if (place.properties.distance > max_distance) max_distance = place.properties.distance
-            }
-
+            place.properties = fields
             return place
+        })
+        return formatted
+    },
 
+    // Sorts Events and Places by their vibes and other fields
+    scorePlaces: function(places, center_point, vibes, scoreby) {
+        scoreby = scoreby || ['vibes', 'distance']
+
+        // Default max values; These will get set by the max in each field
+        let max_scores = {}
+        scoreby.map((field) => max_scores[field] = 1)
+
+        console.log(max_scores)
+
+        const vibe_match_bonus = 10
+        const vibe_rank_bonus = 5
+        const distance_factor = 0.4 // Weight distance different than other fields
+        
+        // Get scores and max in each category
+        let places_scored = places.map((place) => {
+
+            let fields = place.properties
+
+            if (scoreby.includes('distance')) {
+                const point = turf.point(place.geometry.coordinates)
+                fields.distance = turf.distance(center_point, point)
+                // Set max distance
+                if (fields.distance > max_scores['distance']) {
+                    max_scores['distance'] = fields.distance
+                }
+            }
+
+            if (scoreby.includes('vibes')) {
+                // Give place a vibe score
+                let [vibe_matches, average_rank, vibe_bonus] = [0, 0, 0]
+
+                fields.vibes_score = 0
+                // TODO: TEMP until events return vibes
+                if (fields.vibes === undefined) fields.vibes = ['chill']
+                if (fields.vibes.length > 0) fields.vibes_score = fields.vibes.length
+
+                // TODO: Don't show markers without photos; this will analyze the vibe and quality of the image
+                if (fields.images.length > 0) vibe_bonus += vibe_match_bonus
+                
+                // Give direct vibe matches bonus points
+                if (vibes.length > 0 && fields.vibes) {
+                    vibe_matches = helpers.default.matchLists(vibes, fields.vibes)
+                    average_rank = helpers.default.rankVibes(vibes, fields.vibes)
+
+                    vibe_bonus = vibe_matches * vibe_match_bonus + average_rank * vibe_rank_bonus
+
+                    fields.vibes_score += vibe_bonus
+                }
+                // Set max vibe score
+                if (fields.vibes_score > max_scores['vibes']) {
+                    max_scores['vibes'] = fields.vibes_score
+                } 
+            }
+
+            if (scoreby.includes('likes')) {
+                // Set max aggregate score
+                if (fields.likes > max_scores['likes']) {
+                    max_scores['likes'] = fields.likes
+                }
+            }
+
+            if (scoreby.includes('aggregate_rating')) {
+                // Set max aggregate score
+                if (fields.aggregate_rating > max_scores['aggregate_rating']) {
+                    max_scores['aggregate_rating'] = fields.aggregate_rating
+                }
+            }
+
+            place.properties = fields
+            return place
         })
 
         // Normalize each place by the top scores across all results
         let places_scored_averaged = places_scored.map((place) => {
+            let fields = place.properties
+
+            if (scoreby.includes('vibes')) fields.vibes_score = helpers.default.normalize(fields.vibes_score, 0, max_scores['vibes'])
+
+            if (scoreby.includes('likes')) fields.likes_score = helpers.default.normalize(fields.likes, 0, max_scores['likes'])
+
+            if (scoreby.includes('aggregate_rating')) fields.aggregate_rating_score = helpers.default.normalize(fields.aggregate_rating, 2, max_scores['aggregate_rating'])
             
-            // Normalize all scores
-            place.properties.event_score = helpers.default.normalize(place.properties.event_score, 0, max_event_score)
-            place.properties.vibe_score = helpers.default.normalize(place.properties.vibe_score, 0, max_vibe_score)
-
-            place.properties.aggregate_rating = helpers.default.normalize(place.properties.aggregate_rating, 2, max_aggregate_score)
-
             // Distance is inverted from max and then normalize 1-10
             // TODO: There might be something off about this score; should come from backend
-            place.properties.distance_score = helpers.default.normalize(max_distance - place.properties.distance, 0, max_distance)
-            
-            // Simple average of the different scores
-            let reasons = ['events', 'vibe', 'rating', 'distance']
-            let scores = [
-                place.properties.event_score, 
-                place.properties.vibe_score, 
-                place.properties.aggregate_rating,
-                place.properties.distance_score * 0.4 // Only make distance half as important
-            ]
-            let largest_index = scores.indexOf(Math.max(...scores))
+            if (scoreby.includes('distance')) {
+                let max_distance = max_scores['distance']
+                fields.distance_score = helpers.default.normalize(max_distance - fields.distance, 0, max_distance)
 
-            // Average out the scores
-            place.properties.average_score = scores.reduce((a, b) => a + b, 0) / scores.length            
+                fields.distance_score = fields.distance_score * distance_factor
+            }
+
+            let reasons = scoreby
+        
+            let scores = scoreby.map((field) => fields[field + '_score'])
+
+            let largest_index = scores.indexOf(Math.max.apply(null, scores))
+            
+            fields.average_score = scores.reduce((a, b) => a + b, 0) / scores.length
+
             // Add a reason code
-            place.properties.reason = reasons[largest_index]
+            fields.reason = reasons[largest_index]
 
             // Create a scaled icon; TODO: Share logic with markers
             // Normalize the icon size to match photo markers.
-            place.properties.icon_size = helpers.default.scaleIconSize(place.properties.average_score, 10)
-            
-            //console.log('Score for place: ', place.properties.name)
-            //console.log('Vibe: ', place.properties.vibe_score)
-            //console.log('Rating: ', place.properties.aggregate_rating)
-            //console.log('Distance: ', place.properties.distance)
+            fields.icon_size = helpers.default.scaleIconSize(fields.average_score, 10)
+           
+            place.properties = fields
             return place
         })
-        
-        // Resort by average score
+
+        // Resort by average score 
         let places_scored_and_sorted = places_scored_averaged.sort((a, b) => b.properties.average_score - a.properties.average_score)
 
-        /* TODO: for debugging only
-         See scores
+        
+        /* TODO: for debugging only 
         places_scored_and_sorted.map((place) => {
             console.log(place.properties.name)
-            console.log(' - event score: ', place.properties.event_score)
-            console.log(' - vibe_score: ', place.properties.vibe_score)
-            console.log(' - aggregate rating: ', place.properties.aggregate_rating)
+            console.log(' - vibes_score: ', place.properties.vibes_score)
+            console.log(' - aggregate rating: ', place.properties.aggregate_rating_score)
             console.log(' - distance: ', place.properties.distance_score)
             console.log(' - reason: ', place.properties.reason)
         })
         */
-
+        
         return places_scored_and_sorted
+        
     },
 
     clusterPlaces: function(places, cluster_size) {
         
-        let collection = turf.featureCollection(places)        
+        let collection = turf.featureCollection(places)
 
         // TODO: Adjust cluster measure at each zoom level? 
-        let clustered = turf.clustersDbscan(collection, cluster_size, { mutate: true })
-        //console.log("Turf cluster: ", clustered)  
+        let clustered = turf.clustersDbscan(collection, cluster_size, { mutate: false, minPoints: 2 })
+        console.log("Turf cluster: ", clustered, cluster_size)
 
         let results = []
 
         turf.clusterEach(clustered, 'cluster', function (cluster, clusterValue, currentIndex) {
-
+            console.log('clusterValue: ', clusterValue)
             // Only adjust clusters
             if (clusterValue !== 'null') {
                 let center = turf.center(cluster)
 
-                let max = helpers.default.getMax(cluster.features, 'average_score')
+                let max_score = helpers.default.getMax(cluster.features, 'average_score')
                 let size = cluster.features.length
-                console.log('--- Max score for cluster: ', max)
+
+                /* For testing purposes: */
+                console.log('--- Max score for cluster: ', max_score)
                 console.log('--- Center of cluster: ', center)
                 console.log('--- Size of cluster: ', size)
 
                 // TODO: Handle sorting & sizing based on score and distance. 
                 turf.featureEach(cluster, function (currentFeature, featureIndex) {
-                    let vibe_score = currentFeature.properties.vibe_score
-                    let score_diff = max - vibe_score            
+
+                    let fields = currentFeature.properties
+                    let vibes_score = fields.vibes_score
+                    let score_diff = max_score - vibes_score
 
                     let distance = turf.rhumbDistance(center, currentFeature)
                     let bearing = turf.rhumbBearing(center, currentFeature)
                     let destination = turf.rhumbDestination(center, distance * 2, bearing)
 
                     // Move the point based on the rhumb distance and bearing from the cluster center.
-                    currentFeature.properties.offset = destination.geometry
+                    fields.offset = destination.geometry
 
                     // Give point more cluster attributes
-                    currentFeature.properties.in_cluster = true
-                    currentFeature.properties.top_in_cluster = false
+                    fields.in_cluster = true
+                    fields.top_in_cluster = 'false'
 
-                    if (score_diff === 0) {
-                        currentFeature.properties.top_in_cluster = true
+                    console.log('clustered place: ', fields.name, fields.icon_size, fields.top_vibe)
+
+                    if (fields.average_score  >= max_score) {
+                        fields.top_in_cluster = 'true'
                         console.log("Top feature in cluster: ", currentFeature)
+                    } else {
+                        fields.icon_size = fields.icon_size / 1.5
                     }
                     //currentFeature.properties.vibe_score = (vibe_score - score_diff) * bonus
 
+                    currentFeature.properties = fields
                     results.push(currentFeature)
                     //=currentFeature
                     //=featureIndex
@@ -620,7 +587,9 @@ module.exports = {
             } else {
                 turf.featureEach(cluster, function (currentFeature, featureIndex) {
                     currentFeature.properties.in_cluster = false
-                    currentFeature.properties.top_in_cluster = false
+                    currentFeature.properties.top_in_cluster = 'true'
+
+                    console.log('Not in cluster: ', currentFeature.properties.name)
                     results.push(currentFeature)
                 })
             }
@@ -633,7 +602,6 @@ module.exports = {
         results = results.sort((a, b) => {
             return b.properties.average_score - a.properties.average_score
         })
-
 
         return results
 

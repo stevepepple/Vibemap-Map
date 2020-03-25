@@ -12,7 +12,7 @@ function cardPLaceLayout(props) {
 
     let categories = null
 
-    if (typeof (content.categories) == 'object') {
+    if (typeof (content.categories) == 'object' && content.categories.length > 0) {        
         categories = content.categories.map((category) => <span class={category}>Category</span>)
     } else {
         categories = helpers.toTitleCase(content.categories) 
@@ -64,7 +64,7 @@ function cardPLaceLayout(props) {
         <Fragment>
             <Item.Image src={content.images[0]} size='small' />
             <Item.Content>
-                {categories &&
+                {categories !== null && categories.length > 0 &&
                     <Item.Extra className='date'>{categories}</Item.Extra>
                 }
                             

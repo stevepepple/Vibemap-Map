@@ -25,6 +25,7 @@ i18n.use(LanguageDetector).init({
         "both": "Places & Events",
 
         "Current Vibe": "Current Vibe",
+        "Signature Vibe": "Signature Vibe",
         "What's your vibe": "What's your vibe",
         "Pick Activity": "Pick Activity",
 
@@ -61,6 +62,7 @@ i18n.use(LanguageDetector).init({
         "Filters": "Filtros…",
 
         "Current Vibe": "Vibra Actual",
+        "Signature Vibe": "Vibra característico",
         "What's your vibe": "¿Cual es tu vibra?",
         "Pick Activity": "¿Qué quieres hacer?",
 

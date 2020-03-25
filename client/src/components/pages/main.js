@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import queryString from 'querystring'
+import qs from 'qs'
 import isEqual from 'react-fast-compare'
 
 import { Grid } from 'semantic-ui-react'
@@ -41,6 +41,7 @@ class Page extends Component {
         // State includes some globals only for the main page; 
         // Most other UI state is managed by Redux
         this.state = {
+            clusterSize: 80,
             top_event: [],
             items: [],
             // TODO: set state form YAML
@@ -48,11 +49,11 @@ class Page extends Component {
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
             place_categories: ['Arts & Entertainment', 'Food'],
-            vibe_categories: ['adventurous', 'artsy', 'atmosphere', 'authentic', 'bold', 'civic', 'chill', 'classic', 'cool', 'comfortable', 'cowork', 'cozy', 'creative', 'dance', 'dive', 'diverse', 'energetic', 'exclusive', 'family', 'festive', 'free', 'friendly', 'fun', 'gay', 'healthy', 'hidden', 'historic', 'interactive', 'inspired', 'intimate', 'local', 'lively', 'magical', 'new', 'oldschool', 'outdoors', 'peaceful', 'playful', 'popular', 'positive', 'public', 'romantic', 'queer', 'quiet', 'raunchy', 'scenic', 'soul', 'sweet', 'transformative', 'trending', 'vibrant', 'unique', 'wild', 'women-owned', 'zen'],
+            vibe_categories: Constants.all_vibes,
             // TODO: handle conversion math in VibeMap
             intervalIsSet: false,
             loading: true,
-            num_top_picks: 20,
+            num_top_picks: 12,
             timedOut: false,
             mergeTopPicks: false,
             time_of_day: 'morning',
@@ -84,10 +85,12 @@ class Page extends Component {
     }
 
     componentDidMount() {
-        // Set global state with user's location
-        let params = queryString.parse(this.props.search)
+        // Set global state with user's location from query string
+        let params = qs.parse(this.props.search, { ignoreQueryPrefix: true })
         
         // TODO: There should be a button for "Near Me"
+        console.log("location from URL", params.latitude, params.longitude, params)
+
         if (params.latitude && params.longitude) {
             this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude })
         } else {
@@ -147,8 +150,13 @@ class Page extends Component {
             updateData = true
             // Only refresh if it a whole step up or down            
             let zoom_diff = this.props.zoom - prevProps.zoom
-            if (zoom_diff >= 1) refreshResults = true
+            if (zoom_diff >= 0.4) refreshResults = true            
         }
+
+        if (!isEqual(prevProps.pixelDistance, this.props.pixelDistance)) {
+            // TODO: establish reproducable relationship between custer distance and icon size
+            this.setState({ clusterSize: this.props.pixelDistance * 60 })
+        }    
         
         // Reset mergeTopPicks; if the results shoudl change
         if (refreshResults) this.setState({ mergeTopPicks: false })
@@ -161,6 +169,7 @@ class Page extends Component {
         if (this.props.mapReady === true && !isEqual(prevProps.mapReady, this.props.mapReady)) {
             this.getBounds()
         }
+
         if (this.props.boundsReady === false) updateData = false
         // Only update data if the map and searh radius area ready. 
         if (this.props.mapReady && this.props.boundsReady && !isEqual(prevProps.boundsReady, this.props.boundsReady)) {
@@ -184,12 +193,12 @@ class Page extends Component {
     // Put the location in the URL
     setLocationParams = location => {
         // Slice remove the question mark
-        let params = queryString.parse(this.props.search.slice(1))
+        let params = qs.parse(this.props.search, { ignoreQueryPrefix: true })
 
         params["latitude"] = location.latitude
         params["longitude"] = location.longitude
         
-        let string = queryString.stringify(params)
+        let string = qs.stringify(params)
         store.dispatch(push({ search: string }))
     }
 
@@ -279,7 +288,7 @@ class Page extends Component {
     
         /* Get current events, then set them in the state */
         /* TODO: package args into spread object? */        
-        VibeMap.getEvents(point, this.props.distance, this.props.bounds, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
+        VibeMap.getEvents(point, this.props.distance, this.props.bounds, this.state.event_categories, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {                
 
                 let top_picks = results.data.splice(1, this.state.num_top_picks)
@@ -308,16 +317,17 @@ class Page extends Component {
             
             // TODO: add search variable.
             VibeMap.getPicks(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentVibes, this.props.searchTerm)
-                .then(results => {
-                    let cluster_size = this.props.pixelDistance * 10
-                    console.log('Cluster size for distance: ', cluster_size)
+                .then(results => {                                        
+
                     if (results.top_vibes) {
                         this.props.setTopVibes(results.top_vibes)
                     }
 
                     let top_picks = results.data.splice(1, this.state.num_top_picks)
                     
-                    this.props.setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
+                    let top_picks_clustered = VibeMap.clusterPlaces(top_picks, this.state.clusterSize)                                    
+                    
+                    this.props.setTopPicks(top_picks_clustered, refreshResults, this.state.mergeTopPicks)
                     this.props.setPlacesData(results.data, refreshResults)
 
             }, (error) => {
@@ -327,12 +337,8 @@ class Page extends Component {
             this.setState({ searching: false }) 
         }
 
-        // General search     
-        console.log('Getting places from this far away: ', this.props.distance)
-
         VibeMap.getPlaces(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
-                let cluster_size = this.props.pixelDistance * 20
 
                 // TODO: Can this be dispatched from a central place? 
                 this.props.setTopVibes(results.top_vibes)
@@ -341,10 +347,9 @@ class Page extends Component {
                     // This won't be needed if top picks work, right? 
                     let top_picks = results.data.splice(1, this.state.num_top_picks)
                     
-                    // Example of DBSCAN clustering algorithm
-                    // Size cluster for 20 px appart at each level
-                    
-                    let top_picks_clustered = VibeMap.clusterPlaces(top_picks, cluster_size)
+                    // Example of DBSCAN clustering algorithm                                    
+                    let top_picks_clustered = VibeMap.clusterPlaces(top_picks, this.state.clusterSize)                    
+
                     this.props.setTopPicks(top_picks_clustered, refreshResults, this.state.mergeTopPicks)
                     
                     this.props.setPlacesData(results.data, refreshResults)

@@ -48,7 +48,11 @@ class TopVibes extends Component {
         const style = {
             //padding: '1em',
             //paddingTop: '0.2em',
+            cursor: 'pointer',
             fontSize: '1.1em',
+            margin: '1em',
+            positiion: 'fixed',
+            zIndex: 200
         }        
 
         let top_vibes = this.props.topVibes.slice(1, 4)

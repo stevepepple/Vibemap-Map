@@ -116,14 +116,12 @@ export const layersChanged = (state = false, action) => {
     // Always change he state to the opposite.
 
     state = !state
-    console.log('Changed Layer State', state)
   }
   return state
 }
 
 export const headerSize = (state = { width: 0, height: 0 }, action) => {
   if (action.type === 'SET_HEADER_SIZE') {
-    console.log("Set header size: ", action.size)
     state = action.size
   }
   return state
@@ -138,7 +136,6 @@ export const bounds = (state = [], action) => {
 
 export const pixelDistance = (state = [], action) => {
   if (action.type === 'SET_PIXEL_DISTANCE') {
-    console.log('SET_PIXEL_DISTANCE', action)
     state = action.distance
   }
   return state
