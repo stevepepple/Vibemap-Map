@@ -141,6 +141,13 @@ export const pixelDistance = (state = [], action) => {
   return state
 }
 
+export const densityBonus = (state = 0.2, action) => {
+  if (action.type === 'SET_DENSITY_BONUS') {
+    state = action.bonus
+  }
+  return state
+}
+
 export const bearing = (state = 0, action) => {
   if (action.type === 'SET_BEARING') {
     console.log("SET BEARING: ", action.bearing)
@@ -182,7 +189,7 @@ export const searchTerm = (state = "", action) => {
   return state
 }
 
-export const currentVibes = (state = ['chill'], action) => {
+export const currentVibes = (state = [], action) => {
   if (action.type === 'SET_CURRENT_VIBES') {
     state = action.vibes
   }
@@ -319,7 +326,7 @@ export const placesData = (state = [], action) => {
       state = merged
     }
     
-    console.log("How many total places: ", state.length)
+    //console.log("How many total places: ", state.length)
     
   }
 
@@ -424,6 +431,7 @@ export const reducers = (history) => combineReducers({
   currentPlace,
   currentDays,
   currentVibes,
+  densityBonus,
   detailsId,
   detailsType,
   detailsShown,

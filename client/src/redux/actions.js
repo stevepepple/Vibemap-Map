@@ -79,6 +79,11 @@ export const setPixelDistance = distance => ({
   distance,
 })
 
+export const setDensityBonus = bonus => ({
+  type: 'SET_DENSITY_BONUS',
+  bonus,
+})
+
 export const setCurrentPlace = place => ({
   type: 'SET_CURRENT_PLACE',
   place,

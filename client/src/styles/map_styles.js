@@ -189,14 +189,14 @@ module.exports = {
       "text-max-width": 12
     },
 
-    places_heatmap: {
+    places_heatmap: {      
       'heatmap-radius' : [
         "interpolate",
         ["linear"],
         ["zoom"],
           8, 1,
-          10, 24,
-          12, 40,
+          10, 16,
+          12, 34,
           13, 50,
           14, 70,
           20, 200
@@ -205,27 +205,32 @@ module.exports = {
         "interpolate",
         ["linear"],
         ["zoom"],
-          8, 0.2,
-          11, 0.3,
+          8, 0.4,
+          11, 0.4,
           20, 0.4
       ],
       // TODO: Scale this on the total number of results vs. size of area...
-      'heatmap-intensity': [
+      'heatmap-intensity' : 0.2,
+      /*
+      'heatmap-intensity': [        
         "interpolate",
         ["linear"],
         ["zoom"],
-          8, 0.4,
-          12, 0.2,
+          8, 0.8,
+          10, 0.3,
+          12, 0.1,
           14, 0.3,
           20, 0.5
       ],
+      */
       
+      // TODO: this should be average_score from backend vibe score
       "heatmap-weight": [
           "interpolate",
           ["linear"],
           ["get", "aggregate_rating"],
           1, 0.2,
-          8, 1
+          5, 1
       ],
       
       "heatmap-color": [

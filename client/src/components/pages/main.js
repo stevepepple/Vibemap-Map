@@ -154,7 +154,6 @@ class Page extends Component {
             this.getBounds()
             // Only refresh if it a whole step up or down
             let zoom_diff = Math.abs(this.props.zoom - prevProps.zoom)
-            console.log('Zoom changed: ', zoom_diff, this.props.bounds)
             if (zoom_diff >= 0.4) refreshResults = true            
         }
 
@@ -333,17 +332,8 @@ class Page extends Component {
             // TODO: add search variable.
             VibeMap.getPicks(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentVibes, this.props.searchTerm)
                 .then(results => {                                        
-
-                    if (results.top_vibes) {
-                        this.props.setTopVibes(results.top_vibes)
-                    }
-
-                    let top_picks = results.data.splice(1, this.state.num_top_picks)
-                    
-                    let top_picks_clustered = VibeMap.clusterPlaces(top_picks, this.state.clusterSize)                                    
-                    
-                    this.props.setTopPicks(top_picks_clustered, refreshResults, this.state.mergeTopPicks)
-                    this.props.setPlacesData(results.data, refreshResults)
+                    // Set places in he results
+                    this.setTopPlaces(results, refreshResults)
 
             }, (error) => {
                 console.log(error)
@@ -354,20 +344,10 @@ class Page extends Component {
 
         VibeMap.getPlaces(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
-
-                // TODO: Can this be dispatched from a central place? 
-                this.props.setTopVibes(results.top_vibes)
+                
 
                 if(this.state.searching !== true) {                    
-                    // This won't be needed if top picks work, right? 
-                    let top_picks = results.data.splice(1, this.state.num_top_picks)
-                    
-                    // Example of DBSCAN clustering algorithm                                    
-                    let top_picks_clustered = VibeMap.clusterPlaces(top_picks, this.state.clusterSize)                    
-
-                    this.props.setTopPicks(top_picks_clustered, refreshResults, this.state.mergeTopPicks)
-                    
-                    this.props.setPlacesData(results.data, refreshResults)
+                    this.setTopPlaces(results, refreshResults)
                 } else {
                     // TODO: Only show places with vibe affinity during search
                     //this.props.setPlacesData(results.data, refreshResults)
@@ -377,6 +357,26 @@ class Page extends Component {
             }, (error) => {
                 console.log(error)
             })
+    }
+
+    setTopPlaces(results, refreshResults) {
+        if (results.top_vibes) {
+            this.props.setTopVibes(results.top_vibes)
+        }
+
+        let count = results.count
+        let area = helpers.getArea(this.props.bounds)
+        let density = count / area
+        let relative_density = helpers.scaleDensity(this.props.zoom, density)
+        let density_bonus = 1 - relative_density
+        this.props.setDensityBonus(density_bonus)
+
+        let top_picks = results.data.splice(1, this.state.num_top_picks)
+
+        let top_picks_clustered = VibeMap.clusterPlaces(top_picks, this.state.clusterSize)
+
+        this.props.setTopPicks(top_picks_clustered, refreshResults, this.state.mergeTopPicks)
+        this.props.setPlacesData(results.data, refreshResults)
     }
 
     clearDetails = function() {
@@ -466,6 +466,7 @@ const mapStateToProps = state => ({
     zoom: state.zoom,
     currentDays: state.currentDays,
     currentVibes: state.currentVibes,
+    densityBonus: state.densityBonus,
     detailsShown: state.detailsShown,
     detailsId: state.detailsId,
     detailsType: state.detailsType,

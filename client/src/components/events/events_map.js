@@ -15,7 +15,6 @@ import Selected from '../map/selected'
 import VectorTile from '../map/VectorTile'
 import LayersFilter from '../map/LayersFilter'
 import { clusterLayer, clusterCountLayer, unclusteredPointLayer } from '../map/layers'
-import { neighborhoods } from '../map/data'
 //import YouAreHere from '../map/you_are_here.js'
 
 import TopVibes from '../elements/topVibes'
@@ -53,7 +52,6 @@ class EventsMap extends React.Component {
     // TODO: Move to componentWillUPdate
     componentWillReceiveProps(nextProps){
 
-        
         // Make it valide geoJSON
         // TODO: make valid GeoJSON in Redux?
         let places_geojson = turf.featureCollection(nextProps.places_data)
@@ -160,7 +158,7 @@ class EventsMap extends React.Component {
         // There a layer & feature
         if (feature && event.features.length > 0) {
             let first_feature = event.features[0]            
-            if (first_feature.properties.name && (first_feature.layer.id === "top_picks" || first_feature.layer.id === "places" || first_feature.layer.id === "events")) {
+            if (first_feature.properties.name && (first_feature.layer.id === "top_picks" || first_feature.layer.id === "places_markers" || first_feature.layer.id === "events")) {
                 
                 this.showPopup(first_feature.properties.name, event.lngLat[1], event.lngLat[0])
             }
@@ -191,7 +189,13 @@ class EventsMap extends React.Component {
 
         let heat_map_filter = [this.props.activity]
         if (this.props.activity === 'all' || this.props.activity === '') {
-            heat_map_filter = ["food"] //, "shopping", "outdoors"
+            heat_map_filter = ["food", "shopping", "outdoors"]
+        }
+
+        if (this.props.densityBonus) {
+            let intensity = (this.props.densityBonus + Constants.HEATMAP_INTENSITY) / 2
+            //console.log('intensity: ', intensity)
+            mapStyles.places_heatmap['heatmap-intensity'] = intensity
         }
 
         // Marker are better controled with a layout style
@@ -357,9 +361,9 @@ class EventsMap extends React.Component {
                         {/* Only render popup if it's not null */}
                         {this.state.popupInfo &&
                             <Popup
-                                tipSize={4}
+                                tipSize={2}
                                 className={'marker-popup'}
-                                offsetTop={-6}
+                                offsetTop={-10}
                                 longitude={this.state.popupInfo.longitude}
                                 latitude={this.state.popupInfo.latitude}                                
                                 closeOnClick={true}
@@ -397,7 +401,6 @@ class EventsMap extends React.Component {
     }
 }
 
-
 const mapStateToProps = state => ({
     activity: state.activity,
     baseZoom: state.baseZoom,
@@ -407,6 +410,7 @@ const mapStateToProps = state => ({
     currentVibes: state.currentVibes,
     currentLocation: state.currentLocation,
     currentPlace: state.currentPlace,
+    densityBonus: state.densityBonus,
     layers: state.layers,
     layersChanged: state.layersChanged,
     zoom: state.zoom,

@@ -20,7 +20,7 @@ const helpers = {
 
     getBounds: function(location, zoom, size) {
         let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [size.width, size.height], 512)
-        console.log("Got bounds for: ", location, zoom, size, bounds)
+        //console.log("Got bounds for: ", location, zoom, size, bounds)
         return bounds
     },
 
@@ -41,6 +41,28 @@ const helpers = {
         let distance = diameter / 2
 
         return distance
+    },
+
+    getArea: function (bounds) {
+        
+        //let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
+        let height = turf.distance(
+            [bounds[0], bounds[1]], // Southwest
+            [bounds[0], bounds[3]], // Northwest
+            { units: 'miles' }
+        )
+
+        let width = turf.distance(
+            [bounds[0], bounds[1]], // Southwest
+            [bounds[2], bounds[1]], // Southeast
+            { units: 'miles' }
+        )
+
+        console.log('bounds: ', bounds, height, width)
+    
+        let area = height * width
+
+        return area
     },
 
     getDistanceToPixels(bounds, window) {
@@ -218,6 +240,33 @@ const helpers = {
         let scaled_size = Math.round(scale(score))        
 
         return scaled_size
+    },
+
+    scaleDensity: function (zoom, density) {        
+
+        // Scale min and max marker size to zoom level
+        // Could also be by area 
+        // From sampling our cities
+        // zoom level 10: min = 0; max = 16
+        // zoom level 12: min = 0; max = 173
+        // zoom level 14: min = 0; max = 800
+        // zoom level 16: min = 0; max = 6870
+
+        let max_density = scalePow(1)
+            .domain([8, 10, 12, 14, 16]) // Zoom size
+            .range([10, 20, 200, 800, 8000]) // Scale of marker size
+
+        let max = max_density(zoom) 
+        
+        console.log('max density for zoom level: ', zoom, density,  max)
+
+        let density_scale = scalePow(1)
+            .domain([0, max])
+            .range([0, 1])
+        
+        let relative_density = density_scale(density)
+        
+        return relative_density
     },
     
     scaleSelectedMarker: function (zoom) {

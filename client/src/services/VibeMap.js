@@ -182,6 +182,8 @@ module.exports = {
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout);
+                    const count = res.count
+
                     let places = module.exports.formatPlaces(res.results.features)
                     let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])                    
                     // TODO: clustering could happen before and after identification of picks; for now just do it after
@@ -189,7 +191,7 @@ module.exports = {
                 
                     let top_vibes = module.exports.getTopVibes(places)
                     
-                    resolve({ data: places_scored_and_sorted, top_vibes: top_vibes, loading: false, timedOut: false })
+                    resolve({ data: places_scored_and_sorted, count: count, top_vibes: top_vibes, loading: false, timedOut: false })
 
                 }, (error) => {
                     console.log(error)
@@ -242,6 +244,8 @@ module.exports = {
             fetch(ApiUrl + "/v0.3/places/?" + query)
                 .then(data => data.json())
                 .then(res => {
+
+                    const count = res.count
                     clearTimeout(timeout);
                     let places = module.exports.formatPlaces(res.results.features)
                     let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])
@@ -250,7 +254,7 @@ module.exports = {
                     let top_vibes = module.exports.getTopVibes(res.results.features)
                     // TODO: remove this quick way of export the current data results to a map
                     //console.log(JSON.stringify(res))
-                    resolve({ data: places_scored_and_sorted, top_vibes: top_vibes, loading: false, timedOut: false })
+                    resolve({ data: places_scored_and_sorted, count: count,  top_vibes: top_vibes, loading: false, timedOut: false })
 
                 }, (error) => {
                     console.log(error)
@@ -336,12 +340,12 @@ module.exports = {
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout);
-
+                    const count = res.count
                     // Apply some temporary scoring to events to make them show up better.
                     let event_places = module.exports.formatEvents(res.results.features)
                     let scored = module.exports.scorePlaces(event_places, center_point, vibes, ['vibes', 'distance', 'likes'])
 
-                    resolve({ data: scored, loading: false, timedOut: false })
+                    resolve({ data: scored, count: count, loading: false, timedOut: false })
 
                 }, (error) => {
                     console.log(error)

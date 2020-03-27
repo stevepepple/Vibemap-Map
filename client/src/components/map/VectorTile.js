@@ -81,7 +81,7 @@ class VectorTile extends React.Component {
 
             var layers = map.getStyle().layers            
                         
-            map.addLayer(layer_options)
+            map.addLayer(layer_options, before)
 
             let layer = map.getLayer(this.props.id)
             console.log('Added this layer: ', this.props.id, layer)
@@ -129,8 +129,8 @@ class VectorTile extends React.Component {
             this.addHeatMap()
         } 
         
-        if (this._map.style._loaded && this.state.update_layer) {
-            this._map.setFilter("heat_layer", ['==', 'primary_category', this.props.filter])
+        if (this._map.style._loaded && this.state.update_layer) {            
+            this._map.setFilter("heat_layer", this.props.filter)
         }
             
     }
