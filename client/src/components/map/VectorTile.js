@@ -3,6 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
+import * as Constants from '../../constants.js'
+
 import { _MapContext as MapContext, MapContextProps} from 'react-map-gl'
 
 import Styles from '../../styles/map_styles.js'
@@ -39,6 +41,7 @@ class VectorTile extends React.Component {
             if (this.props.activity === 'all') {
                 this.setState({ filter: ["food", "shopping", "outdoors"] })
             } else {
+                console.log('Setting heatmap filter: ', this.props.activity)
                 this.setState({ update_layer: true, activity: this.props.activity, filter: [this.props.activity] })
             }
         }
@@ -52,35 +55,40 @@ class VectorTile extends React.Component {
     
         const map = this._map
 
+        let layer_options = {
+            "id": this.props.id,
+            "source": this.props.id + '_source',
+            "source-layer": this.props.source_layer,
+            "type": this.props.type,     
+            "paint": this.props.paint,
+            "layout": { 'visibility' : this.props.visibility }
+        }
+
+        if (this.props.filter) {
+            //layer_options['filter'] = this.props.filter
+        }
+
+        let before = null
+        if (this.props.id === 'heat_layer') before = 'neighborhoods'
+
         if (map.style && map.style._loaded) {
 
-            map.addSource('tile_layer', {
+            map.addSource(this.props.id + '_source', {
                 'type': 'vector',
-                'tiles': ["https://tiles.vibemap.com/maps/places/{z}/{x}/{y}.mvt"],
+                'tiles': [this.props.tiles],
                 'minzoom': 8
             })
-            
-            map.addLayer({
-                "id": "heat_layer",
-                "source": "tile_layer",
-                "source-layer": "places",
-                "type": "heatmap",
-                'filter': [
-                    "all",
-                    [
-                        "match",
-                        ["get", "primary_category"],
-                        this.state.filter,
-                        true,
-                        false
-                    ]
-                ],                
-                "paint": Styles.places_heatmap,
-                //"layout": { 'visibility' : this.state.visibility }
-            })
 
-            /* TODO: Measure density here or get from backend with JSON tiles response. */
-            //var features = map.queryRenderedFeatures({ layers: ['places'] });            
+            var layers = map.getStyle().layers            
+                        
+            map.addLayer(layer_options)
+
+            let layer = map.getLayer(this.props.id)
+            console.log('Added this layer: ', this.props.id, layer)
+            if (typeof layer !== 'undefined') {
+                var features = map.queryRenderedFeatures({ layers: [layer.id] });
+                console.log('number of heatmap features', features)
+            }            
 
             this.setState({ added_map: true })
         }
@@ -91,33 +99,38 @@ class VectorTile extends React.Component {
         let map = this._map        
 
         let layer = map.getLayer('heat_layer')
-
+        if (typeof layer !== 'undefined') {
+            if (this.props.filter) map.setFilter(layer.id, this.props.filter)
+        }
         //this._map.setFilter('collisions', ['all', 'test']) 
-        //map.setFilter(layer.id, ['==', 'primary_category', this.state.activity])
+        
+        try {
+            // TODO: this works fine but has a slight side effect that make the places layer work. 
+            map.setLayoutProperty(layer.id, 'visibility', this.state.visibility); 
 
-        // TODO: this works fine but has a slight side effect that make the places layer work. 
-        map.setLayoutProperty(layer.id, 'visibility', this.state.visibility);
-
-        console.log('layers changed: ', this.props.layers)
-
-        Object.keys(this.props.layers).map((key) => {
-            let visibility = this.props.layers[key]  ? "visible" : "none"
-            map.setLayoutProperty(key, 'visibility', visibility);
-        })
-            
-       
+            Object.keys(this.props.layers).map((key) => {
+                let layer = map.getLayer(key)
+                if (typeof layer !== 'undefined') {
+                    let visibility = this.props.layers[key] ? "visible" : "none"
+                    map.setLayoutProperty(key, 'visibility', visibility)
+                }
+                
+            })            
+        } catch (error) {
+            console.log('problem with layer: ', error)
+        }
     }
 
     _render(context: MapContextProps) {
         
         this._map = context.map
 
-        if(this.state.added_map === false) {            
+        if(this.state.added_map === false) {
             this.addHeatMap()
         } 
         
         if (this._map.style._loaded && this.state.update_layer) {
-            //this._map.setFilter("heat_layer", ['==', 'primary_category', this.state.activity])
+            this._map.setFilter("heat_layer", ['==', 'primary_category', this.props.filter])
         }
             
     }

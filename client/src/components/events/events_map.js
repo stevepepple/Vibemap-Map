@@ -14,7 +14,8 @@ import Markers from '../map/markers'
 import Selected from '../map/selected'
 import VectorTile from '../map/VectorTile'
 import LayersFilter from '../map/LayersFilter'
-import { clusterLayer, clusterCountLayer, unclusteredPointLayer } from '../map/layers';
+import { clusterLayer, clusterCountLayer, unclusteredPointLayer } from '../map/layers'
+import { neighborhoods } from '../map/data'
 //import YouAreHere from '../map/you_are_here.js'
 
 import TopVibes from '../elements/topVibes'
@@ -188,12 +189,14 @@ class EventsMap extends React.Component {
         const mapController = new CustomMapController()
         const mapStyles = this.state.mapStyles
 
+        let heat_map_filter = [this.props.activity]
+        if (this.props.activity === 'all' || this.props.activity === '') {
+            heat_map_filter = ["food"] //, "shopping", "outdoors"
+        }
+
         // Marker are better controled with a layout style
         mapStyles.marker_layout.visibility = this.props.layers.places_markers ? "visible" : "none"
-        
-        //this._map.setLayoutProperty('place_markers', 'visibility', mapStyles.marker_layout.visibility);
-
-        
+                
         let heat_map_visibility = this.props.layers.heatmap ? 'visible' : 'none'
 
         return (
@@ -232,7 +235,7 @@ class EventsMap extends React.Component {
 
                         <TopVibes />
 
-                        <ScaleControl maxWidth={200} unit='imperial' />
+                        <ScaleControl maxWidth={200} unit='imperial' />                        
 
                         {has_top_pick_data &&
                             <Fragment>
@@ -255,7 +258,6 @@ class EventsMap extends React.Component {
                                         layout={mapStyles.top_vibe_layout}
                                         paint={mapStyles.top_pick_paint}
                                     />
-
                                 </Source>
                                 {/* TODO: this state should be synced with the top_picks react state */}
                                 {this.props.layers.photo_markers &&
@@ -269,14 +271,30 @@ class EventsMap extends React.Component {
                             </Fragment>
                         }
 
+                        {/* this.props.layers.neighborhoods === true &&
+                            // mapbox://stevepepple.ck896dj6863jf2rpm6ioemfpm-5fmfa
+                            <Fragment>                            
+
+                            <VectorTile
+                                id='neighborhoods_all'
+                                type='symbol'
+                                source='tile_layer'
+                                source-layer='places'
+                                tiles={"https://a.tiles.mapbox.com/v4/stevepepple.ck896dj6863jf2rpm6ioemfpm-5fmfa/{z}/{x}/{y}.mvt?access_token=" + Constants.MAPBOX_TOKEN}                                
+                                layout={mapStyles.neighborhood_layout}
+                                paint={mapStyles.neighborhood_paint}
+                                visibility='visible'
+                            />
+                            </Fragment>                          
+                        */}
+                        
                         {this.props.detailsShown && this.props.currentPlace.location !== null &&
                             /* Current place marker */
                             <Marker
                                 longitude={this.props.currentPlace.location.longitude}
                                 latitude={this.props.currentPlace.location.latitude}
                                 offsetTop={-2}
-                                offsetLeft={-2}
-                            >   
+                                offsetLeft={-2}>   
                                 <Selected size={helpers.scaleSelectedMarker(this.props.zoom)} />
                             </Marker>
                         }
@@ -289,21 +307,22 @@ class EventsMap extends React.Component {
                                 cluster={false}>
 
                                 <Layer
-                                    id='places_circle'
-                                    type='circle'
-                                    beforeId='places_markers'
-                                    paint={mapStyles.places_circle}
-                                    isLayerChecked={true} />
-
-                                <Layer
                                     id='places_markers'
                                     key='places_markers'
                                     beforeId='photo_markers'
                                     type='symbol'
                                     layout={mapStyles.marker_layout}
                                     paint={mapStyles.marker_paint} />
+
+                                <Layer
+                                    id='places_circle'
+                                    type='circle'
+                                    beforeId='places_markers'
+                                    paint={mapStyles.places_circle}
+                                    isLayerChecked={true} />
+
                             </Source>
-                        }
+                        }                    
 
                         {this.props.layers.clusters && 
                             <Source
@@ -354,7 +373,19 @@ class EventsMap extends React.Component {
                             id='heat_layer'
                             type='heatmap'
                             source='tile_layer'
-                            source-layer='places'
+                            source_layer='places'
+                            tiles='https://tiles.vibemap.com/maps/places/{z}/{x}/{y}.mvt'
+                            filter={[
+                                "all",
+                                [
+                                    "match",
+                                    ["get", "primary_category"],
+                                    heat_map_filter,
+                                    true,
+                                    false
+                                ]
+                            ]}
+                            paint={Styles.places_heatmap}
                             visibility={heat_map_visibility}
                         />
 

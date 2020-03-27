@@ -123,6 +123,33 @@ module.exports = {
       'visibility': 'visible'
     },
 
+    neighborhood_layout: {
+      "text-size": { 
+        "base": 1, 
+        "stops": [[10, 8], [18, 12]] 
+      },  
+      "text-transform": "uppercase",
+      "text-padding": 1,      
+      "text-field": [
+        "to-string",
+        ["get", "neighborhood"]
+      ],
+      "text-font": ["Public Sans Bold"],
+      "text-letter-spacing": 0.1,
+      "text-allow-overlap": true,
+      "text-ignore-placement": true,
+      "text-max-width": 8,
+      "visibility" : "visible"
+    },
+
+    neighborhood_paint: {
+      "text-halo-color": "hsla(295, 100%, 100%, 0.8)",
+      "text-halo-width": 1,
+      "text-color": "hsl(253, 50%, 47%)",
+      //"text-halo-blur": 0.6,
+      //"text-opacity": 0.33
+    },
+
     top_pick_paint: {
       'text-color': '#222222',
       'text-halo-color': '#FFFFFF',
