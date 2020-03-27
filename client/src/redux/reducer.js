@@ -104,7 +104,7 @@ export const mapSize = (state = { width: 800, height: 600 }, action) => {
   return state
 }
 
-export const layers = (state = { clusters: false, heatmap: true, places_markers: true, photo_markers: true }, action) => {
+export const layers = (state = { clusters: false, heatmap: true, neighborhoods: true, places_markers: true, photo_markers: true }, action) => {
   if (action.type === 'SET_LAYERS') {    
     state = action.layers
   }
