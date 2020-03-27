@@ -37,13 +37,8 @@ const helpers = {
             [bounds[2], bounds[3]],
             { units: 'miles' }
         )
-        
-        console.log('Diameter is: ', diameter)
-        console.log('Width is: ', width)
 
         let distance = diameter / 2
-
-        console.log("RADIUS is ", distance, " miles")
 
         return distance
     },

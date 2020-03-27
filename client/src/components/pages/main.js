@@ -180,8 +180,7 @@ class Page extends Component {
 
         // Reset mergeTopPicks; if the results shoudl change
         if (refreshResults) this.setState({ mergeTopPicks: false })
-
-        console.log('updateData, refreshResults: ', updateData, refreshResults)
+        
         /* Once map and radius are ready, fetch data */        
         if (updateData === true) this.getPlacesOrEvents(refreshResults)
 
