@@ -209,7 +209,7 @@ module.exports = {
           11, 0.4,
           20, 0.4
       ],
-      // TODO: Scale this on the total number of results vs. size of area...
+      // This number is adjusted by React based on the relative density of the map area
       'heatmap-intensity' : 0.2,
       /*
       'heatmap-intensity': [        
