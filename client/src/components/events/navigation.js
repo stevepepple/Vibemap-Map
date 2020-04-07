@@ -96,14 +96,18 @@ class Navigation extends Component {
             this.props.setCurrentVibes(vibes)
         }
 
+        if (params.mainVibe) {
+            this.props.setMainVibe(params.mainVibe)
+        }
+
         if (params.days) {
             this.props.setDays(params.days)
         }
     }
 
     // Sync URL params with React Router history in Redux store
-    componentDidUpdate(prevProps, prevState) {    
-                
+    componentDidUpdate(prevProps, prevState) {
+                        
         let new_history = queryString.stringify(this.state.params)    
         push(new_history)
 
@@ -130,6 +134,10 @@ class Navigation extends Component {
 
         if (!isEqual(prevProps.vibes, this.props.vibes)) {
             this.updateURL("vibes", this.props.vibes)
+        }
+
+        if (!isEqual(prevProps.mainVibe, this.props.mainVibe)) {
+            this.updateURL("mainVibe", this.props.mainVibe)
         }
 
         if (!isEqual(prevProps.placeType, this.props.placeType)) {
@@ -176,7 +184,8 @@ class Navigation extends Component {
 
     renderVibesLabel = (label) => ({
         size: 'mini',
-        content: label.text,        
+        className: 'ui label ' + label.text,
+        content: label.text,
     })    
     
     handleDaysChange = (e, { value }) => {
@@ -190,6 +199,8 @@ class Navigation extends Component {
 
         if (value && value != '') {
             const current = this.props.signatureVibes.find(({ key }) => key === value);
+
+            this.props.setMainVibe(value)
 
             if (current !== undefined || current !== null) vibes = current.vibes
 
@@ -245,6 +256,7 @@ class Navigation extends Component {
                             <Grid.Column width={3}>
                                 <Translation>{
                                     (t, { i18n }) => <Dropdown
+                                        className={'main_vibe ' + this.props.mainVibe}
                                         clearable
                                         search
                                         // TODO: map this icon: icon={this.props.activity}
@@ -254,6 +266,7 @@ class Navigation extends Component {
                                         selection
                                         onChange={this.handleSignatureVibe}
                                         options={this.props.signatureVibes}
+                                        value={this.props.mainVibe}
                                     />
                                 }</Translation>
                             </Grid.Column>
@@ -302,6 +315,7 @@ const mapStateToProps = state => {
         placeType: state.placeType,
         search: state.router.location.search,
         searchTerm: state.searchTerm,
+        mainVibe: state.mainVibe,
         signatureVibes: state.signatureVibes
     }
 }

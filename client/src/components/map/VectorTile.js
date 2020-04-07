@@ -2,6 +2,7 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
+import isEqual from 'react-fast-compare'
 
 import * as Constants from '../../constants.js'
 
@@ -46,7 +47,8 @@ class VectorTile extends React.Component {
             }
         }
 
-        if (prevProps.visibility !== this.props.visibility || prevProps.layersChanged !== this.props.layersChanged) {   
+        if (prevProps.visibility !== this.props.visibility || prevProps.layersChanged !== this.props.layersChanged || prevProps.update_layer !== this.props.update_layer) {
+            console.log('Update map!!!', this.props.paint)
             this.updateMap()
         }
     }
@@ -69,7 +71,7 @@ class VectorTile extends React.Component {
         }
 
         let before = null
-        if (this.props.id === 'heat_layer') before = 'neighborhoods'
+        if (this.props.id === 'heat_layer') before = 'transit_routes'
 
         if (map.style && map.style._loaded) {
 
@@ -84,10 +86,10 @@ class VectorTile extends React.Component {
             map.addLayer(layer_options, before)
 
             let layer = map.getLayer(this.props.id)
-            console.log('Added this layer: ', this.props.id, layer)
+            //console.log('Added this layer: ', this.props.id, layer)
             if (typeof layer !== 'undefined') {
                 var features = map.queryRenderedFeatures({ layers: [layer.id] });
-                console.log('number of heatmap features', features)
+                //console.log('number of heatmap features', features)
             }            
 
             this.setState({ added_map: true })
@@ -107,6 +109,14 @@ class VectorTile extends React.Component {
         try {
             // TODO: this works fine but has a slight side effect that make the places layer work. 
             map.setLayoutProperty(layer.id, 'visibility', this.state.visibility); 
+
+
+            for (const style in this.props.paint) {
+                map.setPaintProperty(layer.id, style, this.props.paint[style]);
+            };
+
+            //map.setPaintProperty(layer.id, 'fill-color', this.props.paint);
+
 
             Object.keys(this.props.layers).map((key) => {
                 let layer = map.getLayer(key)

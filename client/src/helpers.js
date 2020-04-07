@@ -2,6 +2,7 @@ import * as Constants from './constants.js'
 
 import { scaleLinear, scalePow } from 'd3-scale'
 
+import chroma from 'chroma-js'
 import * as turf from '@turf/turf'
 import geoViewport from '@mapbox/geo-viewport'
 
@@ -112,6 +113,96 @@ const helpers = {
         })
 
         return matches
+    },
+
+    getHeatmap(colors, vibe) {
+        
+        //let colors = color.map((color, i) => choroma(color).alpha(0.2))
+        let heatmap = []
+        
+        let blue = '#008ae5'
+        let gray = '#B1E2E5'
+        let yellow = '#F8EE32'
+        let pink = '#ED0A87'
+        let teal = '#32BFBF'
+        let white = '#FFFFFF'
+        
+        
+        let light_blue = '#54CAF2'
+        let light_green = '#9DE862'
+        let light_teal = '#7DCAA5'     
+        let light_pink = '#E479B0'
+        let light_purple = '#BC94C4'
+        let light_yellow = '#FFFCC5'
+        let light_orange = '#FBCBBD'
+        let orange = '#F09C1F'
+    
+        //'yellow', 'lightgreen', '008ae5']
+        let classic = ['blue', 'teal', 'yellow', 'orange']
+        let blue_scale = ['gray', 'white', 'yellow', 'blue']
+        let orange_scale = ['#B1E2E5',  'yellow', 'orange']
+        let purple_scale = ['#B1E2E5', '#EDE70D', '#F27BA5', '#D76CE3']
+        
+        let spectral = chroma.scale('Spectral').colors(6).reverse()
+
+        let green_purple = "PiYG"
+        
+        const vibe_to_scale = {
+            'calm': [gray, light_green, light_yellow, light_blue],
+            'buzzing': [gray, light_pink, light_yellow, orange],
+            'dreamy': [gray, light_purple, light_blue, light_yellow],
+            'oldschool': [blue, yellow,  orange],
+            'playful': [gray, light_teal, yellow, orange],
+            'solidarity': [gray, light_yellow, yellow, orange],
+            'together': [gray, light_teal, light_yellow],
+            'wild': green_purple
+        }
+
+        let scale = [gray, light_pink, yellow, orange]
+
+        if (vibe) {
+            scale = vibe_to_scale[vibe]            
+        }
+
+        console.log('getHeatmap(colors, vibes): ', colors, vibe, scale)
+
+        if (colors) {            
+            let color1 = chroma('#fafa6e')
+            let color2 = chroma('#fafa6e')
+            scale = chroma.scale([colors])
+        }
+
+        heatmap = chroma.scale(scale)
+            .mode('lch') // lab
+            //.domain([0, .1, 0.9, 1])
+            .colors(6)
+
+        heatmap = heatmap
+            //.reverse()
+            .map((color, i) => {
+                let alpha = i * 0.2
+                let rgb = chroma(color)
+                    .alpha(alpha)
+                    //.brighten(i * 0.05)
+                    .saturate(i * 0.05)
+                    .css()
+                console.log('heat layer ', i, rgb)
+                return rgb
+            })
+
+        /*
+        heatmap = chroma.cubehelix()
+            .lightness([0.3, 0.8])
+            .scale() // convert to chroma.scale
+            .correctLightness()
+            .colors(6)
+
+        heatmap = chroma.scale('Spectral')
+            //.scale() // convert to chroma.scale
+            .colors(6)
+        */
+
+        return heatmap
     },
 
     normalize : function(val, min, max) {         
@@ -254,7 +345,7 @@ const helpers = {
 
         let max_density = scalePow(1)
             .domain([8, 10, 12, 14, 16]) // Zoom size
-            .range([10, 20, 200, 800, 8000]) // Scale of marker size
+            .range([10, 20, 80, 800, 8000]) // Scale of marker size
 
         let max = max_density(zoom) 
         

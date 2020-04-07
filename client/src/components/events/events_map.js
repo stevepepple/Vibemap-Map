@@ -37,7 +37,8 @@ class EventsMap extends React.Component {
             popupInfo: null,
             has_data: false,
             layers: props.layers,
-            mapStyles : Styles
+            mapStyles : Styles,
+            update_layer: false
         }
 
         this.map = React.createRef()
@@ -58,20 +59,33 @@ class EventsMap extends React.Component {
         let events_geojson = turf.featureCollection(nextProps.events_data)
         let top_picks_geojson = turf.featureCollection(nextProps.topPicks)        
 
-        let zoom = nextProps.zoom
+        let zoom = this.props.zoom
 
         this.setState({ 
             places_geojson: places_geojson,
             events_geojson: events_geojson,
             top_picks_geojson: top_picks_geojson,
+            update_layer: false,
             viewport: {
                 bearing: nextProps.bearing,
                 latitude: nextProps.currentLocation.latitude,
                 longitude: nextProps.currentLocation.longitude,
                 zoom: zoom
             }
-        })        
-    }    
+        })
+
+        if (nextProps.mainVibe !== this.props.mainVibe) {
+            this.setState({ update_layer: true })
+        }
+    } 
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.mainVibe !== this.props.mainVibe) {
+            console.log('Update heatmap!!!', prevProps.mainVibe, this.props.mainVibe)
+            
+            this.styleHeatMap()
+        }
+    }
 
     componentDidMount() {
         let size = {
@@ -83,6 +97,35 @@ class EventsMap extends React.Component {
         this.props.setMapSize(size)
 
         this.props.setMapReady(true)
+    }
+
+    styleHeatMap() {
+        // TODO: only do this if the main vibe changes?         
+        let heatmap = helpers
+            .getHeatmap(null, this.props.mainVibe)
+
+        // Style the legend
+        heatmap.map((rgb, i) => {
+            let css_var = '--heatmap_' + (i + 1)
+            document.documentElement.style.setProperty(css_var, rgb)
+        })
+
+        let mapStyles = this.state.mapStyles
+
+        mapStyles.places_heatmap['heatmap-color'] = [
+            "interpolate",
+            ["linear"],
+            ["heatmap-density"],
+            0.0, 'rgba(0, 0, 0, 0.2)',
+            0.1, heatmap[0],
+            0.2, heatmap[1],
+            0.3, heatmap[2],
+            0.8, heatmap[3],
+            0.9, heatmap[4],
+            1.2, heatmap[5]
+        ]
+
+        this.setState({ mapStyles : mapStyles })
     }
 
     _onViewportChange = viewport => {
@@ -194,7 +237,7 @@ class EventsMap extends React.Component {
 
         if (this.props.densityBonus) {
             let intensity = (this.props.densityBonus + Constants.HEATMAP_INTENSITY) / 2
-            //console.log('intensity: ', intensity)
+            console.log('adjusted intensity: ', intensity)
             mapStyles.places_heatmap['heatmap-intensity'] = intensity
         }
 
@@ -389,8 +432,9 @@ class EventsMap extends React.Component {
                                     false
                                 ]
                             ]}
-                            paint={Styles.places_heatmap}
+                            paint={mapStyles.places_heatmap}
                             visibility={heat_map_visibility}
+                            update_layer={this.state.update_layer}
                         />
 
                     </ReactMapGL>
@@ -419,6 +463,7 @@ const mapStateToProps = state => ({
     detailsType: state.detailsType,
     detailsShown: state.detailsShown,
     mapReady: state.mapReady,
+    mainVibe: state.mainVibe,
     mapSize: state.mapSize,
     pathname: state.router.location.pathname,
     params: state.params,
