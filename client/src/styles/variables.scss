@@ -4,18 +4,59 @@ $color-green : #27AE6D;
 
 $color-dark-gray: #4F4F4F;
 
-$shadow-purple: 1px 1px 4px 0px rgba(189,21,132,0.55);
 
+
+$gray: #B1E2E5;
+$yellow: #F8EE32;
+$pink: #ED0A87;
+$teal: #32BFBF;
+$white: #FFFFFF;
+        
+        
+$light_blue: #54CAF2;
+$light_green: #9DE862;
+$light_teal: #7DCAA5;    
+$light_pink: #E479B0;
+$light_purple: #BC94C4;
+$light_yellow: #FFFCC5;
+$light_orange: #FBCBBD;
+$orange: #F09C1F;
+
+$shadow-purple: 1px 1px 4px 0px rgba(189,21,132,0.55);
 $shadow-blue: 1px 1px 6px 1px rgba(210,244,250,1.55);
 
-$icon-size: 1.8em;
-
+/*
+const vibe_to_scale = {
+    'calm': [gray, light_green, light_yellow, light_blue],
+    'buzzing': [gray, light_pink, light_yellow, orange],
+    'dreamy': [gray, light_purple, light_blue, light_yellow],
+    'oldschool': [blue, yellow,  orange],
+    'playful': [gray, light_teal, yellow, orange],
+    'solidarity': [gray, light_yellow, yellow, orange],
+    'together': [gray, light_teal, light_yellow],
+    'wild': green_purple
+}
+*/
 $heatmap_1: rgba(218,95,241,0.1);
 $heatmap_2: rgba(95,153,241,0.4);
 $heatmap_3: rgba(136,235,177,0.6);
 $heatmap_4: rgba(220,248,151,0.6);
 $heatmap_5: rgba(255,213,0,1);
 $heatmap_6: rgba(255,153,0,1);
+
+$heatmap_gradient: 45deg, var(--heatmap_3) 0%, var(--heatmap_5) 100%;
+
+$buzzing_gradient: 45deg, $light_purple 0%, $light_orange 100%;
+$calm_gradient: 45deg, $light_teal 0%, $light_blue 100%;
+$dreamy_gradient: 45deg, $light_purple 0%, $light_blue 100%;
+$oldschool_gradient: 45deg, $light_blue 0%, $light_orange 70%;
+$playtime_gradient: 45deg, $light_green 0%, $light_yellow 100%;
+$together_gradient: 45deg, $light_yellow 0%, $light_teal 100%;
+
+
+
+$icon-size: 1.8em;
+
 
 :export { colorPurple: $color-purple; }
 
