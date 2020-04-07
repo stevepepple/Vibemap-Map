@@ -219,9 +219,23 @@ export const signatureVibes = (state = [], action) => {
   return state
 }
 
+export const mainVibe = (state = null, action) => {
+  if (action.type === 'SET_MAIN_VIBE') {
+    state = action.vibe
+  }
+  return state
+}
+
 export const allVibes = (state = [], action) => {
   if (action.type === 'SET_ALL_VIBES') {
     state = action.allVibes
+  }
+  return state
+}
+
+export const allCategories = (state = [], action) => {
+  if (action.type === 'SET_ALL_CATEGORIES') {
+    state = action.allCategories
   }
   return state
 }
@@ -261,8 +275,9 @@ export const nearby_places = (state = [], action) => {
 
 export const cities = (state = [], action) => {
 
-  if (action.cities === 'SET_CITIES') {
+  if (action.type === 'SET_CITIES') {
     // Save the processed data to state.
+    
     return action.cities
   }
 
@@ -271,7 +286,7 @@ export const cities = (state = [], action) => {
 
 export const neighborhoods = (state = [], action) => {
 
-  if (action.neighborhoods === 'SET_NEIGHBORHOODS') {
+  if (action.type === 'SET_NEIGHBORHOODS') {
     // Save the processed data to state.
     return action.neighborhoods
   }
@@ -420,6 +435,7 @@ export const geod = (state = {}, action) => {
 
 export const reducers = (history) => combineReducers({
   activity,
+  allCategories,
   allVibes,
   bearing,
   bounds,
@@ -450,6 +466,7 @@ export const reducers = (history) => combineReducers({
   searchTerm,
   topPicks,
   topVibes,
+  mainVibe,
   signatureVibes,
   uiState,
   viewport,

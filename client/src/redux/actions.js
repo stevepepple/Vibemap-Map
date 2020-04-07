@@ -124,6 +124,11 @@ export const setAllVibes = allVibes => ({
   allVibes,
 })
 
+export const setAllCategories = allCategories => ({
+  type: 'SET_ALL_CATEGORIES',
+  allCategories,
+})
+
 export const setCurrentVibes = vibes => ({
   type: 'SET_CURRENT_VIBES',
   vibes,
@@ -132,6 +137,11 @@ export const setCurrentVibes = vibes => ({
 export const setPlaceType = (value) => ({
   type: 'SET_PLACE_TYPE',
   value,
+})
+
+export const setMainVibe = vibe => ({
+  type: 'SET_MAIN_VIBE',
+  vibe,
 })
 
 export const setSignatureVibes = signatureVibes => ({
