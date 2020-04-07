@@ -30,13 +30,13 @@ module.exports = {
     marker_layout :  {
       // Icon Style
       "icon-image": ["to-string", ["get", "categories"]],
-      "icon-padding": 2,
+      "icon-padding": 1.8,
       "icon-size": [
         "case",
         [">", ["get", "average_score"], 4.9],
-        0.8,
+        1.0,
         [">", ["get", "average_score"], 3.5],
-        0.7,
+        0.8,
         [">", ["get", "average_score"], 2],
         0.6,
         // Fall back value
@@ -63,13 +63,14 @@ module.exports = {
         22, 16
       ],
       "text-offset": [0, -0.8],
-      "text-padding": 4,
+      "text-padding": 2,
       "text-max-width": 10,
       'visibility': 'visible' 
     },
 
     marker_paint: { 
       'text-color': '#742395',
+      'icon-color': '#3475BA',
       'text-halo-color': '#FFFFFF',
       'text-halo-width' : 1.2
     },
@@ -210,7 +211,7 @@ module.exports = {
           20, 0.4
       ],
       // This number is adjusted by React based on the relative density of the map area
-      'heatmap-intensity' : 0.2,
+      'heatmap-intensity' : 0.1,
       /*
       'heatmap-intensity': [        
         "interpolate",
@@ -237,17 +238,19 @@ module.exports = {
         "interpolate",
         ["linear"],
         ["heatmap-density"],
-        0.2,
+        0.1,
         "hsla(240, 80%, 94%, 0)",
+        0.2,
+        "hsla(240, 80%, 94%, 0.1)",
         0.3,
-        "hsla(286, 100%, 50%, 0.2)",
-        0.4,
-        "hsla(179, 100%, 50%, 0.6)",
-        0.99,
+        "hsla(222, 100%, 50%, 0.3)",
+        0.6,
+        "hsla(178, 86%, 47%, 0.6)",
+        1,
         "hsla(50, 100%, 50%, 0.9)",
         /* The pink is too much? */
         1.2,
-        "hsla(25, 100%, 50%, 0.8)" 
+        "hsla(36, 100%, 50%, 0.8)"
       ]
     },
 
