@@ -58,16 +58,16 @@ class TopVibes extends Component {
         let top_vibes = this.props.topVibes.slice(1, 4)
         top_vibes.map((vibe) => vibe)
         
-        let vibes = top_vibes.map((vibe) => <Label key={vibe[0]} onClick={((e) => this.handleClick(e, vibe[0]))} color={this.state.colors[vibe[0]]} title={'clickToAdd'} className={'vibe label ' + vibe[0]}>{vibe[0]}<Label.Detail>{vibe[1]}</Label.Detail></Label>)
+        let vibes = top_vibes.map((vibe) => 
+            <Label 
+                key={vibe[0]} onClick={((e) => this.handleClick(e, vibe[0]))} /*color={this.state.colors[vibe[0]]}*/ title={'clickToAdd'} className={'vibe tiny label ' + vibe[0]}>{vibe[0]}<Label.Detail>{vibe[1]}</Label.Detail></Label>)
 
         return (
             <div id='topVibes' style={style}>
-            
-                <Label size='small' pointing='right'>                    
-                    <Translation>
-                        {(t, { i18n }) => <p>{t("Current Vibe")}</p>}
-                    </Translation>
-                </Label>
+                        
+                <Translation>
+                    {(t, { i18n }) => <p>{t("Trending Vibes")}</p>}
+                </Translation>            
                 
                 { /* Show loading if vibes aren't there*/
                 top_vibes.length > 0 ? (
@@ -89,6 +89,6 @@ const mapStateToProps = state => {
         currentVibes: state.currentVibes,
         topVibes: state.topVibes
     }
-};
+}
 
 export default connect(mapStateToProps, actions)(TopVibes);
