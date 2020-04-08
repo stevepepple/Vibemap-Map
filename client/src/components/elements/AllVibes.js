@@ -34,7 +34,7 @@ class AllVibes extends Component {
     render() {
 
         return (
-            <div className='allVibes' style={{ position: 'absolute', margin: '1em', zIndex: '100'}}>
+            <div className='allVibes' style={{ position: 'absolute', margin: '1em', zIndex: '90'}}>
                 <Translation>{
                     (t, { i18n }) => <Dropdown
                         style={{ minWidth: '12em' }}

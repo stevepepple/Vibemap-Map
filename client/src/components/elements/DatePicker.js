@@ -13,10 +13,12 @@ class DatePicker extends Component {
         return (
             <Translation>{
                 (t, { i18n }) =>
-                    <Dropdown
-                        button
-                        className='icon left tiny datepicker'
+                    <Dropdown             
+                        button           
+                        className='icon tiny basic datepicker'
                         icon='calendar'
+                        iconPosition='left'
+                        labeled
                         onChange={this.props.handleChange}
                         text={t(this.props.text)}>
                         <Dropdown.Menu>
