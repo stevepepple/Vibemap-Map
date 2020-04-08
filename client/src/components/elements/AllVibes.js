@@ -31,6 +31,11 @@ class AllVibes extends Component {
         this.props.setCurrentVibes(value)
     }
 
+    renderVibesLabel = (label) => ({        
+        className: label.text,
+        content: label.text,
+    })
+
     render() {
 
         return (
