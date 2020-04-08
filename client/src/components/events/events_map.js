@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
+import isEqual from 'react-fast-compare'
 import * as actions from '../../redux/actions'
-
 import * as turf from '@turf/turf'
-
 
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup, ScaleControl } from 'react-map-gl'
 import CustomMapController from '../map/map-conroller'
@@ -17,7 +16,7 @@ import LayersFilter from '../map/LayersFilter'
 import { clusterLayer, clusterCountLayer, unclusteredPointLayer } from '../map/layers'
 //import YouAreHere from '../map/you_are_here.js'
 
-import TopVibes from '../elements/topVibes'
+import AllVibes from '../elements/AllVibes'
 import ZoomLegend from '../map/ZoomLegend'
 
 // TODO: load from common .env
@@ -81,10 +80,19 @@ class EventsMap extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.mainVibe !== this.props.mainVibe) {
-            console.log('Update heatmap!!!', prevProps.mainVibe, this.props.mainVibe)
-            
+            console.log('Update heatmap!!!', prevProps.mainVibe, this.props.mainVibe)            
             this.styleHeatMap()
         }
+
+        if (!isEqual(prevProps.allVibes, this.props.allVibes)) {
+
+            let vibe_options = this.props.allVibes.map(function (vibe) {
+                return { key: vibe, value: vibe, text: vibe }
+            })
+
+            this.setState({ vibe_options: vibe_options })
+        }
+
     }
 
     componentDidMount() {
@@ -237,7 +245,7 @@ class EventsMap extends React.Component {
 
         if (this.props.densityBonus) {
             let intensity = (this.props.densityBonus + Constants.HEATMAP_INTENSITY) / 2
-            console.log('adjusted intensity: ', intensity)
+            //console.log('adjusted intensity: ', intensity)
             mapStyles.places_heatmap['heatmap-intensity'] = intensity
         }
 
@@ -280,7 +288,7 @@ class EventsMap extends React.Component {
                             trackUserLocation={true}
                         />
 
-                        <TopVibes />
+                        <AllVibes vibes={this.props.allVibes} />
 
                         <ScaleControl maxWidth={200} unit='imperial' />                        
 
@@ -447,6 +455,7 @@ class EventsMap extends React.Component {
 
 const mapStateToProps = state => ({
     activity: state.activity,
+    allVibes: state.allVibes,
     baseZoom: state.baseZoom,
     bearing: state.bearing,
     bounds: state.bounds,
