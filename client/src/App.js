@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import { Menu, Dropdown } from 'semantic-ui-react'
 
 import MainPage from './components/pages/main';
 import EventCalendar from './components/pages/calendar';
@@ -24,20 +23,7 @@ class App extends Component {
       <div className="App">
   
         <Router>
-          <div>
-            <Menu id="header" pointing>
-              <Dropdown button labeled className='icon main_menu  ' icon='list' text='Menu'>
-                <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <Link to="/places">Nearby</Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link to="/calendar">Calendar</Link>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              
-            </Menu>
+          <div id='container'>               
             
             <Switch>
               <Route path="/calendar" component={EventCalendar} />
