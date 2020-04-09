@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import isEqual from 'react-fast-compare'
 import _ from 'lodash'
 
 import { connect } from 'react-redux'
@@ -7,10 +8,11 @@ import * as actions from '../../redux/actions'
 import helpers from '../../helpers';
 import * as Constants from '../../constants.js'
 
-import { Dimmer, Form, Input, Item, Loader, Segment, Dropdown } from 'semantic-ui-react'
+import { Button, Dimmer, Form, Input, Item, Loader, Segment } from 'semantic-ui-react'
 import { Global } from '@emotion/core'
 
 import ListItem from './list_item.js'
+import DatePicker from '../elements/DatePicker.js'
 
 import { Translation } from 'react-i18next'
 
@@ -18,31 +20,54 @@ class PlacesList extends Component {
 
     constructor(props) {
         super(props)
-        this.onClick = this.onClick.bind(this)
 
         this.state = {
-            place_type_options: [
-                { key: 'both', value: 'both', text: 'Everything' },
-                { key: 'places', value: 'places', text: 'Places' },
-                { key: 'events', value: 'events', text: 'Events' }
-            ]
+            category_options: [],
+            date_options: [
+                { key: '1', text: 'Today', value: '1' },
+                { key: '2', text: '2 days', value: '2' },
+                { key: '3', text: '3 days', value: '3' },
+                { key: '7', text: 'Week', value: '5' },
+                { key: '14', text: '2 weeks', value: '14' }
+            ],
+            selected_activity: Constants.main_categories[0],
         }
-    }    
+
+        this.onClick = this.onClick.bind(this)
+        this.handleDaysChange = this.handleDaysChange.bind(this)
+    }
+    
+    componentDidUpdate(prevProps, prevState) {
+
+        if (!isEqual(prevProps.allCategories, this.props.allCategories)) {
+
+            /*
+            let category_options = this.props.allCategories.map(function (category) {
+                console.log('Mapping category: ', category)
+
+                let option = Constants.activty_categories[category]
+                return { 
+                    key: category, 
+                    value: category, 
+                    label: option.label,
+                    text: option.text }
+            })
+
+            this.setState({ category_options: category_options })
+            */
+        }
+        
+    }
 
     onChange = (e, { value }) => {
         this.props.setSearchTerm(value)
     }
 
-    handlePlaceType = (e, { value }) => {
-        console.log("CHANGED PLACE TYPE: ", value)
-        this.props.setPlaceType(value)
-    }
-
-    handleActivityChange = (event, { value }) => {
-        console.log("CHANGED ACTIVITY: ", value)
-        this.setState({ current_activity: value })
-        this.props.setActivity(value)
-    }
+    handleDaysChange = (e, { value }) => {
+        console.log("handleDaysChange: ", value)
+        this.props.setDays(value)
+        this.updateURL("days", value)
+    }    
 
     onClick = (event, id, type) => { 
         this.props.setDetailsId(id)
@@ -52,7 +77,7 @@ class PlacesList extends Component {
 
     render() {
         let has_items = this.props.data.length > 0
-        let items = null;
+        let items = null
 
         let searchTerm = this.props.searchTerm
 
@@ -64,10 +89,49 @@ class PlacesList extends Component {
             })
         }
 
+        let date = <DatePicker 
+                        handleChange={this.handleDaysChange.bind(this)}
+                        options={this.state.date_options} 
+                        text={(this.state.date_options.find(obj => obj.value === this.props.currentDays).text)} />
+
         return (
-            <Segment>
-                <Global
+            <Segment id='list' compact>
+                {/* TODO: Move to style sheet */}
+                <Global                
                     styles={{
+                        '#list': {                          
+                          position: 'absolute',
+                          display: 'flex',
+                          alignItems: 'stretch',
+                          flexDirection: 'column',
+                          paddingTop: '0',
+                          height: '100%',
+                          width: '100%'
+                        },
+                        '#list .ui.items': {                            
+                            flexGrow: '1'
+                        },
+                        '#list .listSearch input': {
+                            borderWidth: '2px',                            
+                            borderRadius: '3em'
+                        },
+                        '#list .datepicker': {                            
+                            border: 'solid 2px rgba(34,36,38,.15)', 
+                            borderLeft: 'solid 1px rgba(34,36,38,.05)',
+                            borderTopLeftRadius: '0',
+                            borderBottomLeftRadius: '0',
+                            borderBottomRightRadius: '3em',
+                            borderTopRightRadius: '3em'
+                        },
+                        '#list .datepicker .icon': {
+                            background: 'none',
+                            borderWidth: '2px',
+                            borderLeftWidth: '0px',
+                            borderBottomRightRadius: '3em',
+                            borderTopRightRadius: '3em',
+                            fontSize: '1.2em',
+                            verticalAlign: 'middle'
+                        },
                         '.listType' : {
                             marginLeft: '2% !important',
                             width: '98%'
@@ -78,82 +142,29 @@ class PlacesList extends Component {
                         '.ui.inverted.purple.buttons .active.button': {
                             backgroundColor: Constants.PURPLE + '!important',
                             color: '#FFFFFF !important'
-                        },
-                        '.dropdown i.icon' : {
-                            margin: '0px !important'
-                        }
+                        }                        
                     }}
                 />
                 
-                <Segment vertical>
-                    <Form>
+                <Segment vertical basic>
+                    <Form>                        
                         <Form.Field widths='equal'>
                             <Translation>{
                                 (t, { i18n }) => <Input
+                                    className='listSearch'
                                     fluid
+                                    label={date}
+                                    labelPosition='right'
                                     placeholder={t('Search')}
                                     icon='search'
                                     iconPosition='left'
                                     onChange={_.debounce(this.onChange, 500, {
                                         leading: true,
                                     })}
+                                    size='large'                                
                                     value={searchTerm} />
-                            }</Translation>
-                            
-                        </Form.Field>
-                        <Form.Group widths='equal'>
-
-                            <Translation>{
-                                (t, { i18n }) => <Dropdown 
-                                icon='map pin'
-                                fluid
-                                button
-                                labeled
-                                compact
-                                className='icon basic small'
-                                style={{ width : '10em', lineHeight: '2.4em', marginLeft: '0.4em' }}
-                                text={t(this.props.placeType)}
-                                value={this.props.placeType}
-                                onChange={this.handlePlaceType}
-                            >
-                                <Dropdown.Menu>
-                                    {this.state.place_type_options.map((option) => (
-                                        <Dropdown.Item key={option.value} onClick={this.handlePlaceType} text={t(option.text)} value={option.value} />
-                                    ))}
-                                </Dropdown.Menu>
-                            </Dropdown>
-                            }</Translation>
-                            
-                            <Translation>{
-                                (t, { i18n }) => <Dropdown
-                                    search
-                                    // TODO: map this icon: icon={this.props.activity}
-                                    fluid    
-                                    labeled
-                                    placeholder={t('Pick Activity')}
-                                    selection
-                                    onChange={this.handleActivityChange}
-                                    options={Constants.activty_categories}
-                                    value={this.props.activity}
-                                />
-                            }</Translation>
-
-                            {/* 
-                            <Translation>{
-                            (t, { i18n }) => 
-                                <Dropdown
-                                    text={t('Filters')}
-                                    icon='filter'
-                                    fluid
-                                    labeled
-                                    button
-                                    compact
-                                    className='icon small'
-                                />
-                            }</Translation>
-                            */}
-                            
-                        </Form.Group>
+                            }</Translation>                            
+                        </Form.Field>                        
                     </Form>
                 </Segment>
                 
@@ -162,7 +173,7 @@ class PlacesList extends Component {
                         {items}
                     </Item.Group>
                 ) : (
-                    <Segment placeholder>
+                    <Segment placeholder basic>
                         <Dimmer active inverted><Loader inverted><h3>Have you ever stopped to smell the roses near Grand Avenue?</h3></Loader></Dimmer>
                     </Segment>
                 )}
@@ -175,6 +186,8 @@ class PlacesList extends Component {
 const mapStateToProps = state => {
     return {
         activity: state.activity,
+        allCategories: state.allCategories,
+        currentDays: state.currentDays,
         searchTerm: state.searchTerm,
         detailsId: state.detailsId,
         detailsType: state.detailsType,
