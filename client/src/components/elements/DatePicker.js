@@ -16,8 +16,7 @@ class DatePicker extends Component {
                     <Dropdown             
                         button           
                         className='icon tiny basic datepicker'
-                        icon='calendar'
-                        iconPosition='left'
+                        icon='calendar'                        
                         labeled
                         onChange={this.props.handleChange}
                         text={t(this.props.text)}>
