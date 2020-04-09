@@ -100,10 +100,9 @@ class EventsMap extends React.Component {
             height: this.map.current.offsetHeight,
             width: this.map.current.offsetWidth
         }
-
+        
         // These both need size at the same time
         this.props.setMapSize(size)
-
         this.props.setMapReady(true)
     }
 

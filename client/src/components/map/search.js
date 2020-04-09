@@ -34,8 +34,7 @@ class LocationSearchInput extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('Cities in Search: ', this.props.cities)
-
+        
         if (this.props.cities.length > 0 && !isEqual(prevProps.cities, this.props.cities)) {
             this.handleCities()
         }
@@ -185,7 +184,6 @@ class LocationSearchInput extends React.Component {
                 onChange={this.handleSelect}
                 options={options}
                 value={this.state.nearest}
-                defaultValue={this.state.nearest}
                 placeholder='Near you'
                 style={{ width : '12em', marginLeft: '0.6em', zIndex: '100' }}
             />

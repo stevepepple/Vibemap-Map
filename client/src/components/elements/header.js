@@ -10,7 +10,7 @@ import LocationSearchInput from '../map/search'
 class Header extends Component {
     render() {
         return (
-            <Menu id='header' borderless pointing basic>
+            <Menu id='header' borderless pointing>
                 <Menu.Item>
                     <SVG style={{ width: '12em', padding: '1em' }} src='/images/logo-type.svg' />
                 </Menu.Item>                

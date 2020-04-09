@@ -47,8 +47,7 @@ class VectorTile extends React.Component {
             }
         }
 
-        if (prevProps.visibility !== this.props.visibility || prevProps.layersChanged !== this.props.layersChanged || prevProps.update_layer !== this.props.update_layer) {
-            console.log('Update map!!!', this.props.paint)
+        if (prevProps.visibility !== this.props.visibility || prevProps.layersChanged !== this.props.layersChanged || prevProps.update_layer !== this.props.update_layer) {            
             this.updateMap()
         }
     }
