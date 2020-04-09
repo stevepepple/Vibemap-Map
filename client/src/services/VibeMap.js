@@ -9,7 +9,10 @@ const ApiHeaders = new Headers({
     'Authorization': 'Token ' + Constants.SYSTEM_TOKEN
 });
 
-const ApiUrl = 'https://api.vibemap.com';
+// TODO: tie this value to the DEV or PROD var
+//const ApiUrl = 'http://192.168.99.100:8888'
+const ApiUrl = 'https://api.vibemap.com'
+
 const mapbox_url = 'https://api.mapbox.com/datasets/v1/stevepepple/';
 
 let timedOut = false
@@ -25,26 +28,32 @@ module.exports = {
 
     getCities: function() {
         return new Promise(function (resolve, reject) {
-            let query = querystring.stringify({
-                // lat: this.state.lat,
-                // lon: this.state.lon,
-                //point: point,
-                // distance: this.state.distance,
-                //dist: distanceInMeters,
-                //activity: activity,
-                //days: days,
-            })
-
-            fetch(ApiUrl + "/v0.3/boundaries/?" + query)
+            
+            fetch(ApiUrl + '/v0.3/boundaries/')
                 .then(data => data.json())
-                .then(res => {
+                .then(res => {                    
                     clearTimeout(timeout);
                     resolve({ data: res.results, loading: false, timedOut: false })
-
                 }, (error) => {
                     console.log(error)
                 });
         }); 
+    },
+
+    getCategories: function () {
+        return new Promise(function (resolve, reject) {            
+
+            fetch(ApiUrl + "/v0.3/category-list/")
+                .then(data => data.json())
+                .then(res => {
+                    clearTimeout(timeout)
+                    console.log('Categories list: ', res)
+                    resolve({ data: res, loading: false, timedOut: false })
+
+                }, (error) => {
+                    console.log(error)
+                });
+        });
     },
 
     getVibes: function () {
@@ -232,7 +241,7 @@ module.exports = {
                 end_date_before: day_end,
                 categories: activity,
                 search: search_term,
-                per_page: 200
+                per_page: 400
             }
 
             if (activity) {
