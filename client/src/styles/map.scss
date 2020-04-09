@@ -33,7 +33,9 @@
 }
 
 .mapboxgl-ctrl-scale {
-    right: 6em;
+    right: 8em;    
+    bottom: 4em;
+    top: auto;
 }
 
 .mapboxgl-map:before {
@@ -58,22 +60,22 @@
     background-color: $color-purple;
     color: #FFFFFF;
     */
-    top: 2em;
-    right: 5.3vmin;
+    bottom: 1em;
+    right: 5em;
     font-size: 1em;
     font-family: 'Roboto Condensed', sans-serif;    
     font-weight: 700;
     z-index: 20;
     opacity: 0.6;
-    padding: 0.4em;
+    //padding: 0.4em;
     padding-left: 0.8em;
     padding-right: 0.8em;    
     text-shadow: 1px 1px 1px rgba(255,255,255,1), 1px 1px 1px rgba(255,255,255,1), 1px 1px 1px rgba(255,255,255,1), -1px 1px 1px rgba(255,255,255,1);
 }
 
 .map_container #heatmap_scale {
-    left: 1em;
-    top: 4em;
+    right: 5em;
+    top: 1.8em;
     width: 12em;
     height: 1.4em;
     background: linear-gradient(45deg, var(--heatmap_1), var(--heatmap_2), var(--heatmap_3), var(--heatmap_4), var(--heatmap_5));
@@ -107,16 +109,27 @@
 .mapboxgl-canvas {
     position: relative !important;
 }
-.marker {
+
+.marker {    
     -webkit-border-radius: 50% 50% 50% 50%;
     -moz-border-radius: 50% 50% 50% 50%;
-    border-radius: 50% 50% 50% 50%;
+    border-radius: 50% 50% 50% 50%;    
+    background-size: cover;      
+    background: -moz-linear-gradient($heatmap_gradient);
+    background: -webkit-linear-gradient($heatmap_gradient); 
+    background: linear-gradient($heatmap_gradient); 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+    padding:0.4em;
+    filter: saturate(0.8);
+    filter: contrast(1.2);    
     /*
-    background: #D224B6;
-    background-image: url('https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_64.png');
+    border-image-source: linear-gradient(45deg, rgb(0,143,104), rgb(250,224,66));
+    background-origin: border-box;
+    background-clip: content-box, border-box;    
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-image-slice: 1;
     */
-    background-size: cover;  
-    border: solid 1.5px #FFFFFF;
     cursor: help;
     opacity: 1.0;
     /*
@@ -127,6 +140,14 @@
     -moz-box-shadow: $shadow-purple;
     box-shadow: $shadow-purple;
     transition: visibility 0s, opacity 0.5s linear;
+}
+
+.marker.small {
+    padding: 0.2em;
+}
+
+.marker img {
+    border: solid 1px #FFFFFF;
 }
 
 .marker.arts {
@@ -229,10 +250,11 @@
 
 .marker {
     overflow: hidden;
+    transform: scale(1.2);
 }
 
 .marker:hover, .marker:focus {
-    transform: scale(1.2);
+    transform: scale(1.4);
     will-change: transform;
     transition: all 0.2s ease-in-out 0s;
 }
