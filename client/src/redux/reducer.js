@@ -14,7 +14,7 @@ export function uiReducer(state = uiState, action) {
 // then returns a state
 export const uiState = (state = {}, action) => {
   if (action.type === 'SET_UI_STATE') {
-    console.log("Setting initial Redux state with: ", action)
+    //console.log("Setting initial Redux state with: ", action)
     state = action.state
   }
   return state
@@ -79,7 +79,7 @@ export const activity = (state = "", action) => {
 // then returns a state
 export const currentLocation = (state = { latitude: 0, longitude: 0, name : null, distance_changed : 0 }, action) => {
   if (action.type === 'SET_CURRENT_LOCATION') {
-    console.log("SET_CURRENT_LOCATION", action.location.latitude, action.location.longitude, action.distance_changed)
+    //console.log("SET_CURRENT_LOCATION", action.location.latitude, action.location.longitude, action.distance_changed)
     action.location.latitude = parseFloat(action.location.latitude)
     action.location.longitude = parseFloat(action.location.longitude)
     state = action.location

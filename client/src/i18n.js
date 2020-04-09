@@ -28,7 +28,7 @@ i18n.use(LanguageDetector).init({
 
         "Eating": "Eating",
         "Drinking": "Drinking",
-        "Shopping ": "Shopping",
+        "Shopping": "Shopping",
         "Arts": "Arts",
         "Comedy & Storyteling": "Comedy & Storyteling",
         "Community": "Community",

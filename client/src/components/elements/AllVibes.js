@@ -52,7 +52,6 @@ class AllVibes extends Component {
 
     render() {
         let num_vibes = this.state.vibes.length
-        console.log('NUmber of vibes: ', this.props.currentVibes.length, this.props.currentVibes)
 
         return (
             <div className='allVibes' style={{ position: 'absolute', margin: '1em', zIndex: '90'}}>

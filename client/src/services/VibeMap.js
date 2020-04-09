@@ -46,8 +46,7 @@ module.exports = {
             fetch(ApiUrl + "/v0.3/category-list/")
                 .then(data => data.json())
                 .then(res => {
-                    clearTimeout(timeout)
-                    console.log('Categories list: ', res)
+                    clearTimeout(timeout)                    
                     resolve({ data: res, loading: false, timedOut: false })
 
                 }, (error) => {
@@ -72,7 +71,6 @@ module.exports = {
                 .then(data => data.json())
                 .then(res => {
                     clearTimeout(timeout)
-                    console.log('Vibes list: ', res)
                     resolve({ data: res, loading: false, timedOut: false })
 
                 }, (error) => {
@@ -117,7 +115,6 @@ module.exports = {
                 .then(res => {
                     
                     clearTimeout(timeout);
-                    console.log("Got events data: ", res)
                     resolve({ data: res, loading: false, timedOut: false })
 
                 }, (error) => {
@@ -148,7 +145,6 @@ module.exports = {
                 .then(data => data.json())
                 .then(result => {
                     clearTimeout(timeout);
-                    console.log("Got place details: ", result)
                     resolve({ data: result, loading: false, timedOut: false })
 
                 }, (error) => {
@@ -329,8 +325,6 @@ module.exports = {
 
         let day_start = moment().startOf('day').format("YYYY-MM-DD HH:MM")
         let day_end = moment().add(days, 'days').format("YYYY-MM-DD HH:MM")
-
-        console.log('DAY END SEARCH: ', day_end)
 
         return new Promise(function (resolve, reject) {
             let query = querystring.stringify({

@@ -49,7 +49,7 @@ class Page extends Component {
             event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             // 'Performing Arts Venue', 'Dance Studio', 'Public Art', 'Outdoor Sculpture', 'Other Nightlife'
             // If evening include 'Nightlife Spot'
-            place_categories: ['Arts & Entertainment', 'Food'],            
+            place_categories: ['Arts & Entertainment', 'Food'],
             // TODO: handle conversion math in VibeMap
             intervalIsSet: false,
             loading: true,
@@ -291,11 +291,11 @@ class Page extends Component {
     getPlacesOrEvents(refreshResults) {
         // TODO: Add preferece for places or events
         switch (this.props.placeType) {
-            case 'events':            
+            case 'events':
                 this.setState({ mergeTopPicks: false })
                 this.fetchEvents(refreshResults)
                 break
-            case 'places':                
+            case 'places':
                 this.setState({ mergeTopPicks: false })
                 this.fetchPlaces(refreshResults)
                 break
@@ -318,7 +318,7 @@ class Page extends Component {
         }
     
         /* Get current events, then set them in the state */
-        /* TODO: package args into spread object? */        
+        /* TODO: package args into spread object? */
         VibeMap.getEvents(point, this.props.distance, this.props.bounds, this.state.event_categories, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {                
 
@@ -363,7 +363,7 @@ class Page extends Component {
             .then(results => {
                 
 
-                if(this.state.searching !== true) {                    
+                if(this.state.searching !== true) {
                     this.setTopPlaces(results, refreshResults)
                 } else {
                     // TODO: Only show places with vibe affinity during search
@@ -398,9 +398,8 @@ class Page extends Component {
     }
 
     toggleList(){
-        
+    
         let show = !this.props.showList
-        console.log('Show LIst: ', show)
         this.props.setShowList(show)
     }
 
@@ -454,11 +453,11 @@ class Page extends Component {
                     
                 ) : (
                     <MobilePage data={this.props.eventsData} places_data={this.props.placesData} vibe_categories={this.state.vibe_categories} isMobile={isMobile} setLocationParams={this.setLocationParams} />
-                )                          
+                )
             )
         } else {
             return (
-                <React.Fragment>                    
+                <React.Fragment>
                     <Header/>
                     {navigation}
                     
@@ -484,14 +483,14 @@ class Page extends Component {
                                     {/* <EventsList data={this.state.data} /> */}
 
                                 </Grid.Column>
-                            </Transition>                            
+                            </Transition>
                             
                             <Grid.Column width={map_width}>
-                                <Button                                    
+                                <Button
                                     onClick={this.toggleList} icon={list_arrow}
                                     style={{ position: 'absolute', boxShadow: '0 0 0 1px rgba(34,36,38,.15) inset', left: '-1.1em',  top: '50%', zIndex: '100' }}
                                     circular />
-                                <ErrorBoundary>                                    
+                                <ErrorBoundary>
                                     {events_map}
                                 </ErrorBoundary>
                             </Grid.Column>

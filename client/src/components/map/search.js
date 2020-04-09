@@ -45,18 +45,14 @@ class LocationSearchInput extends React.Component {
     }
 
     setNearest() {
-        console.log('Set nearest: ', this.state.locations)
-
         if (this.state.locations.length > 0) {
             let ordered_locations = helpers.sortLocations(this.state.locations, this.props.currentLocation)
             let distance_from_user = helpers.getDistance([this.props.currentLocation.longitude, this.props.currentLocation.latitude], ordered_locations[0].centerpoint)
 
-            if (distance_from_user < 20) {
-                console.log('SET AS CITY: ', ordered_locations[0]['id'])
+            if (distance_from_user < 20) {                
                 this.setState({ nearest: ordered_locations[0]['id'] })
             }
         }
-
     }
 
     handleCities() {
@@ -80,11 +76,9 @@ class LocationSearchInput extends React.Component {
         // Sort by location to user
         let ordered_locations = helpers.sortLocations(filtered, this.props.currentLocation)
 
-        console.log('ordered_locations: ', ordered_locations, this.props.currentLocation)
         let distance_from_user = helpers.getDistance([this.props.currentLocation.longitude, this.props.currentLocation.latitude], ordered_locations[0].centerpoint)
 
         if(distance_from_user < 20) {
-            console.log('SET AS CITY: ', ordered_locations[0]['id'])
             this.setState({ nearest: ordered_locations[0]['id'] })
         }
         
