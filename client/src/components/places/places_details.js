@@ -36,8 +36,13 @@ class PlaceDetails extends Component {
             categories: [],
             show_directions: false,
             vibes: [],
+            vibes_expanded: false,
+            vibes_to_show: 8,
             images: []
         }
+
+        this.toggleMoreVibes = this.toggleMoreVibes.bind(this)
+
     }
 
     handleClose = function() {
@@ -91,10 +96,12 @@ class PlaceDetails extends Component {
                     })
                     // TODO: Helper function for coord to lat - long?
                     this.props.setCurrentLocation(location)
-                }                                                
-                
-                
+                }            
             })
+    }
+
+    toggleMoreVibes() {
+        this.setState({ vibes_expanded: !this.state.vibes_expanded })
     }
 
     render() {
@@ -129,7 +136,12 @@ class PlaceDetails extends Component {
 
         let vibes = null
         if (this.props.currentPlace.vibes.length > 0) {
-            vibes = this.props.currentPlace.vibes.map((vibe) => <Label key={vibe} className={'vibe pink label ' + vibe}>{vibe}</Label>);
+            if (this.state.vibes_expanded == false) {
+                vibes = this.props.currentPlace.vibes.slice(0, this.state.vibes_to_show).map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
+            } else {
+                vibes = this.props.currentPlace.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
+            }
+            
         }
 
         let image = <Image className = 'placeImage' src={ process.env.PUBLIC_URL + '/images/image.png' } fluid/>
@@ -160,9 +172,9 @@ class PlaceDetails extends Component {
                     <meta name="twitter:image" content={image.src} />
                     
                 </MetaTags>
-
-                <Button onClick={this.props.clearDetails}>Back</Button>
                 <Divider hidden />
+                <Button onClick={this.props.clearDetails}>Back</Button>
+                
     
                 {this.state.loading ? (
                     <Placeholder>
@@ -197,7 +209,16 @@ class PlaceDetails extends Component {
                             </ShowMoreText>
                         </List.Item>
                         { recommendation }
-                        <List.Item>{vibes}</List.Item>
+                        <List.Item>
+                            {vibes}
+                                {(this.state.vibes_expanded == false && this.props.currentPlace.vibes.length > this.state.vibes.length) &&
+                                <a onClick={this.toggleMoreVibes}>Show more</a>
+                            }
+
+                            { this.state.vibes_expanded == true &&
+                                <a onClick={this.toggleMoreVibes}>Show less</a>
+                            }
+                        </List.Item>
                     </List>
                 )}                
 
