@@ -56,32 +56,31 @@ export const zoom_levels = {
     20: 'Rooftop ~ 1:1 K'
 }
 
-/* TODO: Move to react Store? */
-export const activty_categories = [
+export const main_categories = [
     // Going Out
-    { key: 'all', value: 'all', text: 'All Activities', categories: ['art', 'arts', 'books', 'comedy', 'community', 'culture', 'free', 'health', 'local', 'nightlife', 'recurs', 'romance', 'urban'] },
+    { key: 'all', value: 'all', text: 'Categories', label: { icon: 'building', circular: true }, categories: ['art', 'arts', 'books', 'comedy', 'community', 'culture', 'free', 'health', 'local', 'nightlife', 'recurs', 'romance', 'urban'] },
     // Eating
-    { key: 'food', value: 'food', text: 'Eating', label: { color: 'pink', icon: 'food', circular: true }, categories: ['food', 'restuarant'] },
+    { key: 'food', value: 'food', text: 'Eating', label: { icon: 'food', circular: true }, categories: ['food', 'restuarant'] },
     // Drinking
-    { key: 'drinking', value: 'drinking', text: 'Drinking', label: { color: 'pink', icon: 'glass martini', circular: true }, categories: ['drinking', 'drinks'] },
+    { key: 'drinking', value: 'drinking', text: 'Drinking', label: { icon: 'glass martini', circular: true }, categories: ['drinking', 'drinks'] },
     // Music
-    { key: 'music', value: 'music', text: 'Music', label: { color: 'violet', icon: 'music', circular: true }, categories: ['music'] },
     // Shopping
-    { key: 'shopping', value: 'shopping', text: 'Shopping', label: { color: 'blue', icon: 'shopping bag', circular: true }, categories: ['shopping'] },
-    // Arts
-    { key: 'arts', value: 'arts', text: 'Arts', label: { color: 'teal', icon: 'food', circular: true }, categories: ['art', 'arts', 'craft', 'dance', 'performance'] },
-    // Outdoors
-    { key: 'outdoors', value: 'outdoors', text: 'Outdoors', label: { color: 'green', icon: 'tree', circular: true }, categories: ['outdoors'] },
-    
-    // Culture
-    { key: 'comedy', value: 'comedy', text: 'Stories & Laughing', categories: ['comedy', 'storytelling'] },
-    { key: 'games', value: 'games', text: 'Games & Sports', categories: ['games', 'sports'] },
-    // Learning and Classes
-    { key: 'learning', value: 'learning', text: 'Learning', categories: ['learning', 'education'] },
-    // TODO: make these vibes? 
-    { key: 'immersive', value: 'immersive', text: 'Immersive', categories: ['immersive'] },
-    { key: 'spiritual', value: 'spiritual', text: 'Spiritual', categories: ['spirtual'] },
-    { key: 'transit', value: 'transit', text: 'transit', categories: ['transit'] }   
+    { key: 'shopping', value: 'shopping', text: 'Shopping', label: { icon: 'shopping bag', circular: true }, categories: ['shopping'] },    
+]
+
+export const activty_categories = [
+    { key: 'arts', value: 'arts', text: 'Arts', label: { icon: 'paint brush', circular: true }, categories: ['art', 'arts', 'craft', 'dance', 'immersive', 'performance'] },
+    { key: 'comedy', value: 'comedy', text: 'Comedy & Storyteling', label: { icon: 'microphone', circular: true }, categories: ['community']},
+    { key: 'community', value: 'community', text: 'Community', label: { icon: 'heart', circular: true }, categories: ['comedy', 'storytelling'] },
+    { key: 'health', value: 'health', text: 'Immersive', label: { icon: 'medkit', circular: true }, categories: ['health'] },
+    //{ key: 'immersive', value: 'immersive', text: 'Immersive', categories: ['immersive'] },
+    { key: 'learning', value: 'learning', text: 'Learning', label: { icon: 'book', circular: true }, categories: ['learning', 'education'] },    
+    { key: 'music', value: 'music', text: 'Music', label: { icon: 'music', circular: true }, categories: ['music'] },
+    { key: 'outdoors', value: 'outdoors', text: 'Outdoors', label: { icon: 'tree', circular: true }, categories: ['outdoors'] },
+    { key: 'games', value: 'games', text: 'Games & Sports', label: { icon: 'table tennis', circular: true }, categories: ['games', 'sports'] },
+    { key: 'style', value: 'style', text: 'Style & Fashion', label: { icon: 'cut', circular: true }, categories: ['style', 'fashion'] }
+    //{ key: 'spiritual', value: 'spiritual', text: 'Spiritual', categories: ['spirtual'] },
+    //{ key: 'transit', value: 'transit', text: 'transit', categories: ['transit'] }   
 ]
 
 // Groupings for All Place Categories
