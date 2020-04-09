@@ -1,34 +1,48 @@
 // @flow 
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 import isEqual from 'react-fast-compare'
 
 import { Translation } from 'react-i18next'
-import { Dropdown } from 'semantic-ui-react'
+import { Button, Dropdown, Icon } from 'semantic-ui-react'
 
 class AllVibes extends Component {    
     constructor(props) {
         super(props)
         this.state = {
-            vibe_options : []
+            vibe_options : [],
+            vibes: []
         }
     }
 
     componentDidUpdate(prevProps) {
         if (!isEqual(prevProps.allVibes, this.props.allVibes)) {
-            
+                        
             let vibe_options = this.props.allVibes.map(function (vibe) {
                 return { key: vibe, value: vibe, className: 'vibe', text: vibe }
             })
 
             this.setState({ vibe_options : vibe_options})
-        }        
+        }
+        
+        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
+
+            this.setState({ vibes: this.props.currentVibes })
+        }
     }    
 
     handleVibeChange = (event, { value }) => {
+    
+        // Make strings array
+        if (value === 'string') value = [value]
+
         this.setState({ vibes: value })
         this.props.setCurrentVibes(value)
+    }
+
+    clearVibes = () => {
+        this.setState({ vibes : [] })
     }
 
     renderVibesLabel = (label) => ({        
@@ -37,24 +51,60 @@ class AllVibes extends Component {
     })
 
     render() {
+        let num_vibes = this.state.vibes.length
+        console.log('NUmber of vibes: ', this.props.currentVibes.length, this.props.currentVibes)
 
         return (
             <div className='allVibes' style={{ position: 'absolute', margin: '1em', zIndex: '90'}}>
-                <Translation>{
-                    (t, { i18n }) => <Dropdown
-                        style={{ minWidth: '12em' }}
+                {num_vibes > 0 &&
+                    <Fragment>                        
+                        <Translation>{
+                            (t, { i18n }) => <Dropdown
+                                style={{ minWidth: '12em' }}
+                                placeholder={t("Add more vibes")}
+                                //multiple
+                                icon='add'
+                                label="Vibe"
+                                labeled
+                                clearable
+                                multiple
+                                search
+                                closeOnChange
+                                onChange={this.handleVibeChange}
+                                options={this.state.vibe_options}
+                                value={this.props.currentVibes}
+                                renderLabel={this.renderVibesLabel}
+                            />
+                        }</Translation>
+                        {/* 
+                        <Button className='icon tiny'
+                            onClick={this.clearVibes}>
+                            <Icon name='remove' />
+                        </Button>
+                        */}
+                    </Fragment>
+                }
+
+                {num_vibes == 0 &&
+                    <Translation>{
+                        (t, { i18n }) => <Dropdown
+                        button
+                        className='icon basic'
                         clearable
-                        placeholder={t("Add more vibes")}
+                        floating
+                        icon='add'
+                        labeled
                         multiple
-                        label="Vibe"
                         search
-                        closeOnChange
                         onChange={this.handleVibeChange}
-                        options={this.state.vibe_options}
                         value={this.props.currentVibes}
-                        renderLabel={this.renderVibesLabel}
+                        options={this.state.vibe_options}                        
+                        style={{ minWidth: '12em' }}
+                        text='Add Vibe'
                     />
-                }</Translation>
+                    }</Translation>
+                }
+                
             </div>
             
         )
