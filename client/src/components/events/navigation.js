@@ -264,8 +264,7 @@ class Navigation extends Component {
                                     (t, { i18n }) => <Dropdown
                                         className={'main_vibe ' + this.props.mainVibe}
                                         clearable
-                                        search
-                                        // TODO: map this icon: icon={this.props.activity}                                        
+                                        search                                        
                                         labeled
                                         placeholder={t('Signature Vibes')}                                        
                                         onChange={this.handleSignatureVibe}
