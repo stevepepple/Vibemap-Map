@@ -14,6 +14,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import VibeMap from '../../services/VibeMap.js'
+import Header from '../elements/header.js'
 import Navigation from '../events/navigation.js'
 
 class EventCalendar extends Component {
@@ -68,15 +69,25 @@ class EventCalendar extends Component {
         )
     }
 
+    fetchCities() {
+        VibeMap.getCities()
+            .then(results => {
+                this.props.setCities(results.data)
+            })
+    }
+
     componentWillMount() {
 
         // Set global state with user's location
         let params = queryString.parse(this.props.search)
 
+        this.fetchCities()
+
         // Get location and event list
         if (params.latitude && params.longitude) {
             this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude })
-        } else {
+        } else {            
+            
             helpers.getPosition()
                 .then((position) => {
                     if (position) {
@@ -111,7 +122,8 @@ class EventCalendar extends Component {
     /* TODO: Should all of this logic just flow through an event service and component? */
     // Change to getPlaces
     fetchEvents(position) {
-
+        let distance = 20
+        let days = 14
         let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
         if (this.state.timedOut === true) {
             this.setState({ timedOut: false })
@@ -120,7 +132,7 @@ class EventCalendar extends Component {
         /* Get current events, then set them in the state */
         /* TODO: package args into spread object? */
 
-        VibeMap.getEvents(point, this.props.distance, this.state.event_categories, this.props.currentDays, this.props.searchTerm)
+        VibeMap.getEvents(point, distance, null, this.state.event_categories, days, this.props.searchTerm)
             .then(results => {
                 
                 let events = results.data.map((result) => {
@@ -156,8 +168,8 @@ class EventCalendar extends Component {
 
         return (
             <React.Fragment>
-                {navigation}
-                <div>Calendar will go here.</div>
+                <Header />
+                {navigation}                
 
                 <Calendar
                     popup
