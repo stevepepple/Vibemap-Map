@@ -8,6 +8,11 @@ export const setDetailsShown = show => ({
   show,
 })
 
+export const setShowList = show => ({
+  type: 'SET_SHOW_LIST',
+  show,
+})
+
 export const setDetailsId = id => ({
   type: 'SET_DETAILS_ID',
   id,

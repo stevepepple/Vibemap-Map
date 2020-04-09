@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 import qs from 'qs'
 import isEqual from 'react-fast-compare'
 
-import { Grid } from 'semantic-ui-react'
+import { Button, Grid, Transition } from 'semantic-ui-react'
 import VibeMap from '../../services/VibeMap.js'
 
 // TODO: move to services
@@ -18,6 +18,7 @@ import PlacesList from '../places/places_list.js'
 import ErrorBoundary from '../pages/GlobalError.js'
 
 import EventsMap from '../events/events_map.js'
+import Header from '../elements/header.js'
 import Navigation from '../events/navigation.js'
 //import PlaceCards from '../places/place_cards.js'
 
@@ -68,6 +69,7 @@ class Page extends Component {
         this.setActivity = this.setActivity.bind(this)
         // TODO: move to Redux
         this.clearDetails = this.clearDetails.bind(this)
+        this.toggleList = this.toggleList.bind(this)
     }
      
     componentWillMount() {
@@ -86,7 +88,9 @@ class Page extends Component {
     componentDidMount() {
 
         // Load vibes from API
+        this.fetchCities()
         this.fetchVibes()
+        this.fetchCategories()
 
         // Set global state with user's location from query string
         let params = qs.parse(this.props.search, { ignoreQueryPrefix: true })
@@ -121,12 +125,17 @@ class Page extends Component {
         //let distanceChanged = false
 
         // TODO: Move this to actions or service layer as shouldFetchData        
-        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {        
+        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
             updateData = true
             refreshResults = true
         }
 
         if (!isEqual(prevProps.searchTerm, this.props.searchTerm) && this.props.searchTerm > 2) {
+            updateData = true
+            refreshResults = true
+        }
+
+        if (!isEqual(prevProps.activity, this.props.activity)) {
             updateData = true
             refreshResults = true
         }
@@ -238,7 +247,7 @@ class Page extends Component {
 
     fetchCities() {
         VibeMap.getCities()
-            .then(results => {
+            .then(results => {                
                 this.props.setCities(results.data)
             })
     }
@@ -248,6 +257,14 @@ class Page extends Component {
             .then(results => {                
                 this.props.setSignatureVibes(results.data['signature_vibes'])
                 this.props.setAllVibes(results.data['all_vibes'])                
+            })
+    }
+
+    fetchCategories() {
+        VibeMap.getCategories()
+            .then(results => {
+                //this.props.setSignatureVibes(results.data['signature_vibes'])
+                this.props.setAllCategories(results.data['place_categories'])
             })
     }
 
@@ -370,6 +387,7 @@ class Page extends Component {
         let relative_density = helpers.scaleDensity(this.props.zoom, density)
         let density_bonus = 1 - relative_density
         this.props.setDensityBonus(density_bonus)
+        console.log('density: ', count, area, density)
 
         let top_picks = results.data.splice(1, this.state.num_top_picks)
 
@@ -377,6 +395,13 @@ class Page extends Component {
 
         this.props.setTopPicks(top_picks_clustered, refreshResults, this.state.mergeTopPicks)
         this.props.setPlacesData(results.data, refreshResults)
+    }
+
+    toggleList(){
+        
+        let show = !this.props.showList
+        console.log('Show LIst: ', show)
+        this.props.setShowList(show)
     }
 
     clearDetails = function() {
@@ -397,6 +422,16 @@ class Page extends Component {
         // TODO: Set this in Redux for global access
         const isMobile = width <= 700
 
+        let map_width = 11
+        let list_width = 5
+        let list_arrow = 'arrow left'        
+
+        if (this.props.showList === false) {
+            map_width = 15
+            list_width = 1            
+            list_arrow = 'arrow right'
+        }
+
         // TODO: best practice is to make this a func? 
         let navigation = <Navigation 
             setActivity={ this.setActivity } 
@@ -406,6 +441,7 @@ class Page extends Component {
             isMobile = { isMobile } />
 
         let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.props.detailsShown ? 16 : this.props.zoom} setPosition={this.setPosition} setLocationParams={this.setLocationParams} />
+        
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
@@ -422,26 +458,39 @@ class Page extends Component {
             )
         } else {
             return (
-                <React.Fragment>
+                <React.Fragment>                    
+                    <Header/>
                     {navigation}
+                    
 
                     {/* 16 column grid */}
-                    <Grid id='content' className='content'>                       
-                        <Grid.Row stretched className='collapsed'>
-                            <Grid.Column floated='left' width={5} className='list_details'>
-                                {
-                                    /* TODO: Refactor into component */
-                                    this.props.detailsShown ? (
-                                        <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
-                                    ) : (                                        
-                                        <PlacesList data={this.props.topPicks} type='places' />
-                                    )
-                                }
+                    <Grid id='content' className='content' padded>
+                        <Grid.Row className='collapsed columns' style={{ background: '#EEEEEE'}}>
+                            
+                            <Transition animation='fade right' visible={this.props.showList} duration={200}>                                
+                                <Grid.Column floated='left' width={list_width} className='list_details'>
+                                    
+                                    {this.props.showList &&
+                                        /* TODO: Refactor into layout component and include guides */
+                                        <Fragment>
+                                        {this.props.detailsShown ? (
+                                                <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
+                                            ) : (
+                                                <PlacesList data={this.props.topPicks} type='places' />
+                                                )
+                                        }
+                                        </Fragment>
+                                    }
+                                    {/* <EventsList data={this.state.data} /> */}
 
-                                {/* <EventsList data={this.state.data} /> */}
-                                
-                            </Grid.Column>
-                            <Grid.Column width={11}>                                
+                                </Grid.Column>
+                            </Transition>                            
+                            
+                            <Grid.Column width={map_width}>
+                                <Button                                    
+                                    onClick={this.toggleList} icon={list_arrow}
+                                    style={{ position: 'absolute', boxShadow: '0 0 0 1px rgba(34,36,38,.15) inset', left: '-1.1em',  top: '50%', zIndex: '100' }}
+                                    circular />
                                 <ErrorBoundary>                                    
                                     {events_map}
                                 </ErrorBoundary>
@@ -456,6 +505,7 @@ class Page extends Component {
 
 const mapStateToProps = state => ({
     activity: state.activity,
+    allCategories: state.allCategories,
     allVibes: state.allVibes,
     bounds: state.bounds,
     boundsReady: state.boundsReady,
@@ -480,6 +530,7 @@ const mapStateToProps = state => ({
     searchTerm: state.searchTerm,
     search: state.router.location.search,
     signatureVibes: state.router.location.signatureVibes,
+    showList: state.showList,
     topPicks: state.topPicks,
     topVibes: state.topVibes,
     windowSize: state.windowSize,

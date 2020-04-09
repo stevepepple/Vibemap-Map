@@ -27,6 +27,13 @@ export const detailsShown = (state = false, action) => {
   return state
 }
 
+export const showList = (state = true, action) => {
+  if (action.type === 'SET_SHOW_LIST') {
+    state = action.show
+  }
+  return state
+}
+
 export const mapReady = (state = false, action) => {
   if (action.type === 'SET_MAP_READY') {
     state = action.ready
@@ -464,6 +471,7 @@ export const reducers = (history) => combineReducers({
   placesData,
   placeType,
   searchTerm,
+  showList,
   topPicks,
   topVibes,
   mainVibe,
