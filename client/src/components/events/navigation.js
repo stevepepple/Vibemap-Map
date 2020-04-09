@@ -136,13 +136,7 @@ class Navigation extends Component {
         
         let string = queryString.stringify(params)
         store.dispatch(push({ search: string }))
-    }
-
-    renderVibesLabel = (label) => ({
-        size: 'mini',
-        className: 'ui label ' + label.text,
-        content: label.text,
-    })    
+    }        
     
     // Event Handlers
     handleActivityChange = (event, { value }) => {
@@ -156,6 +150,11 @@ class Navigation extends Component {
         this.setState({ current_activity: value, selected_activity: selected_activity })
         this.props.setActivity(value)        
     }    
+
+    handlePlaceType = (e, { value }) => {
+        console.log("CHANGED PLACE TYPE: ", value)
+        this.props.setPlaceType(value)
+    }
 
     handleSignatureVibe = (e, {value}) => {
         
@@ -207,8 +206,7 @@ class Navigation extends Component {
                                         style={{ width: '10em', lineHeight: '2.4em', marginLeft: '0.4em' }}
                                         text={t(this.props.placeType)}
                                         value={this.props.placeType}
-                                        onChange={this.handlePlaceType}
-                                    >
+                                        onChange={this.handlePlaceType}>
                                         <Dropdown.Menu>
                                             {this.state.place_type_options.map((option) => (
                                                 <Dropdown.Item key={option.value} onClick={this.handlePlaceType} text={t(option.text)} value={option.value} />
@@ -272,6 +270,7 @@ class Navigation extends Component {
                                         placeholder={t('Signature Vibes')}                                        
                                         onChange={this.handleSignatureVibe}
                                         options={this.props.signatureVibes}
+                                        style={{ width: '12em'}}
                                         value={this.props.mainVibe}
                                     />
                                 }</Translation>
