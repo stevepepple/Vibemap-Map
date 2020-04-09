@@ -64,8 +64,7 @@ class PlaceDetails extends Component {
     getPlaceDetails = function() {
         VibeMap.getPlaceDetails(this.props.detailsId, this.props.detailsType)
             .then(result => {
-                console.log("Place details: ", result)
-
+                
                 // Handle Error
                 if (result.data.detail === 'Not found.') {
                     this.setState({ details_data: null, loading: false})
@@ -173,8 +172,7 @@ class PlaceDetails extends Component {
                     
                 </MetaTags>
                 <Divider hidden />
-                <Button onClick={this.props.clearDetails}>Back</Button>
-                
+                <Button basic icon='settings' onClick={this.props.clearDetails}>Back</Button>                
     
                 {this.state.loading ? (
                     <Placeholder>
