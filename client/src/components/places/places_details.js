@@ -107,6 +107,8 @@ class PlaceDetails extends Component {
         let name = this.props.currentPlace.name
         let description = unescape(this.props.currentPlace.description)
 
+        console.log('Place description: ', description, typeof(description))
+
         /* TODO: Make recommendation is own component */
         if (this.props.currentPlace.reason === undefined) this.props.currentPlace.reason = 'vibe'
         let reason = Constants.RECOMMENDATION_REASONS[this.props.currentPlace.reason]
@@ -191,7 +193,7 @@ class PlaceDetails extends Component {
                                 onClick={this.executeOnClick}
                                 expanded={false}
                             >
-                                {description}
+                                {description && description !== 'null' ? description : 'No description'}
                             </ShowMoreText>
                         </List.Item>
                         { recommendation }
@@ -219,7 +221,7 @@ class PlaceDetails extends Component {
                     </Placeholder>
                 ) : (
                     <Segment.Group>                    
-                        <Segment>{categories}</Segment>
+                        <Segment>{categories ? categories : 'No categories'}</Segment>
                         <Segment>{this.props.currentPlace.hours ? this.props.currentPlace.hours : 'No hours' }</Segment>
                         <Segment>{this.props.currentPlace.address ? this.props.currentPlace.address: 'No address' }</Segment>
                         <Segment>{this.props.currentPlace.url ? this.props.currentPlace.url : 'No website' }</Segment>

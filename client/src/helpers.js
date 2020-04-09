@@ -25,6 +25,17 @@ const helpers = {
         return bounds
     },
 
+    getDistance: function (point_a, point_b) {
+        let distance = turf.distance(
+            [point_a[0], point_a[1]],
+            [point_b[0], point_b[1]],
+            { units: 'miles' }
+        )
+
+        return distance
+    },
+
+
     getRadius: function (bounds) {        
         //let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
         let diameter = turf.distance(
@@ -269,7 +280,7 @@ const helpers = {
             a.distance = turf.distance(current, point_a)
             b.distance = turf.distance(current, point_b)
             
-            if (a.distance < b.distance) {
+            if (a.distance > b.distance) {
                 return 1
             } else {
                 return -1
