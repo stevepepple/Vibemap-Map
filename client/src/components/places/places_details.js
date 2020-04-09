@@ -211,12 +211,12 @@ class PlaceDetails extends Component {
                         { recommendation }
                         <List.Item>
                             {vibes}
-                                {(this.state.vibes_expanded == false && this.props.currentPlace.vibes.length > this.state.vibes.length) &&
-                                <a onClick={this.toggleMoreVibes}>Show more</a>
+                            {(this.state.vibes_expanded == false && this.props.currentPlace.vibes.length > this.state.vibes.length) &&
+                                <Button basic onClick={this.toggleMoreVibes} className='tiny' icon='arrow down' circular />
                             }
 
                             { this.state.vibes_expanded == true &&
-                                <a onClick={this.toggleMoreVibes}>Show less</a>
+                                <Button basic onClick={this.toggleMoreVibes} className='tiny' icon='arrow up' circular />
                             }
                         </List.Item>
                     </List>
