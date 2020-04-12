@@ -36,6 +36,7 @@ class AllVibes extends Component {
     
         // Make strings array
         if (value === 'string') value = [value]
+        console.log('Vibe changed: ',)
 
         this.setState({ vibes: value })
         this.props.setCurrentVibes(value)
@@ -62,7 +63,7 @@ class AllVibes extends Component {
                                 style={{ minWidth: '12em' }}
                                 placeholder={t("Add more vibes")}
                                 //multiple
-                                icon='add'
+                                icon='add basic'
                                 label="Vibe"
                                 labeled
                                 clearable
@@ -89,8 +90,6 @@ class AllVibes extends Component {
                         (t, { i18n }) => <Dropdown
                         button
                         className='icon basic'
-                        clearable
-                        floating
                         icon='add'
                         labeled
                         multiple
@@ -99,7 +98,7 @@ class AllVibes extends Component {
                         value={this.props.currentVibes}
                         options={this.state.vibe_options}                        
                         style={{ minWidth: '12em' }}
-                        text='Add Vibe'
+                        label='Add Vibe'
                     />
                     }</Translation>
                 }
