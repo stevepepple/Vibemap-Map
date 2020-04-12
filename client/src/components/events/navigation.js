@@ -266,7 +266,7 @@ class Navigation extends Component {
                                         clearable
                                         search                                        
                                         labeled
-                                        placeholder={t('Signature Vibes')}                                        
+                                        placeholder={t('Vibe sets')}                                        
                                         onChange={this.handleSignatureVibe}
                                         options={this.props.signatureVibes}
                                         style={{ width: '12em'}}
