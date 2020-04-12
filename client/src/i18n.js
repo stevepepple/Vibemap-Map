@@ -43,6 +43,7 @@ i18n.use(LanguageDetector).init({
         
         "Add more vibes": "Add more vibes",      
         "Current Vibe": "Current Vibe",
+        "Vibe sets" : "Vibe sets",
         "Signature Vibe": "Signature Vibe",
         "What's your vibe": "What's your vibe",
         "Pick Activity": "Pick Activity",
