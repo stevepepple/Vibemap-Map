@@ -33,7 +33,7 @@ const helpers = {
         )
 
         return distance
-    },
+    },              
 
 
     getRadius: function (bounds) {        

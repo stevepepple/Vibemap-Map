@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import { render } from "react-dom";
 import { Button, Container, Dropdown, Form, Grid, Icon, Label, Menu, Message, Segment } from 'semantic-ui-react'
 
+import _ from 'lodash'
+
 import MapGL, { FullscreenControl, Source, Layer, NavigationControl, GeolocateControl, Marker, Popup, ScaleControl } from 'react-map-gl'
 import ControlPanel from '../map/editor_control_panel'
 import SVG from 'react-inlinesvg'
@@ -65,16 +67,16 @@ class SketchMap extends Component {
             loaded: false,
             instructions: 'Click to start drawing',
             modes: [
-                { key: 'EDITING', title: 'Edit', icon: 'mouse pointer', value: 'EDITING' },
-                { key: 'DRAW_POINT', title: 'Draw', icon: 'marker',  value: 'DRAW_POINT' },
-                { key: 'DRAW_PATH', title: 'Path', icon: 'line', value: 'DRAW_PATH' },
-                { key: 'DRAW_POLYGON', title: 'Polygon', icon: 'vector', value: 'DRAW_POLYGON' },
-                { key: 'DRAW_RECTANGLE', title: 'Rectangle', icon: 'rectangle', value: 'DRAW_RECTANGLE' }
+                { key: 'EDITING', title: 'Edit', icon: 'mouse pointer', value: 'EDITING', instructions: 'Pick a tool above.' },
+                { key: 'DRAW_POINT', title: 'Draw', icon: 'marker',  value: 'DRAW_POINT', instructions: 'Click map to add a point' },
+                { key: 'DRAW_PATH', title: 'Path', icon: 'line', value: 'DRAW_PATH', instructions: 'Click two points' },
+                { key: 'DRAW_POLYGON', title: 'Polygon', icon: 'vector', value: 'DRAW_POLYGON', instructions: 'Click one or more points to make a shape' },
+                { key: 'DRAW_RECTANGLE', title: 'Rectangle', icon: 'rectangle', value: 'DRAW_RECTANGLE', instructions: 'Click and drag'  }
             ],
             options: [],
             placeholder: "Loading",
             save_drawing_data: null,
-            selectedMode: 'DRAW_POINT',
+            selectedMode: 'READ_ONLY',
             selectedFeatureIndex: null,
             showPen: false,
             sliderValue: 3,
@@ -142,7 +144,8 @@ class SketchMap extends Component {
 
     save() {
         try {
-            this.canvasDraw.undo()
+            let save_data = this.canvasDraw.getSaveData()
+            console.log(save_data)
         } catch (error) {
             console.log('Problem undoing')
         }
@@ -179,14 +182,12 @@ class SketchMap extends Component {
     handlePenColor = (e, { name, value }) => this.setState({ color: value, activeItem: 'pen', showPen : true })
 
     handleRemove = () => {
-
         // TODO: How to use the same control to talk to multiple components with different states.
         if (this.canvasDraw) {
             let save_data = this.canvasDraw.getSaveData()
             console.log(save_data)
             this.canvasDraw.clear()
         }
-        console.log('DELETE', this.state.activeItem)
 
         if (this.state.activeItem === 'shape') {
             this.setState({ selectedMode: 'DELETE' })
@@ -197,8 +198,13 @@ class SketchMap extends Component {
     handleSlider = (value) => this.setState({ sliderValue: value})
 
     switchMode = (e, { name, value }) => {
-        const selectedMode = value;
+        const selectedMode = value
+
+        // Pick current instructinos
+        const selectedOption = _.find(this.state.modes, function(o) { return o.key === selectedMode  })
+
         this.setState({
+            instructions: selectedOption['instructions'],
             selectedMode: selectedMode === this.state.selectedMode ? null : selectedMode
         });
     }
@@ -274,7 +280,6 @@ class SketchMap extends Component {
                                 onChange={this.switchMode}>
                             </Dropdown>
                         </Menu.Item>
-
                         
                         <Menu.Item name='undo' onClick={this.undo} position='right'>
                             <Icon name='undo' />
@@ -291,70 +296,71 @@ class SketchMap extends Component {
                             <Icon name='save outline' />
                         </Menu.Item>
                     </Menu>
-                        <div id="map_container" className='map_container' ref={this.map} style={{ width: '100%', height: '100%' }}>
-                            
-                            {this.state.showPen &&
-                                <CanvasDraw 
-                                    ref={canvasDraw => (this.canvasDraw = canvasDraw)}
-                                    style={{ position: "absolute" }} 
-                                    brushColor={this.state.color}
-                                    brushRadius={this.state.sliderValue}
-                                    canvasHeight={this.props.mapSize.height}
-                                    canvasWidth={this.props.mapSize.width} 
-                                    saveData={this.state.save_drawing_data}/>
-                            }
 
-                            <Menu style={{ position: 'absolute', top: '6.4em', left: '1em', zIndex: 20 }}>
-                                <Slider defaultValue={this.state.sliderValue} onChange={this.handleSlider} />
-                                <Button icon onClick={this.handleRemove}>
-                                    <Icon name='trash alternate' />
-                                </Button>
-                                <Button.Group color={this.state.color}>
-                                    <Dropdown
-                                        button
-                                        //disabled={activeItem !== 'pen'}
-                                        text=''
-                                        className='icon'
-                                        floating
-                                        icon='eyedropper'
-                                        //onClick={this.handlePen}
-                                        onChange={this.handlePenColor}
-                                        options={this.state.colors}
-                                        defaultValue='grey'>
-                                    </Dropdown>
-                                </Button.Group>
-                            </Menu>
+                    <div id="map_container" className='map_container' ref={this.map} style={{ width: '100%', height: '100%' }}>
+                        
+                        {this.state.showPen &&
+                            <CanvasDraw 
+                                ref={canvasDraw => (this.canvasDraw = canvasDraw)}
+                                style={{ position: "absolute" }} 
+                                brushColor={this.state.color}
+                                brushRadius={this.state.sliderValue}
+                                canvasHeight={this.props.mapSize.height}
+                                canvasWidth={this.props.mapSize.width} 
+                                saveData={this.state.save_drawing_data}/>
+                        }
 
-                            <div style={{ position: 'absolute', left: '1em', top: '12em', zIndex: 10}}>
-                                {this.state.instructions}
-                            </div>
+                        <Menu style={{ position: 'absolute', top: '6.4em', left: '1em', zIndex: 20 }}>
+                            <Slider defaultValue={this.state.sliderValue} onChange={this.handleSlider} />
+                            <Button icon onClick={this.handleRemove}>
+                                <Icon name='trash alternate' />
+                            </Button>
+                            <Button.Group color={this.state.color}>
+                                <Dropdown
+                                    button
+                                    //disabled={activeItem !== 'pen'}
+                                    text=''
+                                    className='icon'
+                                    floating
+                                    icon='eyedropper'
+                                    //onClick={this.handlePen}
+                                    onChange={this.handlePenColor}
+                                    options={this.state.colors}
+                                    defaultValue='grey'>
+                                </Dropdown>
+                            </Button.Group>
+                        </Menu>
 
-                            <MapGL
-                                {...viewport}
-                                width='100%'
-                                height='100%'
-                                transition={{ "duration": 300, "delay": 0 }}
-                                mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
-                                mapStyle={Constants.MAPBOX_STYLE_LIGHT}
-                                onViewportChange={this._onViewportChange}>
-
-                                <GeolocateControl
-                                    style={{ position: 'absolute', right: 3, top: 40, margin: 10, width: 30 }}
-                                    positionOptions={{ enableHighAccuracy: true }}
-                                    trackUserLocation={true}
-                                />
-
-                                <FullscreenControl container={document.querySelector('body')} />
-
-                                <DrawEditor
-                                    ref={_ => (this._editorRef = _)}
-                                    style={{ width: '100%', height: '100%' }}
-                                    clickRadius={12}
-                                    mode={selectedMode}
-                                />
-                                
-                            </MapGL>
+                        <div style={{ position: 'absolute', left: '1em', top: '12em', zIndex: 10}}>
+                            {this.state.instructions}
                         </div>
+
+                        <MapGL
+                            {...viewport}
+                            width='100%'
+                            height='100%'
+                            transition={{ "duration": 300, "delay": 0 }}
+                            mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
+                            mapStyle={Constants.MAPBOX_STYLE_LIGHT}
+                            onViewportChange={this._onViewportChange}>
+
+                            <GeolocateControl
+                                style={{ position: 'absolute', right: 3, top: 40, margin: 10, width: 30 }}
+                                positionOptions={{ enableHighAccuracy: true }}
+                                trackUserLocation={true}
+                            />
+
+                            <FullscreenControl container={document.querySelector('body')} />
+
+                            <DrawEditor
+                                ref={_ => (this._editorRef = _)}
+                                style={{ width: '100%', height: '100%' }}
+                                clickRadius={12}
+                                mode={selectedMode}
+                            />
+                            
+                        </MapGL>
+                    </div>
                 </Segment.Group>
             </Fragment>
             

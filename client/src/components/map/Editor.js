@@ -93,14 +93,15 @@ class DrawEditor extends Component {
     }
 
     render() {
-    const { viewport, selectedMode } = this.state;
+    const { viewport, selectedMode } = this.state
+    const { editHandleShape } = this.props
 
     return (
         <Fragment>
             <Editor
                 ref={_ => (this._editorRef = _)}
                 clickRadius={16}
-                editHandleShape={'circle'}
+                editHandleShape={editHandleShape}
                 onSelect={this._onSelect}
                 onUpdate={this._onUpdate}
                 mode={selectedMode}
@@ -122,5 +123,11 @@ const mapStateToProps = state => {
         viewport: state.viewport,
     }
 }
+
+DrawEditor.defaultProps = {
+    editHandleShape: 'circle',
+    selectedMode: 'READ_ONLY'
+}
+
 
 export default connect(mapStateToProps, actions)(DrawEditor)
