@@ -35,13 +35,9 @@ class LocationSearchInput extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         
-        if (this.props.cities.length > 0 && !isEqual(prevProps.cities, this.props.cities)) {
-            this.handleCities()
-        }
-
-        if (prevProps.currentLocation.latitude !== this.props.currentLocation.latitude) {            
-            this.setNearest()
-        }        
+        // Handle city or locations changes
+        if (this.props.cities.length > 0 && !isEqual(prevProps.cities, this.props.cities)) this.handleCities()
+        if (prevProps.currentLocation.latitude !== this.props.currentLocation.latitude) this.setNearest()
     }
 
     setNearest() {
@@ -49,16 +45,14 @@ class LocationSearchInput extends React.Component {
             let ordered_locations = helpers.sortLocations(this.state.locations, this.props.currentLocation)
             let distance_from_user = helpers.getDistance([this.props.currentLocation.longitude, this.props.currentLocation.latitude], ordered_locations[0].centerpoint)
 
-            if (distance_from_user < 20) {                
-                this.setState({ nearest: ordered_locations[0]['id'] })
-            }
+            // If user is with 20 miles of city, set that as the city
+            if (distance_from_user < 20) this.setState({ nearest: ordered_locations[0]['id'] })
         }
     }
 
     handleCities() {
         
         let locations = this.props.cities.map(function (item) {            
-            //return { key: item['id'], value: item['id'], text: item['name'] }
             // Attributes for dropdown
             item['key'] = item['id']
             item['value'] = item['id']
@@ -68,25 +62,19 @@ class LocationSearchInput extends React.Component {
             return item
         })        
         
-        //const filtered = locations.filter((elem) => !anotherArray.find(({ id }) => elem.id === id) && elem.sub);
         // Filter all cities to only the list of feature cities. 
         const featured = this.state.featured
         const filtered = locations.filter(function (el) { return featured.indexOf(el.name) >= 0; });
 
         // Sort by location to user
         let ordered_locations = helpers.sortLocations(filtered, this.props.currentLocation)
-
         let distance_from_user = helpers.getDistance([this.props.currentLocation.longitude, this.props.currentLocation.latitude], ordered_locations[0].centerpoint)
-
-        if(distance_from_user < 20) {
-            this.setState({ nearest: ordered_locations[0]['id'] })
-        }
+        if(distance_from_user < 20) this.setState({ nearest: ordered_locations[0]['id'] })
         
         this.setState({ locations: ordered_locations })
     }
 
     handleSearch = (e, { searchQuery }) => {
-        console.log(searchQuery)
 
         // Auto search once two letter are typed
         if(searchQuery.length > 1) {
@@ -127,14 +115,9 @@ class LocationSearchInput extends React.Component {
 
         // User picked an item from the list
         if (typeof item == 'object') {
-
-            if (item.zoom_start) {
-                this.props.setZoom(item.zoom_start)
-            }
-
-            if (item.bearing_start) {
-                this.props.setBearing(item.bearing_start)
-            }
+            // Set zoom & bearing
+            if (item.zoom_start) this.props.setZoom(item.zoom_start)
+            if (item.bearing_start) this.props.setBearing(item.bearing_start)
 
             this.props.setCurrentLocation({ latitude: item.centerpoint[1], longitude: item.centerpoint[0] })
             this.props.setDetailsId(null)
@@ -157,7 +140,6 @@ class LocationSearchInput extends React.Component {
                 })
                 .catch(error => console.error('Error', error));
         }
-    
     }
 
     render() {
@@ -193,4 +175,4 @@ const mapStateToProps = state => ({
     zoom: state.zoom
 });
 
-export default connect(mapStateToProps, actions)(LocationSearchInput);
+export default connect(mapStateToProps, actions)(LocationSearchInput)
