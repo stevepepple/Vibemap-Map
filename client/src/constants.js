@@ -4,6 +4,8 @@ export const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-j
 
 export const MAPBOX_STYLE = 'mapbox://styles/stevepepple/cjpk3ts1c0skb2rs52w658p07'
 
+export const MAPBOX_STYLE_LIGHT = 'mapbox://styles/stevepepple/ck8unzpvf0z5j1itdntgz3lxp'
+
 export const DATABASE = 'mongodb://stevepepple:Hotspot1@ds019101.mlab.com:19101/hotspots'
 
 export const TIMEOUT = 8000;

@@ -1,0 +1,28 @@
+/* TODO: Required until we swap in a customer version of semantic UI */
+:global(.vector) {
+    width: 1.2em !important;
+    height: 1.2em !important;
+    background-image: url(/images/vector.svg) !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+:global(.line) {
+    width: 1.2em !important;
+    height: 1.2em !important;
+    background-image: url(/images/line.svg) !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+:global(.rectangle) {
+    width: 1.2em !important;
+    height: 1.2em !important;
+    background-image: url(/images/rectangle.svg) !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.menuIcon {
+    z-index: 30;
+}

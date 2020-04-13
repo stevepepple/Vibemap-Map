@@ -1,0 +1,9 @@
+.vector {
+    width: 1em;
+    height: 1em;
+    background-image: url('/images/vector.svg');
+}
+
+/*
+<SVG style={{ height: '2em', width: '2em' }} src='/images/vector.svg' />
+*/
