@@ -13,6 +13,9 @@ import * as Constants from '../../constants.js'
 // Pages
 import MobilePage from './mobile.js'
 
+// Layouts
+import TwoColumnLayout from '../layouts/TwoColumnLayout'
+
 import PlaceDetails from '../places/places_details.js'
 import PlacesList from '../places/places_list.js'
 import ErrorBoundary from '../pages/GlobalError.js'
@@ -69,7 +72,6 @@ class Page extends Component {
         this.setActivity = this.setActivity.bind(this)
         // TODO: move to Redux
         this.clearDetails = this.clearDetails.bind(this)
-        this.toggleList = this.toggleList.bind(this)
     }
      
     componentWillMount() {
@@ -108,8 +110,6 @@ class Page extends Component {
                     }
                 })
         }        
-
-        // Get the list of vibes
         
         // Handle scree resizing
         window.addEventListener('resize', this.handleWindowSizeChange)
@@ -130,7 +130,8 @@ class Page extends Component {
             refreshResults = true
         }
 
-        if (!isEqual(prevProps.searchTerm, this.props.searchTerm) && this.props.searchTerm > 2) {
+        if (!isEqual(prevProps.searchTerm, this.props.searchTerm) && this.props.searchTerm.length > 2) {
+            console.log('New search term: ', this.props.searchTerm)
             updateData = true
             refreshResults = true
         }
@@ -361,7 +362,6 @@ class Page extends Component {
 
         VibeMap.getPlaces(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
-                
 
                 if(this.state.searching !== true) {
                     this.setTopPlaces(results, refreshResults)
@@ -397,12 +397,6 @@ class Page extends Component {
         this.props.setPlacesData(results.data, refreshResults)
     }
 
-    toggleList(){
-    
-        let show = !this.props.showList
-        this.props.setShowList(show)
-    }
-
     clearDetails = function() {
         this.props.history.replace('')
 
@@ -421,26 +415,14 @@ class Page extends Component {
         // TODO: Set this in Redux for global access
         const isMobile = width <= 700
 
-        let map_width = 11
-        let list_width = 5
-        let list_arrow = 'arrow left'        
-
-        if (this.props.showList === false) {
-            map_width = 15
-            list_width = 1            
-            list_arrow = 'arrow right'
-        }
-
-        // TODO: best practice is to make this a func? 
-        let navigation = <Navigation 
-            setActivity={ this.setActivity } 
-            days={ this.props.currentDays }             
-            activities = { this.state.event_categories } 
-            activity={this.state.activity}
-            isMobile = { isMobile } />
-
-        let events_map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.props.detailsShown ? 16 : this.props.zoom} setPosition={this.setPosition} setLocationParams={this.setLocationParams} />
+        let Map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.props.detailsShown ? 16 : this.props.zoom} setPosition={this.setPosition} setLocationParams={this.setLocationParams} />
         
+        // TODOL Also handle guide here.
+        let LeftPanel = <PlacesList data={this.props.topPicks} type='places' />
+
+        if (this.props.detailsShown) {
+            LeftPanel = <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
+        }
 
         // Don't render until the data has loaded
         // TODO: Handle error versus no results versus still loading
@@ -449,8 +431,7 @@ class Page extends Component {
         if (isMobile) {
             return ( 
                 this.props.detailsShown ? (  
-                    <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />            
-                    
+                    <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
                 ) : (
                     <MobilePage data={this.props.eventsData} places_data={this.props.placesData} vibe_categories={this.state.vibe_categories} isMobile={isMobile} setLocationParams={this.setLocationParams} />
                 )
@@ -458,44 +439,21 @@ class Page extends Component {
         } else {
             return (
                 <React.Fragment>
-                    <Header/>
-                    {navigation}
                     
+                    <Header/>
 
-                    {/* 16 column grid */}
-                    <Grid id='content' className='content' padded>
-                        <Grid.Row className='collapsed columns' style={{ background: '#EEEEEE'}}>
-                            
-                            <Transition animation='fade right' visible={this.props.showList} duration={200}>                                
-                                <Grid.Column floated='left' width={list_width} className='list_details'>
-                                    
-                                    {this.props.showList &&
-                                        /* TODO: Refactor into layout component and include guides */
-                                        <Fragment>
-                                        {this.props.detailsShown ? (
-                                                <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
-                                            ) : (
-                                                <PlacesList data={this.props.topPicks} type='places' />
-                                                )
-                                        }
-                                        </Fragment>
-                                    }
-                                    {/* <EventsList data={this.state.data} /> */}
+                    <Navigation
+                        setActivity={this.setActivity}
+                        days={this.props.currentDays}
+                        activities={this.state.event_categories}
+                        activity={this.state.activity}
+                        isMobile={isMobile} />                    
 
-                                </Grid.Column>
-                            </Transition>
-                            
-                            <Grid.Column width={map_width}>
-                                <Button
-                                    onClick={this.toggleList} icon={list_arrow}
-                                    style={{ position: 'absolute', boxShadow: '0 0 0 1px rgba(34,36,38,.15) inset', left: '-1.1em',  top: '50%', zIndex: '100' }}
-                                    circular />
-                                <ErrorBoundary>
-                                    {events_map}
-                                </ErrorBoundary>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
+                    <TwoColumnLayout
+                        leftPanel={LeftPanel}
+                        rightPanel={Map}
+                        showLeft={this.props.showList}/>
+                    
                 </React.Fragment>
             )
         }

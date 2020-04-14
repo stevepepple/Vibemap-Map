@@ -152,7 +152,7 @@ class LocationSearchInput extends React.Component {
             <Dropdown
                 fluid
                 search
-                className='icon select_city'                
+                className='icon select_city'
                 labeled
                 compact                
                 floating                     
