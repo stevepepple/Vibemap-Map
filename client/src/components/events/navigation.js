@@ -65,13 +65,18 @@ class Navigation extends Component {
         }
 
         // Set Redux state from Router params
-        if (params.activity) this.props.setActivity(params.activity)
         if (params.latitude && params.longitude) this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude, distance_changed: 0 })
         if (params.mainVibe) this.props.setMainVibe(params.mainVibe)
         if (params.days) this.props.setDays(params.days)
         if (params.place_type) this.props.setPlaceType(params.place_type)                    
         if (params.search) this.props.setSearchTerm(params.search)
         if (params.zoom) this.props.setZoom(parseFloat(params.zoom))
+        
+        if (params.activity) {
+            this.props.setActivity(params.activity)
+            this.lookUpActivity(params.activity)
+        } 
+
 
         if (params.vibes) {
             let vibes = []
@@ -93,11 +98,6 @@ class Navigation extends Component {
         let new_history = queryString.stringify(this.state.params)    
         push(new_history)
 
-        if (!isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)) {         
-            this.updateURL("latitude", this.props.currentLocation.latitude)
-            this.updateURL("longitude", this.props.currentLocation.longitude)
-        }
-
         if (!isEqual(prevProps.activity, this.props.activity)) this.updateURL("activity", this.props.activity)
         if (!isEqual(prevProps.detailsId, this.props.detailsId)) this.updateURL("place", this.props.detailsId)
         if (!isEqual(prevProps.detailsType, this.props.detailsType)) this.updateURL("type", this.props.detailsType)
@@ -107,6 +107,10 @@ class Navigation extends Component {
         if (!isEqual(prevProps.vibes, this.props.vibes)) this.updateURL("vibes", this.props.vibes)
         if (!isEqual(prevProps.zoom, this.props.zoom)) this.updateURL("zoom", this.props.zoom)        
 
+        if (!isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)) {
+            this.updateURL("latitude", this.props.currentLocation.latitude)
+            this.updateURL("longitude", this.props.currentLocation.longitude)
+        }
 
         if (!isEqual(prevProps.allVibes, this.props.allVibes)) {
             
@@ -141,7 +145,11 @@ class Navigation extends Component {
     
     // Event Handlers
     handleActivityChange = (event, { value }) => {
-
+        this.lookUpActivity(value)
+    }
+    
+    // Use for events change and prop to state
+    lookUpActivity = (value) => {
         const all_categories = Constants.activty_categories.concat(Constants.main_categories)
 
         let selected_activity = all_categories.find(({ key }) => key === value)
@@ -150,7 +158,8 @@ class Navigation extends Component {
 
         this.setState({ current_activity: value, selected_activity: selected_activity })
         this.props.setActivity(value)        
-    }    
+
+    }
 
     handlePlaceType = (e, { value }) => {
         console.log("CHANGED PLACE TYPE: ", value)
@@ -158,6 +167,12 @@ class Navigation extends Component {
     }
 
     handleSignatureVibe = (e, {value}) => {
+
+        // Handled cleareable state
+        if (value === '' || value === '') {
+            this.props.setMainVibe(null)
+            this.props.setCurrentVibes([])
+        }
         
         let vibes = [] 
 
@@ -178,7 +193,9 @@ class Navigation extends Component {
         this.props.setCurrentVibes(value)
     }
 
-    render() {        
+    render() {
+        
+        const { activity, isMobile, mainVibe, signatureVibes, placeType } = this.props
 
         let search = <Form size='small'>
             <Form.Group>
@@ -189,7 +206,7 @@ class Navigation extends Component {
 
         return (
             <React.Fragment>
-                {this.props.isMobile? (
+                {isMobile? (
                     <div className='navigation mobile' ref={this.navRef}>
                         {search}
                     </div>
@@ -205,8 +222,8 @@ class Navigation extends Component {
                                         compact
                                         //className='icon basic small'
                                         style={{ width: '10em', lineHeight: '2.4em', marginLeft: '0.4em' }}
-                                        text={t(this.props.placeType)}
-                                        value={this.props.placeType}
+                                        text={t(placeType)}
+                                        value={placeType}
                                         onChange={this.handlePlaceType}>
                                         <Dropdown.Menu>
                                             {this.state.place_type_options.map((option) => (
@@ -222,6 +239,7 @@ class Navigation extends Component {
                                         (t, { i18n }) => <Dropdown
                                             //button
                                             className='icon basic small'
+                                            clearable
                                             //icon={this.state.selected_activity.label.icon}
                                             //labeled
                                             style={{ lineHeight: '2.4em', marginLeft: '0.4em' }}                                                                                                                                                                                
@@ -229,7 +247,7 @@ class Navigation extends Component {
                                             onChange={this.handleActivityChange}
                                             //options={Constants.main_categories}                                    
                                             text={this.state.selected_activity.text}
-                                            value={this.state.current_activity}>
+                                            value={activity}>
                                             <Dropdown.Menu>
                                                 {Constants.main_categories.map((option) => (
                                                     <Dropdown.Item key={option.value} label={option.label} onClick={this.handleActivityChange} text={t(option.text)} value={option.value} />
@@ -243,35 +261,21 @@ class Navigation extends Component {
 
                                         }</Translation>
 
-                                    {/* 
-                                    <Translation>{
-                                    (t, { i18n }) => 
-                                        <Dropdown
-                                            text={t('Filters')}
-                                            icon='filter'
-                                            fluid
-                                            labeled
-                                            button
-                                            compact
-                                            className='icon small'
-                                        />
-                                    }</Translation>
-                                    */}
-
                                 </Form.Group>
                             </Menu.Item>
                             <Menu.Item>
                                 <Translation>{
                                     (t, { i18n }) => <Dropdown
-                                        className={'main_vibe ' + this.props.mainVibe}
+                                        className={'main_vibe ' + mainVibe}
                                         clearable
-                                        search                                        
+                                        floating
+                                        //search
                                         labeled
-                                        placeholder={t('Vibe sets')}                                        
+                                        placeholder={t('Vibe sets')}
                                         onChange={this.handleSignatureVibe}
-                                        options={this.props.signatureVibes}
+                                        options={signatureVibes}
                                         style={{ width: '12em'}}
-                                        value={this.props.mainVibe}
+                                        value={mainVibe}
                                     />
                                 }</Translation>
                             </Menu.Item>

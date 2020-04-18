@@ -63,7 +63,7 @@ class AllVibes extends Component {
                                 style={{ minWidth: '12em' }}
                                 placeholder={t("Add more vibes")}
                                 //multiple
-                                icon='add basic'
+                                icon='add'
                                 label="Vibe"
                                 labeled
                                 clearable
