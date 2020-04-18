@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Dimmer, Dropdown, GridColumn, Loader, Segment, Tab } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
 
-import Card from './item_card.js'
+import Card from '../elements/item_card.js'
 
 class EventsList extends Component {
 

@@ -11,7 +11,8 @@ import * as Constants from '../../constants.js'
 import { Button, Dimmer, Form, Input, Item, Loader, Segment } from 'semantic-ui-react'
 import { Global } from '@emotion/core'
 
-import styles from './ListItems.css'
+import styles from '../../styles/ListItems.scss'
+
 
 import ListItems from '../layouts/ListItems.js'
 import DatePicker from '../elements/DatePicker.js'
@@ -56,7 +57,7 @@ class PlacesList extends Component {
     }
 
     render() {
-        let has_items = this.props.data.length > 0
+        let has_items = this.props.data && this.props.data.length > 0
         let items = null
 
         let searchTerm = this.props.searchTerm
@@ -75,12 +76,8 @@ class PlacesList extends Component {
                         text={(this.state.date_options.find(obj => obj.value === this.props.currentDays).text)} />
 
         return (
-            <Segment id='list' compact>
+            <Segment id='list' className={styles.list} compact>
                 {/* TODO: Move to style sheet */}
-                <Global                
-                    styles={{                        
-                    }}
-                />
                 
                 <Segment vertical basic>
                     <Form>                        
@@ -88,7 +85,6 @@ class PlacesList extends Component {
                             <Translation>{
                                 (t, { i18n }) => <Input
                                     className='listSearch'
-                                    clearable
                                     fluid
                                     label={date}
                                     labelPosition='right'

@@ -25,9 +25,7 @@ function cardPLaceLayout(props) {
     }
 
     let venue = null
-    if (content.venue) {
-        venue = <span className='venue'>{content.venue}</span>
-    }
+    if (content.venue) venue = <span className='venue'>{content.venue}</span>
 
     let vibes = null;
     if (typeof content.vibes !== "undefined") {
@@ -36,13 +34,9 @@ function cardPLaceLayout(props) {
 
         let first_vibe = helpers.toTitleCase(content.vibes[0])
 
-        if (remainder > 0) {
-            vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe}<Label.Detail>{remainder}</Label.Detail></Label>
-        }
-
-        if (remainder === 0) {
-            vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe}</Label>
-        }
+        // Handle vibe label layout
+        if (remainder > 0) vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe}<Label.Detail>{remainder}</Label.Detail></Label>
+        if (remainder === 0) vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe}</Label>
 
         // vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
     }

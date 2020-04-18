@@ -30,13 +30,12 @@ function cardPLaceLayout(props) {
     }
 
     let venue = null
-    if (content.venue) {
-        venue = <span className='venue'>{content.venue}</span>
-    }
+    if (content.venue) venue = <span className='venue'>{content.venue}</span>
 
     let date_time = <span>{}</span>
 
     let vibes = null;
+    
     if (typeof content.vibes !== "undefined") {
         let remainder = content.vibes.length - 1
         vibes = null
