@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import _ from 'lodash'
 import isEqual from 'react-fast-compare'
 import MetaTags from 'react-meta-tags'
 
@@ -28,7 +29,7 @@ class PlaceDetails extends Component {
         this.state = {
             show: props.show,
             id: this.props.id,
-            details_data: null,
+            currentItem: this.props.currentItem,
             directions: null,                     
             loading: true,
             name: null,
@@ -50,8 +51,10 @@ class PlaceDetails extends Component {
         // Do something
     }
 
-    componentDidMount = function() {        
-        this.getPlaceDetails()
+    componentDidMount = function() {       
+        // Fetch guide details and walking path
+        if(this.props.detailsType === 'guides') this.getGuideDetails()
+
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -59,17 +62,23 @@ class PlaceDetails extends Component {
         if (!isEqual(prevProps.id, this.props.id)) {
             this.getPlaceDetails()
         }
+
+        if (!isEqual(prevProps.currentItem, this.props.currentItem)) {
+            this.setState({ currentItem: this.props.currentItem })
+        }
     }
 
+    // TODO: Move this module to layouts and make this function more explicitly agnostic to type. 
     getPlaceDetails = function() {
-        VibeMap.getPlaceDetails(this.props.detailsId, this.props.detailsType)
-            .then(result => {
-                
+        const { detailsId, detailsType, currentItem, setCurrentItem } = this.props
+        VibeMap.getPlaceDetails(detailsId, detailsType)
+            .then(result => {      
                 // Handle Error
+                console.log('getPlaceDetails: ', result.data.detail)
                 if (result.data.detail === 'Not found.') {
-                    this.setState({ details_data: null, loading: false})
+                    this.setState({ currentItem: null, loading: false})
                 } else  {
-                    this.setState({ details_data: result.data, loading: false })
+                    this.setState({ loading: false })
                     let point = result.data.geometry.coordinates
                     let location = { latitude: point[1], longitude: point[0] }
 
@@ -78,7 +87,7 @@ class PlaceDetails extends Component {
                         result.data.properties.vibes = []
                     }
 
-                    this.props.setCurrentPlace({
+                    setCurrentItem({
                         name: result.data.properties.name,
                         description: result.data.properties.description,
                         categories: result.data.properties.categories,
@@ -99,25 +108,79 @@ class PlaceDetails extends Component {
             })
     }
 
+    getGuideDetails = function () {
+        const { detailsId, guidesData, setCurrentItem, setGuideDetails, setGuideMarkers } = this.props
+
+        const selectedGuide = _.find(guidesData, function (o) { return o.id === detailsId })
+        let guideDetails = selectedGuide['properties']
+
+        let place_promises = guideDetails['places'].map((place) => VibeMap.getPlaceDetails(place['id'], 'places'))
+
+        Promise.all(place_promises).then(function (places) {
+            let guideMarkers = places.map((place) => place['data'])
+
+            setGuideMarkers(guideMarkers)
+
+            setCurrentItem({
+                name: guideDetails.name,
+                description: guideDetails.description,
+                categories: guideDetails.categories,
+                images: guideDetails.images,
+                places: guideMarkers,
+                tips: guideDetails.tips,
+                vibes: guideDetails.vibes
+            })
+
+        })
+
+        let waypoints = guideDetails['places'].map((place) => place['coordinates'])
+
+        VibeMap.getDirections(waypoints)
+            .then(result => {
+
+                let bestRoute = result['data']['routes'][0]
+
+                let geojson = {
+                    type: 'Feature',
+                    properties: {
+                        distance: bestRoute['distance']
+                    },
+                    geometry: {
+                        type: 'LineString',
+                        coordinates: bestRoute['geometry']['coordinates']
+                    }
+                }
+
+                // Join guide and route and save in Redux
+                guideDetails.route = geojson
+                setGuideDetails(guideDetails)
+
+                this.setState({ currentItem: guideDetails, loading: false })
+            })
+    }
+
     toggleMoreVibes() {
         this.setState({ vibes_expanded: !this.state.vibes_expanded })
     }
 
     render() {
+
+        const { loading, vibes_expanded, vibes_to_show } = this.state
+        const { currentItem } = this.props
         
-        if (this.state.loading === false && this.state.details_data == null) { return 'No data for the component.' }
+        if (loading === false && currentItem == null) { return 'No data for the component.' }
 
         /* TODO: Handle events and places in one place */
         
-        let title = this.props.currentPlace.name + ' - VibeMap'
-        let name = this.props.currentPlace.name
-        let description = unescape(this.props.currentPlace.description)
+        let title = this.props.currentItem.name + ' - VibeMap'
+        let name = this.props.currentItem.name
+        let description = unescape(this.props.currentItem.description)
 
         console.log('Place description: ', description, typeof(description))
 
         /* TODO: Make recommendation is own component */
-        if (this.props.currentPlace.reason === undefined) this.props.currentPlace.reason = 'vibe'
-        let reason = Constants.RECOMMENDATION_REASONS[this.props.currentPlace.reason]
+        if (this.props.currentItem.reason === undefined) this.props.currentItem.reason = 'vibe'
+        let reason = Constants.RECOMMENDATION_REASONS[this.props.currentItem.reason]
         
         let recommendation = 
             <List.Item className='recomendation'>
@@ -129,30 +192,46 @@ class PlaceDetails extends Component {
 
         // TODO: Make these components that handle mapping and errors.
         let categories = null
-        if (this.props.currentPlace.categories.length > 0) {
-            categories = this.props.currentPlace.categories.map((category) => <Label key={category} className={'image label ' + category}>{category}</Label>);
+        if (this.props.currentItem.categories.length > 0) {
+            categories = this.props.currentItem.categories.map((category) => <Label key={category} className={'image label ' + category}>{category}</Label>);
         }
 
         let vibes = null
-        if (this.props.currentPlace.vibes.length > 0) {
-            if (this.state.vibes_expanded == false) {
-                vibes = this.props.currentPlace.vibes.slice(0, this.state.vibes_to_show).map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
+        if (this.props.currentItem.vibes.length > 0) {
+            if (vibes_expanded == false) {
+                vibes = currentItem.vibes.slice(0, vibes_to_show).map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
             } else {
-                vibes = this.props.currentPlace.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
+                vibes = currentItem.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
             }
             
         }
 
         let image = <Image className = 'placeImage' src={ process.env.PUBLIC_URL + '/images/image.png' } fluid/>
-        let num_images = this.props.currentPlace.images.length
+        let num_images = currentItem.images.length
         if (num_images > 0) {
-            image = <Image className='placeImage' src={this.props.currentPlace.images[num_images - 1]} fluid />
+            image = <Image className='placeImage' src={currentItem.images[num_images - 1]} fluid />
         }
 
         let directions = null
 
-        if (this.state.details_data && this.state.show_directions) {
-            directions = <Directions data={this.state.details_data} />
+        if (currentItem && this.state.show_directions) {
+            directions = <Directions data={currentItem} />
+        }
+
+        let places = null
+        if (currentItem && currentItem.places !== undefined) {
+            console.log('Details data: ', currentItem.places)
+            let items = currentItem.places.map((place, i) => <List.Item key={place.properties.id}>
+                <Label circular color='blue' style={{ float: 'left'}}>{i + 1}</Label>
+                <List.Content>
+                    <strong>{place.properties.name}</strong>
+                    {place.properties && place.properties.tips &&
+                        <List.Description>{place.properties.tips[0]}</List.Description>
+                    }
+                </List.Content>
+            </List.Item>)
+
+            places = <List divided>{items}</List>
         }
 
         return (
@@ -192,7 +271,7 @@ class PlaceDetails extends Component {
                         <Placeholder.Line />
                     </Placeholder>
                 ) : (
-                    <List verticalAlign = 'middle'>
+                    <List verticalAlign='middle'>
                         <List.Item >
                             <ShowMoreText
                                 /* Default options */
@@ -209,7 +288,7 @@ class PlaceDetails extends Component {
                         { recommendation }
                         <List.Item>
                             {vibes}
-                            {(this.state.vibes_expanded == false && this.props.currentPlace.vibes.length > this.state.vibes.length) &&
+                            {(this.state.vibes_expanded == false && this.props.currentItem.vibes.length > this.state.vibes.length) &&
                                 <Button basic onClick={this.toggleMoreVibes} className='tiny' icon='arrow down' circular />
                             }
 
@@ -232,6 +311,12 @@ class PlaceDetails extends Component {
                     </Reveal>            
                 )}
 
+                {places &&
+                    <Segment.Group>
+                        {places}
+                    </Segment.Group>
+                }
+
                 {this.state.loading ? (
                     <Placeholder>
                         <Placeholder.Line />
@@ -241,15 +326,16 @@ class PlaceDetails extends Component {
                 ) : (
                     <Segment.Group>                    
                         <Segment>{categories ? categories : 'No categories'}</Segment>
-                        <Segment>{this.props.currentPlace.hours ? this.props.currentPlace.hours : 'No hours' }</Segment>
-                        <Segment>{this.props.currentPlace.address ? this.props.currentPlace.address: 'No address' }</Segment>
-                        <Segment>{this.props.currentPlace.url ? this.props.currentPlace.url : 'No website' }</Segment>
+                        <Segment>{this.props.currentItem.hours ? this.props.currentItem.hours : 'No hours' }</Segment>
+                        <Segment>{this.props.currentItem.address ? this.props.currentItem.address: 'No address' }</Segment>
+                        <Segment>{this.props.currentItem.url ? this.props.currentItem.url : 'No website' }</Segment>
                     </Segment.Group>
                     )}
 
                 <div>
                     
                 </div>                        
+                
 
                 {/* TODO: Render Description at HTML the proper way as stored in Mongo and then as own React component */}
 
@@ -275,7 +361,9 @@ const mapStateToProps = state => {
         detailsType: state.detailsType,
         nearby_places: state.nearby_places,
         currentLocation: state.currentLocation,
-        currentPlace: state.currentPlace,
+        currentItem: state.currentItem,
+        guidesData: state.guidesData,
+        guideMarkers: state.guideMarkers,
         zoom: state.zoom,
         currentDays: state.currentDays,
         currentDistance: state.currentDistance,

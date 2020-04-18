@@ -55,6 +55,38 @@ module.exports = {
         });
     },
 
+    getDirections: function(waypoints) {
+        return new Promise(function (resolve, reject) {
+            const service = 'https://api.mapbox.com/directions/v5/mapbox/walking/'
+            let query = querystring.stringify({
+                access_token: Constants.MAPBOX_TOKEN,
+                geometries: 'geojson',
+                steps: true,
+                waypoints: []
+            })
+
+            const start = waypoints[0]
+            const end = waypoints[waypoints.length - 1]
+
+            let start_end = String(start) + ';' + String(end)
+            //if (waypoints !== undefined) query['waypoints'] = query += 'waypoints=' + waypoints.join(';')
+            
+            start_end = waypoints.join(';')
+            console.log('Getting directions for ', start_end, query)
+
+            fetch(service + start_end + "?" + query)
+                .then(data => data.json())
+                .then(res => {
+                    console.log('Got Directions: ', res)
+                    clearTimeout(timeout)
+                    resolve({ data: res, loading: false, timedOut: false })
+
+                }, (error) => {
+                    console.log(error)
+                });
+            })
+    },
+
     getVibes: function () {
         return new Promise(function (resolve, reject) {
             let query = querystring.stringify({
@@ -75,7 +107,7 @@ module.exports = {
 
                 }, (error) => {
                     console.log(error)
-                });
+                })
         });
     },
 
@@ -89,7 +121,7 @@ module.exports = {
                     top_vibes[vibe] += 1
                 } else {
                     top_vibes[vibe] = 1
-                }            
+                }
             })
         })
         
@@ -102,6 +134,12 @@ module.exports = {
         
         return top_vibes_sorted
 
+    },
+
+    getGuides: function(){
+        return new Promise(function (resolve, reject) {
+
+        })
     },
 
     getNeighborhoods: function(){
@@ -139,6 +177,7 @@ module.exports = {
 
     // TODO: Include a way to query by time of day
     getPlaceDetails: function (id, type) {
+        // TODO: Handle Guides type
         if(type == null || type == undefined) type = 'places'
         return new Promise(function (resolve, reject) {
             fetch(ApiUrl + "/v0.3/"+ type + "/" + id)

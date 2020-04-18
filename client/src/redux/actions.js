@@ -3,6 +3,11 @@ export const setUIState = state => ({
   state,
 })
 
+export const addFeature = feature => ({
+  type: 'ADD_FEATURE',
+  feature,
+})
+
 export const setDetailsShown = show => ({
   type: 'SET_DETAILS_SHOWN',
   show,
@@ -22,6 +27,18 @@ export const setDetailsType = place_type => ({
   type: 'SET_DETAILS_TYPE',
   place_type,
 })
+
+export const setGuideDetails = details => ({
+  type: 'SET_GUIDE_DETAILS',
+  details,
+})
+
+export const setGuideMarkers = markers => ({
+  type: 'SET_GUIDE_MARKERS',
+  markers,
+})
+
+
 
 export const setMapReady = ready => ({
   type: 'SET_MAP_READY',
@@ -89,8 +106,8 @@ export const setDensityBonus = bonus => ({
   bonus,
 })
 
-export const setCurrentPlace = place => ({
-  type: 'SET_CURRENT_PLACE',
+export const setCurrentItem = place => ({
+  type: 'SET_CURRENT_ITEM',
   place,
 })
 

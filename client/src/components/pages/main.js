@@ -15,14 +15,14 @@ import MobilePage from './mobile.js'
 
 // Layouts
 import TwoColumnLayout from '../layouts/TwoColumnLayout'
+import ItemDetails from '../layouts/ItemDetails.js'
+import ListSearch from '../layouts/ListSearch.js'
 
-import PlaceDetails from '../places/places_details.js'
-import PlacesList from '../places/places_list.js'
-import ErrorBoundary from '../pages/GlobalError.js'
-
-import EventsMap from '../events/events_map.js'
+// Page elements
 import Header from '../elements/header.js'
 import Navigation from '../events/navigation.js'
+import EventsMap from '../events/events_map.js'
+
 //import PlaceCards from '../places/place_cards.js'
 
 /* REDUX STUFF */
@@ -30,10 +30,6 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 import { store } from '../../redux/store'
 import { push } from 'connected-react-router'
-
-/* TODO: Break this into styles for each component */
-// THIS is a high-order component so styles should go elsewhere
-import '../../styles/vibe_generator.scss'
 
 // TODO: Seperate data rendering from layout from UI logic? 
 // TODO: Move to main page component, i.e main.js or index.js
@@ -246,6 +242,14 @@ class Page extends Component {
         })        
     }
 
+    // TODO: consider breaking these out as a separate service/container that only fetches data
+    fetchGuides() {
+        VibeMap.getGuides()
+            .then(results => {
+                this.props.setCities(results.data)
+            })
+    }
+
     fetchCities() {
         VibeMap.getCities()
             .then(results => {                
@@ -276,6 +280,73 @@ class Page extends Component {
             })
     }
 
+    /* TODO: Should all of this logic just flow through an event service and component? */
+    // Change to getPlaces
+    fetchEvents(position, refreshResults) {
+
+        let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
+        if (this.state.timedOut === true) {
+            this.setState({ timedOut: false })
+        }
+
+        /* Get current events, then set them in the state */
+        /* TODO: package args into spread object? */
+        VibeMap.getEvents(point, this.props.distance, this.props.bounds, this.state.event_categories, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
+            .then(results => {
+
+                let top_picks = results.data.splice(1, this.state.num_top_picks)
+                // TODO: If both events and places, how to merge the results
+                this.props.setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
+                this.props.setEventsData(results.data)
+
+                this.setState({ loading: false, timedOut: false })
+            }, (error) => {
+                console.log(error)
+            })
+    }
+
+    // Get Ranked Places for the map
+    // TODO: Move to service & reducer
+    fetchPlaces(refreshResults) {
+
+        let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
+
+        if (this.state.timedOut === true) this.setState({ timedOut: false, searching: false })
+
+        /* Get nearby places, then set them in the Redux state */
+        // If there a search term or vibes do a top pick search
+        if (this.props.currentVibes.length > 0 || this.props.searchTerm !== "") {
+            this.setState({ searching: true })
+
+            // TODO: add search variable.
+            VibeMap.getPicks(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentVibes, this.props.searchTerm)
+                .then(results => {
+                    // Set places in he results
+                    this.setTopPlaces(results, refreshResults)
+
+                }, (error) => {
+                    console.log(error)
+                })
+        } else {
+            this.setState({ searching: false })
+        }
+
+        VibeMap.getPlaces(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
+            .then(results => {
+
+                if (this.state.searching !== true) {
+                    this.setTopPlaces(results, refreshResults)
+                } else {
+                    // TODO: Only show places with vibe affinity during search
+                    //this.props.setPlacesData(results.data, refreshResults)
+                }
+
+                this.setState({ loading: false, timedOut: false })
+            }, (error) => {
+                console.log(error)
+            })
+    }
+
     getBounds() {
         // TODO: There's probably a better place for these hooks. 
         let bounds = helpers.getBounds(this.props.currentLocation, this.props.zoom, this.props.mapSize)
@@ -300,6 +371,11 @@ class Page extends Component {
                 this.setState({ mergeTopPicks: false })
                 this.fetchPlaces(refreshResults)
                 break
+            case 'guides':
+                this.setState({ mergeTopPicks: false })
+                this.fetchGuides()
+                //this.fetchPlaces(refreshResults)
+                break
             // i.e. both
             default:
                 this.setState({ mergeTopPicks: true })
@@ -307,73 +383,6 @@ class Page extends Component {
                 this.fetchPlaces(refreshResults)
                 break
         }
-    }
-
-    /* TODO: Should all of this logic just flow through an event service and component? */
-    // Change to getPlaces
-    fetchEvents(position, refreshResults) {
-
-        let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
-        if(this.state.timedOut === true) {
-            this.setState({ timedOut: false })
-        }
-    
-        /* Get current events, then set them in the state */
-        /* TODO: package args into spread object? */
-        VibeMap.getEvents(point, this.props.distance, this.props.bounds, this.state.event_categories, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
-            .then(results => {                
-
-                let top_picks = results.data.splice(1, this.state.num_top_picks)
-                // TODO: If both events and places, how to merge the results
-                this.props.setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
-                this.props.setEventsData(results.data)
-
-                this.setState({ loading: false, timedOut: false })
-            }, (error) => {
-                console.log(error)
-            })
-    }
-
-    // Get Ranked Places for the map
-    // TODO: Move to service & reducer
-    fetchPlaces(refreshResults){
-
-        let point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
-
-        if (this.state.timedOut === true) this.setState({ timedOut: false, searching: false })
-
-        /* Get nearby places, then set them in the Redux state */
-        // If there a search term or vibes do a top pick search
-        if (this.props.currentVibes.length > 0 || this.props.searchTerm !== "") {
-            this.setState({ searching: true})
-            
-            // TODO: add search variable.
-            VibeMap.getPicks(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentVibes, this.props.searchTerm)
-                .then(results => {                                        
-                    // Set places in he results
-                    this.setTopPlaces(results, refreshResults)
-
-            }, (error) => {
-                console.log(error)
-            })
-        } else {
-            this.setState({ searching: false }) 
-        }
-
-        VibeMap.getPlaces(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
-            .then(results => {
-
-                if(this.state.searching !== true) {
-                    this.setTopPlaces(results, refreshResults)
-                } else {
-                    // TODO: Only show places with vibe affinity during search
-                    //this.props.setPlacesData(results.data, refreshResults)
-                }
-                
-                this.setState({ loading: false, timedOut: false })
-            }, (error) => {
-                console.log(error)
-            })
     }
 
     setTopPlaces(results, refreshResults) {
@@ -411,17 +420,25 @@ class Page extends Component {
     render() {
 
         const { width } = this.state
+        const { placeType, guidesData, topPicks } = this.props
 
         // TODO: Set this in Redux for global access
         const isMobile = width <= 700
 
         let Map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.props.detailsShown ? 16 : this.props.zoom} setPosition={this.setPosition} setLocationParams={this.setLocationParams} />
         
+        // Pick the list that should be display
+        let list_data = null
+        if (placeType === 'places' || placeType === 'events') list_data = topPicks
+        if (placeType === 'guides' ) list_data = guidesData
+
         // TODOL Also handle guide here.
-        let LeftPanel = <PlacesList data={this.props.topPicks} type='places' />
+        let LeftPanel = <ListSearch 
+                            data={list_data} 
+                            type='places' />
 
         if (this.props.detailsShown) {
-            LeftPanel = <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
+            LeftPanel = <ItemDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
         }
 
         // Don't render until the data has loaded
@@ -431,7 +448,7 @@ class Page extends Component {
         if (isMobile) {
             return ( 
                 this.props.detailsShown ? (  
-                    <PlaceDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
+                    <ItemDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
                 ) : (
                     <MobilePage data={this.props.eventsData} places_data={this.props.placesData} vibe_categories={this.state.vibe_categories} isMobile={isMobile} setLocationParams={this.setLocationParams} />
                 )
@@ -479,6 +496,7 @@ const mapStateToProps = state => ({
     detailsType: state.detailsType,
     distance: state.distance,
     eventsData: state.eventsData,
+    guidesData: state.guidesData,
     mapReady: state.mapReady,
     mapSize: state.mapSize,
     pixelDistance: state.pixelDistance,

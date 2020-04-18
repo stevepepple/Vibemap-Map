@@ -35,8 +35,12 @@ class EventsMap extends React.Component {
             lens : {"type": "FeatureCollection", "features": []},
             popupInfo: null,
             has_data: false,
+            has_marker_data: false,
+            has_route_data: false,
+            marker_data: [],
             layers: props.layers,
             mapStyles : Styles,
+            score_markers: true,
             update_layer: false
         }
 
@@ -52,14 +56,21 @@ class EventsMap extends React.Component {
     // TODO: Move to componentWillUPdate
     componentWillReceiveProps(nextProps){
 
+        const { detailsShown, placeType, guidesData, guideDetails, guideMarkers, topPicks } = nextProps
+        let { has_marker_data, has_route_data, marker_data, score_markers } = this.state
         // Make it valide geoJSON
         // TODO: make valid GeoJSON in Redux?
         let places_geojson = turf.featureCollection(nextProps.places_data)
         let events_geojson = turf.featureCollection(nextProps.events_data)
-        let top_picks_geojson = turf.featureCollection(nextProps.topPicks)        
 
+        //let guides_geojson = turf.featureCollection(nextProps.guideData)
+
+        let top_picks_geojson = turf.featureCollection(nextProps.topPicks)        
         let zoom = this.props.zoom
 
+        console.log('placeType: ', placeType)
+        this.handleMarkers(nextProps)
+        
         this.setState({ 
             places_geojson: places_geojson,
             events_geojson: events_geojson,
@@ -104,6 +115,8 @@ class EventsMap extends React.Component {
         // These both need size at the same time
         this.props.setMapSize(size)
         this.props.setMapReady(true)
+        this.handleMarkers(this.props)
+
     }
 
     styleHeatMap() {
@@ -178,7 +191,7 @@ class EventsMap extends React.Component {
 
     // Set details when marker or icon is clicked
     _onClick = (event, feature) => {
-        console.log("Clicked this: ", event, feature)
+        console.log("Clicked this: ", event.lngLat, feature)
         let id = null
         let place_type = null
 
@@ -218,6 +231,33 @@ class EventsMap extends React.Component {
         }
     }
 
+    handleMarkers(props) {
+        const { detailsShown, placeType, guidesData, guideDetails, guideMarkers, topPicks } = props
+        let { has_marker_data, has_route_data, marker_data, score_markers } = this.state
+
+        if (placeType === 'places' || placeType === 'events') marker_data = topPicks
+        if (placeType === 'guides') {
+            marker_data = guidesData
+            score_markers = false
+
+            if (detailsShown && guideDetails.route !== null) {
+                has_route_data = true
+
+                console.log(JSON.stringify(guideDetails.route))
+                marker_data = guideMarkers
+            }
+        }
+
+        has_marker_data = marker_data.length > 0
+
+        this.setState({
+            marker_data: marker_data,
+            score_markers: score_markers,
+            has_route_data: has_route_data, 
+            has_marker_data: has_marker_data
+        })
+    }
+
     showPopup(name, latitude, longitude) {
         this.setState({
             popupInfo: {
@@ -230,9 +270,11 @@ class EventsMap extends React.Component {
 
     render() {
 
+        const { topPicks, detailsShown, guidesData, guideDetails, guideMarkers, placeType } = this.props
+        const { has_marker_data, has_route_data, marker_data, score_markers } = this.state
+
         let has_places_data = this.props.places_data.length > 0
         let has_events_data = this.props.events_data.length > 0
-        let has_top_pick_data = this.props.topPicks.length > 0
 
         const mapController = new CustomMapController()
         const mapStyles = this.state.mapStyles
@@ -291,7 +333,7 @@ class EventsMap extends React.Component {
 
                         <ScaleControl maxWidth={200} unit='imperial' />                        
 
-                        {has_top_pick_data &&
+                        {has_marker_data &&
                             <Fragment>
                                 <Source
                                     id='top_picks'
@@ -316,12 +358,31 @@ class EventsMap extends React.Component {
                                 {/* TODO: this state should be synced with the top_picks react state */}
                                 {this.props.layers.photo_markers &&
                                     <Markers
-                                        data={this.props.topPicks}
+                                        data={marker_data}
                                         currentVibes={this.props.currentVibes}
                                         zoom={this.props.zoom}
                                         onClick={this._onClick}
+                                        score_markers={score_markers}
                                         showPopup={this.showPopup} />
                                 }
+                            </Fragment>
+                        }
+
+                        {has_route_data &&
+                            <Fragment>
+                                <Source
+                                    id='route'
+                                    type="geojson"
+                                    data={guideDetails.route}>
+                                
+                                    <Layer
+                                        id="walking_route"
+                                        type="line"
+                                        layout={mapStyles.route_layout}
+                                        paint={mapStyles.route_paint}
+                                    />
+                                </Source>
+
                             </Fragment>
                         }
 
@@ -342,11 +403,11 @@ class EventsMap extends React.Component {
                             </Fragment>                          
                         */}
                         
-                        {this.props.detailsShown && this.props.currentPlace.location !== null &&
+                        {this.props.detailsShown && this.props.placeType !== 'guides' && this.props.currentItem.location !== null &&
                             /* Current place marker */
                             <Marker
-                                longitude={this.props.currentPlace.location.longitude}
-                                latitude={this.props.currentPlace.location.latitude}
+                                longitude={this.props.currentItem.location.longitude}
+                                latitude={this.props.currentItem.location.latitude}
                                 offsetTop={-2}
                                 offsetLeft={-2}>   
                                 <Selected size={helpers.scaleSelectedMarker(this.props.zoom)} />
@@ -461,8 +522,11 @@ const mapStateToProps = state => ({
     nearby_places: state.nearby_places,
     currentVibes: state.currentVibes,
     currentLocation: state.currentLocation,
-    currentPlace: state.currentPlace,
+    currentItem: state.currentItem,
     densityBonus: state.densityBonus,
+    guidesData: state.guidesData,
+    guideDetails: state.guideDetails,
+    guideMarkers: state.guideMarkers,
     layers: state.layers,
     layersChanged: state.layersChanged,
     zoom: state.zoom,
@@ -474,6 +538,7 @@ const mapStateToProps = state => ({
     mainVibe: state.mainVibe,
     mapSize: state.mapSize,
     pathname: state.router.location.pathname,
+    placeType: state.placeType,
     params: state.params,
     search: state.router.location.search,
     topPicks: state.topPicks,

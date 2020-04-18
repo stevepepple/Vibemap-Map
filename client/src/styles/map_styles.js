@@ -75,6 +75,17 @@ module.exports = {
       'text-halo-width' : 1.2
     },
 
+    route_layout: {
+      'line-join': 'round',
+      'line-cap': 'round'
+    },
+
+    route_paint: {
+      'line-color': '#3887be',
+      'line-width': 5,
+      'line-opacity': 0.75
+    },
+
     top_pick_layout: {
       // TODO: Make sure important sorting variable is working
       //"icon-image": "",

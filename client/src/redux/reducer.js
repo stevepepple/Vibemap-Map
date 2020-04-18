@@ -4,9 +4,26 @@ import { connectRouter } from 'connected-react-router'
 import _ from 'lodash'
 import helpers from '../helpers.js'
 
+import initialGuides from './guides.json'
+
 export function uiReducer(state = uiState, action) {
   switch(action.type) {
     
+  }
+}
+
+const editorState = { features: [], numFeatures: 0 }
+
+export const editorReducer = (state = editorState, action) => {
+  switch(action.type) {
+    case 'ADD_FEATURE': {
+      return Object.assign({}, state, {
+        features: state.features.concat(action.feature),
+        numFeatures: state.numFeatures++
+      })
+    }
+    default: 
+      return state
   }
 }
 
@@ -203,6 +220,7 @@ export const currentVibes = (state = [], action) => {
   return state
 }
 
+// One of events, places, or guides
 export const placeType = (state = 'places', action) => {
   if (action.type === 'SET_PLACE_TYPE') {
     //console.log("SET_PLACE_TYPE", action)
@@ -317,6 +335,30 @@ export const eventsData = (state = [], action) => {
   return state
 }
 
+export const guidesData = (state = initialGuides['results']['features'], action) => {
+  if (action.type === 'SET_GUIDES_DATA') {
+    return action.guides_data
+  }
+
+  return state
+}
+
+export const guideDetails = (state = {}, action) => {
+  if (action.type === 'SET_GUIDE_DETAILS') {
+    return action.details
+  }
+
+  return state
+}
+
+export const guideMarkers = (state = {}, action) => {
+  if (action.type === 'SET_GUIDE_MARKERS') {
+    return action.markers
+  }
+
+  return state
+}
+
 export const placesData = (state = [], action) => {
 
   if (action.type === 'SET_PLACES_DATA') {
@@ -355,7 +397,7 @@ export const placesData = (state = [], action) => {
   return state
 }
 
-export const currentPlace = (state = {
+export const currentItem = (state = {
   name: null,
   description: null,
   address: null,
@@ -369,8 +411,8 @@ export const currentPlace = (state = {
   vibes: [],
   images: []
 }, action) => {
-  if (action.type === "SET_CURRENT_PLACE") {
-    console.log('SET_CURRENT_PLACE: ', action)
+  if (action.type === "SET_CURRENT_ITEM") {
+    console.log('SET_CURRENT_VIBES: ', action.place)
     return action.place
   }
 
@@ -448,10 +490,11 @@ export const reducers = (history) => combineReducers({
   bounds,
   boundsReady,
   cities,
+  editorReducer,
   geod,
   router: connectRouter(history),
   currentLocation,
-  currentPlace,
+  currentItem,
   currentDays,
   currentVibes,
   densityBonus,
@@ -460,6 +503,9 @@ export const reducers = (history) => combineReducers({
   detailsShown,
   distance,
   eventsData,
+  guidesData,
+  guideDetails,
+  guideMarkers,
   headerSize,
   layers,
   layersChanged,

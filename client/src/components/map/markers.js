@@ -22,8 +22,9 @@ class Markers extends Component {
 
     componentDidMount() {        
         let has_features = (this.props.data.length > 0) ? true : false
+        // Add markers to state from props; optionally do additional scoring
         if (has_features) {
-            this.setState({ markers: this.scoreMarkers(this.props.data) })    
+            this.setState({ markers: this.styleMarkers(this.props.data) })
         }
     }
 
@@ -38,38 +39,41 @@ class Markers extends Component {
 
         if (has_features && !update) {
             // Comes from Redux state but that's not entirely clear
-            this.setState({ markers: this.scoreMarkers(this.props.data)})    
+            this.setState({ markers: this.styleMarkers(this.props.data)})    
         }
     }
 
-    scoreMarkers(features) {        
-
+    styleMarkers(features) {        
 
         let scored_markers = features.map((feature) => {
-            
-            // TODO: Vibe Score and average score are confusing. 
-            let score = feature.properties.average_score
-
-            let max = helpers.getMax(features, 'average_score')
-            let min = helpers.getMin(features, 'average_score')
-
             feature.className = 'marker'
+            feature.width = this.props.size
+            feature.height = this.props.size
 
-            // Make less high scored marker in cluster smaller 
-            if (feature.properties.in_cluster === true && feature.properties.top_in_cluster === 'false' ) {
-                score = max / 4
-                feature.className = 'marker small'
+            if (this.props.score_markers) {
+                // TODO: Vibe Score and average score are confusing. 
+                let score = feature.properties.average_score
+
+                let max = helpers.getMax(features, 'average_score')
+                let min = helpers.getMin(features, 'average_score')
+
+                // Make less high scored marker in cluster smaller 
+                if (feature.properties.in_cluster === true && feature.properties.top_in_cluster === 'false') {
+                    score = max / 4
+                    feature.className = 'marker small'
+                }
+
+                //let orginal_score = feature.properties.score
+                //let vibes = feature.properties.vibes
+                //let name = feature.name ? feature.name : feature.properties.name
+                //let link = feature.properties.link
+
+                feature.size = helpers.scaleMarker(score, min, max, this.props.zoom)
+
+                feature.width = feature.size
+                feature.height = feature.size
+
             }
-
-            //let orginal_score = feature.properties.score
-            //let vibes = feature.properties.vibes
-            //let name = feature.name ? feature.name : feature.properties.name
-            //let link = feature.properties.link
-        
-            feature.size = helpers.scaleMarker(score, min, max, this.props.zoom)
-            
-            feature.width = feature.size
-            feature.height = feature.size
 
             return feature
         })
@@ -99,15 +103,16 @@ class Markers extends Component {
                 // If the marker is the top in it's cluster show a special label
                 let label = null
 
-                // top in cluster is a string/boolean because of map box styles
+                {/* TODO: Remove this: 
+                 top in cluster is a string/boolean because of map box styles
                 if (in_cluster === false || top_in_cluster === 'true') {
                     label = <div className='label' style={{ marginTop: - (feature.height - 8) + 'px' }}>
                         <div className='name'>{feature.properties.name}</div>
 
-                        {/* TODO: Handle event vs. place summary */}
                         <Vibe feature={feature} />
                     </div>
                 }
+                */}
 
                 if (feature.id === this.props.detailsId) {
                     console.log(feature)
@@ -116,7 +121,7 @@ class Markers extends Component {
                 let selected = (feature.id === this.props.detailsId)
 
                 // TODO: How to set z-index of parent marker based on score.
-                let marker = <Marker
+                return <Marker
                     key={feature.id}
                     id={feature.id}
                     longitude={feature.geometry.coordinates[0]}
@@ -133,8 +138,8 @@ class Markers extends Component {
                         style={{ 
                             height: feature.height, 
                             width: feature.width,
-                            marginLeft: - feature.width / 2,
-                            marginTop: - feature.height / 2,
+                            marginLeft: - feature.width,
+                            marginTop: - feature.height,
                             zIndex: feature.vibe_score
                         }}>                        
                                                 
@@ -143,7 +148,7 @@ class Markers extends Component {
                     </div>
                 </Marker>
                 
-                return(marker)
+                //return(marker)
             })            
         }
 
@@ -157,6 +162,11 @@ const mapStateToProps = state => {
     return {
         detailsId: state.detailsId
     }
+}
+
+Markers.defaultProps = {
+    size: 52,
+    score_markers: true
 }
 
 export default connect(mapStateToProps, actions)(Markers)

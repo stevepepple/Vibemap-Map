@@ -1,0 +1,60 @@
+{
+    "count": 3,
+    "next": "http://api.vibemap.com/v0.3/places/?categories=&dist=2318.0701215973572&end_date_before=2020-04-17+19%3A04&ordering=-aggregate_rating&page=2&per_page=400&point=-122.4114176%2C37.801164799999995&search=&start_date_after=2020-04-16+07%3A04",
+    "previous": null,
+    "results": {
+        "type": "FeatureCollection",
+            "features": [
+                {
+                    "id": "45c7f2ae-bc68-40ac-be28-f534023ed466",
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -122.22485551498522,
+                            37.77778834361489
+                        ]
+                    },
+                    "properties": {
+                        "name": "Fruitvale Walking Guide",
+                        "short_name": "Walk in Fruitvale",
+                        "place_type": "guides",
+                        "categories": ["walking", "history"],
+                        "description": "It's an exciting time to be in Oakland and the perfect time to start exploring Fruitvale! The vibrant neighborhood at the base of the Oakland foothills is almost half Latinos and is home to some of The Towns hidden treasures. Fruitvale is known for its assortment of Mexican food fare, especially Oakland’s famous street-style tacos. Many of the shops and restaurants located in Fruitvale are family-owned, and some have even been passed down from generation to generation.",
+                        "images": [
+                            "https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/clients/oakland-redesign/neighborhood_fruitvale_f8ae42bb-7e6a-4ff1-8f4e-68d3beb1b2ce.jpg"
+                        ],
+                        "places": [
+                            {
+                                "id" : "28ee76ab-b37d-40ab-933a-a9113dc2f98a", 
+                                "name": "Red Bay Coffee", 
+                                "coordinates" : [-122.22847642402988, 37.77622627345013]
+                            },
+                            {
+                                "id": "7344f461-2a79-4c09-a74f-5c428be7e980",
+                                "name": "Fruitvale Village",
+                                "coordinates": [-122.2266622, 37.775951]
+                            },
+                            {
+                                "id": "a1db0647-9cab-47ae-89a3-2f90a5a8a410",
+                                "name": "San Antonio Park",
+                                "coordinates": [-122.24002530387085, 37.789663030230365]
+                            },
+                            {
+                                "id": "caa9d7a0-78cc-4c63-b632-33a89353b384",
+                                "name": "Brotzeit Lokal",
+                                "coordinates": [-122.25375644190694,37.787836582469744]
+                            },
+                            {
+                                "id": "a86c3e89-9952-4cc6-88ee-9cbfd69c2be3",
+                                "name": "Tacos Mi Rancho",
+                                "coordinates": [-122.25707520051564,37.79869665916186]
+                            }
+                        ],
+                        "route": null,
+                        "vibes": ["historic", "fun", "community", "local"]
+                    }
+                }
+            ]
+    }
+}
