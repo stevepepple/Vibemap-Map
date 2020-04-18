@@ -1,6 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
+import isEqual from 'react-fast-compare'
+
 import MapGL from 'react-map-gl';
-import { Editor, EditorModes } from 'react-map-gl-draw';
+import { Editor, EditorModes } from 'react-map-gl-draw'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
@@ -35,6 +37,9 @@ class DrawEditor extends Component {
         this.setState({ selectedMode: EditorModes[nextProps.mode]})
 
         if (nextProps.mode === 'DELETE') this._onDelete()
+
+        // Add features added via Redux
+        if (!isEqual(nextProps.editorReducer, this.props.editorReducer)) this._handleFeatures(nextProps.editorReducer['features'])
     }
 
  
@@ -45,7 +50,18 @@ class DrawEditor extends Component {
         });
     }
 
+    _handleFeatures = (features) => {
+        console.log('_handleFeatures: ', features, this._editorRef)
+        // TODO: Also see if feature is already in the editor?
+        console.log('Add this feature: ', features) 
+        this._editorRef.addFeatures(features)
+    }
+
     _onSelect = options => {
+        
+        console.log(options.selectedFeature)
+        //this._editorRef.addFeatures(options.selectedFeature)
+
         this.setState({ selectedFeatureIndex: options && options.selectedFeatureIndex });
     }
 
@@ -71,11 +87,11 @@ class DrawEditor extends Component {
     }
 
     _onUpdate = ({ editType }) => {
-    if (editType === 'addFeature') {
-        this.setState({
-            selectedMode: EditorModes.EDITING
-        });
-    }
+        if (editType === 'addFeature') {
+            this.setState({
+                selectedMode: EditorModes.EDITING
+            });
+        }
     }
 
     _renderToolbar = () => {
@@ -118,6 +134,7 @@ class DrawEditor extends Component {
 const mapStateToProps = state => {
 
     return {
+        editorReducer: state.editorReducer,
         mapSize: state.mapSize,
         windowSize: state.windowSize,
         viewport: state.viewport,

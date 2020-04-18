@@ -1,5 +1,5 @@
 /* TODO: Required until we swap in a customer version of semantic UI */
-:global(.vector) {
+.vector {
     width: 1.2em !important;
     height: 1.2em !important;
     background-image: url(/images/vector.svg) !important;
@@ -7,7 +7,7 @@
     background-repeat: no-repeat;
 }
 
-:global(.line) {
+.sketchMap .line {
     width: 1.2em !important;
     height: 1.2em !important;
     background-image: url(/images/line.svg) !important;
@@ -15,7 +15,7 @@
     background-repeat: no-repeat;
 }
 
-:global(.rectangle) {
+.rectangle {
     width: 1.2em !important;
     height: 1.2em !important;
     background-image: url(/images/rectangle.svg) !important;

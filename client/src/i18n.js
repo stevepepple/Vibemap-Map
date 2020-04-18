@@ -22,6 +22,7 @@ i18n.use(LanguageDetector).init({
         "Everything": "Everything",
         "Places": "Places",
         "places": "Places",
+        "guides": "Guides",
 
         "Activities": "Activities",
         "Categories": "Categories",

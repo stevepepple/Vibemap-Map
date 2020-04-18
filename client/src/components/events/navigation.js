@@ -28,7 +28,8 @@ class Navigation extends Component {
             place_type_options: [
                 { key: 'both', value: 'both', text: 'Everything' },
                 { key: 'places', value: 'places', text: 'Places' },
-                { key: 'events', value: 'events', text: 'Events' }
+                { key: 'events', value: 'events', text: 'Events' },
+                { key: 'guides', value: 'guides', text: 'Guides' }
             ],
             params: {},
             vibes: [],
@@ -224,7 +225,7 @@ class Navigation extends Component {
                                             //icon={this.state.selected_activity.label.icon}
                                             //labeled
                                             style={{ lineHeight: '2.4em', marginLeft: '0.4em' }}                                                                                                                                                                                
-                                            placeholder={t('Activities')}
+                                            //placeholder={t('Activities')}
                                             onChange={this.handleActivityChange}
                                             //options={Constants.main_categories}                                    
                                             text={this.state.selected_activity.text}

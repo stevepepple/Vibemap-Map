@@ -3,6 +3,7 @@ import { render } from "react-dom";
 import { Button, Container, Dropdown, Form, Grid, Icon, Label, Menu, Message, Segment } from 'semantic-ui-react'
 
 import _ from 'lodash'
+import simplify from '@turf/simplify';
 
 import MapGL, { FullscreenControl, Source, Layer, NavigationControl, GeolocateControl, Marker, Popup, ScaleControl } from 'react-map-gl'
 import ControlPanel from '../map/editor_control_panel'
@@ -29,7 +30,9 @@ import styles from "./SketchMap.css";
 class SketchMap extends Component {
     constructor(props) {
         super(props)
+        this.mapRef = React.createRef();
 
+        this.handleCanvasChange = this.handleCanvasChange.bind(this)
         this.handlePen = this.handlePen.bind(this)
         this.handleMarker = this.handleMarker.bind(this)
         this.handlePrint = this.handlePrint.bind(this)
@@ -65,7 +68,7 @@ class SketchMap extends Component {
                 }],
             data: [],
             loaded: false,
-            instructions: 'Click to start drawing',
+            instructions: 'Pick a tool above',
             modes: [
                 { key: 'EDITING', title: 'Edit', icon: 'mouse pointer', value: 'EDITING', instructions: 'Pick a tool above.' },
                 { key: 'DRAW_POINT', title: 'Draw', icon: 'marker',  value: 'DRAW_POINT', instructions: 'Click map to add a point' },
@@ -116,6 +119,48 @@ class SketchMap extends Component {
         this.props.setMapReady(true)
     }
 
+    handleCanvasChange(event) {
+        // Reference to Mapbox GL API
+        const mapGL = this.mapRef.current.getMap()
+
+        console.log('handleCanvasChange: ', event)
+
+        // Get line strings from Canvas
+        let save_data = JSON.parse(this.canvasDraw.getSaveData())
+        console.log('save_data: ', save_data)
+
+        let feature = {
+            "type": "Feature",
+            "geometry": { "type": "Polygon", "coordinates": [] },
+            "properties": { renderType: "Polygon", id: null }
+        }
+
+        // Project to Long-Lats
+        const lines = save_data['lines']
+
+        let coordinates = lines.map((line) => {
+            console.log('Line face: ', line['points'])
+            feature['properties']['line_color'] = line['brushColor']
+            feature['properties']['line_width'] = line['brushRadius']
+
+            let points = line['points'].map((point) => mapGL.unproject(point).toArray())
+
+            return points
+        })
+
+        console.log('Points to coordinations: ', coordinates)
+        feature['properties']['id'] = this.props.editorReducer.numFeatures
+        feature['geometry']['coordinates'] = coordinates
+
+        //let simplified = simplify(feature, { tolerance: 0.01, mutate: true, highQuality: true});
+
+        this.props.addFeature(feature)
+        // TODO: Add new feature coordinates via Redux
+
+        //let first_line = lines[0]
+        //let first_point = first_line['points'][0]
+    }
+
     handleMarker() {
         // Toggle the rendering of the pen tool
         this.setState({ activeItem: 'marker', selectedMode : 'DRAW_POINT' })
@@ -160,6 +205,7 @@ class SketchMap extends Component {
     }
 
     handlePrint() {
+        const mapGL = this.mapRef.current.getMap()
 
         if (this.canvasDraw) {
             let save_data = this.canvasDraw.getSaveData()
@@ -167,7 +213,8 @@ class SketchMap extends Component {
         }
 
         // TODO: The images object doesn't show anything; hook directly to the Mapbox map object
-        let canvas = document.getElementsByClassName('mapboxgl-canvas')[0]
+        //let canvas = document.getElementsByClassName('mapboxgl-canvas')[0]
+        let canvas = mapGL.getCanvas()
         let image = canvas.toDataURL("image/png")
         console.log(image)
 
@@ -219,7 +266,7 @@ class SketchMap extends Component {
         const { activeItem } = this.state
 
         return (
-            <Fragment>
+            <Fragment className='sketchMap'>
                 <Header />
                 <Segment.Group style={{ marginTop: '6%', marginLeft: '20%', height: '70%', width: '70%' }}>
                     <Hotkeys
@@ -301,12 +348,14 @@ class SketchMap extends Component {
                         
                         {this.state.showPen &&
                             <CanvasDraw 
+                                className='canvasDraw'
                                 ref={canvasDraw => (this.canvasDraw = canvasDraw)}
                                 style={{ position: "absolute" }} 
                                 brushColor={this.state.color}
                                 brushRadius={this.state.sliderValue}
                                 canvasHeight={this.props.mapSize.height}
-                                canvasWidth={this.props.mapSize.width} 
+                                canvasWidth={this.props.mapSize.width}
+                                onChange={this.handleCanvasChange} 
                                 saveData={this.state.save_drawing_data}/>
                         }
 
@@ -342,6 +391,8 @@ class SketchMap extends Component {
                             transition={{ "duration": 300, "delay": 0 }}
                             mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
                             mapStyle={Constants.MAPBOX_STYLE_LIGHT}
+                            ref={this.mapRef}
+                            preserveDrawingBuffer={true}
                             onViewportChange={this._onViewportChange}>
 
                             <GeolocateControl
@@ -372,6 +423,7 @@ const mapStateToProps = state => {
 
     return {
         currentLocation: state.currentLocation,
+        editorReducer: state.editorReducer,
         mapSize: state.mapSize,
         windowSize: state.windowSize,
         viewport: state.viewport, 
