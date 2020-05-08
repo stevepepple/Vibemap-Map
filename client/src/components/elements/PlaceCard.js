@@ -11,12 +11,8 @@ function cardPLaceLayout(props) {
     let score = Math.round(content.average_score)
 
     let categories = null
-
-    if (typeof (content.categories) == 'object' && content.categories.length > 0) {        
-        categories = content.categories.map((category) => <span class={category}>Category</span>)
-    } else {
-        categories = helpers.toTitleCase(content.categories) 
-    }
+    let venue = null
+    let vibes = null;
 
     // TODO: Move to server side
     if (name) {
@@ -24,10 +20,14 @@ function cardPLaceLayout(props) {
         name = name[0]
     }
 
-    let venue = null
+    if (typeof (content.categories) == 'object' && content.categories.length > 0) {        
+        categories = content.categories.map((category) => <span class={category}>Category</span>)
+    } else {
+        categories = helpers.toTitleCase(content.categories) 
+    }
+
     if (content.venue) venue = <span className='venue'>{content.venue}</span>
 
-    let vibes = null;
     if (typeof content.vibes !== "undefined") {
         let remainder = content.vibes.length - 1
         vibes = null
@@ -35,7 +35,10 @@ function cardPLaceLayout(props) {
         let first_vibe = helpers.toTitleCase(content.vibes[0])
 
         // Handle vibe label layout
-        if (remainder > 0) vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe}<Label.Detail>{remainder}</Label.Detail></Label>
+        if (remainder > 0) vibes = <Fragment>
+                <Label circular key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe}</Label>
+                <Label circular title={'See all ' + remainder + 'vibes.'}>+ {remainder}</Label>
+            </Fragment>
         if (remainder === 0) vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe}</Label>
 
         // vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
