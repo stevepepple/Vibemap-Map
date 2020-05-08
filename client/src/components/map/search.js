@@ -11,7 +11,6 @@ import helpers from '../../helpers.js'
 
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
-
 class LocationSearchInput extends React.Component {
     constructor(props) {
         super(props);

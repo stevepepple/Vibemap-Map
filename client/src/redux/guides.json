@@ -6,7 +6,7 @@
         "type": "FeatureCollection",
             "features": [
                 {
-                    "id": "45c7f2ae-bc68-40ac-be28-f534023ed466",
+                    "id": "1",
                     "type": "Feature",
                     "geometry": {
                         "type": "Point",
@@ -27,7 +27,8 @@
                         "places": [
                             {
                                 "id" : "28ee76ab-b37d-40ab-933a-a9113dc2f98a", 
-                                "name": "Red Bay Coffee", 
+                                "name": "Red Bay Coffee",
+                                "short_name": "Red Bay Coffee",
                                 "coordinates" : [-122.22847642402988, 37.77622627345013]
                             },
                             {
@@ -38,7 +39,7 @@
                             {
                                 "id": "a1db0647-9cab-47ae-89a3-2f90a5a8a410",
                                 "name": "San Antonio Park",
-                                "coordinates": [-122.24002530387085, 37.789663030230365]
+                                "coordinates": [-122.24002530387085,37.789663030230365]
                             },
                             {
                                 "id": "caa9d7a0-78cc-4c63-b632-33a89353b384",
@@ -48,11 +49,216 @@
                             {
                                 "id": "a86c3e89-9952-4cc6-88ee-9cbfd69c2be3",
                                 "name": "Tacos Mi Rancho",
-                                "coordinates": [-122.25707520051564,37.79869665916186]
+                                "coordinates": [-122.25707520051564, 37.79869665916186
+                                ]
                             }
                         ],
                         "route": null,
                         "vibes": ["historic", "fun", "community", "local"]
+                    }
+                },
+                {
+                    "id": "2",
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -122.421211,
+                            37.76297195
+                        ]
+                    },
+                    "properties": {
+                        "name": "Mission Art Walk",
+                        "short_name": "Mission Art Walk",
+                        "place_type": "guides",
+                        "categories": [
+                            "art",
+                            "walking",
+                            "history"
+                        ],
+                        "description": "Cultural and historic walking tours along the Mission Street and 24th Street corridors in the Mission District. Every weekend, Precita Eyes Mural Arts and Visitors Center offers several different guided mural walks. Each walk features different murals and all of our tours are conducted by muralists. Private tours, group tours, bicycle tours, bus tours, and other customized mural tours are available by appointment for any day of the week. School field trip tours for all ages, from pre-K through college to elder hostel are also available by appointment.",
+                        "images": [
+                            "https://clarionalleymuralproject.org/wp-content/uploads/2015/02/CAMPTours.jpg"
+                        ],
+                        "places": [
+                            {
+                                "id": "fddeac9d-8bf2-4b0a-a67a-7a7bcaa3b635",
+                                "name": "Gus' Market",
+                                "coordinates": [
+                                    -122.41297015054305,
+                                    37.76529894340936
+                                ]
+                            },
+                            {
+                                "id": "94d6b21c-8d00-4f14-bb87-eb6d515a6bc0",
+                                "name": "Stable Cafe",
+                                "coordinates": [
+                                    -122.41545698671433,
+                                    37.7632446558721
+                                ]
+                            },
+                            {
+                                "id": "c180afbf-fbe1-410d-afe2-11a698b6517a",
+                                "name": "Clarion Alley",
+                                "coordinates": [
+                                    -122.421211,
+                                    37.76297195
+                                ]
+                            },
+                            {
+                                "id": "6c6c3d56-3cb8-4699-927c-fc3b81b4639e",
+                                "name": "Gray Area Arts",
+                                "coordinates": [
+                                    -122.41834929999999,
+                                    37.75440539999999
+                                ]
+                            },
+                            {
+                                "id": "6ce3c56b-9591-44e8-bce4-0ed36ecb15b8",
+                                "name": "Adobe Books",
+                                "coordinates": [
+                                    -122.41480760000036,
+                                    37.75257859999996
+                                ]
+                            },
+                            {
+                                "id": "cfbad96d-0322-465c-821a-3a6f4d8b69df",
+                                "name": "Balmy Alley",
+                                "coordinates": [
+                                    -122.41480760000036,
+                                    37.75257859999996
+                                ]
+                            }
+                        ],
+                        "route": null,
+                        "vibes": [
+                            "artsy",
+                            "historic",
+                            "vibrant",
+                            "unexpected"
+                        ]
+                    }
+                },
+                {
+                    "id": "3",
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -122.421211,
+                            37.76297195
+                        ]
+                    },
+                    "properties": {
+                        "name": "Walk the Presidio",
+                        "short_name": "Walk the Presidio",
+                        "place_type": "guides",
+                        "categories": [
+                            "art",
+                            "walking",
+                            "history"
+                        ],
+                        "description": "Cultural and historic walking tours along the Mission Street and 24th Street corridors in the Mission District. Every weekend, Precita Eyes Mural Arts and Visitors Center offers several different guided mural walks. Each walk features different murals and all of our tours are conducted by muralists. Private tours, group tours, bicycle tours, bus tours, and other customized mural tours are available by appointment for any day of the week. School field trip tours for all ages, from pre-K through college to elder hostel are also available by appointment.",
+                        "images": [
+                            "https://clarionalleymuralproject.org/wp-content/uploads/2015/02/CAMPTours.jpg"
+                        ],
+                        "places": [
+                            {
+                                "id": "bb7f09dd-9f9a-4b44-a699-77d9271d9742",
+                                "name": "Yoda Fountain",
+                                "coordinates": [
+                                    -122.4504455924034,
+                                    37.79878722743872
+                                ]
+                            },
+                            {
+                                "id": "f5f5ccfd-62eb-454e-88fa-8b127656d991",
+                                "name": "Transit Cafe",
+                                "coordinates": [
+                                    -122.4562010126574,
+                                    37.80186694590735
+                                ]
+                            },
+                            {
+                                "id": "011855af-21d8-4970-8182-9d8dbd47cdbe",
+                                "name": "Off the Grid",
+                                "coordinates": [
+                                    -122.458635687293,
+                                    37.80005258829819
+                                ]
+                            },
+                            {
+                                "id": "5cd30bf8-a370-4527-af39-d82dee93a3f7",
+                                "name": "Crissy Field Overlook",
+                                "coordinates": [
+                                    -122.4698111,
+                                    37.80500841
+                                ]
+                            },
+                            {
+                                "id": "bce63b60-8c04-4e1f-9be9-703b4a3c2e5c",
+                                "name": "Battery East Trail",
+                                "coordinates": [
+                                    -122.4726274301405,
+                                    37.80777646414919
+                                ]
+                            },
+                            {
+                                "id": "b88e78d6-3b1f-4a49-8149-34a1607ff7ac",
+                                "name": "Pacific Overlook",
+                                "coordinates": [
+                                    -122.4778885,
+                                    37.80088927
+                                ]
+                            },
+                            {
+                                "id": "4e2f31d5-af94-45c0-adb6-aaa428e1fc11",
+                                "name": "General Store (Cafe)",
+                                "coordinates": [
+                                    -122.4686628072006,
+                                    37.79380782982503
+                                ]
+                            },
+                            {
+                                "id": "6b49ed71-6e1b-4cfd-b812-2de0ab6c6b27",
+                                "name": "Inspiration Point",
+                                "coordinates": [
+                                    -122.4583168999997,
+                                    37.79220658
+                                ]
+                            },
+                            {
+                                "id": "c40f145e-367b-4c09-bbed-9569194d3145",
+                                "name": "Presidio Officer's Club",
+                                "coordinates": [
+                                    -122.4589227012819,
+                                    37.79766739132896
+                                ]
+                            },
+                            {
+                                "id": "26f96a84-8a0e-48df-bf20-439a7b75feb2",
+                                "name": "Lyon Street Steps",
+                                "coordinates": [
+                                    -122.4465591,
+                                    37.79354366
+                                ]
+                            },
+                            {
+                                "id": "3a14efe5-ee84-43cc-a893-0ad6b6df32b7",
+                                "name": "Pizzeria Avellino",
+                                "coordinates": [
+                                    -122.4470970825732,
+                                    37.79839522171165
+                                ]
+                            }
+                        ],
+                        "route": null,
+                        "vibes": [
+                            "artsy",
+                            "historic",
+                            "vibrant",
+                            "unexpected"
+                        ]
                     }
                 }
             ]

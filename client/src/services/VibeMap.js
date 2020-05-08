@@ -177,6 +177,7 @@ module.exports = {
 
     // TODO: Include a way to query by time of day
     getPlaceDetails: function (id, type) {
+
         // TODO: Handle Guides type
         if(type == null || type == undefined) type = 'places'
         return new Promise(function (resolve, reject) {
@@ -255,7 +256,6 @@ module.exports = {
 
     // TODO: Include a way to query by time of day
     getPlaces: function (point, distance, bounds, activity, days, vibes, search_term) {
-
         let distanceInMeters = 1
         if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
         let center_point = point.split(',').map(value => parseFloat(value))

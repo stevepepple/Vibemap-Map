@@ -4,6 +4,8 @@ import isEqual from 'react-fast-compare'
 import * as actions from '../../redux/actions'
 import * as turf from '@turf/turf'
 
+import geojsonhint from '@mapbox/geojsonhint'
+
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup, ScaleControl } from 'react-map-gl'
 import CustomMapController from '../map/map-conroller'
 
@@ -38,6 +40,8 @@ class EventsMap extends React.Component {
             has_marker_data: false,
             has_route_data: false,
             marker_data: [],
+            marker_data_geojson: [],
+            route_data: [],
             layers: props.layers,
             mapStyles : Styles,
             score_markers: true,
@@ -63,18 +67,25 @@ class EventsMap extends React.Component {
         let places_geojson = turf.featureCollection(nextProps.places_data)
         let events_geojson = turf.featureCollection(nextProps.events_data)
 
+        //console.log('Marker json: ', JSON.stringify(places_geojson))
         //let guides_geojson = turf.featureCollection(nextProps.guideData)
 
-        let top_picks_geojson = turf.featureCollection(nextProps.topPicks)        
         let zoom = this.props.zoom
+        
+        if (nextProps.guidesData) this.handleMarkers(nextProps)
+        if (nextProps.topPicks) this.handleMarkers(nextProps)
 
-        console.log('placeType: ', placeType)
-        this.handleMarkers(nextProps)
+        // Handle route details
+        if (nextProps.guideDetails) this.handleRouteData(guideDetails.route)
+
+        if (nextProps.detailsShown === false) this.setState({ has_route_data: false })
+
+        // Truncate long coordinates
+        places_geojson = turf.truncate(places_geojson, { precision: 6, coordinates: 2 })
         
         this.setState({ 
             places_geojson: places_geojson,
             events_geojson: events_geojson,
-            top_picks_geojson: top_picks_geojson,
             update_layer: false,
             viewport: {
                 bearing: nextProps.bearing,
@@ -115,7 +126,7 @@ class EventsMap extends React.Component {
         // These both need size at the same time
         this.props.setMapSize(size)
         this.props.setMapReady(true)
-        this.handleMarkers(this.props)
+        //this.handleMarkers(this.props)
 
     }
 
@@ -233,29 +244,44 @@ class EventsMap extends React.Component {
 
     handleMarkers(props) {
         const { detailsShown, placeType, guidesData, guideDetails, guideMarkers, topPicks } = props
-        let { has_marker_data, has_route_data, marker_data, score_markers } = this.state
+        let { has_marker_data, marker_data, marker_data_geojson, score_markers } = this.state
 
-        if (placeType === 'places' || placeType === 'events') marker_data = topPicks
+        if (placeType === 'places' || placeType === 'events') {
+            marker_data = topPicks
+            marker_data_geojson = turf.featureCollection(marker_data)
+
+        } 
         if (placeType === 'guides') {
             marker_data = guidesData
             score_markers = false
 
-            if (detailsShown && guideDetails.route !== null) {
-                has_route_data = true
+            //guideDetails.route = { "type": "Feature", "properties": { "distance": 39433.076 }, "geometry": { "type": "LineString", "coordinates": [[-122.41301, 37.765377], [-122.413132, 37.765369], [-122.413101, 37.765076], [-122.413605, 37.763824], [-122.415169, 37.763699], [-122.415123, 37.763264], [-122.415169, 37.763699], [-122.421738, 37.763306], [-122.421707, 37.762928], [-122.421211, 37.762955], [-122.421707, 37.762928], [-122.421577, 37.7617], [-122.41938, 37.761841], [-122.418671, 37.754387], [-122.41938, 37.761841], [-122.413986, 37.762165], [-122.413101, 37.765076], [-122.413185, 37.765999], [-122.412811, 37.766758], [-122.41256, 37.766788], [-122.412613, 37.767597], [-122.411781, 37.768715], [-122.410828, 37.76902], [-122.410873, 37.769333], [-122.404449, 37.76976], [-122.404068, 37.770008], [-122.404045, 37.770035], [-122.403915, 37.770081], [-122.40168, 37.771832], [-122.401512, 37.771824], [-122.397247, 37.775211], [-122.395401, 37.776615], [-122.394951, 37.776878], [-122.394333, 37.776394], [-122.391998, 37.778225], [-122.390518, 37.777138], [-122.387604, 37.778286], [-122.387535, 37.778183], [-122.387047, 37.778191], [-122.385635, 37.777733], [-122.374046, 37.778023], [-122.368317, 37.780373], [-122.364838, 37.78265], [-122.354187, 37.795113], [-122.346306, 37.799332], [-122.341743, 37.800514], [-122.337524, 37.800179], [-122.305725, 37.792282], [-122.295769, 37.792213], [-122.294495, 37.791122], [-122.293839, 37.792198], [-122.28019, 37.79451], [-122.280136, 37.794491], [-122.279739, 37.79512], [-122.278793, 37.794743], [-122.276924, 37.794548], [-122.275215, 37.793877], [-122.274918, 37.794342], [-122.274437, 37.794155], [-122.274368, 37.794258], [-122.268883, 37.792171], [-122.26841, 37.792034], [-122.262154, 37.790703], [-122.252197, 37.788403], [-122.252441, 37.787865], [-122.253761, 37.787861], [-122.253845, 37.788036], [-122.252884, 37.788376], [-122.252792, 37.788567], [-122.253159, 37.788662], [-122.265854, 37.791405], [-122.268265, 37.792034], [-122.274368, 37.794258], [-122.274437, 37.794155], [-122.274918, 37.794342], [-122.275215, 37.793877], [-122.276924, 37.794548], [-122.278793, 37.794743], [-122.279739, 37.79512], [-122.280136, 37.794491], [-122.28019, 37.79451], [-122.293839, 37.792198], [-122.294495, 37.791122], [-122.295769, 37.792213], [-122.305725, 37.792282], [-122.337524, 37.800179], [-122.341743, 37.800514], [-122.346306, 37.799332], [-122.354187, 37.795113], [-122.364838, 37.78265], [-122.368317, 37.780373], [-122.374046, 37.778023], [-122.385635, 37.777733], [-122.387047, 37.778191], [-122.387535, 37.778183], [-122.387604, 37.778286], [-122.390518, 37.777138], [-122.391998, 37.778225], [-122.394333, 37.776394], [-122.394951, 37.776878], [-122.39727, 37.775227], [-122.401535, 37.771847], [-122.401596, 37.7719], [-122.403687, 37.770214], [-122.403915, 37.770081], [-122.404068, 37.770008], [-122.406723, 37.769306], [-122.410873, 37.769333], [-122.410828, 37.76902], [-122.411781, 37.768715], [-122.412613, 37.767597], [-122.41256, 37.766788], [-122.412811, 37.766758], [-122.413185, 37.765999], [-122.413101, 37.765076], [-122.413986, 37.762165], [-122.415016, 37.762108], [-122.414101, 37.752506], [-122.414803, 37.752464]] } }
 
-                console.log(JSON.stringify(guideDetails.route))
+            if (detailsShown && guideDetails.route !== null) {
+                //route_data = guideDetails.route
                 marker_data = guideMarkers
+                marker_data_geojson = turf.featureCollection(marker_data)
             }
         }
+
+        console.log('marker_data_geojson: ', marker_data_geojson)
 
         has_marker_data = marker_data.length > 0
 
         this.setState({
             marker_data: marker_data,
+            marker_data_geojson: marker_data_geojson,
             score_markers: score_markers,
-            has_route_data: has_route_data, 
             has_marker_data: has_marker_data
         })
+    }
+
+    handleRouteData(route_data) {
+        let has_route_data = false
+        if (route_data !== undefined) has_route_data = true
+        
+        if (has_route_data) this.setState({ route_data: route_data, has_route_data: true })
+
     }
 
     showPopup(name, latitude, longitude) {
@@ -271,13 +297,22 @@ class EventsMap extends React.Component {
     render() {
 
         const { topPicks, detailsShown, guidesData, guideDetails, guideMarkers, placeType } = this.props
-        const { has_marker_data, has_route_data, marker_data, score_markers } = this.state
+        const { has_marker_data, has_route_data, marker_data, marker_data_geojson, route_data, score_markers } = this.state
 
         let has_places_data = this.props.places_data.length > 0
         let has_events_data = this.props.events_data.length > 0
 
         const mapController = new CustomMapController()
         const mapStyles = this.state.mapStyles
+
+        if (has_route_data) {
+
+            let validate = geojsonhint.hint(guideDetails.route, {
+                precisionWarning: true
+            })
+
+            console.log('validate guideDetails.route: ', validate, guideDetails.route)
+        } 
 
         let heat_map_filter = [this.props.activity]
         if (this.props.activity === 'all' || this.props.activity === '') {
@@ -338,7 +373,7 @@ class EventsMap extends React.Component {
                                 <Source
                                     id='top_picks'
                                     type="geojson"
-                                    data={this.state.top_picks_geojson}
+                                    data={marker_data_geojson}
                                     cluster={false}>
 
                                     <Layer
@@ -373,7 +408,7 @@ class EventsMap extends React.Component {
                                 <Source
                                     id='route'
                                     type="geojson"
-                                    data={guideDetails.route}>
+                                    data={route_data}>
                                 
                                     <Layer
                                         id="walking_route"
