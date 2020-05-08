@@ -4,7 +4,7 @@ import _ from 'lodash'
 import isEqual from 'react-fast-compare'
 import MetaTags from 'react-meta-tags'
 
-import { Button, Divider, Header, Icon, Image, Label, List, Reveal, Placeholder, Segment } from 'semantic-ui-react'
+import { Button, Card, Divider, Header, Icon, Image, Label, List, Reveal, Placeholder, Segment } from 'semantic-ui-react'
 import Directions from '../places/directions'
 import VibeMap from '../../services/VibeMap.js'
 import * as Constants from '../../constants.js'
@@ -13,6 +13,10 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
 import AppStoreLink from '../elements/AppStoreLink'
+import Tip from '../elements/Tip'
+
+import CardCarousel from './CardCarousel'
+
 import ShowMoreText from 'react-show-more-text'
 
 /* TODO: Break this into styles for each component */
@@ -43,7 +47,6 @@ class PlaceDetails extends Component {
         }
 
         this.toggleMoreVibes = this.toggleMoreVibes.bind(this)
-
     }
 
     handleClose = function() {
@@ -55,6 +58,7 @@ class PlaceDetails extends Component {
         // Fetch guide details and walking path
         if(this.props.detailsType === 'guides') this.getGuideDetails()
 
+        if (this.props.detailsType === 'events' || this.props.detailsType === 'places') this.getPlaceDetails()
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -222,7 +226,7 @@ class PlaceDetails extends Component {
         if (currentItem && currentItem.places !== undefined) {
             console.log('Details data: ', currentItem.places)
             let items = currentItem.places.map((place, i) => <List.Item key={place.properties.id}>
-                <Label circular color='blue' style={{ float: 'left'}}>{i + 1}</Label>
+                <Label circular key={i} color='blue' style={{ float: 'left'}}>{i + 1}</Label>
                 <List.Content>
                     <strong>{place.properties.name}</strong>
                     {place.properties && place.properties.tips &&
@@ -232,6 +236,13 @@ class PlaceDetails extends Component {
             </List.Item>)
 
             places = <List divided>{items}</List>
+        }
+
+        let tips = null
+        if (currentItem && currentItem.tips !== undefined) {
+            let all_tips = currentItem.tips.map((tip) => <Tip text={tip}/>)
+            tips = <CardCarousel items={all_tips} />
+            
         }
 
         return (
@@ -315,6 +326,12 @@ class PlaceDetails extends Component {
                     <Segment.Group>
                         {places}
                     </Segment.Group>
+                }
+
+                {tips &&
+                    <Segment basic>
+                        {tips}
+                    </Segment>
                 }
 
                 {this.state.loading ? (
