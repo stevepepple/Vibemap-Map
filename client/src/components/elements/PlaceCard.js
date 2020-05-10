@@ -21,7 +21,7 @@ function cardPLaceLayout(props) {
     }
 
     if (typeof (content.categories) == 'object' && content.categories.length > 0) {        
-        categories = content.categories.map((category) => <span class={category}>Category</span>)
+        categories = content.categories.map((category) => <span key={category} className={category}>Category</span>)
     } else {
         categories = helpers.toTitleCase(content.categories) 
     }
