@@ -11,6 +11,7 @@ import queryString from 'querystring'
 import { Translation } from 'react-i18next'
 
 import '../../styles/events_page.scss'
+import styles from '../../styles/vibe_generator.scss'
 
 import VibeMap from '../../services/VibeMap.js'
 
@@ -25,7 +26,7 @@ class VibeGenerator extends Component {
             placeholder: "Loading",
             colors: {
                 'buzzing': { name: 'yellow', color_list: ['#FFB600', '#FDF5A7', '#FD7900'] },
-                'chill': { name: 'teal', color_list: ['#9EE8B5', '#F3FED5', '#4A2BC1'] },
+                'calm': { name: 'teal', color_list: ['#9EE8B5', '#F3FED5', '#4A2BC1'] },
                 'dreamy': { name: 'gray', color_list: ['#B0E3F5', '#EEEEEE', '#3B5465']},
                 'oldschool': { name: 'blue', color_list: ['#EE8031', '#E0E9E6', '#181D63'] },
                 'playful': { name: 'green', color_list: ['#261298', '#D03C32', '#E6E4AC'] },
@@ -81,13 +82,16 @@ class VibeGenerator extends Component {
         let color = this.state.colors[this.state.current]['name']
         let vibes = []
         let vibe_options =[]
+        let selected_vibes = []
         if (this.state.options.length > 0) {
 
             vibes = this.state.options.find(o => o.value === this.state.current)['vibes']
             vibe_options = vibes.map(vibe => ({ 'key': vibe, 'value': vibe, 'text' : vibe }))
 
             console.log('vibes for current: ', vibes, vibe_options)
+            selected_vibes = vibes.map((vibe, i) => <Label className={'vibe ' + vibe} circular key={vibe} content={vibe} style={{ padding: '0.8em !important', marginBottom: '0.8em', marginRight: '0.8em' }} />)
         }
+        
         return (
             <Grid columns='equal' style={{ paddingTop: '8%'}}>
                 <Grid.Column>
@@ -102,24 +106,22 @@ class VibeGenerator extends Component {
                                     <Form.Field>
                                         <Dropdown
                                             onChange={this.onChange}
-                                            text={this.state.current.toUpperCase()}                                            
-                                            value={this.state.current} 
-                                            button                                           
+                                            text={this.state.current.toUpperCase()}
+                                            value={this.state.current}
+                                            button
                                         >
                                             <Dropdown.Menu>
                                                 {this.state.options.map((option) => (
                                                     <Dropdown.Item key={option.value} onClick={this.onChange} text={option.text} value={option.value} />
-                                                ))}                                                
+                                                ))}
                                             </Dropdown.Menu>
                                         </Dropdown>
-                                        <Label className={'ui circular label ' + color} style={{ marginLeft: '2em' }} />                                    
+                                        <Label className={'ui circular label ' + color} style={{ marginLeft: '2em' }} />
                                     </Form.Field>            
                                 </Form>
                                 <br/>
                                 <Container>
-                                    <p>{vibes.map((vibe, i) => 
-                                        (i === vibes.length - 1) ? <span key={vibe}>{vibe}</span> : <span key={vibe}>{vibe + ', '}</span>
-                                    )}</p>
+                                    {selected_vibes}
                                 </Container>
                                 <Translation>{
                                     (t, { i18n }) => <blockquote>
@@ -128,23 +130,23 @@ class VibeGenerator extends Component {
                                 }</Translation>
 
                                 <br/>
+                                {/* 
                                 <Dropdown 
                                     button 
                                     text='Pick Vibes' 
                                     selection
                                     options={vibe_options}
                                     />
-                                
+                                */}
                             </Grid.Column>
                             <Grid.Column width={10}>
                                 <Segment padded style={{ height: '66vmin'}}>
                                     <div className='video'></div>
-                                    <div className='color'></div>                                    
+                                    <div className='color'></div>
                                 </Segment>
                             </Grid.Column>
                         </Grid>
                     </Segment>
-                    
                     
                 </Grid.Column>
                 <Grid.Column>
