@@ -109,7 +109,7 @@ const helpers = {
     scaleIconSize: function(score, max) {
         let scale = scalePow(1)
             .domain([0, max])
-            .range([2, 5])
+            .range([2, 6])
         
         return scale(score)
     },

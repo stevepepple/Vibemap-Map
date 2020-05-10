@@ -67,7 +67,6 @@ export const boundsReady = (state = false, action) => {
 
 export const detailsId = (state = null, action) => {
   if (action.type === 'SET_DETAILS_ID') {
-    console.log("SET_DETAILS_ID: " + action.id)
     state = action.id
   }
   return state
@@ -351,7 +350,7 @@ export const guideDetails = (state = {}, action) => {
   return state
 }
 
-export const guideMarkers = (state = {}, action) => {
+export const guideMarkers = (state = [], action) => {
   if (action.type === 'SET_GUIDE_MARKERS') {
     return action.markers
   }

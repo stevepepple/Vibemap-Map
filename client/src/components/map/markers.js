@@ -138,8 +138,8 @@ class Markers extends Component {
                         style={{ 
                             height: feature.height, 
                             width: feature.width,
-                            marginLeft: - feature.width,
-                            marginTop: - feature.height,
+                            marginLeft: - feature.width / 2,
+                            marginTop: - feature.height / 2,
                             zIndex: feature.vibe_score
                         }}>                        
                                                 

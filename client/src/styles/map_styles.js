@@ -30,7 +30,7 @@ module.exports = {
     marker_layout :  {
       // Icon Style
       "icon-image": ["to-string", ["get", "categories"]],
-      "icon-padding": 1.8,
+      "icon-padding": 1.0,
       "icon-size": [
         "case",
         [">", ["get", "average_score"], 4.9],
@@ -42,15 +42,20 @@ module.exports = {
         // Fall back value
         0.4
       ],
-
       // TODO: Make sure important sorting variable is working
       "symbol-sort-key": ["get", "average_score"],
       // Text
-      "text-field": ["to-string", ["get", "short_name"]],
+      "text-field": [
+        "case",
+        [">", ["get", "average_score"], 3.0],
+        ["to-string", ["get", "short_name"]],
+        // Fallback value
+        ""
+      ],
       //"text-field": ["to-string", ["get", "top_vibe"]],
       "text-allow-overlap": false,
-      "icon-allow-overlap": true,
-      "icon-ignore-placement": true,
+      "icon-allow-overlap": false,
+      "icon-ignore-placement": false,
       "text-ignore-placement": false,
       "text-line-height": 1.0,
       "text-anchor": "bottom",
@@ -100,7 +105,6 @@ module.exports = {
       "symbol-sort-key": ["get", "average_score"],
       // Text
       "text-field": [
-        
         "match", 
         ["get", "top_in_cluster"], 
         ["false"], 

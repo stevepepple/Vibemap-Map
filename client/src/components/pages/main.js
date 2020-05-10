@@ -246,7 +246,7 @@ class Page extends Component {
     fetchGuides() {
         VibeMap.getGuides()
             .then(results => {
-                this.props.setCities(results.data)
+                this.props.setGuidesData(results.data)
             })
     }
 
