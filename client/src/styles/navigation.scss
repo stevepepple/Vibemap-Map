@@ -10,6 +10,10 @@
     font-family: 'Public Sans', sans-serif !important;
 }
 
+.dropdown:hover, .ui.label, .item {
+    color: $color-purple;
+}
+
 .navigation.mobile {
     position: relative;
     left: 0;
