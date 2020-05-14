@@ -159,17 +159,17 @@ const helpers = {
         let green_purple = "PiYG"
         
         const vibe_to_scale = {
-            'calm': [gray, light_green, light_yellow, light_blue],
-            'buzzing': [gray, light_pink, light_yellow, orange],
-            'dreamy': [gray, light_purple, light_blue, light_yellow],
+            'calm': [white, light_green, light_yellow, light_blue],
+            'buzzing': [white, light_pink, light_yellow, orange],
+            'dreamy': [white, light_purple, orange, light_yellow],
             'oldschool': [blue, yellow,  orange],
-            'playful': [gray, light_teal, yellow, orange],
-            'solidarity': [gray, light_yellow, yellow, orange],
-            'together': [gray, light_teal, light_yellow],
+            'playful': [white, light_teal, yellow, orange],
+            'solidarity': [white, light_yellow, yellow, orange],
+            'together': [white, light_teal, light_yellow],
             'wild': green_purple
         }
 
-        let scale = [gray, light_pink, yellow, orange]
+        let scale = [white, light_purple, yellow, orange]
 
         if (vibe) {
             scale = vibe_to_scale[vibe]            
