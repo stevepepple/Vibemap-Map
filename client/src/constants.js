@@ -1,8 +1,8 @@
 export const SET_ACTIVE_OPTION = 'SET_ACTIVE_OPTION'
 
-export const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw'
+export const MAPBOX_STYLE = 'mapbox://styles/stevepepple/ck91hf18201e61io3m7uaeqit/draft'
 
-export const MAPBOX_STYLE = 'mapbox://styles/stevepepple/cjpk3ts1c0skb2rs52w658p07'
+export const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw'
 
 export const MAPBOX_STYLE_LIGHT = 'mapbox://styles/stevepepple/ck8unzpvf0z5j1itdntgz3lxp'
 
