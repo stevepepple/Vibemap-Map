@@ -52,7 +52,7 @@ class Page extends Component {
             // TODO: handle conversion math in VibeMap
             intervalIsSet: false,
             loading: true,
-            num_top_picks: 12,
+            num_top_picks: 6,
             timedOut: false,
             mergeTopPicks: false,
             time_of_day: 'morning',
