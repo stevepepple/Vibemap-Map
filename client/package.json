@@ -4,6 +4,8 @@
   "scripts": {
     "serve": "npm run build & serve -s build",
     "start": "react-scripts start",
+    "start-styleguide": "npx styleguidist server",
+    "build": "react-scripts build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -63,7 +65,8 @@
     "save": "^2.4.0",
     "semantic-ui-react": "^0.83.0",
     "truncate": "^2.1.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "vibemap-constants": "^1.0.1"
   },
   "eslintConfig": {
     "extends": "react-app"
