@@ -7,7 +7,9 @@
 
 .idea/
 
-.DS_Store
 client/src/styles/icons/
-app_certificate
 client/src/styles/icons.zip
+
+app_certificate
+
+.DS_Store
