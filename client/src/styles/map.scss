@@ -47,10 +47,11 @@
     display: block;
     z-index: 10;
     pointer-events: none;
-
+    /*
     -webkit-box-shadow: inset 0px 0px 10px 5px rgba(0,0,0,0.35);
     -moz-box-shadow: inset 0px 0px 10px 5px rgba(0,0,0,0.35);
     box-shadow: inset 0px 0px 80px 5px rgba(74,98,124,0.35);
+    */
 }
 
 .map_container #scale {
@@ -112,16 +113,16 @@
 .mapboxgl-marker .marker {    
     -webkit-border-radius: 50% 50% 50% 50%;
     -moz-border-radius: 50% 50% 50% 50%;
-    border-radius: 50% 50% 50% 50%;    
-    background-size: cover;      
-    background: -moz-linear-gradient($heatmap_gradient);
-    background: -webkit-linear-gradient($heatmap_gradient); 
-    background: linear-gradient($heatmap_gradient); 
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
-    padding:0.4em;
-    filter: saturate(0.8);
-    filter: contrast(1.2);    
+    border-radius: 50% 50% 50% 50%;
+    background-size: cover;
+    padding:0.2em;
+    filter: brightness(0.9);
+    filter: saturate(0.9);
+    filter: contrast(1.2);
+    border: solid 1px #7D7C84;
+ 
     /*
+    background: #000000;
     border-image-source: linear-gradient(45deg, rgb(0,143,104), rgb(250,224,66));
     background-origin: border-box;
     background-clip: content-box, border-box;    
@@ -134,15 +135,21 @@
     /*
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
-    */
     -webkit-box-shadow: $shadow-purple;
     -moz-box-shadow: $shadow-purple;
     box-shadow: $shadow-purple;
+    */
+    
     transition: visibility 0s, opacity 0.5s linear;
+    z-index: 100;
 }
 
-.marker.small {
-    padding: 0.2em;
+.mapboxgl-marker .marker.small {
+    z-index: 10;
+}
+
+.mapboxgl-marker .marker.hidden {
+    display:none !important;
 }
 
 .marker img {

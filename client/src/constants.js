@@ -1,6 +1,6 @@
 export const SET_ACTIVE_OPTION = 'SET_ACTIVE_OPTION'
 
-export const MAPBOX_STYLE = 'mapbox://styles/stevepepple/ck91hf18201e61io3m7uaeqit/draft'
+export const MAPBOX_STYLE = 'mapbox://styles/stevepepple/cka8kdq0i1dvv1it9nj0l70xn/draft'
 
 export const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw'
 

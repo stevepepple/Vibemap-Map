@@ -16,7 +16,8 @@ class Markers extends Component {
 
         this.state = {
             markers: [],
-            has_features: false
+            has_features: false,
+            show_clusters: false
         }
     }
 
@@ -60,7 +61,11 @@ class Markers extends Component {
                 // Make less high scored marker in cluster smaller 
                 if (feature.properties.in_cluster === true && feature.properties.top_in_cluster === 'false') {
                     score = max / 4
-                    feature.className = 'marker small'
+                    if (this.state.show_clusters) {
+                        feature.className = 'marker small'
+                    } else {
+                        feature.className = 'marker small hidden'
+                    }
                 }
 
                 //let orginal_score = feature.properties.score

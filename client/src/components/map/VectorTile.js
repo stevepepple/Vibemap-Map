@@ -81,9 +81,13 @@ class VectorTile extends React.Component {
             })
 
             var layers = map.getStyle().layers            
-                        
-            map.addLayer(layer_options, before)
-
+                      
+            try {
+                map.addLayer(layer_options, before)    
+            } catch (error) {
+                console.log('Problem adding layer!')
+            }
+            
             let layer = map.getLayer(this.props.id)
             //console.log('Added this layer: ', this.props.id, layer)
             if (typeof layer !== 'undefined') {
