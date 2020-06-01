@@ -63,9 +63,20 @@ class EventsMap extends React.Component {
 
         const { detailsShown, placeType, guidesData, guideDetails, guideMarkers, topPicks } = nextProps
         let { has_marker_data, has_route_data, marker_data, score_markers } = this.state
+
         // Make it valide geoJSON
         // TODO: make valid GeoJSON in Redux?
-        let places_geojson = turf.featureCollection(nextProps.places_data)
+
+        // TODO: Remove this is just a temporary work around to get the JSON to work with Mapbox
+        let places_data = nextProps.places_data.map(place => { 
+            
+            delete place.properties.data_sources
+            delete place.properties.hotspots_events
+            
+            return place
+        }) 
+
+        let places_geojson = turf.featureCollection(places_data)
         let events_geojson = turf.featureCollection(nextProps.events_data)
 
         //console.log('Marker json: ', JSON.stringify(places_geojson))
@@ -166,6 +177,9 @@ class EventsMap extends React.Component {
         // TODO: how to transtlate greater of viewport width or height to search radius
         this.props.setViewport(viewport)
 
+        this.setState({ viewport })   
+
+
         // If the user pans by more than 2 kilometers, update the map
         let new_location = turf.point([viewport.longitude, viewport.latitude])
         let original_location = turf.point([this.props.currentLocation.longitude, this.props.currentLocation.latitude])
@@ -178,7 +192,7 @@ class EventsMap extends React.Component {
         // Need to throttle and take the last, most recent value
         if (viewport.longitude > 0) setLocation = true
 
-        if (distance > 0.05) setLocation = true
+        if (distance > 0.25) setLocation = true
 
         if (viewport.bearing !== this.props.bearing) this.props.setBearing(viewport.bearing)
     
@@ -198,7 +212,6 @@ class EventsMap extends React.Component {
         // Update bearing
         if (setBearing) this.props.setZoom(viewport.zoom)
 
-        this.setState({ viewport })   
     }    
 
     // Set details when marker or icon is clicked
@@ -402,13 +415,7 @@ class EventsMap extends React.Component {
                                         layout={mapStyles.top_pick_layout}
                                         paint={mapStyles.top_pick_paint}
                                     />
-
-                                    <Layer
-                                        id="top_vibes"
-                                        type="symbol"
-                                        layout={mapStyles.top_vibe_layout}
-                                        paint={mapStyles.top_pick_paint}
-                                    />
+                                    
                                 </Source>
                                 {/* TODO: this state should be synced with the top_picks react state */}
                                 {this.props.layers.photo_markers &&
@@ -538,6 +545,7 @@ class EventsMap extends React.Component {
                                 {this.state.popupInfo.name}
                             </Popup>
                         }
+                        
                         
                         <VectorTile
                             id='heat_layer'

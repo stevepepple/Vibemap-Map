@@ -114,7 +114,6 @@ const helpers = {
 
             css['background'] = gradient
 
-            console.log('Found gradient for :', vibe, gradient)
         }
         
 
