@@ -15,5 +15,10 @@
         "name": "Oui Chippy",
         "description": "Reopening with a new pop-up from the same team — Oui Chippy will specialize in casual, seafood-focused takeout inspired by fish and chips shops in the United Kingdom, plus wine and beer. -- Eater Portland",
         "category": "popup"
+    },
+    {
+        "name": "Nightingale New Happy Hours",
+        "description": "New menu with take out, meal kits, and extended happy hour.",
+        "category": "happy hour"
     }
 ]
