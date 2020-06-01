@@ -1,0 +1,19 @@
+[
+    {
+        "name" : "Zareen's",
+        "description": "Zareen’s continues to offer fresh and frozen takeout meals during shelter-in-place. Additionally, in honor of Eid al-Fitr, owner Zareen Khan is offering sheer khurma (an Eid specialty dessert) and kulfi at her restaurants. Proceeds will go to Doctors Without Borders. -- Bay Area Bites",
+        "category" : "takeout"       
+    }
+    ,
+    {
+        "name" : "ZARU Tea",
+        "description": "ZARU TEA Offers Free Delivery to Portland Metro Area | A Portion of All Sales Help Fund Projects Dedicated to Saving Endangered Species -- PDX Pipeline",
+        "category" : "takeout"       
+    }
+    ,
+    {
+        "name": "Oui Chippy",
+        "description": "Reopening with a new pop-up from the same team — Oui Chippy will specialize in casual, seafood-focused takeout inspired by fish and chips shops in the United Kingdom, plus wine and beer. -- Eater Portland",
+        "category": "popup"
+    }
+]

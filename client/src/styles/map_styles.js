@@ -30,7 +30,7 @@ module.exports = {
     marker_layout :  {
       // Icon Style
       "icon-image": ["to-string", ["get", "categories"]],
-      "icon-padding": 1.0,
+      "icon-padding": 4.0,
       "icon-size": [
         "case",
         [">", ["get", "average_score"], 4.9],
@@ -67,14 +67,14 @@ module.exports = {
         8, 4,
         22, 16
       ],
-      "text-offset": [0, -0.8],
+      "text-offset": [0, -1.0],
       "text-padding": 2,
       "text-max-width": 10,
       'visibility': 'visible' 
     },
 
     marker_paint: { 
-      'text-color': '#742395',
+      'text-color': '#7D7C84',
       'icon-color': '#3475BA',
       'text-halo-color': '#FFFFFF',
       'text-halo-width' : 1.2
@@ -132,8 +132,8 @@ module.exports = {
         "interpolate",
         ["linear"],
         ["zoom"],
-        8, 6,
-        22, 20
+        8, 8,
+        22, 22
       ],
       "text-max-width": 10,
       'visibility': 'visible'
@@ -212,21 +212,21 @@ module.exports = {
         ["zoom"],
           8, 1,
           10, 16,
-          12, 34,
-          13, 50,
-          14, 70,
+          12, 50,
+          13, 80,
+          14, 100,
           20, 200
       ],
       'heatmap-opacity': [
         "interpolate",
         ["linear"],
         ["zoom"],
-          8, 0.4,
-          11, 0.4,
-          20, 0.4
+          8, 0.3,
+          11, 0.3,
+          20, 0.3
       ],
       // This number is adjusted by React based on the relative density of the map area
-      'heatmap-intensity' : 0.1,
+      'heatmap-intensity' : 0.3,
       /*
       'heatmap-intensity': [        
         "interpolate",
@@ -253,16 +253,16 @@ module.exports = {
         "interpolate",
         ["linear"],
         ["heatmap-density"],
-        0.3,
+        0.1,
         "hsla(240, 80%, 94%, 0)",
+        0.3,
+        "hsla(251, 100%, 80%, 0.6)",
         0.5,
-        "hsla(172, 75%, 60%, 0.4)",
-        0.7,
-        "hsla(271, 73%, 64%, 0.8)",
-        0.95,
-        "hsla(19, 88%, 60%, 0.8)",
-        1.2,
-        "hsla(42, 84%, 73%, 0.9)",
+        "hsla(274, 100%, 65%, 0.8)",
+        0.8,
+        "hsla(300, 100%, 50%, 0.8)",
+        1.0,
+        "hsla(42, 100%, 64%, 0.8)",
         /* The pink is too much? 
         1.2,
         "hsla(42, 88%, 65%, 0.9)"
