@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import isEqual from 'react-fast-compare'
 import _ from 'lodash'
 
@@ -8,7 +8,7 @@ import * as actions from '../../redux/actions'
 import helpers from '../../helpers';
 import * as Constants from '../../constants.js'
 
-import { Button, Dimmer, Form, Input, Item, Loader, Segment } from 'semantic-ui-react'
+import { Button, Dimmer, Form, Input, Item, Loader, Pagination, Segment } from 'semantic-ui-react'
 import { Global } from '@emotion/core'
 
 import styles from './ListItems.css'
@@ -106,9 +106,12 @@ class PlacesList extends Component {
                 </Segment>
                 
                 {has_items? (
-                    <Item.Group divided relaxed size='small' className='events_list'>
-                        {items}
-                    </Item.Group>
+                    <Fragment>
+                        <Item.Group divided relaxed size='small' className='events_list'>
+                            {items}
+                        </Item.Group>
+                    </Fragment>
+                    
                 ) : (
                     <Segment placeholder basic>
                         <Dimmer active inverted><Loader inverted><h3>Have you ever stopped to smell the roses near Grand Avenue?</h3></Loader></Dimmer>

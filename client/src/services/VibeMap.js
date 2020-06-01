@@ -276,7 +276,7 @@ module.exports = {
                 end_date_before: day_end,
                 categories: activity,
                 search: search_term,
-                per_page: 400
+                per_page: 200
             }
 
             if (activity) {

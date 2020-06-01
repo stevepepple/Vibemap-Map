@@ -8,7 +8,7 @@ import * as actions from '../../redux/actions'
 import helpers from '../../helpers';
 import * as Constants from '../../constants.js'
 
-import { Button, Dimmer, Form, Input, Item, Loader, Segment } from 'semantic-ui-react'
+import { Button, Dimmer, Form, Input, Item, Loader, Pagination, Segment } from 'semantic-ui-react'
 import { Global } from '@emotion/core'
 
 import styles from '../../styles/ListItems.scss'
@@ -48,7 +48,12 @@ class PlacesList extends Component {
         console.log("handleDaysChange: ", value)
         this.props.setDays(value)
         this.updateURL("days", value)
-    }    
+    }
+    
+    handlePage = (e, { activePage }) => {
+        console.log('setCurrentPage: ', activePage)
+        this.props.setCurrentPage(activePage)
+    }
 
     onClick = (event, id, type) => { 
         this.props.setDetailsId(id)
@@ -104,6 +109,20 @@ class PlacesList extends Component {
                 {has_items? (
                     <Item.Group divided relaxed size='small' className='events_list'>
                         {items}
+
+                        <Pagination
+                            className='list_pagination'
+                            fluid   
+                            pointing
+                            secondary
+                            onPageChange={this.handlePage}
+                            boundaryRange={1}
+                            siblingRange={1}
+                            totalPages={this.props.totalPages}
+                            firstItem={false}
+                            lastItem={false}
+                            activePage={this.props.currentPage}
+                        />
                     </Item.Group>
                 ) : (
                     <Segment placeholder basic>
@@ -116,16 +135,22 @@ class PlacesList extends Component {
     }
 }
 
+PlacesList.defaultProps = {
+    showPagination: true
+}
+
 const mapStateToProps = state => {
     return {
         activity: state.activity,
         allCategories: state.allCategories,
         currentDays: state.currentDays,
+        currentPage: state.currentPage,
         searchTerm: state.searchTerm,
         detailsId: state.detailsId,
         detailsType: state.detailsType,
         detailsShown: state.detailsShown,
-        placeType: state.placeType
+        placeType: state.placeType,
+        totalPages: state.totalPages
     }
 }
 

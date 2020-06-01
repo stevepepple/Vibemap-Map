@@ -5,13 +5,15 @@
     display: flex;
     align-items: stretch;
     flex-direction: column;
+    padding-right: 0;
     padding-top: 0;
     height: 100%;
     width: 100%;
 }
 
 #list .ui.items {
-    flex-grow: 1
+    flex-grow: 1;
+    margin: 0.5em;
 }
 
 #list .listSearch input {
@@ -50,4 +52,12 @@
 ui.inverted.purple.buttons .active.button {
     background-color: $color-purple !important;
     color: #FFFFFF !important
+}
+
+.list_pagination {
+    background: #FFFFFF !important;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
 }

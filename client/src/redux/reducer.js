@@ -418,6 +418,20 @@ export const currentItem = (state = {
   return state
 }
 
+export const currentPage = (state = 0, action) => {
+  if (action.type === 'SET_CURRENT_PAGE') {
+    state = action.page
+  }
+  return state
+}
+
+export const totalPages = (state = 5, action) => {
+  if (action.type === 'SET_TOTAL_PAGES') {
+    state = action.pages
+  }
+  return state
+}
+
 export const topPicks = (state = [], action) => {
 
   if (action.type === 'SET_TOP_PICKS_DATA') {
@@ -435,7 +449,7 @@ export const topPicks = (state = [], action) => {
         place.properties.top_vibe = place.properties.vibes[0]
       }
 
-      if (place.properties.sub_categories && place.properties.sub_categories.length > 0) {
+      if (place.properties.sub_categories && typeof (place.properties.sub_categories) == 'object' && place.properties.sub_categories.length > 0) {
         place.properties.categories = place.properties.sub_categories[0]
       }
 
@@ -495,6 +509,7 @@ export const reducers = (history) => combineReducers({
   currentLocation,
   currentItem,
   currentDays,
+  currentPage,
   currentVibes,
   densityBonus,
   detailsId,
@@ -517,6 +532,7 @@ export const reducers = (history) => combineReducers({
   placeType,
   searchTerm,
   showList,
+  totalPages,
   topPicks,
   topVibes,
   mainVibe,
