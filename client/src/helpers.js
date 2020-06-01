@@ -6,6 +6,8 @@ import chroma from 'chroma-js'
 import * as turf from '@turf/turf'
 import geoViewport from '@mapbox/geo-viewport'
 
+import * as style_variables from 'vibemap-constants/design-system/build/json/variables.json';
+
 const helpers = {
 
     // Get HTML Position
@@ -69,9 +71,7 @@ const helpers = {
             [bounds[2], bounds[1]], // Southeast
             { units: 'miles' }
         )
-
-        console.log('bounds: ', bounds, height, width)
-    
+  
         let area = height * width
 
         return area
@@ -94,6 +94,33 @@ const helpers = {
 
     },
 
+    getVibeStyle(vibe) {
+        let vibe_styles = style_variables['default']['color']['vibes']
+
+        let dark_gray = style_variables['default']['color']['base']['gray']['1000']
+        let light_gray = style_variables['default']['color']['base']['gray']['300']
+
+        let css = { color: dark_gray, background: light_gray }
+
+        if (vibe in vibe_styles) {
+            let primary = vibe_styles[vibe]['primary']
+
+            let luminance = chroma(primary).luminance()
+            let brightness = 1.2
+            if (luminance < 0.1) brightness += 2
+            if (luminance < 0.3) brightness += 1
+
+            let gradient = 'linear-gradient(45deg, ' + chroma(primary).brighten(brightness).hex() + ' 0%, ' + light_gray + ' 75%)'
+
+            css['background'] = gradient
+
+            console.log('Found gradient for :', vibe, gradient)
+        }
+        
+
+        return css
+    },
+
     zoomToRadius : function(zoom) {
         
         // Scale and interpolate radius to zoom siz
@@ -109,7 +136,7 @@ const helpers = {
     scaleIconSize: function(score, max) {
         let scale = scalePow(1)
             .domain([0, max])
-            .range([2, 6])
+            .range([2, 4])
         
         return scale(score)
     },
@@ -137,7 +164,6 @@ const helpers = {
         let pink = '#ED0A87'
         let teal = '#32BFBF'
         let white = '#FFFFFF'
-        
         
         let light_blue = '#54CAF2'
         let light_green = '#9DE862'
@@ -360,8 +386,6 @@ const helpers = {
 
         let max = max_density(zoom) 
         
-        console.log('max density for zoom level: ', zoom, density,  max)
-
         let density_scale = scalePow(1)
             .domain([0, max])
             .range([0, 1])
