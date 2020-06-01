@@ -14,6 +14,10 @@ TODO: Move to design system and auto-generate
 }
 
 */
+.ui.label.black {    
+    background-color: #CCCCCC !important;    
+    border: solid 1.5px $light_green;
+}
 
 .ui.label.outdoors {    
     border: solid 1.5px $light_green;
