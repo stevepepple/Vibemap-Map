@@ -9,6 +9,8 @@ import SketchMap from './components/pages/SketchMap';
 
 import { withTranslation } from 'react-i18next';
 
+// Include themed version of Semantic UI styles
+import 'vibemap-constants/design-system/semantic/dist/semantic.css';
 
 import './styles/App.css';
 

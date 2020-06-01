@@ -1,5 +1,7 @@
 @import 'variables.scss';
 
+@import 'vibemap-constants/design-system/build/scss/_variables.scss';
+
 html, body, #root, div.App, div.App > div {
   height: 100%;
   font-family: 'Public Sans', sans-serif;
@@ -128,7 +130,7 @@ html, body, #root, div.App, div.App > div {
 
 .ui.items .item .content .date {
     font-size: 1.1em;
-    color: #999;
+    color: $color-base-gray-600;
     padding: 0.2em;
     padding-bottom: 0.4em;
 }
@@ -162,7 +164,7 @@ html, body, #root, div.App, div.App > div {
 }
 
 .ui.items .top_match {
-    color: $color-green;
+    color: $color-base-green-deep;
 }
 
 .details {
