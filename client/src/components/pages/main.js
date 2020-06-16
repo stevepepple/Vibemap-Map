@@ -400,10 +400,12 @@ class Page extends Component {
         let count = results.count
         let area = helpers.getArea(this.props.bounds)
         let density = count / area
-        let relative_density = helpers.scaleDensity(this.props.zoom, density)
-        let density_bonus = 1 - relative_density
+        let relative_density = helpers.scaleDensityArea(density)
+        let density_bonus = helpers.scaleDensityBonus(relative_density)
         this.props.setDensityBonus(density_bonus)
-        console.log('density: ', count, area, density)
+
+        console.log('relative_density, inverted scale: ', relative_density, density_bonus)
+        console.log('density (points, area in mi, density): ', count, area, density)
 
         const page = this.props.currentPage
         const first = page * this.state.num_top_picks

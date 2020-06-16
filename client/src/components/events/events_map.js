@@ -352,7 +352,9 @@ class EventsMap extends React.Component {
         }
 
         if (this.props.densityBonus) {
-            let intensity = (this.props.densityBonus + Constants.HEATMAP_INTENSITY) / 2
+            /* TODO: Better scalling for low and high densities */
+            // Take the mean of density bonus and the default intensity
+            let intensity = this.props.densityBonus
             //console.log('adjusted intensity: ', intensity)
             mapStyles.places_heatmap['heatmap-intensity'] = intensity
         }

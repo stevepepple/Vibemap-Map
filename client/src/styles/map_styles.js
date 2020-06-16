@@ -226,7 +226,7 @@ module.exports = {
           20, 0.3
       ],
       // This number is adjusted by React based on the relative density of the map area
-      'heatmap-intensity' : 0.3,
+      'heatmap-intensity' : 0.2,
       /*
       'heatmap-intensity': [        
         "interpolate",
@@ -259,9 +259,9 @@ module.exports = {
         "hsla(251, 100%, 80%, 0.6)",
         0.5,
         "hsla(274, 100%, 65%, 0.8)",
-        0.8,
+        0.9,
         "hsla(300, 100%, 50%, 0.8)",
-        1.0,
+        1.1,
         "hsla(42, 100%, 64%, 0.8)",
         /* The pink is too much? 
         1.2,

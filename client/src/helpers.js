@@ -115,7 +115,6 @@ const helpers = {
             css['background'] = gradient
 
         }
-        
 
         return css
     },
@@ -369,6 +368,25 @@ const helpers = {
         return scaled_size
     },
 
+    scaleDensityBonus: function(relative_density) {
+        let inverted_scale = scalePow(1)
+            .domain([0, 1])
+            .range([Constants.HEATMAP_INTENSITY * 4, Constants.HEATMAP_INTENSITY])
+
+        return inverted_scale(relative_density)
+
+    },
+
+    scaleDensityArea: function(density, area) {
+        let density_scale = scalePow(2)
+            .domain([1, 600, 10000])
+            .range([0, 0.6, 1])
+
+        let relative_density = density_scale(density)
+
+        return relative_density
+    },
+
     scaleDensity: function (zoom, density) {        
 
         // Scale min and max marker size to zoom level
@@ -383,10 +401,11 @@ const helpers = {
             .domain([8, 10, 12, 14, 16]) // Zoom size
             .range([10, 20, 80, 800, 8000]) // Scale of marker size
 
-        let max = max_density(zoom) 
+        // TODO: shoudl this be by area not zoom? 
+        let max_at_zoom = max_density(zoom) 
         
         let density_scale = scalePow(1)
-            .domain([0, max])
+            .domain([0, max_at_zoom])
             .range([0, 1])
         
         let relative_density = density_scale(density)
@@ -400,7 +419,7 @@ const helpers = {
         // Scale em size of svg marker to zoom level
         let scale = scalePow(1)
             .domain([8, 12, 20]) // Zoom size
-            .range([0.1, 1, 5]) // Scale of marker size
+            .range([0.1, 2, 5]) // Scale of marker size
     
         let scaled_size = Math.round(scale(zoom))
 

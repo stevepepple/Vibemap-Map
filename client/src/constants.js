@@ -25,7 +25,7 @@ export const PURPLE = '#811897'
 
 export const TRUCATE_LENGTH = 18
 
-export const HEATMAP_INTENSITY = 0.1
+export const HEATMAP_INTENSITY = 0.4
 
 export const RECOMMENDATION_REASONS = {
     'events': 'This place is happening',
