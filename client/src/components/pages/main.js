@@ -1,9 +1,8 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import qs from 'qs'
 import isEqual from 'react-fast-compare'
 
-import { Button, Grid, Transition } from 'semantic-ui-react'
 import VibeMap from '../../services/VibeMap.js'
 
 // TODO: move to services

@@ -371,7 +371,7 @@ const helpers = {
     scaleDensityBonus: function(relative_density) {
         let inverted_scale = scalePow(1)
             .domain([0, 1])
-            .range([Constants.HEATMAP_INTENSITY * 4, Constants.HEATMAP_INTENSITY])
+            .range([Constants.HEATMAP_INTENSITY * 2, Constants.HEATMAP_INTENSITY])
 
         return inverted_scale(relative_density)
 

@@ -61,8 +61,7 @@ class EventsMap extends React.Component {
     // TODO: Move to componentWillUPdate
     componentWillReceiveProps(nextProps){
 
-        const { detailsShown, placeType, guidesData, guideDetails, guideMarkers, topPicks } = nextProps
-        let { has_marker_data, has_route_data, marker_data, score_markers } = this.state
+        const { guidesData, guideDetails, topPicks } = nextProps
 
         // Make it valide geoJSON
         // TODO: make valid GeoJSON in Redux?
@@ -84,8 +83,8 @@ class EventsMap extends React.Component {
 
         let zoom = this.props.zoom
         
-        if (nextProps.guidesData) this.handleMarkers(nextProps)
-        if (nextProps.topPicks) this.handleMarkers(nextProps)
+        if (guidesData) this.handleMarkers(nextProps)
+        if (topPicks) this.handleMarkers(nextProps)
 
         // Handle route details
         if (!isEqual(guideDetails, this.props.guideDetails)) this.handleRouteData(guideDetails.route)
@@ -297,7 +296,6 @@ class EventsMap extends React.Component {
     }
 
     handleRouteData(route_data) {
-        const mapGL = this.mapRef.current.getMap()
 
         let has_route_data = false
         if (route_data !== undefined) has_route_data = true
@@ -330,7 +328,7 @@ class EventsMap extends React.Component {
 
     render() {
 
-        const { topPicks, detailsShown, guidesData, guideDetails, guideMarkers, placeType } = this.props
+        const { densityBonus, guideDetails } = this.props
         const { has_marker_data, has_route_data, marker_data, marker_data_geojson, route_data, score_markers } = this.state
 
         let has_places_data = this.props.places_data.length > 0
@@ -351,7 +349,7 @@ class EventsMap extends React.Component {
             heat_map_filter = ["food", "shopping", "outdoors"]
         }
 
-        if (this.props.densityBonus) {
+        if (densityBonus) {
             /* TODO: Better scalling for low and high densities */
             // Take the mean of density bonus and the default intensity
             let intensity = this.props.densityBonus
