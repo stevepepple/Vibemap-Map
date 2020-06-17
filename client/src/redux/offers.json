@@ -19,6 +19,21 @@
     {
         "name": "Nightingale New Happy Hours",
         "description": "New menu with take out, meal kits, and extended happy hour.",
-        "category": "happy hour"
+        "category": "happy hour",
+        "place_id": ""
+    },
+    {
+        "name": "Fresh Roots Popup",
+        "description": "Find us at our pickup and pop-up market stand from 4-7pm (details to follow about its exact location at the ICC), or go to the Main Office from 7-8pm for self-serve pickup!",
+        "category": "popup",
+        "place_id": "7c24474c-5ecb-4fc3-884c-5cc042a723f1"
+    },
+    {
+        "name": "Cocktail Classes",
+        "description": "Check out Monday Night Mixology",
+        "category": "classes",
+        "link": "https://www.mondaymixology.com/classes",
+        "place_id": "86dc2809-fc71-42b7-ada0-3ae09e61ed7c"
     }
+
 ]
