@@ -4,6 +4,7 @@
   "scripts": {
     "serve": "npm run build & serve -s build",
     "start": "react-scripts start",
+    "start-styleguide": "npx styleguidist server",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -31,7 +32,7 @@
     "lodash.merge": "^4.6.2",
     "mapbox-gl": "^0.50",
     "moment": "^2.24.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "pure-react-carousel": "^1.27.1",
     "qs": "^6.9.2",
@@ -41,6 +42,7 @@
     "react-canvas-draw": "^1.1.0",
     "react-dom": "^16.13.1",
     "react-fast-compare": "^2.0.4",
+    "react-ga": "^3.0.0",
     "react-hot-keys": "^2.5.2",
     "react-i18next": "^11.3.1",
     "react-icons-weather": "^1.0.5",
@@ -61,9 +63,10 @@
     "redux": "^4.0.5",
     "request-promise": "^4.2.5",
     "save": "^2.4.0",
-    "semantic-ui-react": "^0.83.0",
+    "semantic-ui-react": "^0.88.2",
     "truncate": "^2.1.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "vibemap-constants": "^1.0.7"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -76,5 +79,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "react-styleguidist": "^11.0.6",
+    "semantic-ui": "^2.4.2"
+  }
 }

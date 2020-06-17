@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import { Item, Icon, Label } from 'semantic-ui-react'
 
+import Vibe from './vibe'
+
 import helpers from '../../helpers';
 
 function cardPLaceLayout(props) {
@@ -32,14 +34,21 @@ function cardPLaceLayout(props) {
         let remainder = content.vibes.length - 1
         vibes = null
 
-        let first_vibe = helpers.toTitleCase(content.vibes[0])
+        let first_vibe = content.vibes[0]
+        let first_vibe_text = helpers.toTitleCase(first_vibe)
 
         // Handle vibe label layout
         if (remainder > 0) vibes = <Fragment>
-                <Label circular key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe}</Label>
+                <Label
+                    circular 
+                    key={content.vibes[0]}
+                    className={'vibe label tiny' + content.vibes[0]}
+                    style={helpers.getVibeStyle(first_vibe)}>
+                    {first_vibe}
+                </Label>
                 <Label circular title={'See all ' + remainder + 'vibes.'}>+ {remainder}</Label>
             </Fragment>
-        if (remainder === 0) vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe}</Label>
+        if (remainder === 0) vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe_text}</Label>
 
         // vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
     }

@@ -20,6 +20,9 @@ import { push } from 'connected-react-router'
 
 import '../../styles/navigation.scss'
 
+import vibe_styles from '../../styles/vibes.scss'
+
+
 class Navigation extends Component {
     constructor(props) {
         super(props)

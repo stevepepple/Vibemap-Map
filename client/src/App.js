@@ -7,8 +7,12 @@ import ProfileLookUp from './components/pages/profile';
 import VibeGenerator from './components/pages/vibe_generator';
 import SketchMap from './components/pages/SketchMap';
 
+import GA from './services/GoogleAnalytics'
+
 import { withTranslation } from 'react-i18next';
 
+// Include themed version of Semantic UI styles
+import 'vibemap-constants/design-system/semantic/dist/semantic.css';
 
 import './styles/App.css';
 
@@ -24,8 +28,10 @@ class App extends Component {
       <div className="App">
   
         <Router>
+  
           <div id='container'>               
-            
+            {GA.init() && <GA.RouteTracker />}
+          
             <Switch>
               <Route path="/calendar" component={EventCalendar} />
               <Route path="/places" component={MainPage} />

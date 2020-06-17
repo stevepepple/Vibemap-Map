@@ -61,11 +61,21 @@ class EventsMap extends React.Component {
     // TODO: Move to componentWillUPdate
     componentWillReceiveProps(nextProps){
 
-        const { detailsShown, placeType, guidesData, guideDetails, guideMarkers, topPicks } = nextProps
-        let { has_marker_data, has_route_data, marker_data, score_markers } = this.state
+        const { guidesData, guideDetails, topPicks } = nextProps
+
         // Make it valide geoJSON
         // TODO: make valid GeoJSON in Redux?
-        let places_geojson = turf.featureCollection(nextProps.places_data)
+
+        // TODO: Remove this is just a temporary work around to get the JSON to work with Mapbox
+        let places_data = nextProps.places_data.map(place => { 
+            
+            delete place.properties.data_sources
+            delete place.properties.hotspots_events
+            
+            return place
+        }) 
+
+        let places_geojson = turf.featureCollection(places_data)
         let events_geojson = turf.featureCollection(nextProps.events_data)
 
         //console.log('Marker json: ', JSON.stringify(places_geojson))
@@ -73,8 +83,8 @@ class EventsMap extends React.Component {
 
         let zoom = this.props.zoom
         
-        if (nextProps.guidesData) this.handleMarkers(nextProps)
-        if (nextProps.topPicks) this.handleMarkers(nextProps)
+        if (guidesData) this.handleMarkers(nextProps)
+        if (topPicks) this.handleMarkers(nextProps)
 
         // Handle route details
         if (!isEqual(guideDetails, this.props.guideDetails)) this.handleRouteData(guideDetails.route)
@@ -166,6 +176,9 @@ class EventsMap extends React.Component {
         // TODO: how to transtlate greater of viewport width or height to search radius
         this.props.setViewport(viewport)
 
+        this.setState({ viewport })   
+
+
         // If the user pans by more than 2 kilometers, update the map
         let new_location = turf.point([viewport.longitude, viewport.latitude])
         let original_location = turf.point([this.props.currentLocation.longitude, this.props.currentLocation.latitude])
@@ -178,7 +191,7 @@ class EventsMap extends React.Component {
         // Need to throttle and take the last, most recent value
         if (viewport.longitude > 0) setLocation = true
 
-        if (distance > 0.05) setLocation = true
+        if (distance > 0.25) setLocation = true
 
         if (viewport.bearing !== this.props.bearing) this.props.setBearing(viewport.bearing)
     
@@ -198,7 +211,6 @@ class EventsMap extends React.Component {
         // Update bearing
         if (setBearing) this.props.setZoom(viewport.zoom)
 
-        this.setState({ viewport })   
     }    
 
     // Set details when marker or icon is clicked
@@ -284,7 +296,6 @@ class EventsMap extends React.Component {
     }
 
     handleRouteData(route_data) {
-        const mapGL = this.mapRef.current.getMap()
 
         let has_route_data = false
         if (route_data !== undefined) has_route_data = true
@@ -317,7 +328,7 @@ class EventsMap extends React.Component {
 
     render() {
 
-        const { topPicks, detailsShown, guidesData, guideDetails, guideMarkers, placeType } = this.props
+        const { densityBonus, guideDetails } = this.props
         const { has_marker_data, has_route_data, marker_data, marker_data_geojson, route_data, score_markers } = this.state
 
         let has_places_data = this.props.places_data.length > 0
@@ -338,8 +349,10 @@ class EventsMap extends React.Component {
             heat_map_filter = ["food", "shopping", "outdoors"]
         }
 
-        if (this.props.densityBonus) {
-            let intensity = (this.props.densityBonus + Constants.HEATMAP_INTENSITY) / 2
+        if (densityBonus) {
+            /* TODO: Better scalling for low and high densities */
+            // Take the mean of density bonus and the default intensity
+            let intensity = this.props.densityBonus
             //console.log('adjusted intensity: ', intensity)
             mapStyles.places_heatmap['heatmap-intensity'] = intensity
         }
@@ -402,13 +415,7 @@ class EventsMap extends React.Component {
                                         layout={mapStyles.top_pick_layout}
                                         paint={mapStyles.top_pick_paint}
                                     />
-
-                                    <Layer
-                                        id="top_vibes"
-                                        type="symbol"
-                                        layout={mapStyles.top_vibe_layout}
-                                        paint={mapStyles.top_pick_paint}
-                                    />
+                                    
                                 </Source>
                                 {/* TODO: this state should be synced with the top_picks react state */}
                                 {this.props.layers.photo_markers &&
@@ -538,6 +545,7 @@ class EventsMap extends React.Component {
                                 {this.state.popupInfo.name}
                             </Popup>
                         }
+                        
                         
                         <VectorTile
                             id='heat_layer'

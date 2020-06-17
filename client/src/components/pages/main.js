@@ -1,9 +1,8 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import qs from 'qs'
 import isEqual from 'react-fast-compare'
 
-import { Button, Grid, Transition } from 'semantic-ui-react'
 import VibeMap from '../../services/VibeMap.js'
 
 // TODO: move to services
@@ -52,7 +51,7 @@ class Page extends Component {
             // TODO: handle conversion math in VibeMap
             intervalIsSet: false,
             loading: true,
-            num_top_picks: 12,
+            num_top_picks: 10,
             timedOut: false,
             mergeTopPicks: false,
             time_of_day: 'morning',
@@ -146,7 +145,12 @@ class Page extends Component {
             updateData = true
             refreshResults = true
         }
-        
+
+        if (!isEqual(prevProps.currentPage, this.props.currentPage)) {
+            refreshResults = true
+            this.pageTopPicks(refreshResults)
+        }
+
         if (!isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)) {
             // TODO: measure distance between current and previous event
             // If they close together, merge the data in fetchPlaces.
@@ -294,7 +298,9 @@ class Page extends Component {
         VibeMap.getEvents(point, this.props.distance, this.props.bounds, this.state.event_categories, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
             .then(results => {
 
-                let top_picks = results.data.splice(1, this.state.num_top_picks)
+                const page = this.props.currentPage
+
+                let top_picks = results.data.splice(page, page + this.state.num_top_picks)
                 // TODO: If both events and places, how to merge the results
                 this.props.setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
                 this.props.setEventsData(results.data)
@@ -393,17 +399,47 @@ class Page extends Component {
         let count = results.count
         let area = helpers.getArea(this.props.bounds)
         let density = count / area
-        let relative_density = helpers.scaleDensity(this.props.zoom, density)
-        let density_bonus = 1 - relative_density
+        let relative_density = helpers.scaleDensityArea(density)
+        let density_bonus = helpers.scaleDensityBonus(relative_density)
         this.props.setDensityBonus(density_bonus)
-        console.log('density: ', count, area, density)
 
-        let top_picks = results.data.splice(1, this.state.num_top_picks)
+        console.log('relative_density, inverted scale: ', relative_density, density_bonus)
+        console.log('density (points, area in mi, density): ', count, area, density)
+
+        const page = this.props.currentPage
+        const first = page * this.state.num_top_picks
+        const last = first + this.state.num_top_picks
+
+        console.log('first and last page: ', first, last)
+
+        let top_picks = results.data.splice(first, last)
+
+        let num_results = results.data.length
+        let num_pages = Math.floor(num_results / this.state.num_top_picks) - 1
+        let wildcard = Math.floor(Math.random() * num_results)
+
+        // TODO: consider adding and highlighting a wildcard result         
+        // top_picks.push(results.data[wildcard])
 
         let top_picks_clustered = VibeMap.clusterPlaces(top_picks, this.state.clusterSize)
 
         this.props.setTopPicks(top_picks_clustered, refreshResults, this.state.mergeTopPicks)
+
+        this.props.setTotalPages(num_pages)
         this.props.setPlacesData(results.data, refreshResults)
+    }
+
+    pageTopPicks(refreshResults) {
+        const page = this.props.currentPage
+        const first = page * this.state.num_top_picks + 1
+        const last = first + this.state.num_top_picks
+
+        console.log('first and last page: ', first, last, refreshResults, this.state.mergeTopPicks)
+
+        let top_picks = this.props.placesData.slice(first, last)
+
+        console.log('top_picks of total: ', top_picks, this.props.placesData.length)
+        this.props.setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
     }
 
     clearDetails = function() {
@@ -487,6 +523,7 @@ const mapStateToProps = state => ({
     geod: state.geod,
     currentCategory: state.currentCategory,
     currentLocation: state.currentLocation,
+    currentPage: state.currentPage,
     zoom: state.zoom,
     currentDays: state.currentDays,
     currentVibes: state.currentVibes,
@@ -506,6 +543,7 @@ const mapStateToProps = state => ({
     search: state.router.location.search,
     signatureVibes: state.router.location.signatureVibes,
     showList: state.showList,
+    totalPages: state.totalPages,
     topPicks: state.topPicks,
     topVibes: state.topVibes,
     windowSize: state.windowSize,

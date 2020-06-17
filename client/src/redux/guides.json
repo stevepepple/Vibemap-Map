@@ -260,6 +260,131 @@
                             "unexpected"
                         ]
                     }
+                },
+                {
+                    "id": "4",
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -122.421211,
+                            37.76297195
+                        ]
+                    },
+                    "properties": {
+                        "name": "Peak to Peak",
+                        "short_name": "Scenic urban hike",
+                        "place_type": "guides",
+                        "categories": [
+                            "outdoors",
+                            "walking",
+                            "views"
+                        ],
+                        "description": "Long urban hike between scenic views and the villages of Nob Hill, Western Addition, Mission, Bernal Heights, Potrero Hill, and SOMA. You can always take the bus back.",
+                        "images": [
+                            "https://fastly.4sqi.net/img/general/300x500/355755_nOefZLghhjMeT3cJjgoDtHxMZtiKfMU_axD3h20tOyM.jpg"
+                        ],
+                        "places": [
+                            {
+                                "id": "37fd62e2-69a5-42f0-9681-78f229a62292",
+                                "name": "Grace Cathedral",
+                                "coordinates": [
+                                    -122.41314996964033,
+                                    37.79187524079848
+                                ]
+                            },
+                            {
+                                "id": "55c65923-84c8-4d78-909a-112be28942d1",
+                                "name": "Lafayette Park",
+                                "coordinates": [
+                                    -122.4280806000004,
+                                    37.79124659
+                                ]
+                            },
+                            {
+                                "id": "726cb358-6ac8-4d3a-8191-14d08a9aae36",
+                                "name": "Alamo Square",
+                                "coordinates": [
+                                    -122.4348603999996,
+                                    37.77593780000002
+                                ]
+                            },
+                            {
+                                "id": "e5f8ca1a-d104-4f02-b120-f3ac366fb0d1",
+                                "name": "Buena Vista Park",
+                                "coordinates": [
+                                    -122.440589,
+                                    37.76849022000001
+                                ]
+                            },
+                            {
+                                "id": "9fa4b59f-385d-47e2-b844-615a786ddd38",
+                                "name": "Corona Heights Summit",
+                                "coordinates": [
+                                    -122.4392424131799,
+                                    37.76499750972105
+                                ]
+                            },
+                            {
+                                "id": "e8995337-1f0c-4ab5-bd4f-d5557db3229f",
+                                "name": "Mission Dolores Park",
+                                "coordinates": [
+                                    -122.42704649999975,
+                                    37.75942964
+                                ]
+                            },
+                            {
+                                "id": "fff4a93f-6ca0-4f5b-ad78-9718be79524a",
+                                "name": "Bernal Heights Park",
+                                "coordinates": [
+                                    -122.4149568,
+                                    37.74326498
+                                ]
+                            },
+                            {
+                                "id": "1bb3d8f2-3652-4e93-9d60-1bfd7ca89417",
+                                "name": "Starr King Open Space",
+                                "coordinates": [
+                                    -122.4001829563922,
+                                    37.75350921443473
+                                ]
+                            },
+                            {
+                                "id": "1cd2c588-c4c8-4f0c-8299-5e8074a691f8",
+                                "name": "McKinley Square Park",
+                                "coordinates": [
+                                    -122.4039355,
+                                    37.7593329
+                                ]
+                            },
+                            {
+                                "id": "f197403c-6b77-47e1-ad23-ed2fbffe215c",
+                                "name": "Victoria Manalo Draves Park",
+                                "coordinates": [
+                                    -122.4062288205358,
+                                    37.77731307044861
+                                ]
+                            },
+                            {
+                                "id": "caf97caa-5c19-4e3f-bf2f-88e98db49af2",
+                                "name": "Yerba Buena Gardens",
+                                "coordinates": [
+                                    -122.4021903999998,
+                                    37.7856437
+                                ]
+                            }
+
+                            
+                            
+                        ],
+                        "route": null,
+                        "vibes": [
+                            "artsy",
+                            "historic",
+                            "vibrant",
+                            "unexpected"
+                        ]
+                    }
                 }
             ]
     }

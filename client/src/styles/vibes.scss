@@ -1,0 +1,65 @@
+@import 'variables.scss';
+
+$vibes: 'buzzing', 'outdoors';
+
+/*
+TODO: Move to design system and auto-generate
+.ui.label.buzzing {    
+    border: solid 1.5px $color-base-yellow-deep;
+}
+
+.ui.label.buzzing.active {
+    border: solid 1.5px $color-base-yellow-deep;
+    background: $color-base-yellow-deep;
+}
+
+*/
+.ui.label.black {    
+    background-color: #CCCCCC !important;    
+    border: solid 1.5px $light_green;
+}
+
+.ui.label.outdoors {    
+    border: solid 1.5px $light_green;
+}
+
+.ui.label.positive {    
+    border: solid 1.5px $light_yellow;
+}
+
+.ui.label.proud {    
+    border: solid 1.5px $light_purple;
+}
+
+.ui.label.zen {    
+    border: solid 1.5px $light_blue;
+}
+
+.ui.label.classic {
+    /*
+    background: rgb(241,95,149);
+    background: linear-gradient(45deg, rgba(230,124,163,0.3475140056022409) 0%, rgba(240,233,231,1) 34%, rgba(234,223,208,1) 74%, rgba(244,168,56,0.31390056022408963) 100%);
+    */
+    border: solid 1.5px $light_pink;
+}
+
+.ui.label.legacy {    
+    border: solid 1.5px $orange;
+}
+
+.ui.label.old {    
+    border: solid 1.5px $light_teal;
+}
+
+.ui.label.oldschool {    
+    border: solid 1.5px $light_teal;
+}
+
+.ui.label.nostalgic {    
+    border: solid 1.5px $light_blue;
+}
+
+.ui.label.retro {    
+    border: solid 1.5px $light_purple;
+}
+

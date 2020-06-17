@@ -11,19 +11,23 @@ blockquote {
     font-size: 1.2em;
 }
 
+.ui.label.vibe.circular {
+    padding: 1.2em !important;
+}
+
 .color {
     height: 94%;
     width: 94%;
     background: linear-gradient(
-        46deg,
-        var(--color-1) 30%,
-        var(--color-2) 50%,
-        var(--color-3) 70%
+        44deg,
+        var(--color-1) 0%,
+        var(--color-2) 60%,
+        var(--color-3) 100%
     );
-    opacity: 0.6;
+    opacity: 0.8;
     position: absolute;
 
-    background-size: 300% 300%;
+    background-size: 200% 200%;
     /*animation: gradient-rotate 10s ease-in-out infinite;*/
     -webkit-animation: AnimationName 30s ease infinite;
     -moz-animation: AnimationName 30s ease infinite;
@@ -45,6 +49,7 @@ blockquote {
     position: absolute;
     background-image: url('warp.gif'); 
     background-size: cover;
+    opacity: 0.6;
 }
 
 @-webkit-keyframes AnimationName {

@@ -1,8 +1,8 @@
 export const SET_ACTIVE_OPTION = 'SET_ACTIVE_OPTION'
 
-export const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw'
+export const MAPBOX_STYLE = 'mapbox://styles/stevepepple/cka8kdq0i1dvv1it9nj0l70xn/draft?optimize=true'
 
-export const MAPBOX_STYLE = 'mapbox://styles/stevepepple/cjpk3ts1c0skb2rs52w658p07'
+export const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw'
 
 export const MAPBOX_STYLE_LIGHT = 'mapbox://styles/stevepepple/ck8unzpvf0z5j1itdntgz3lxp'
 
@@ -25,7 +25,7 @@ export const PURPLE = '#811897'
 
 export const TRUCATE_LENGTH = 18
 
-export const HEATMAP_INTENSITY = 0.1
+export const HEATMAP_INTENSITY = 0.4
 
 export const RECOMMENDATION_REASONS = {
     'events': 'This place is happening',

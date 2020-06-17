@@ -24,7 +24,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="images//apple-touch-icon.png">
     <meta name="theme-color" content="#811897">
 
-
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -56,12 +55,64 @@
     <meta name="twitter:app:name:iphone" content="@vibemap"></meta>
     <meta name="twitter:app:name:googleplay" content="@vibemap"></meta>
 
+    <style>
+      /* TODO: Add animation and load from style sheet */
+      /* TODO: Make background gray? */
+      .full-page-loader {
+        background: #EFEFF4;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+      }
+
+      .logo {
+        animation: logo-rotate infinite 6s ease-in;
+      }
+
+      @keyframes logo-rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        10% {
+          transform: rotate(-40deg);
+        }
+
+        40% {
+          transform: rotate(120deg);
+        }
+
+        70% {
+          tranform: rotate(-140deg)
+        }
+
+        100% {
+          transform: rotate(50deg);
+        }
+      }
+
+    </style>
+
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="root"></div>
+    <div id="root">
+        <div class="full-page-loader">
+          <div class="logo">
+            <img width="140" src="/images/logo-mark.svg" alt="Vibemap" />
+          </div>
+          
+        </div>
+
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -72,8 +123,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script src='https://api.mapbox.com/mapbox-assembly/mbx/v0.18.0/assembly.js'></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2IfNJpGR6qcaOsgacTLVYuF4tqJ7HejY &libraries=places"></script>
 
   </body>
 </html>

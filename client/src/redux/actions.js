@@ -38,8 +38,6 @@ export const setGuideMarkers = markers => ({
   markers,
 })
 
-
-
 export const setMapReady = ready => ({
   type: 'SET_MAP_READY',
   ready,
@@ -58,6 +56,16 @@ export const activateGeod = geod => ({
 export const setCurrentLocation = location => ({
   type: 'SET_CURRENT_LOCATION',
   location,
+})
+
+export const setCurrentPage = page => ({
+  type: 'SET_CURRENT_PAGE',
+  page,
+})
+
+export const setTotalPages = pages => ({
+  type: 'SET_TOTAL_PAGES',
+  pages,
 })
 
 export const setHeaderSize = size => ({

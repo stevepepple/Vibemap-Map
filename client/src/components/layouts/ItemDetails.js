@@ -4,7 +4,7 @@ import _ from 'lodash'
 import isEqual from 'react-fast-compare'
 import MetaTags from 'react-meta-tags'
 
-import { Button, Card, Divider, Header, Icon, Image, Label, List, Reveal, Placeholder, Segment } from 'semantic-ui-react'
+import { Button, Divider, Icon, Image, Label, List, Reveal, Placeholder, Segment } from 'semantic-ui-react'
 import Directions from '../places/directions'
 import VibeMap from '../../services/VibeMap.js'
 import * as Constants from '../../constants.js'
@@ -21,9 +21,6 @@ import ShowMoreText from 'react-show-more-text'
 
 /* TODO: Break this into styles for each component */
 import '../../styles/place_details.scss'
-
-import moment from 'moment';
-import { constants } from 'buffer'
 
 class PlaceDetails extends Component {
 

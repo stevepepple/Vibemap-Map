@@ -6,5 +6,9 @@
 	],
 	"settings": {
 		"debug.node.autoAttach": "on"
+	},
+	"launch": {
+		"configurations": [
+		]
 	}
 }

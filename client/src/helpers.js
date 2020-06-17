@@ -6,6 +6,8 @@ import chroma from 'chroma-js'
 import * as turf from '@turf/turf'
 import geoViewport from '@mapbox/geo-viewport'
 
+import * as style_variables from 'vibemap-constants/design-system/build/json/variables.json';
+
 const helpers = {
 
     // Get HTML Position
@@ -69,9 +71,7 @@ const helpers = {
             [bounds[2], bounds[1]], // Southeast
             { units: 'miles' }
         )
-
-        console.log('bounds: ', bounds, height, width)
-    
+  
         let area = height * width
 
         return area
@@ -94,6 +94,31 @@ const helpers = {
 
     },
 
+    getVibeStyle(vibe) {
+        let vibe_styles = style_variables['default']['color']['vibes']
+
+        let dark_gray = style_variables['default']['color']['base']['gray']['1000']
+        let light_gray = style_variables['default']['color']['base']['gray']['300']
+
+        let css = { color: dark_gray, background: light_gray }
+
+        if (vibe in vibe_styles) {
+            let primary = vibe_styles[vibe]['primary']
+
+            let luminance = chroma(primary).luminance()
+            let brightness = 1.2
+            if (luminance < 0.1) brightness += 2
+            if (luminance < 0.3) brightness += 1
+
+            let gradient = 'linear-gradient(45deg, ' + chroma(primary).brighten(brightness).hex() + ' 0%, ' + light_gray + ' 75%)'
+
+            css['background'] = gradient
+
+        }
+
+        return css
+    },
+
     zoomToRadius : function(zoom) {
         
         // Scale and interpolate radius to zoom siz
@@ -109,7 +134,7 @@ const helpers = {
     scaleIconSize: function(score, max) {
         let scale = scalePow(1)
             .domain([0, max])
-            .range([2, 6])
+            .range([2, 4])
         
         return scale(score)
     },
@@ -138,7 +163,6 @@ const helpers = {
         let teal = '#32BFBF'
         let white = '#FFFFFF'
         
-        
         let light_blue = '#54CAF2'
         let light_green = '#9DE862'
         let light_teal = '#7DCAA5'     
@@ -159,17 +183,17 @@ const helpers = {
         let green_purple = "PiYG"
         
         const vibe_to_scale = {
-            'calm': [gray, light_green, light_yellow, light_blue],
-            'buzzing': [gray, light_pink, light_yellow, orange],
-            'dreamy': [gray, light_purple, light_blue, light_yellow],
+            'calm': [white, light_green, light_yellow, light_blue],
+            'buzzing': [white, light_pink, light_yellow, orange],
+            'dreamy': [white, light_purple, orange, light_yellow],
             'oldschool': [blue, yellow,  orange],
-            'playful': [gray, light_teal, yellow, orange],
-            'solidarity': [gray, light_yellow, yellow, orange],
-            'together': [gray, light_teal, light_yellow],
+            'playful': [white, light_teal, yellow, orange],
+            'solidarity': [white, light_yellow, yellow, orange],
+            'together': [white, light_teal, light_yellow],
             'wild': green_purple
         }
 
-        let scale = [gray, light_pink, yellow, orange]
+        let scale = [white, light_purple, yellow, orange]
 
         if (vibe) {
             scale = vibe_to_scale[vibe]            
@@ -344,6 +368,25 @@ const helpers = {
         return scaled_size
     },
 
+    scaleDensityBonus: function(relative_density) {
+        let inverted_scale = scalePow(1)
+            .domain([0, 1])
+            .range([Constants.HEATMAP_INTENSITY * 2, Constants.HEATMAP_INTENSITY])
+
+        return inverted_scale(relative_density)
+
+    },
+
+    scaleDensityArea: function(density, area) {
+        let density_scale = scalePow(2)
+            .domain([1, 600, 10000])
+            .range([0, 0.6, 1])
+
+        let relative_density = density_scale(density)
+
+        return relative_density
+    },
+
     scaleDensity: function (zoom, density) {        
 
         // Scale min and max marker size to zoom level
@@ -358,12 +401,11 @@ const helpers = {
             .domain([8, 10, 12, 14, 16]) // Zoom size
             .range([10, 20, 80, 800, 8000]) // Scale of marker size
 
-        let max = max_density(zoom) 
+        // TODO: shoudl this be by area not zoom? 
+        let max_at_zoom = max_density(zoom) 
         
-        console.log('max density for zoom level: ', zoom, density,  max)
-
         let density_scale = scalePow(1)
-            .domain([0, max])
+            .domain([0, max_at_zoom])
             .range([0, 1])
         
         let relative_density = density_scale(density)
@@ -377,7 +419,7 @@ const helpers = {
         // Scale em size of svg marker to zoom level
         let scale = scalePow(1)
             .domain([8, 12, 20]) // Zoom size
-            .range([0.1, 1, 5]) // Scale of marker size
+            .range([0.1, 2, 5]) // Scale of marker size
     
         let scaled_size = Math.round(scale(zoom))
 
