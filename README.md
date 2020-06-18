@@ -16,12 +16,6 @@ This application used React Router to serve page components. See `components/pag
     npm install
     npm run start
 
-This app now uses Gatsby for static-site generation and optimize page routing and rendering. 
-
-Install the Gatsby client globally: 
-
-    npm install -g gatsby-cli
-
 
 ## To Deploy
 Push the changes to the Azure instance of the repo: 
