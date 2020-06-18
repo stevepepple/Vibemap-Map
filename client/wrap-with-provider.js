@@ -1,9 +1,9 @@
 import React from "react"
 import { Provider } from "react-redux"
 
-import { store } from './src/redux/store'
+//import { store } from './src/redux/store'
 
-//import createStore from "./src/state/createStore"
+import createStore from "./src/redux/createStore"
 
 // eslint-disable-next-line react/display-name,react/prop-types
 export default ({ element }) => {
@@ -11,7 +11,7 @@ export default ({ element }) => {
     //  - there is fresh store for each SSR page
     //  - it will be called only once in browser, when React mounts
     
-    //const store = createStore()
+    const store = createStore()
     
     return <Provider store={store}>{element}</Provider>
 }
