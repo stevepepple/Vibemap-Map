@@ -212,8 +212,8 @@ module.exports = {
         ["zoom"],
           8, 1,
           10, 16,
-          12, 50,
-          13, 80,
+          12, 40,
+          13, 60,
           14, 100,
           20, 200
       ],
@@ -255,12 +255,19 @@ module.exports = {
         ["heatmap-density"],
         0.1,
         "hsla(240, 80%, 94%, 0)",
-        0.3,
-        "hsla(251, 100%, 80%, 0.6)",
-        0.5,
+        // Replaced by heatmap.fifth
+        0.2,
+        "hsla(125, 63%, 88%, 0.4)",
+        // Replaced by heatmap.fourth
+        0.4,
+        "hsla(192, 84%, 80%, 0.6)",
+        // Replaced by heatmap.third
+        0.7,
         "hsla(274, 100%, 65%, 0.8)",
+        // Replaced by heatmap.second
         0.9,
         "hsla(300, 100%, 50%, 0.8)",
+        // Replaced by heatmap.first
         1.1,
         "hsla(42, 100%, 64%, 0.8)",
         /* The pink is too much? 

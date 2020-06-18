@@ -116,10 +116,10 @@
     border-radius: 50% 50% 50% 50%;
     background-size: cover;
     padding:0.2em;
-    filter: brightness(0.9);
-    filter: saturate(0.9);
+    filter: brightness(0.8);
+    filter: saturate(0.8);
     filter: contrast(1.2);
-    border: solid 1px #7D7C84;
+    border: solid 1px $color-base-gray-100;
  
     /*
     background: #000000;
@@ -135,10 +135,11 @@
     /*
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
-    -webkit-box-shadow: $shadow-purple;
-    -moz-box-shadow: $shadow-purple;
-    box-shadow: $shadow-purple;
+    
     */
+    -webkit-box-shadow: 1px 1px 6px $color-base-gray-800;
+    -moz-box-shadow: 1px 1px 6px $color-base-gray-800;
+    box-shadow: 1px 1px 6px $color-base-gray-800;
     
     transition: visibility 0s, opacity 0.5s linear;
     z-index: 100;
