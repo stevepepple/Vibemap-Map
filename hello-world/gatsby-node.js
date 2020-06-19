@@ -4,4 +4,12 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-// You can delete this file if you're not using it
+// Example plugin for creating slugs from filesystem nodes
+const { createFilePath } = require(`gatsby-source-filesystem`)
+
+exports.onCreateNode = ({ node }) => {
+    console.log(node.internal.type)
+
+    console.log(createFilePath({ node, getNode, basePath: `pages` }))
+
+}

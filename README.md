@@ -22,6 +22,10 @@ Install the Gatsby client globally:
 
     npm install -g gatsby-cli
 
+Run Gatsby: 
+
+
+
 
 ## To Deploy
 Push the changes to the Azure instance of the repo: 
