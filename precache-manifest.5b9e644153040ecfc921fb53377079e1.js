@@ -72,12 +72,12 @@ self.__precacheManifest = [
     "url": "/Vibemap/static/media/outline-icons.d2e53334.svg"
   },
   {
-    "revision": "2aa6edf8f296a43b32df35f330b7c81c",
-    "url": "/Vibemap/static/media/icons.2aa6edf8.ttf"
-  },
-  {
     "revision": "7fb1cdd9c3b889161216a13267b55fe2",
     "url": "/Vibemap/static/media/icons.7fb1cdd9.eot"
+  },
+  {
+    "revision": "2aa6edf8f296a43b32df35f330b7c81c",
+    "url": "/Vibemap/static/media/icons.2aa6edf8.ttf"
   },
   {
     "revision": "d72293118cda50ec50c39957d9d836d0",

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/Vibemap/precache-manifest.e85de4875e0e4d230403b7e489daf41b.js"
+  "/Vibemap/precache-manifest.5b9e644153040ecfc921fb53377079e1.js"
 );
 
 workbox.clientsClaim();
