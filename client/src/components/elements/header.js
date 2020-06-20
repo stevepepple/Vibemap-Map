@@ -19,6 +19,7 @@ class Header extends Component {
                     <Menu.Item name='city' style={{ zIndex: '200'}}>
                         <SVG style={{ width: '2em' }} src='/images/logo-mark.svg' />
                         <LocationSearchInput className='mobile search' />
+
                     </Menu.Item>
                     
                     <Menu.Item>
