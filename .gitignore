@@ -5,6 +5,8 @@
 /client/build
 /client/debug.log
 
+/client/.next
+
 .idea/
 
 client/src/styles/icons/
