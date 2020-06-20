@@ -2,6 +2,7 @@
   "name": "Vibemap",
   "version": "0.1.1",
   "scripts": {
+    "dev": "next dev src",
     "serve": "npm run build & serve -s build",
     "start": "react-scripts start",
     "start-styleguide": "npx styleguidist server",
@@ -86,5 +87,9 @@
   "devDependencies": {
     "react-styleguidist": "^11.0.6",
     "semantic-ui": "^2.4.2"
+  },
+    "resolutions": {
+    "@turf/difference": "6.0.1"
   }
+
 }

@@ -32,6 +32,9 @@
   "engines": {
     "node": "10.x"
   },
+  "resolutions": {
+    "@turf/difference": "6.0.1"
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
