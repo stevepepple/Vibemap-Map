@@ -461,6 +461,8 @@ class Page extends Component {
         // TODO: Set this in Redux for global access
         const isMobile = width <= 700
 
+        console.log('isMObile: ', isMobile, width)
+
         let Map = <EventsMap searchTerm={this.props.searchTerm} events_data={this.props.eventsData} places_data={this.props.placesData} zoom={this.props.detailsShown ? 16 : this.props.zoom} setPosition={this.setPosition} setLocationParams={this.setLocationParams} />
         
         // Pick the list that should be display

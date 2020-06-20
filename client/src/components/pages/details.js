@@ -13,6 +13,8 @@ const Details = props => {
                 <title>{title}</title>
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
+                <meta property="twitter:description" content={description} />
+
             </Helmet>
 
             {description}
