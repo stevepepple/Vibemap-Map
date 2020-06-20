@@ -5,6 +5,9 @@
 /client/build
 /client/debug.log
 
+client/.cache
+
+
 .idea/
 
 client/src/styles/icons/
