@@ -45,6 +45,7 @@ class EventsMap extends React.Component {
             layers: props.layers,
             mapStyles : Styles,
             score_markers: true,
+            show_breadcrumbs: false,
             update_layer: false
         }
 
@@ -178,7 +179,6 @@ class EventsMap extends React.Component {
 
         this.setState({ viewport })   
 
-
         // If the user pans by more than 2 kilometers, update the map
         let new_location = turf.point([viewport.longitude, viewport.latitude])
         let original_location = turf.point([this.props.currentLocation.longitude, this.props.currentLocation.latitude])
@@ -311,9 +311,7 @@ class EventsMap extends React.Component {
             this.props.setCurrentLocation({ latitude: center.geometry.coordinates[1], longitude: center.geometry.coordinates[0] })
             this.props.setZoom(14)
             //mapGL.flyTo({ center: center.geometry.coordinates });
-
         } 
-
     }
 
     showPopup(name, latitude, longitude) {

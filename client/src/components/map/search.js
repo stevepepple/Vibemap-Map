@@ -88,6 +88,8 @@ class LocationSearchInput extends React.Component {
                         let new_locations = results.map(address => {
                             if (address.formatted_address) {
                                 return { key: address.place_id, id: address.place_id, text: address.formatted_address, centerpoint: [address.geometry.location.lat(), address.geometry.location.lng()], value: address.formatted_address }
+                            } else {
+                                return null
                             }
                         })
 

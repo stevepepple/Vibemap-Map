@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
 import { List, Segment } from 'semantic-ui-react'
+
+/* TODO: Remove emotion entirely; just use CSS modules */
 import { Global } from '@emotion/core'
 
 import MobileListItem from './mobile_list_item.js'

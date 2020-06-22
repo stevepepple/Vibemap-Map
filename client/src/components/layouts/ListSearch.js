@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import isEqual from 'react-fast-compare'
-import _ from 'lodash'
+import { debounce } from 'lodash'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
@@ -8,11 +7,9 @@ import * as actions from '../../redux/actions'
 import helpers from '../../helpers';
 import * as Constants from '../../constants.js'
 
-import { Button, Dimmer, Form, Input, Item, Loader, Pagination, Segment } from 'semantic-ui-react'
-import { Global } from '@emotion/core'
+import { Dimmer, Form, Input, Item, Loader, Pagination, Segment } from 'semantic-ui-react'
 
 import styles from '../../styles/ListItems.scss'
-
 
 import ListItems from '../layouts/ListItems.js'
 import DatePicker from '../elements/DatePicker.js'
@@ -96,7 +93,7 @@ class PlacesList extends Component {
                                     placeholder={t('Search')}
                                     icon='search'
                                     iconPosition='left'
-                                    onChange={_.debounce(this.onChange, 500, {
+                                    onChange={debounce(this.onChange, 500, {
                                         leading: true,
                                     })}
                                     size='large'                                

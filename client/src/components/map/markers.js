@@ -7,8 +7,6 @@ import * as actions from '../../redux/actions'
 import { Marker } from 'react-map-gl'
 import isEqual from 'react-fast-compare'
 
-import Vibe from '../elements/vibe'
-
 class Markers extends Component {
 
     constructor(props) {
@@ -101,14 +99,15 @@ class Markers extends Component {
                         
             // TODO: @cory this
             markers = this.state.markers.map(feature => {
-                    
+
+                {/* TODO: Remove this: 
+
                 let in_cluster = feature.properties.in_cluster
                 let top_in_cluster = feature.properties.top_in_cluster
                 
                 // If the marker is the top in it's cluster show a special label
                 let label = null
 
-                {/* TODO: Remove this: 
                  top in cluster is a string/boolean because of map box styles
                 if (in_cluster === false || top_in_cluster === 'true') {
                     label = <div className='label' style={{ marginTop: - (feature.height - 8) + 'px' }}>
@@ -148,7 +147,7 @@ class Markers extends Component {
                             zIndex: feature.vibe_score
                         }}>                        
                                                 
-                        <img src={feature.properties.images[0]} height={'100%'} width={'100%'} />
+                        <img alt={feature.properties.name} src={feature.properties.images[0]} height={'100%'} width={'100%'} />
                         
                     </div>
                 </Marker>

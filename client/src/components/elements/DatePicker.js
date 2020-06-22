@@ -3,10 +3,7 @@ import React, { Component } from 'react'
 import { Translation } from 'react-i18next'
 import { Dropdown } from 'semantic-ui-react'
 
-class DatePicker extends Component {    
-    constructor(props) {
-        super(props)
-    }
+class DatePicker extends Component {
 
     render() {
 

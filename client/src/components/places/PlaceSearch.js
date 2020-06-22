@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { Search, Form, Grid, Header, Input, Label, Segment } from 'semantic-ui-react'
-import _ from 'lodash'
+import { Search, Form, Input, Label } from 'semantic-ui-react'
+import { debounce } from 'lodash'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
 import VibeMap from '../../services/VibeMap.js'
-
-import querystring from 'querystring'
 
 class PlaceSearch extends Component {
 
@@ -98,7 +96,7 @@ class PlaceSearch extends Component {
                         input={{ fluid: true, iconPosition : 'left', placeholder: 'Add your spot now' }}
                         loading={isLoading}
                         onResultSelect={this.handleResultSelect}
-                        onSearchChange={_.debounce(this.handleSearchChange, 500, {
+                        onSearchChange={debounce(this.handleSearchChange, 500, {
                             leading: true,
                         })}
                         resultRenderer={this.resultRenderer}

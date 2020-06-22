@@ -212,8 +212,8 @@ module.exports = {
         ["zoom"],
           8, 1,
           10, 16,
-          12, 50,
-          13, 70,
+          12, 40,
+          13, 60,
           14, 90,
           20, 200
       ],
@@ -268,7 +268,7 @@ module.exports = {
         0.9,
         "hsla(300, 100%, 50%, 0.8)",
         // Replaced by heatmap.first
-        1.1,
+        1.2,
         "hsla(42, 100%, 64%, 0.8)",
         /* The pink is too much? 
         1.2,

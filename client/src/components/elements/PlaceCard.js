@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react'
 import { Item, Icon, Label } from 'semantic-ui-react'
 
-import Vibe from './vibe'
-
 import helpers from '../../helpers';
 
 function cardPLaceLayout(props) {

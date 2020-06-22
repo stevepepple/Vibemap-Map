@@ -5,7 +5,7 @@ import * as actions from '../../redux/actions'
 import isEqual from 'react-fast-compare'
 
 import { Translation } from 'react-i18next'
-import { Button, Dropdown, Icon } from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react'
 
 class AllVibes extends Component {    
     constructor(props) {
@@ -85,7 +85,7 @@ class AllVibes extends Component {
                     </Fragment>
                 }
 
-                {num_vibes == 0 &&
+                {num_vibes === 0 &&
                     <Translation>{
                         (t, { i18n }) => <Dropdown
                         button

@@ -8,8 +8,7 @@ function cardPLaceLayout(props) {
 
     let content = props.properties
 
-    let name = content.name;
-    let start = content.start_time
+    let name = content.name
     let date = content.start_date
     let score = Math.round(content.average_score)
 
@@ -31,8 +30,6 @@ function cardPLaceLayout(props) {
 
     let venue = null
     if (content.venue) venue = <span className='venue'>{content.venue}</span>
-
-    let date_time = <span>{}</span>
 
     let vibes = null;
     

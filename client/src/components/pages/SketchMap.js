@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from "react";
-import { render } from "react-dom";
-import { Button, Container, Dropdown, Form, Grid, Icon, Label, Menu, Message, Segment } from 'semantic-ui-react'
+import { Button, Dropdown, Icon, Menu, Segment } from 'semantic-ui-react'
 
-import _ from 'lodash'
-import simplify from '@turf/simplify';
+import { find } from 'lodash'
 
-import MapGL, { FullscreenControl, Source, Layer, NavigationControl, GeolocateControl, Marker, Popup, ScaleControl } from 'react-map-gl'
-import ControlPanel from '../map/editor_control_panel'
-import SVG from 'react-inlinesvg'
+//import simplify from '@turf/simplify';
+
+import MapGL, { FullscreenControl, GeolocateControl } from 'react-map-gl'
+//import ControlPanel from '../map/editor_control_panel'
+//import SVG from 'react-inlinesvg'
 
 import Hotkeys from 'react-hot-keys'
 
@@ -21,8 +21,6 @@ import * as Constants from '../../constants.js'
 import Header from '../elements/header.js'
 import DrawEditor from '../map/Editor.js'
 import Slider from '../elements/slider.js'
-import VibeMap from '../../services/VibeMap.js'
-import Styles from '../../styles/map_styles.js'
 
 import styles from "./SketchMap.css";
 
@@ -248,7 +246,7 @@ class SketchMap extends Component {
         const selectedMode = value
 
         // Pick current instructinos
-        const selectedOption = _.find(this.state.modes, function(o) { return o.key === selectedMode  })
+        const selectedOption = find(this.state.modes, function(o) { return o.key === selectedMode  })
 
         this.setState({
             instructions: selectedOption['instructions'],

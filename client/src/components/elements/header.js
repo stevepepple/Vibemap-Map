@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import { Grid, Menu, Dropdown, Image } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Menu, Dropdown } from 'semantic-ui-react'
 import SVG from 'react-inlinesvg'
 
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import LocationSearchInput from '../map/search'
 

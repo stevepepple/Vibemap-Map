@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
-import { Container, Dropdown, Form, Grid, Label, Message, Segment } from 'semantic-ui-react'
+import { Container, Dropdown, Form, Grid, Label, Segment } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
 import isEqual from 'react-fast-compare'
-import queryString from 'querystring'
 
 import chroma from 'chroma-js'
-
 
 import * as style_variables from 'vibemap-constants/design-system/build/json/variables.json';
 
@@ -70,11 +67,8 @@ class VibeGenerator extends Component {
     }
 
     onChange = (e, { value }) => {
-
-        let root = document.documentElement;
         
         this.setState({ current: value })
-
         this.setColors(value)
     }
 
@@ -105,7 +99,7 @@ class VibeGenerator extends Component {
                 let gray = style_variables['default']['color']['base']['gray']['500']
                 let light_gray = style_variables['default']['color']['base']['gray']['300']
 
-                let white = style_variables['default']['color']['base']['gray']['50']
+                //let white = style_variables['default']['color']['base']['gray']['50']
 
                 if (isActive) {
                     let luminance = chroma(primary).luminance()
@@ -145,8 +139,9 @@ class VibeGenerator extends Component {
         vibes.map(vibe => {
             if (vibe in vibe_styles) {
                 colors.push(vibe_styles[vibe]['primary']) 
-
             }
+
+            return null
         })
         
         return colors

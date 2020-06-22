@@ -6,6 +6,7 @@
     "start": "react-scripts start",
     "start-styleguide": "npx styleguidist server",
     "build": "react-scripts build",
+    "predeploy": "yarn run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "npm run build && rsync -avzu --delete --progress -h build/ hotspots@app.vibemap.com:/usr/share/nginx/frontend/"
@@ -81,7 +82,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "react-styleguidist": "^11.0.6",
-    "semantic-ui": "^2.4.2"
+    "serve": "^11.3.2"
+  },
+  "resolutions": {
+    "@turf/difference": "6.0.1"
   }
 }

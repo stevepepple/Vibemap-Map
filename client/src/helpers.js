@@ -1,6 +1,6 @@
 import * as Constants from './constants.js'
 
-import { scaleLinear, scalePow } from 'd3-scale'
+import { scalePow } from 'd3-scale'
 
 import chroma from 'chroma-js'
 import * as turf from '@turf/turf'
@@ -44,12 +44,6 @@ const helpers = {
             [bounds[0], bounds[1]],
             [bounds[2], bounds[3]],
             { units: 'miles'}
-        )
-
-        let width = turf.distance(
-            [bounds[0], bounds[3]],
-            [bounds[2], bounds[3]],
-            { units: 'miles' }
         )
 
         let distance = diameter / 2
@@ -142,15 +136,18 @@ const helpers = {
     getCategoryMatch(categories) {
         const all_categories = Constants.place_categories.map(category => category.key)
         let matches = []
+        /* TODO: use a combination of filter & map */
         categories.map(category => {
             if (all_categories.includes(category)) {
                 matches.push(category)
-            } 
+            }
+            return true
         })
 
         return matches
     },
 
+    /* TODO: Only use primary vibe set colors on the second half of the heatmap */
     getHeatmap(colors, vibe) {
         
         //let colors = color.map((color, i) => choroma(color).alpha(0.2))
@@ -172,22 +169,22 @@ const helpers = {
         let light_orange = '#FBCBBD'
         let orange = '#F09C1F'
     
-        //'yellow', 'lightgreen', '008ae5']
+        /*
         let classic = ['blue', 'teal', 'yellow', 'orange']
         let blue_scale = ['gray', 'white', 'yellow', 'blue']
         let orange_scale = ['#B1E2E5',  'yellow', 'orange']
         let purple_scale = ['#B1E2E5', '#EDE70D', '#F27BA5', '#D76CE3']
-        
         let spectral = chroma.scale('Spectral').colors(6).reverse()
+        */
 
         let green_purple = "PiYG"
         
         const vibe_to_scale = {
-            'calm': [white, light_green, light_yellow, light_blue],
-            'buzzing': [white, light_pink, light_yellow, orange],
+            'calm': [white, light_blue, light_green, light_yellow],
+            'buzzing': [white, light_pink, orange, light_yellow],
             'dreamy': [white, light_purple, orange, light_yellow],
             'oldschool': [blue, yellow,  orange],
-            'playful': [white, light_teal, yellow, orange],
+            'playful': [white, light_teal, light_green, yellow],
             'solidarity': [white, light_yellow, yellow, orange],
             'together': [white, light_teal, light_yellow],
             'wild': green_purple
@@ -212,6 +209,7 @@ const helpers = {
             //.domain([0, .1, 0.9, 1])
             .colors(6)
 
+        
         heatmap = heatmap
             //.reverse()
             .map((color, i) => {
@@ -338,9 +336,13 @@ const helpers = {
 
                     if (top_match || child_match ) {
                         combined.push(sub_category.name)
-                    }                
+                    }
+                    
+                    return null
                 })
             }
+
+            return true
         })
 
         return combined;

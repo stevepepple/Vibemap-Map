@@ -2,9 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
-import { Header, Button, Checkbox, Form, Grid, Popup, Segment } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Grid, Popup, Segment } from 'semantic-ui-react'
 import SVG from 'react-inlinesvg'
-import { render } from 'react-dom'
 
 //class EventsMap extends React.PureComponent {
 
@@ -61,7 +60,6 @@ class LayersFilter extends React.Component {
                 </Grid>
             </Popup>
         )
-
     }
 }
 

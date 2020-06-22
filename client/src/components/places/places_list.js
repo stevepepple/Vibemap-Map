@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import isEqual from 'react-fast-compare'
-import _ from 'lodash'
+import { debounce } from 'lodash'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
@@ -8,8 +8,7 @@ import * as actions from '../../redux/actions'
 import helpers from '../../helpers';
 import * as Constants from '../../constants.js'
 
-import { Button, Dimmer, Form, Input, Item, Loader, Pagination, Segment } from 'semantic-ui-react'
-import { Global } from '@emotion/core'
+import { Dimmer, Form, Input, Item, Loader, Pagination, Segment } from 'semantic-ui-react'
 
 import styles from './ListItems.css'
 
@@ -75,12 +74,7 @@ class PlacesList extends Component {
                         text={(this.state.date_options.find(obj => obj.value === this.props.currentDays).text)} />
 
         return (
-            <Segment id='list' compact>
-                {/* TODO: Move to style sheet */}
-                <Global                
-                    styles={{                        
-                    }}
-                />
+            <Segment id='list' compact>        
                 
                 <Segment vertical basic>
                     <Form>                        
@@ -95,7 +89,7 @@ class PlacesList extends Component {
                                     placeholder={t('Search')}
                                     icon='search'
                                     iconPosition='left'
-                                    onChange={_.debounce(this.onChange, 500, {
+                                    onChange={debounce(this.onChange, 500, {
                                         leading: true,
                                     })}
                                     size='large'                                

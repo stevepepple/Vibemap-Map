@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import _ from 'lodash'
+import { find } from 'lodash'
 import isEqual from 'react-fast-compare'
 import MetaTags from 'react-meta-tags'
 
@@ -71,7 +71,7 @@ class PlaceDetails extends Component {
 
     // TODO: Move this module to layouts and make this function more explicitly agnostic to type. 
     getPlaceDetails = function() {
-        const { detailsId, detailsType, currentItem, setCurrentItem } = this.props
+        const { detailsId, detailsType, setCurrentItem } = this.props
         VibeMap.getPlaceDetails(detailsId, detailsType)
             .then(result => {      
                 // Handle Error
@@ -112,7 +112,7 @@ class PlaceDetails extends Component {
     getGuideDetails = function () {
         const { detailsId, guidesData, setCurrentItem, setGuideDetails, setGuideMarkers } = this.props
 
-        const selectedGuide = _.find(guidesData, function (o) { return o.id === detailsId })
+        const selectedGuide = find(guidesData, function (o) { return o.id === detailsId })
         let guideDetails = selectedGuide['properties']
 
         let place_promises = guideDetails['places'].map((place) => VibeMap.getPlaceDetails(place['id'], 'places'))
@@ -199,12 +199,11 @@ class PlaceDetails extends Component {
 
         let vibes = null
         if (this.props.currentItem.vibes.length > 0) {
-            if (vibes_expanded == false) {
+            if (vibes_expanded === false) {
                 vibes = currentItem.vibes.slice(0, vibes_to_show).map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
             } else {
                 vibes = currentItem.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
             }
-            
         }
 
         let image = <Image className = 'placeImage' src={ process.env.PUBLIC_URL + '/images/image.png' } fluid/>
@@ -296,11 +295,11 @@ class PlaceDetails extends Component {
                         { recommendation }
                         <List.Item>
                             {vibes}
-                            {(this.state.vibes_expanded == false && this.props.currentItem.vibes.length > this.state.vibes.length) &&
+                            {(this.state.vibes_expanded === false && this.props.currentItem.vibes.length > this.state.vibes.length) &&
                                 <Button basic onClick={this.toggleMoreVibes} className='tiny' icon='arrow down' circular />
                             }
 
-                            { this.state.vibes_expanded == true &&
+                            { this.state.vibes_expanded === true &&
                                 <Button basic onClick={this.toggleMoreVibes} className='tiny' icon='arrow up' circular />
                             }
                         </List.Item>

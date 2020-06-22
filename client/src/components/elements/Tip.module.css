@@ -1,0 +1,6 @@
+@import '../../styles/variables.scss';
+
+.tip {
+    font-size: 1.2em;
+    font-family: $font-family-nantes;
+}

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
-import _ from 'lodash'
+import { unionBy } from 'lodash'
 import helpers from '../helpers.js'
 
 import initialGuides from './guides.json'
@@ -385,7 +385,7 @@ export const placesData = (state = [], action) => {
     if(action.refreshResults) {
       state = processed
     } else {
-      var merged = _.unionBy(state, processed, 'id')
+      var merged = unionBy(state, processed, 'id')
       state = merged
     }
     
@@ -457,7 +457,7 @@ export const topPicks = (state = [], action) => {
     })
 
     if (action.refreshResults === false || action.mergeTopPicks === true) {
-      var merged = _.unionBy(state, processed, 'id')
+      var merged = unionBy(state, processed, 'id')
       let merged_sorted = merged.sort((a, b) => b.properties.average_score - a.properties.average_score)
       state = merged_sorted
 

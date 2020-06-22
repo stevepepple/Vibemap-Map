@@ -1,9 +1,5 @@
 import React from 'react'
 
-import chroma from 'chroma-js'
-
-import * as style_variables from 'vibemap-constants/design-system/build/json/variables.json';
-
 export default class Vibe extends React.Component{
 
     constructor(props) {

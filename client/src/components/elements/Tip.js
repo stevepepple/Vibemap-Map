@@ -1,10 +1,9 @@
-import React, { Fragment } from "react"
+import React from "react"
 
-import { ButtonBack, ButtonNext, CarouselProvider, Slide, Slider } from "pure-react-carousel"
 import { Card } from "semantic-ui-react"
 import ShowMoreText from 'react-show-more-text'
 
-import styles from "./Tip.scss";
+import styles from "./Tip.module.scss";
 
 export default class Tip extends React.Component {
     constructor(props) {
@@ -19,7 +18,7 @@ export default class Tip extends React.Component {
         const { numLines, text } = this.props 
 
         return (
-            <Card fluid className='tip'>
+            <Card fluid className={styles.tip}>
                 <Card.Content>
                     <ShowMoreText
                         /* Default options */

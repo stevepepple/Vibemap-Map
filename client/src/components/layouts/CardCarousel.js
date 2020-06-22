@@ -1,7 +1,7 @@
-import React, { Fragment } from "react"
+import React from "react"
 
 import { ButtonBack, ButtonNext, CarouselProvider, Dot, Slide, Slider } from "pure-react-carousel"
-import { Button, Card, Container } from "semantic-ui-react"
+import { Button, Container } from "semantic-ui-react"
 import "pure-react-carousel/dist/react-carousel.es.css"
 
 

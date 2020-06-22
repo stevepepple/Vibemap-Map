@@ -122,7 +122,9 @@ module.exports = {
                 } else {
                     top_vibes[vibe] = 1
                 }
+                return null
             })
+            return null
         })
         
         var sortable = [];
@@ -179,7 +181,7 @@ module.exports = {
     getPlaceDetails: function (id, type) {
 
         // TODO: Handle Guides type
-        if(type == null || type == undefined) type = 'places'
+        if(type === null || type === undefined) type = 'places'
         return new Promise(function (resolve, reject) {
             fetch(ApiUrl + "/v0.3/"+ type + "/" + id)
                 .then(data => data.json())
@@ -276,7 +278,7 @@ module.exports = {
                 end_date_before: day_end,
                 categories: activity,
                 search: search_term,
-                per_page: 200
+                per_page: 300
             }
 
             if (activity) {

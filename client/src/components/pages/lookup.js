@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
-import { Grid, Header, Message, Segment } from 'semantic-ui-react'
+
+import { Grid, Message, Segment } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
 import isEqual from 'react-fast-compare'
-import queryString from 'querystring'
 
 import VibeMap from '../../services/VibeMap.js'
 

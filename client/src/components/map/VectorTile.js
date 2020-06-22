@@ -2,13 +2,8 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
-import isEqual from 'react-fast-compare'
-
-import * as Constants from '../../constants.js'
 
 import { _MapContext as MapContext, MapContextProps} from 'react-map-gl'
-
-import Styles from '../../styles/map_styles.js'
 
 class VectorTile extends React.Component {
 
@@ -79,9 +74,7 @@ class VectorTile extends React.Component {
                 'tiles': [this.props.tiles],
                 'minzoom': 8
             })
-
-            var layers = map.getStyle().layers            
-                      
+                     
             try {
                 map.addLayer(layer_options, before)    
             } catch (error) {
@@ -91,7 +84,7 @@ class VectorTile extends React.Component {
             let layer = map.getLayer(this.props.id)
             //console.log('Added this layer: ', this.props.id, layer)
             if (typeof layer !== 'undefined') {
-                var features = map.queryRenderedFeatures({ layers: [layer.id] });
+                //var features = map.queryRenderedFeatures({ layers: [layer.id] });
                 //console.log('number of heatmap features', features)
             }            
 
@@ -120,14 +113,13 @@ class VectorTile extends React.Component {
 
             //map.setPaintProperty(layer.id, 'fill-color', this.props.paint);
 
-
             Object.keys(this.props.layers).map((key) => {
                 let layer = map.getLayer(key)
                 if (typeof layer !== 'undefined') {
                     let visibility = this.props.layers[key] ? "visible" : "none"
                     map.setLayoutProperty(key, 'visibility', visibility)
+                    return null
                 }
-                
             })            
         } catch (error) {
             console.log('problem with layer: ', error)
@@ -138,6 +130,7 @@ class VectorTile extends React.Component {
         
         this._map = context.map
 
+        // TODO: How to set this state before render and avoid exception
         if(this.state.added_map === false) {
             this.addHeatMap()
         } 

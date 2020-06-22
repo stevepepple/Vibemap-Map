@@ -3,7 +3,6 @@ import { Dropdown, Form, Menu } from 'semantic-ui-react'
 import isEqual from 'react-fast-compare'
 
 // MOve query string and 
-import helpers from '../../helpers.js'
 import queryString from 'query-string'
 import * as Constants from '../../constants.js'
 
@@ -19,8 +18,7 @@ import * as actions from '../../redux/actions'
 import { push } from 'connected-react-router'
 
 import '../../styles/navigation.scss'
-
-import vibe_styles from '../../styles/vibes.scss'
+//import vibe_styles from '../../styles/vibes.scss'
 
 
 class Navigation extends Component {
@@ -179,7 +177,7 @@ class Navigation extends Component {
         
         let vibes = [] 
 
-        if (value && value != '') {
+        if (value && value !== '') {
             const current = this.props.signatureVibes.find(({ key }) => key === value);
 
             this.props.setMainVibe(value)
