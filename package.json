@@ -24,7 +24,7 @@
     "react-addons-shallow-compare": "^15.6.2",
     "react-map-gl": "^5.2.2",
     "request": "^2.88.0",
-    "yarn": "^1.21.1"
+    "yarn": "^1.22.0"
   },
   "eslintConfig": {
     "extends": "react-app"
