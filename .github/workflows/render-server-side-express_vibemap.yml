@@ -24,7 +24,7 @@ jobs:
       with:
         node-version: '10.x'
 
-    - name: npm install, build, and test
+    - name: yarn install and build
       run: |
         yarn install
         yarn run build --if-present
@@ -33,7 +33,7 @@ jobs:
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v1
       with:
-        app-name: 'vibemap'
+        app-name: 'Vibemap'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_66188ae4979f447485a2406bd2865f90 }}
         package: .
