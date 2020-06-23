@@ -11,6 +11,10 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run: 
+        shell: bash
+        working-directory: client
 
     steps:
     - uses: actions/checkout@master
@@ -22,9 +26,9 @@ jobs:
 
     - name: npm install, build, and test
       run: |
-        npm install
-        npm run build --if-present
-        npm run test --if-present
+        yarn install
+        yarn run build --if-present
+        yarn run dev 
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v1
