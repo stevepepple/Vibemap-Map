@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { Item, Icon, Label } from 'semantic-ui-react'
 
 import helpers from '../../helpers';
+import { NavLink } from 'react-router-dom';
 
 function cardPLaceLayout(props) {
 
@@ -71,8 +72,14 @@ function cardPLaceLayout(props) {
                 {categories !== null && categories.length > 0 &&
                     <Item.Extra className='date'>{categories}</Item.Extra>
                 }
-                            
-                <Item.Header>{name}</Item.Header>
+                <NavLink to={{ 
+                    pathname: '/details:' + name,
+                    name: name,
+                    id: props.key
+                }}>
+                    <Item.Header>{name}</Item.Header>
+                </NavLink>
+                
                 <Item.Extra>
                     <div>
                         {vibes}

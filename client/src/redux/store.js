@@ -3,6 +3,9 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory, createMemoryHistory } from 'history'
 
+// Handles async functions, called Thunks
+import thunk from 'redux-thunk'
+
 const initialState = {
     uiState: [{ id: 123, text: 'hello', completed: false }]
 };
@@ -21,6 +24,7 @@ export const history = isServer
     })
     : createBrowserHistory();
 
+const middleware = [history, thunk]
 
 const store = createStore(
     // Provide history state to the router in combined, route reducers.
@@ -29,10 +33,9 @@ const store = createStore(
     compose(
         applyMiddleware(
             // Dispacth history actions
-            routerMiddleware(history)
+            routerMiddleware(middleware)
         ),
     ),
 )
 
-console.log('State of the store: ', store.getState())
 export { store };

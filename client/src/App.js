@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import MainPage from './components/pages/main';
 import EventCalendar from './components/pages/calendar';
+import Details from './components/pages/details';
 import ProfileLookUp from './components/pages/lookup';
 import VibeGenerator from './components/pages/vibe_generator';
 import SketchMap from './components/pages/SketchMap';
@@ -32,6 +33,7 @@ class App extends Component {
           
             <Switch>
               <Route path="/calendar" component={EventCalendar} />
+              <Route path="/details:*" component={Details} />
               <Route path="/places" component={MainPage} />
               <Route path="/lookup" component={ProfileLookUp} />
               <Route path="/generator" component={VibeGenerator} />

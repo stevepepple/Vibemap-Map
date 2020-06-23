@@ -12,14 +12,18 @@ import { Provider } from 'react-redux';
 import { store, history } from './redux/store';
 import { ConnectedRouter } from 'connected-react-router'
 
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+
 ReactDOM.hydrate(
     <Provider store={store}>
-        { /* ConnectedRouter links Redux state with React Router */}
-        <ConnectedRouter history={history}>
-            <I18nextProvider i18n={i18n}>
-                <App />
-            </I18nextProvider>
-        </ConnectedRouter>
+        <HelmetProvider>
+            { /* ConnectedRouter links Redux state with React Router */}
+            <ConnectedRouter history={history}>
+                <I18nextProvider i18n={i18n}>
+                    <App />
+                </I18nextProvider>
+            </ConnectedRouter>
+        </HelmetProvider>
     </Provider>,
     document.getElementById('root')
 );

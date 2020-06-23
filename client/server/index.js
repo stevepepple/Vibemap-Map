@@ -10,6 +10,8 @@ import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux'
 import { store } from '../src/redux/store';
 
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+
 import { StaticRouter } from 'react-router'
 
 
@@ -23,6 +25,7 @@ app.use(express.static('./build'));
 
 app.get('/*', (req, res) => {
     const context = {};
+    const helmetContext = {};
 
     //console.log('query params: ', req)
 
@@ -31,7 +34,9 @@ app.get('/*', (req, res) => {
             location={req.url}
             context={context}>
                 <Provider store={store}>
-                    <App/>
+                    <HelmetProvider context={helmetContext}>
+                        <App/>
+                    </HelmetProvider>
                 </Provider>
         </StaticRouter>);
 
