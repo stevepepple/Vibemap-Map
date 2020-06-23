@@ -38,4 +38,4 @@ jobs:
         app-name: 'Vibemap'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_66188ae4979f447485a2406bd2865f90 }}
-        package: .
+        package: ./client
