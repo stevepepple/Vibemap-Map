@@ -2,9 +2,9 @@
   "name": "Vibemap",
   "version": "0.1.1",
   "scripts": {
+    "dev": "NODE_ENV=development babel-watch server/index.js",
     "serve": "npm run build & serve -s build",
     "start": "react-scripts start",
-    "start-styleguide": "npx styleguidist server",
     "build": "react-scripts build",
     "predeploy": "yarn run build",
     "test": "react-scripts test",
@@ -28,6 +28,7 @@
     "history": "^4.10.1",
     "i18next": "^19.1.0",
     "i18next-browser-languagedetector": "^4.0.1",
+    "ignore-styles": "^5.0.1",
     "kind-of": "^6.0.3",
     "lodash": "^4.17.15",
     "lodash.merge": "^4.6.2",
@@ -82,9 +83,15 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "serve": "^11.3.2"
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-react": "^7.10.1",
+    "babel-cli": "^6.26.0",
+    "babel-watch": "^7.0.0",
+    "serve": "^11.3.2",
+    "win-node-env": "^0.4.0"
   },
   "resolutions": {
+    "babel-core": "7.0.0-bridge.0",
     "@turf/difference": "6.0.1"
   }
 }

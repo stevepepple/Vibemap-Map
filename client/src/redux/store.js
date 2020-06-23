@@ -1,13 +1,13 @@
 import { reducers } from './reducer'
 import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
-import { createBrowserHistory } from 'history'
+import { createMemoryHistory } from 'history'
 
 const initialState = {
     uiState: [{ id: 123, text: 'hello', completed: false }]
 };
 
-export const history = createBrowserHistory()
+export const history = createMemoryHistory()
 
 const store = createStore(
     // Provide history state to the router in combined, route reducers.

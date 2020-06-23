@@ -13,7 +13,7 @@ import { Provider } from 'react-redux';
 import { store, history } from './redux/store';
 import { ConnectedRouter } from 'connected-react-router'
 
-ReactDOM.render(
+ReactDOM.hydrate(
     <Provider store={store}>
         { /* ConnectedRouter links Redux state with React Router */}
         <ConnectedRouter history={history}>
