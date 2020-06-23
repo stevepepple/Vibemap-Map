@@ -7,6 +7,9 @@ import React from 'react';
 import express from 'express';
 import ReactDOMServer from 'react-dom/server';
 
+import { Provider } from 'react-redux'
+import { store } from '../src/redux/store';
+
 import { StaticRouter } from 'react-router'
 
 
@@ -21,11 +24,16 @@ app.use(express.static('./build'));
 app.get('/*', (req, res) => {
     const context = {};
 
-    const app = ReactDOMServer.renderToString(<StaticRouter
-        location={req.url}
-        context={context}>
-        <App />
-    </StaticRouter>);
+    //console.log('query params: ', req)
+
+    const app = ReactDOMServer.renderToString(
+        <StaticRouter
+            location={req.url}
+            context={context}>
+                <Provider store={store}>
+                    <App/>
+                </Provider>
+        </StaticRouter>);
 
     const indexFile = path.resolve('./build/index.html');
     fs.readFile(indexFile, 'utf8', (err, data) => {

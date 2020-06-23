@@ -27,8 +27,6 @@ class App extends Component {
     return (
       <div className="App">
   
-        <Router>
-  
           <div id='container'>               
             {GA.init() && <GA.RouteTracker />}
           
@@ -42,7 +40,6 @@ class App extends Component {
             </Switch>
 
           </div>
-        </Router>
         
       </div>
     );

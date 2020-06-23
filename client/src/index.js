@@ -8,7 +8,6 @@ import * as serviceWorker from './serviceWorker';
 import { I18nextProvider } from "react-i18next";
 import i18n from './i18n'
 
-
 import { Provider } from 'react-redux';
 import { store, history } from './redux/store';
 import { ConnectedRouter } from 'connected-react-router'
