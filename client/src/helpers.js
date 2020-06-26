@@ -498,14 +498,14 @@ const helpers = {
 
     fireEvent: function(id, event) {
         
-        if(document.getElementById(id) !== null) {
+        // Handle server-side rendering
+        if (typeof window !== 'undefined' && document.getElementById(id) !== null) {
             let new_event = new Event(event, { bubbles: true, cancelable: false });
 
             document.getElementById(id).dispatchEvent(new_event);
 
             if (document.getElementById(id).fireEvent) {
 
-                
                 document.getElementById(id).fireEvent(event);
             } else {
                 
