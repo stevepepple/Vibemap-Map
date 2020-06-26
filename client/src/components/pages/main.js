@@ -56,7 +56,7 @@ class Page extends Component {
             mergeTopPicks: false,
             time_of_day: 'morning',
             // Used for mobile adaptive layout
-            width: window.innerWidth,
+            width: (typeof window !== 'undefined') ?  window.innerWidth : 800,
         }
 
         // THIS is an optimization to instantiate these func just once
@@ -69,7 +69,7 @@ class Page extends Component {
         this.clearDetails = this.clearDetails.bind(this)
     }
      
-    componentWillMount() {
+    componentDidMount() {
                 
         // Search for all categories that match the current selection and concatenate them
         // TODO: set in Redux? 
@@ -107,7 +107,9 @@ class Page extends Component {
         }        
         
         // Handle scree resizing
-        window.addEventListener('resize', this.handleWindowSizeChange)
+        if (typeof window !== 'undefined') {
+            window.addEventListener('resize', this.handleWindowSizeChange)
+        }        
     }
 
     componentDidUpdate(prevProps, prevState) {

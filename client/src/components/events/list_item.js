@@ -8,11 +8,15 @@ class ListItem extends React.Component {
 
     handleHover(props) {
         console.log("Hovering on: ", props, this.props.id)
-        helpers.fireEvent(this.props.id, "focus")
+        if (typeof window !== 'undefined') {
+            helpers.fireEvent(this.props.id, "focus")
+        }
     }
 
     onMouseLeave(id) {
-        helpers.fireEvent(this.props.id, "mouseleave")
+        if (typeof window !== 'undefined') {
+            helpers.fireEvent(this.props.id, "mouseleave")
+        }
     }
 
     render() {

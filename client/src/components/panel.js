@@ -8,7 +8,7 @@ let Panel = class Panel extends Component {
   handleShowClick = () => this.setState({ visible: true })
   handleSidebarHide = () => this.setState({ visible: false })
 
-  componentWillMount() {
+  componentDidMount() {
     console.log("props: ", this.props)
   }
 

@@ -21,7 +21,7 @@ class Layer extends React.Component {
     map: PropTypes.object
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { map } = this.context
     const {
       id,

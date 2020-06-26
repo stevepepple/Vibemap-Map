@@ -76,7 +76,7 @@ class EventCalendar extends Component {
             })
     }
 
-    componentWillMount() {
+    componentDidMount() {
 
         // Set global state with user's location
         let params = queryString.parse(this.props.search)

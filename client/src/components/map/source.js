@@ -18,7 +18,7 @@ export default class Source extends React.Component {
     map: PropTypes.object
   }
 
-  componentWillMount() {
+  componcomponentDidMount() {
     const { map } = this.context
     const {
       id,

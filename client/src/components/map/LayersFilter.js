@@ -22,7 +22,7 @@ class LayersFilter extends React.Component {
         this.props.setLayersChanged(true)
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.setState({ layers: this.props.layers })
     }
 

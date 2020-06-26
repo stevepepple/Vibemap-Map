@@ -29,9 +29,6 @@ class LocationSearchInput extends React.Component {
         this.handleSelect = this.handleSelect.bind(this)
     }
 
-    componentWillMount() {        
-    }
-
     componentDidUpdate(prevProps, prevState) {
         
         // Handle city or locations changes

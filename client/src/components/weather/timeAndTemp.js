@@ -24,7 +24,7 @@ class TimeAndTemp extends Component {
 
     }
 
-    componentWillMount() {
+    componentDidMount() {
 
         this.getWeather()
         let time_of_day = helpers.getTimeOfDay(moment())

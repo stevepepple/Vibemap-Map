@@ -24,7 +24,7 @@ export default class PhotoMarker extends React.Component {
     map: PropTypes.object,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { map } = this.context
 
     let features = this.props.data.features;

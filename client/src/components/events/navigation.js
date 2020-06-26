@@ -11,7 +11,6 @@ import TopVibes from '../elements/topVibes'
 
 import { Translation } from 'react-i18next'
 
-
 import { connect } from 'react-redux'
 import { store } from '../../redux/store'
 import * as actions from '../../redux/actions'
@@ -49,7 +48,7 @@ class Navigation extends Component {
         })
     }
 
-    componentWillMount() {
+    componentDidMount() {
 
         let params = queryString.parse(this.props.search, { ignoreQueryPrefix: true })
         this.setState({ params: params })
@@ -77,7 +76,6 @@ class Navigation extends Component {
             this.props.setActivity(params.activity)
             this.lookUpActivity(params.activity)
         } 
-
 
         if (params.vibes) {
             let vibes = []

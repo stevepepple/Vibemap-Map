@@ -32,10 +32,6 @@ class Directions extends Component {
         }
     }
 
-    componentWillMount() {
-        
-    }
-
     componentWillReceiveProps(nextProps) {
 
         if (this.props.detailsShown === true && this.props.currentPlace.location) {

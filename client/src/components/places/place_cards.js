@@ -22,7 +22,7 @@ class PlaceCards extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         console.log('PlaceNearby recieved prop', this.props)
 
         // First place

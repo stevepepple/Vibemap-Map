@@ -126,7 +126,7 @@ class VectorTile extends React.Component {
         }
     }
 
-    _render(context: MapContextProps) {
+    _render( context ) {
         
         this._map = context.map
 

@@ -10,7 +10,7 @@ export default class Vibe extends React.Component{
         }
 
     }
-    componentWillMount() {
+    componentDidMount() {
 
         // TODO: @cory once there's a vibe attribute it will be connected to this component.
         let feature = this.props.feature
