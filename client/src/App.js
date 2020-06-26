@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { MemoryRouter as Router, Route, Switch } from "react-router-dom";
 
 import MainPage from './components/pages/main';
 import EventCalendar from './components/pages/calendar';
@@ -30,16 +30,18 @@ class App extends Component {
   
           <div id='container'>               
             {GA.init() && <GA.RouteTracker />}
-          
-            <Switch>
-              <Route path="/calendar" component={EventCalendar} />
-              <Route path="/details:*" component={Details} />
-              <Route path="/places" component={MainPage} />
-              <Route path="/lookup" component={ProfileLookUp} />
-              <Route path="/generator" component={VibeGenerator} />
-              <Route path="/draw" component={SketchMap} />
-              <Route path="/" component={MainPage} />
-            </Switch>
+            <Router>
+              <Switch>
+                <Route path="/calendar" component={EventCalendar} />
+                <Route path="/details:*" component={Details} />
+                <Route path="/places" component={MainPage} />
+                <Route path="/lookup" component={ProfileLookUp} />
+                <Route path="/generator" component={VibeGenerator} />
+                <Route path="/draw" component={SketchMap} />
+                <Route path="/" component={MainPage} />
+              </Switch>
+            </Router>
+            
 
           </div>
         

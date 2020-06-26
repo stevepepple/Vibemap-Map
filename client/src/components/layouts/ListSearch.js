@@ -9,7 +9,7 @@ import * as Constants from '../../constants.js'
 
 import { Dimmer, Form, Input, Item, Loader, Pagination, Segment } from 'semantic-ui-react'
 
-import styles from '../../styles/ListItems.scss'
+//import styles from '../../styles/ListItems.scss'
 
 import ListItems from '../layouts/ListItems.js'
 import DatePicker from '../elements/DatePicker.js'
@@ -78,7 +78,7 @@ class PlacesList extends Component {
                         text={(this.state.date_options.find(obj => obj.value === this.props.currentDays).text)} />
 
         return (
-            <Segment id='list' className={styles.list} compact>
+            <Segment id='list' className={'.list'} compact>
                 {/* TODO: Move to style sheet */}
                 
                 <Segment vertical basic>

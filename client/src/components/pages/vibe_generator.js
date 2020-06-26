@@ -12,10 +12,10 @@ import * as style_variables from 'vibemap-constants/design-system/build/json/var
 
 import { Translation } from 'react-i18next'
 
-import '../../styles/events_page.scss'
+//import '../../styles/events_page.scss'
 
-import styles from '../../styles/vibe_generator.scss'
-import vibe_styles from '../../styles/vibes.scss'
+//import styles from '../../styles/vibe_generator.scss'
+//import vibe_styles from '../../styles/vibes.scss'
 
 import VibeMap from '../../services/VibeMap.js'
 

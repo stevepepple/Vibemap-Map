@@ -10,7 +10,7 @@ import helpers from '../helpers.js'
 import EventCard from './events/event_card.js'
 import EventsList from './events_list.js';
 
-import '../styles/events_page.scss';
+//import '../styles/events_page.scss';
 
 
 class EventsPage extends Component {

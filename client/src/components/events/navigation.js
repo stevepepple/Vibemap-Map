@@ -16,7 +16,7 @@ import { store } from '../../redux/store'
 import * as actions from '../../redux/actions'
 import { push } from 'connected-react-router'
 
-import '../../styles/navigation.scss'
+//import '../../styles/navigation.scss'
 //import vibe_styles from '../../styles/vibes.scss'
 
 

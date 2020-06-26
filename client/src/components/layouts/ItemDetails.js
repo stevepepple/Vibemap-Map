@@ -20,7 +20,7 @@ import CardCarousel from './CardCarousel'
 import ShowMoreText from 'react-show-more-text'
 
 /* TODO: Break this into styles for each component */
-import '../../styles/place_details.scss'
+//import '../../styles/place_details.scss'
 
 class PlaceDetails extends Component {
 
