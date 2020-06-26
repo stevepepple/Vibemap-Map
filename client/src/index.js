@@ -14,19 +14,21 @@ import { ConnectedRouter } from 'connected-react-router'
 
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-ReactDOM.hydrate(
-    <Provider store={store}>
-        <HelmetProvider>
-            { /* ConnectedRouter links Redux state with React Router */}
-            <ConnectedRouter history={history}>
-                <I18nextProvider i18n={i18n}>
-                    <App />
-                </I18nextProvider>
-            </ConnectedRouter>
-        </HelmetProvider>
-    </Provider>,
-    document.getElementById('root')
-);
+if (typeof window !== 'undefined') {
+    ReactDOM.hydrate(
+        <Provider store={store}>
+            <HelmetProvider>
+                { /* ConnectedRouter links Redux state with React Router */}
+                <ConnectedRouter history={history}>
+                    <I18nextProvider i18n={i18n}>
+                        <App />
+                    </I18nextProvider>
+                </ConnectedRouter>
+            </HelmetProvider>
+        </Provider>,
+        document.getElementById('root')
+    );
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
