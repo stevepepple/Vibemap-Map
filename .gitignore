@@ -3,6 +3,7 @@
 /node_modules
 /client/node_modules
 /client/build
+/client/dist
 /client/debug.log
 
 .idea/
