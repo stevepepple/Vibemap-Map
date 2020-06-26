@@ -173,7 +173,6 @@ export const densityBonus = (state = 0.2, action) => {
 
 export const bearing = (state = 0, action) => {
   if (action.type === 'SET_BEARING') {
-    console.log("SET BEARING: ", action.bearing)
     state = action.bearing
   }
   return state
