@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/3fe03c3c-c16a-4021-b984-fe27e23d7eef/resourceGroups/hotspots1/providers/Microsoft.Web/sites/Vibemap-Static",
+    "appService.deploySubpath": "client\\build"
+}
