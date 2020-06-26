@@ -1,56 +1,34 @@
-const path = require("path");
+const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
-const config = {
-    entry: {
-        vendor: ["@babel/polyfill", "react"], // Third party libraries
-        index: ["./src/index.js"]
-        /// Every pages entry point should be mentioned here
-    },
-    output: {
-        path: path.resolve(__dirname, "src", "public"), //destination for bundled output is under ./src/public
-        filename: "[name].js" // names of the bundled file will be name of the entry files (mentioned above)
-    },
-    node: {
-        fs: 'empty'
-    },
+const common = {
     module: {
         rules: [
             {
-                test: /\.css$/i,
-                use: ['style-loader', 'css-loader']
+                test: /\.jsx?$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                options: {
+                    presets: [
+                        '@babel/preset-react',
+                        ['@babel/env', { targets: { browsers: ['last 2 versions'] } }]
+                    ]
+                }
             },
             {
-                test: /\.(js|jsx)$/,
-                use: {
-                    loader: "babel-loader", // asks bundler to use babel loader to transpile es2015 code
-                    options: {
-                        presets: ["@babel/preset-env", "@babel/preset-react"] 
-                    }
-                },
-                exclude: [/node_modules/, /public/]
+                test: /\.css$/i,
+                use: ['node-style!css'],
+                exclude: ['/']
+
             },
             {
                 test: /\.s[ac]ss$/i,
                 use: [
                     // Creates `style` nodes from JS strings
-                    'style-loader',
-                    // Translates CSS into CommonJS
-                    'css-loader',
                     // Compiles Sass to CSS
                     'sass-loader',
                 ],
-                exclude: [/node_modules/, /public/]
-            },
-            {
-                test: /\.svg$/,
-                use: [
-                    {
-                        loader: 'svg-url-loader',
-                        options: {
-                            limit: 10000,
-                        },
-                    },
-                ],
+                exclude: ['/']
             },
             {
                 test: /\.(woff(2)?|ttf|eot|gif|png|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -64,11 +42,65 @@ const config = {
                     }
                 ]
             }
-        ]
+        ],
     },
-    resolve: {
-        //extensions: [".js", ".jsx", "*"]
-    } // If multiple files share the same name but have different extensions, webpack will resolve the one with the extension listed first in the array and skip the rest.
 };
 
-module.exports = config;
+const clientConfig = {
+    ...common,
+
+    mode: 'development',
+
+    name: 'client',
+    target: 'web',
+
+    entry: {
+        client: [
+            '@babel/polyfill',
+            './src/index.js',
+        ],
+    },
+    output: {
+        path: path.resolve(__dirname, 'build'),
+        filename: '[name].js',
+    },
+
+    devtool: 'cheap-module-source-map',
+
+    node: {
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty',
+    },
+};
+
+const serverConfig = {
+    ...common,
+
+    mode: 'development',
+
+    name: 'server',
+    target: 'node',
+    externals: [nodeExternals()],
+
+    entry: {
+        entry: './server/index.js',
+    },
+    output: {
+        path: path.resolve(__dirname, 'build'),
+        filename: 'server.js',
+    },
+
+    devtool: 'cheap-module-source-map',
+
+    node: {
+        console: false,
+        global: false,
+        process: false,
+        Buffer: false,
+        __filename: false,
+        __dirname: false,
+    },
+};
+
+module.exports = [serverConfig];

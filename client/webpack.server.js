@@ -12,15 +12,25 @@ const config = {
 
     // Tell webpack the root file of our
     // server application
-    entry: './server/index.js',
-    // We don't serve bundle.js for server, so we can use dynamic external imports
+    entry: {
+        server: ['@babel/polyfill', path.resolve(__dirname, 'server', 'index.js')],
+    },// We don't serve bundle.js for server, so we can use dynamic external imports
     externals: [webpackNodeExternals()],
 
     // Tell webpack where to put the output file
     // that is generated
     output: {
-        filename: 'bundle.js',
+        filename: 'server.js',
         path: path.resolve(__dirname, 'build')
+    },
+    devtool: 'cheap-module-source-map',
+    node: {
+        console: false,
+        global: false,
+        process: false,
+        Buffer: false,
+        __filename: false,
+        __dirname: false,
     }
 };
 
