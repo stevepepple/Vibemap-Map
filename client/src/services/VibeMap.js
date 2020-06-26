@@ -5,6 +5,9 @@ const helpers = require('../helpers.js')
 const truncate = require('truncate')
 const turf = require('@turf/turf')
 
+const fetch = require('node-fetch');
+global.Headers = fetch.Headers;
+
 const ApiHeaders = new Headers({
     'Authorization': 'Token ' + Constants.SYSTEM_TOKEN
 });
