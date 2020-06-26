@@ -5,6 +5,7 @@ import 'ignore-styles'
 
 import React from 'react';
 import express from 'express';
+import cors from 'cors'
 import ReactDOMServer from 'react-dom/server';
 
 import { Provider } from 'react-redux'
@@ -20,6 +21,7 @@ import App from '../src/App';
 const PORT = process.env.PORT || 3006;
 const app = express();
 
+app.use(cors())
 
 app.use(express.static('./build'));
 
