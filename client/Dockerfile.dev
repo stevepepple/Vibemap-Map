@@ -1,0 +1,31 @@
+
+FROM node:12
+
+ENV NODE_ENV production
+
+# Create app directory
+WORKDIR /usr/src/client
+VOLUME /usr/src/client
+
+#COPY /src /app/src
+#COPY /server /app/server
+#COPY ["package.json", "package-lock.json*", "./"]
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+
+#COPY package*.json ./
+
+COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+
+# If you're using yarn:
+#  yarn build
+#RUN yarn install --production 
+
+RUN yarn install --production --silent && mv node_modules ../
+
+# Expose PORT 3000 on our virtual machine so we can run our server
+EXPOSE 3000
+COPY . .
+
+CMD ["yarn", "run", "dev"]

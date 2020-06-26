@@ -1,0 +1,19 @@
+---
+
+version: '3'
+
+services:
+  dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      - NODE_ENV=production
+      - CORSHEADER="http://192.168.99.101:3000/"
+      - PROXY=true
+    command: yarn run dev
+    ports:
+      - 3000:3006
+    volumes:
+      - .:/usr/src/client
+    working_dir: /usr/src/client
