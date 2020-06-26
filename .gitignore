@@ -1,15 +1,12 @@
-
-# dependencies
-/node_modules
-/client/node_modules
-/client/build
-/client/debug.log
-
-.idea/
-
-client/src/styles/icons/
-client/src/styles/icons.zip
-
-app_certificate
-
+logs
+*.log
+npm-debug.log*
 .DS_Store
+
+coverage
+node_modules
+build
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
