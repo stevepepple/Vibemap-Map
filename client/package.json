@@ -32,6 +32,7 @@
     "i18next": "^19.1.0",
     "i18next-browser-languagedetector": "^4.0.1",
     "ignore-styles": "^5.0.1",
+    "jsdom": "^16.2.2",
     "kind-of": "^6.0.3",
     "lodash": "^4.17.15",
     "lodash.merge": "^4.6.2",
@@ -74,7 +75,8 @@
     "semantic-ui-react": "^0.88.2",
     "truncate": "^2.1.0",
     "typescript": "^3.7.5",
-    "vibemap-constants": "^1.0.7"
+    "vibemap-constants": "^1.0.7",
+    "webpack": "4.28.3"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -96,13 +98,16 @@
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-react": "^7.10.1",
     "babel-watch": "^7.0.0",
+    "cors": "^2.8.5",
     "css-loader": "^3.6.0",
     "file-loader": "^6.0.0",
+    "node-style-loader": "^0.0.1-alpha",
     "sass-loader": "^8.0.2",
     "serve": "^11.3.2",
     "style-loader": "^1.2.1",
     "svg-url-loader": "^6.0.0",
-    "webpack-cli": "^3.3.12"
+    "webpack-merge": "^4.2.2",
+    "webpack-node-externals": "^1.7.2"
   },
   "optionalDependencies": {
     "win-node-env": "^0.4.0"
