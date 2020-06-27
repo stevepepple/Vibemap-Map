@@ -9,15 +9,21 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from "react-redux";
 import configureStore from "../src/app/store/configureStore";
 
+// SEO
+import { HelmetProvider } from 'react-helmet-async';
+
+
 import App from './App';
 
 const store = configureStore(window.__initialData__);
 
 hydrate(
   <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <App />
+      </Router>
+    </HelmetProvider>    
   </Provider>,
   document.getElementById('root')
 );

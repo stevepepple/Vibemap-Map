@@ -12,7 +12,9 @@ import { Provider } from 'react-redux';
 import configureStore from './app/store/configureStore';
 
 // SEO
-import { Helmet } from 'react-helmet'
+//import { Helmet } from 'react-helmet'
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+const helmetContext = {};
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -32,14 +34,15 @@ server
 
     const markup = renderToString(
       <Provider store={store}>
-        <StaticRouter location={req.url} context={context}>
-          <App />
-        </StaticRouter>
+        <HelmetProvider context={helmetContext}>
+          <StaticRouter location={req.url} context={context}>
+              <App />
+          </StaticRouter>
+        </HelmetProvider>
       </Provider>
     );
 
-    const helmet = Helmet.renderStatic()
-    const title = 'Test Title Here'
+    const { helmet } = helmetContext;
 
     console.log('helmet: ', helmet.link.toString())
 

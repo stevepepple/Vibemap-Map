@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchNews } from '../../actions/actions';
-import NewsList from "./NewsList";
+import { fetchNews } from '../app/actions/actions';
+import NewsList from "../app/components/news/NewsList";
 
 class News extends Component {
+  /* TODO: Handle data fetching like this everywhere */
   static initialAction() {
     return fetchNews();
   }

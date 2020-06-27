@@ -4,7 +4,7 @@ import Media from 'react-media'
 import { connect } from "react-redux"
 import { fetchCities } from '../app/actions/actions'
 
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 import './Main.scss';
 
