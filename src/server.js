@@ -1,76 +1,88 @@
+import App from './App';
 import React from 'react';
-import streamString from 'node-stream-string';
-import { StaticRouter, matchPath } from 'react-router-dom';
 import express from 'express';
-import { renderToNodeStream } from 'react-dom/server';
-import { Provider } from "react-redux";
-import serialize from "serialize-javascript";
+import serialize from 'serialize-javascript';
 
-import App from './app/App';
-import routes from './app/routes';
+// Routing
+import { renderToString } from 'react-dom/server';
+import { StaticRouter } from "react-router-dom";
+
+// Redux Store
+import { Provider } from 'react-redux';
 import configureStore from './app/store/configureStore';
-import api from './api/fakeapi';
+
+// SEO
+import { Helmet } from 'react-helmet'
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
 const server = express();
-server.use(api);
 
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
-  .get('/*', (req, res, next) => {
+  .get('/*', (req, res) => {
+    const context = {};
 
-    const store = configureStore();
-    
-    const promises = routes.reduce((acc, route) => {
-      if (matchPath(req.url, route) && route.component && route.component.initialAction) {
-        acc.push(Promise.resolve(store.dispatch(route.component.initialAction())));
-      }
-      return acc;
-    }, []);
+    // Compile an initial state
+    const preloadedState = { };
 
+    // Create a new Redux store instance
+    const store = configureStore(preloadedState);
 
-    Promise.all(promises)
-    .then(() => {
-      const context = {};
-      const markup = renderToNodeStream(
-        <Provider store={store}>
-          <StaticRouter location={req.url} context={context}>
-            <App />
-          </StaticRouter>
-        </Provider>
-      );
-  
-      if (context.url) {
-        res.redirect(context.url);
-      } else {
-        const initialData = store.getState();
-        const stream = streamString`
-        <!doctype html>
-        <html lang="">
-          <head>
-              <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-              <meta charSet='utf-8' />
-              <title>Welcome to Razzle</title>
-              <meta name="viewport" content="width=device-width, initial-scale=1">
-              <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-              ${assets.client.css
-                ? `<link rel="stylesheet" href="${assets.client.css}">`
-                : ''}
-              ${process.env.NODE_ENV === 'production'
-                ? `<script src="${assets.client.js}" defer></script>`
-                : `<script src="${assets.client.js}" defer crossorigin></script>`}
-              <script>window.__initialData__ = ${serialize(initialData)}</script>
-          </head>
-          <body>
-              <div id="root">${markup}</div>
-          </body>
+    const markup = renderToString(
+      <Provider store={store}>
+        <StaticRouter location={req.url} context={context}>
+          <App />
+        </StaticRouter>
+      </Provider>
+    );
+
+    const helmet = Helmet.renderStatic()
+    const title = 'Test Title Here'
+
+    console.log('helmet: ', helmet.link.toString())
+
+    // Grab the initial state from our Redux store
+    const finalState = store.getState();
+
+    if (context.url) {
+      // Somewhere a `<Redirect>` was rendered
+      redirect(301, context.url);
+    } else {
+      res.send(
+        // prettier-ignore
+        `<!doctype html>
+        <html lang="en" ${helmet.htmlAttributes.toString()}>
+        <head>
+            ${helmet.title.toString()}
+            ${helmet.meta.toString()}
+            ${helmet.link.toString()}
+
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta charSet='utf-8' />
+            <meta name="viewport" content="width=device-width, initial-scale=1">            
+            <meta name="mobile-web-app-capable" content="yes">
+            <meta name="apple-mobile-web-app-capable" content="yes">
+            <meta name="twitter:card" content="summary">
+            <meta name="twitter:site" content="@Vibemap">
+
+            ${
+            assets.client.css
+              ? `<link rel="stylesheet" href="${assets.client.css}">`
+              : ''
+            } 
+        </head>
+        <body ${helmet.bodyAttributes.toString()}>
+            <div id="root">${markup}</div>    
+            <script src="${assets.client.js}" defer crossorigin></script>
+            <script>
+              window.__PRELOADED_STATE__ = ${serialize(finalState)}
+            </script>
+        </body>
         </html>`
-        stream.pipe(res)
-      }
-
-    }).catch(next);
+      );
+    }
   });
 
 export default server;
