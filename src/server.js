@@ -1,6 +1,7 @@
 import App from './App';
 import React from 'react';
 import express from 'express';
+import path from 'path';
 import serialize from 'serialize-javascript';
 
 // Routing
@@ -44,7 +45,7 @@ server
 
     const { helmet } = helmetContext;
 
-    console.log('helmet: ', helmet.link.toString())
+    console.log('helmet: ', helmet)
 
     // Grab the initial state from our Redux store
     const finalState = store.getState();

@@ -4,16 +4,17 @@
   "license": "MIT",
   "scripts": {
     "client": "razzle start --type=spa",
-    "start": "razzle start",
+    "dev": "razzle start",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
-    "start:prod": "cross-env NODE_ENV=production node build/server.js"
+    "start": "cross-env NODE_ENV=production node build/server.js"
   },
   "dependencies": {
     "express": "4.16.2",
     "isomorphic-fetch": "^2.2.1",
     "node-stream-string": "^1.0.1",
     "raf": "3.4.0",
+    "razzle-plugin-pwa": "^2.2.3",
     "react": "16.6",
     "react-dom": "16.6",
     "react-helmet-async": "^1.0.6",

@@ -34,6 +34,10 @@ class Main extends Component {
             name="description"
             content="Amazing Tech Talks curated by the community ❤️"
           />
+          <meta property="og:title" content='Vibemap'/>
+          <meta property="og:type" content="article" />
+          <meta property="og:description" content='Find your vibe' />
+          <meta property="og:image" content='https://pbs.twimg.com/profile_images/1270800120452222977/GFhjmGCz_400x400.jpg'/> 
         </Helmet>
 
         <div className="Home-header">
