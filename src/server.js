@@ -10,7 +10,7 @@ import { StaticRouter } from "react-router-dom";
 
 // Redux Store
 import { Provider } from 'react-redux';
-import configureStore from './app/store/configureStore';
+import configureStore from './redux/configureStore';
 
 // SEO
 //import { Helmet } from 'react-helmet'
@@ -28,7 +28,7 @@ server
     const context = {};
 
     // Compile an initial state
-    const preloadedState = { };
+    const preloadedState = {};
 
     // Create a new Redux store instance
     const store = configureStore(preloadedState);
@@ -37,15 +37,13 @@ server
       <Provider store={store}>
         <HelmetProvider context={helmetContext}>
           <StaticRouter location={req.url} context={context}>
-              <App />
+            <App />
           </StaticRouter>
         </HelmetProvider>
       </Provider>
     );
 
     const { helmet } = helmetContext;
-
-    console.log('helmet: ', helmet)
 
     // Grab the initial state from our Redux store
     const finalState = store.getState();
