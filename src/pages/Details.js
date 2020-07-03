@@ -1,4 +1,4 @@
-import React, { Component} from 'react'
+import React, { Component, Fragment } from 'react'
 
 import { Placeholder, Label, Segment } from 'semantic-ui-react'
 
@@ -10,6 +10,14 @@ import SEO from '../components/seo/'
 import Vibe from '../components/places/vibe'
 import Plan from '../components/places/plan'
 
+import Map from '../components/map'
+import Selected from '../components/map/selected'
+
+import Profile from '../components/layouts/Profile'
+
+import ReactMapGL, { Marker } from 'react-map-gl'
+
+
 import {
   BrowserRouter as Router,
   useParams
@@ -20,15 +28,23 @@ import { detailsRequest, detailsReceived, detailsError, fetchDetails } from '../
 
 class Details extends Component {
 
-    constructor(props) {
+  static async getInitialProps({ req, res, match, history, location, ...ctx }) {
+    return { whatever: 'stuff' };
+  }
+
+  constructor(props) {
     super(props)
 
     this.state =  {
       id: null,
       vibes: [],
+      market_size: 12,
       vibes_expanded: false,
-      vibes_to_show: 8,
+      vibes_to_show: 8
     }
+
+      this.onViewportChange = this.onViewportChange.bind(this)
+
 
   }
 
@@ -54,24 +70,66 @@ class Details extends Component {
       } 
   }
 
+  onViewportChange(viewport) {
+    console.log('Viewport changed: ', viewport)
+
+  }
+
   render() {
 
     const { loading, currentItem } = this.props
 
-    const { vibes_expanded, vibes_to_show } = this.state
+    const { marker_size, vibes_expanded, vibes_to_show } = this.state
 
     //console.log('getParams: ', this.getParams())
 
-    let mobile = <p>Mobile here. The document is less than 600px wide.</p>
-
-
     if (loading === false && currentItem == null) { return 'No data for the component.' }
 
-    let web = <div>
-      <p>Desktop layout here. The document is great than 600px wide.</p>
-      <Vibe loading={loading} currentItem={currentItem} vibes_expanded={vibes_expanded}/>
-      <Plan loading={loading} currentItem={currentItem}/>
+    let profile = <Fragment>
+      { loading ? (
+        <Placeholder>
+          <Placeholder.Header>
+            <Placeholder.Line length='very short' />
+            <Placeholder.Line length='medium' />
+          </Placeholder.Header>
+        </Placeholder>
+      ) : (
+          <h2>{currentItem.name}</h2>
+        )}
+
+      <p> Id is: {this.state.id}, {loading}</p>
+
+      <Vibe loading={loading} currentItem={currentItem} vibes_expanded={vibes_expanded} />
+      <Plan loading={loading} currentItem={currentItem} />
+    </Fragment>
+
+    let map = <div>
+      {loading === false && currentItem.location !== null &&
+        <Map
+          loading={loading}
+          longitude={currentItem.location.longitude}
+          latitude={currentItem.location.latitude}
+          currentItem={currentItem}
+          onViewportChange={this.onViewportChange}
+          zoom={15}>
+          <Marker
+            longitude={currentItem.location.longitude}
+            latitude={currentItem.location.latitude}
+            offsetTop={-2}
+            offsetLeft={-2}>
+            <Selected size={marker_size} />
+          </Marker>
+        </Map>
+      }
     </div>
+
+    let web = <Profile leftPanel={profile} rightPanel={map} />
+    
+    let mobile = <div>
+      { profile }
+      { map }
+    </div>
+
     
     return (
       <div className="Details">
@@ -79,18 +137,6 @@ class Details extends Component {
           title={currentItem.name}
           description={currentItem.description}
         />
-        {loading ? (
-          <Placeholder>
-            <Placeholder.Header>
-              <Placeholder.Line length='very short' />
-              <Placeholder.Line length='medium' />
-            </Placeholder.Header>
-          </Placeholder>
-        ) : (
-          <h2>{currentItem.title}</h2>
-        )}
-
-        <p> Id is: {this.state.id}, {loading}</p>
 
         <MediaMatcher 
           desktop={web}
