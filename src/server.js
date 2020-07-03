@@ -23,7 +23,10 @@ const server = express();
 
 server
   .disable('x-powered-by')
-  .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
+  .use(
+    //express.static(process.env.RAZZLE_PUBLIC_DIR)
+    express.static('public')
+  )
   .get('/*', (req, res) => {
     const context = {};
 
