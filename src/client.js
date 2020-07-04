@@ -1,33 +1,42 @@
-import BrowserRouter from 'react-router-dom/BrowserRouter';
 import React from 'react';
+
 import { hydrate } from 'react-dom';
+import { ensureReady, After, getSerializedData } from '@jaredpalmer/after';
+import routes from './pages/routes';
 
 // React Router 
 import { BrowserRouter as Router } from 'react-router-dom'
 
 // React Redux
 import { Provider } from "react-redux";
-import configureStore from "../src/app/store/configureStore";
+import configureStore from "./redux/configureStore";
 
-// SEO
-import { HelmetProvider } from 'react-helmet-async';
+// TODO: How to chuck and minimize this
+import 'vibemap-constants/design-system/semantic/dist/semantic.min.css';
 
+// This is a key step that gets the preloaded inialProps
+const preloadedState = getSerializedData('preloaded_state');
+console.log('preloadedState: ', preloadedState)
+const store = configureStore(preloadedState);
 
-import App from './App';
+function renderApp() {
 
-const store = configureStore(window.__initialData__);
+  ensureReady(routes).then(data =>
 
-hydrate(
-  <Provider store={store}>
-    <HelmetProvider>
-      <Router>
-        <App />
-      </Router>
-    </HelmetProvider>    
-  </Provider>,
-  document.getElementById('root')
-);
+    hydrate(
+      <Provider store={store}>
+          <Router>
+            {/* App.js replaced by After which preloads initial props */}
+            <After data={data} routes={routes} store={store} />            
+          </Router>
+      </Provider>,
+      document.getElementById('root')
+    )
+  )
+}
+
+renderApp();
 
 if (module.hot) {
-  module.hot.accept();
+  module.hot.accept('./pages/routes', renderApp);
 }

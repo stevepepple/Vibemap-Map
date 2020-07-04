@@ -25,7 +25,6 @@ const Vibe = (props) => {
   }
 
   return <div>
-    <h3>Vibe</h3>
     {
       props.loading ? (
         <Placeholder>
@@ -34,16 +33,23 @@ const Vibe = (props) => {
           <Placeholder.Line />
         </Placeholder>
       ) : (
-          <Segment.Group basic>
-            <Segment>
-              <span>The Vibe:</span>
-              { vibes.length > 0 ? vibes : 'Add the first vibe...'}</Segment>
-            <Segment>{ top_tip ? top_tip : 'Add the first tip...'}</Segment>
-            <Segment>
-              <span>Known for:</span>
-              {categories ? categories : 'No categories'}</Segment>
-            <Segment>{ description ? description : 'No description'}</Segment>
-          </Segment.Group>
+          <div>
+            <Segment vertical>
+              <Label basic>Vibes:</Label>
+              { vibes.length > 0 ? vibes : 'Add the first vibe...'}
+            </Segment>
+            <Segment vertical>
+              { description ? description : 'No description'}
+            </Segment>
+            <Segment vertical>
+              <Label basic>Activities</Label>
+              {categories ? categories : 'No categories'}
+            </Segment>
+            <Segment vertical>
+              <Label basic>Highlight</Label>
+              {top_tip ? top_tip : 'Add the first tip...'}
+            </Segment>
+          </div>
         )
     }
   </div>

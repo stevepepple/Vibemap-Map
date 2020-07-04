@@ -6,11 +6,12 @@ import Switch from 'react-router-dom/Switch';
 //import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import routes from './pages/routes';
+
+// Include themed version of Semantic UI styles
 import './App.scss';
 
 const App = () => (
   <div>
-    
     <Switch>
       {routes.map((route, i) => <Route key={i} {...route} />)}
     </Switch>

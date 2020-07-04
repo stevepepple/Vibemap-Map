@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, maximum-scale=1.5", initial-scale=1>
+    
+    <!--TODO: Update with Official App link -->
+    <meta name="apple-itunes-app" content="app-id=1483242045, affiliate-data=myAffiliateData, app-argument=https://apps.apple.com/us/app/hipcamp-camping-glamping/id1440066037">
+
+    <link href="https://fonts.googleapis.com/css?family=Public+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/vnc5qwg.css">
+
+    <!--link href='https://api.mapbox.com/mapbox-assembly/mbx/v0.18.0/assembly.min.css' rel='stylesheet'-->
+    </link>
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
+      <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images//apple-touch-icon.png">
+    <meta name="theme-color" content="#811897">
+
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+
+    <title>VibeMap</title>
+    <meta property="og:title" content="VibeMap" />
+    
+    <meta property="og:site_name" content="VibeMap" />
+    <meta property="fb:app_id" content="VibeMap" />
+    <meta property="og:locale" content="Oakland" />
+
+    <meta name="description" content="__OG_DESCRIPTION__">
+    <meta property="og:description" content="__OG_DESCRIPTION__" />
+    
+    <meta name="keywords" content="Places,Events,Vibes">
+    <meta property="og:type" content='website' />
+
+    <!--Twitter cards-->
+    <meta name="twitter:title" content="VibeMap"/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:description" content="__OG_DESCRIPTION__" />
+    <meta name="twitter:site" content="@vibemap"></meta>
+    <meta name="twitter:app:name:iphone" content="@vibemap"></meta>
+    <meta name="twitter:app:name:googleplay" content="@vibemap"></meta>
+
+    <style>
+      /* TODO: Add animation and load from style sheet */
+      /* TODO: Make background gray? */
+      .full-page-loader {
+        background: #EFEFF4;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+      }
+
+      .logo {
+        animation: logo-rotate infinite 6s ease-in;
+      }
+
+      @keyframes logo-rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        10% {
+          transform: rotate(-40deg);
+        }
+
+        40% {
+          transform: rotate(120deg);
+        }
+
+        70% {
+          tranform: rotate(-140deg)
+        }
+
+        100% {
+          transform: rotate(50deg);
+        }
+      }
+
+    </style>
+
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root">
+        
+    </div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2IfNJpGR6qcaOsgacTLVYuF4tqJ7HejY &libraries=places"></script>
+  </body>
+</html>

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 
-import { Helmet } from 'react-helmet-async'
+import { Helmet } from 'react-helmet'
 
 const SEO = props => {
-    console.log('props in SEO: ', props)
     const { title, description, image, locale, website } = props
 
     return <Helmet>
@@ -18,7 +17,7 @@ const SEO = props => {
         <meta property="og:locale" content={locale} />
 
 
-        <meta name="twitter:title" content="Awesome Talks" />
+        <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description}/>
         <meta name="twitter:image" content="https://file-iloqdynwox.now.sh/" />
         <meta name="twitter:image:alt" content="awesome talks" />

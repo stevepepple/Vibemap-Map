@@ -5,6 +5,7 @@ const pwaConfig = {
   swDest: 'sw.js',
 }
 
+// Add a manifest for the progressive web app
 const manifestConfig = {
   filename: 'manifest.json',
   name: 'Vibemap',
@@ -21,5 +22,5 @@ const manifestConfig = {
 const modify = modifyBuilder({ pwaConfig, manifestConfig })
 
 module.exports = {
-  plugins: ['scss', { func: modify }]
+  plugins: ['scss', 'compression', { func: modify }]
 }
