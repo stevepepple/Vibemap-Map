@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
-import { Placeholder, Label, Segment } from 'semantic-ui-react'
+import { Placeholder } from 'semantic-ui-react'
 
 import { MediaMatcher } from 'react-media-match';
 import { withRouter } from "react-router";
@@ -15,21 +15,23 @@ import Selected from '../components/map/selected'
 
 import Profile from '../components/layouts/Profile'
 
-import ReactMapGL, { Marker } from 'react-map-gl'
-
-
-import {
-  BrowserRouter as Router,
-  useParams
-} from 'react-router-dom'
+import { Marker } from 'react-map-gl'
 
 import { connect } from "react-redux"
-import { detailsRequest, detailsReceived, detailsError, fetchDetails } from '../redux/actions'
+import { detailsReceived, getDetails } from '../redux/actions'
 
 class Details extends Component {
 
-  static async getInitialProps({ req, res, match, history, location, ...ctx }) {
-    return { whatever: 'stuff' };
+  static async getInitialProps({ req, res, match, store }) {
+
+    // Match handles any params in the URL
+    const id = match.params.id
+    let type = 'places'
+
+    let details = await getDetails(id, type)
+
+    details = store.dispatch(detailsReceived(details))
+
   }
 
   constructor(props) {
@@ -44,12 +46,6 @@ class Details extends Component {
     }
 
       this.onViewportChange = this.onViewportChange.bind(this)
-
-
-  }
-
-  static initialAction() {
-    return fetchDetails();
   }
 
   // Example hook
@@ -57,29 +53,16 @@ class Details extends Component {
     let params = useParams()
   }
 
-  componentDidMount() {
-      const id = this.props.match.params.id;
-      this.setState({id : id})
-
-      const { loaded_place, details } = this.props
-
-      // TODO: Pattern for if data is loaded or errored out
-      if (!this.props.details) {
-        let type = 'places'
-        this.props.dispatch(fetchDetails(id, type))
-      } 
-  }
 
   onViewportChange(viewport) {
     console.log('Viewport changed: ', viewport)
-
   }
 
   render() {
 
     const { loading, currentItem } = this.props
 
-    const { marker_size, vibes_expanded, vibes_to_show } = this.state
+    const { marker_size, vibes_expanded } = this.state
 
     //console.log('getParams: ', this.getParams())
 

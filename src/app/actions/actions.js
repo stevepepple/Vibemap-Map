@@ -13,8 +13,6 @@ const citiesError = () => ({ type: "CITIES_ERROR" });
 const detailsRequest = () => ({ type: "DETAILS_LOADING" });
 const detailsReceived = details => ({ type: "DETAILS_SUCCESS", payload: details });
 const detailsError = () => ({ type: "FETCH_DETAILS_FAILURE" });
-
-
 // Async Actions
 export const fetchNews = () => (dispatch, getState) => {
   dispatch(requestNews());

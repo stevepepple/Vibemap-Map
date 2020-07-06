@@ -16,7 +16,7 @@ import 'vibemap-constants/design-system/semantic/dist/semantic.min.css';
 
 // This is a key step that gets the preloaded inialProps
 const preloadedState = getSerializedData('preloaded_state');
-console.log('preloadedState: ', preloadedState)
+
 const store = configureStore(preloadedState);
 
 function renderApp() {

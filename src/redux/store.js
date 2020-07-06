@@ -21,5 +21,12 @@ const store = createStore(
     ),
 )
 
-console.log('State of the store: ', store.getState())
+if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('./reducers', () => {
+        const nextRootReducer = require('./reducers').default;
+        store.replaceReducer(nextRootReducer);
+    });
+}
+
 export { store };

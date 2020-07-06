@@ -1,4 +1,6 @@
 // Config for PWA (Progressive Web App)
+const path = require('path')
+
 const modifyBuilder = require('razzle-plugin-pwa').default
 
 const pwaConfig = {
@@ -22,5 +24,18 @@ const manifestConfig = {
 const modify = modifyBuilder({ pwaConfig, manifestConfig })
 
 module.exports = {
-  plugins: ['scss', 'compression', { func: modify }]
+  plugins: [
+    'bundle-analyzer',
+    'compression',
+    'scss', 
+    'compression', 
+    { func: modify },
+    {
+      name: 'purgecss',
+      options: {
+        path: path.resolve(__dirname, 'src/**/*'),
+        only: ['bundle', 'vendor'],
+      }
+    }
+  ]
 }

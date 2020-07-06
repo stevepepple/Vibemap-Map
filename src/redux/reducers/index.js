@@ -239,8 +239,6 @@ export const placeType = (state = 'places', action) => {
   }
   return state
 }
-
-
 export const topVibes = (state = [], action) => {
   if (action.type === 'SET_TOP_VIBES') {
     state = action.top_vibes
@@ -280,8 +278,6 @@ export const allCategories = (state = [], action) => {
 export const vibeCategories = (
 vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'outdoors', 'scenic', 'positive', 'unique']
 ) */
-
-
 export const nearby_places = (state = [], action) => {
   if (action.type === 'SET_NEARBY_PLACES') {
 
@@ -375,14 +371,11 @@ export const placesData = (state = [], action) => {
   if (action.type === 'SET_PLACES_DATA') {
     // TODO: Map and process, but plan to moe this logic to API
     let processed = action.places_data.map(place => {
-      // TODO: Score places with more categories higher
-      //console.log("categories: ", place.properties.categories)
-      // TODO: work with Cory to fix 
-      //console.log(place.properties.categories)
-      //if (place.properties.categories.length > 1) 
-      
-      //place.properties.sub_categories = place.properties.categories
 
+      // TODO: Score places with more categories higher
+      //console.log("categories: ", place.properties.categories) 
+
+      // TODO: Figure out a way to replace this with a much smaller look up and mapping
       let matches = helpers.getCategoryMatch(place.properties.categories)
       
       if (matches.length === 0) matches.push('missing')
