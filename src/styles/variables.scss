@@ -5,8 +5,6 @@ $color-purple : #811897;
 $color-green : #27AE6D;
 
 $color-dark-gray: #4F4F4F;
-
-
 @font-face {
     font-family:'NantesTrial';
 	src: url('/fonts/NantesTrial/NantesTrialWeb-Regular.eot'); /* IE9 Compat Modes */
@@ -23,8 +21,6 @@ a  {
     text-decoration: none;
     color: #999;
 }         
-
-
 $gray: #B1E2E5;
 $yellow: #F8EE32;
 $orange: #F8EE32;
@@ -74,10 +70,6 @@ $oldschool_gradient: 45deg, $light_blue 0%, $light_orange 70%;
 $playtime_gradient: 45deg, $light_green 0%, $light_yellow 100%;
 $together_gradient: 45deg, $light_yellow 0%, $light_teal 100%;
 
-
-
 $icon-size: 1.8em;
-
-
 :export { colorPurple: $color-purple; }
 
