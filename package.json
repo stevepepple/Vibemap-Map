@@ -5,7 +5,7 @@
   "scripts": {
     "analyze": "cross-env BUNDLE_ANALYZE=true razzle build",
     "client": "razzle start --type=spa",
-    "dev": "cross-env razzle start",
+    "dev": "cross-env razzle start --progress --display-error-details",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
     "start": "cross-env NODE_ENV=production node build/server.js"
@@ -21,6 +21,7 @@
     "express": "4.16.2",
     "isomorphic-fetch": "^2.2.1",
     "moment": "^2.27.0",
+    "pure-react-carousel": "^1.27.1",
     "react": "16.8",
     "react-dom": "16.8",
     "react-helmet": "^6.1.0",
@@ -35,6 +36,8 @@
     "react-redux": "7.x",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
+    "react-show-more-text": "^1.4.2",
+    "react-store-badges": "^1.5.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^0.88.2",
@@ -45,11 +48,13 @@
     "autoprefixer": "^7.1.6",
     "cross-env": "^5.1.1",
     "razzle": "latest",
+    "razzle-dev-utils": "^3.1.5",
     "razzle-plugin-bundle-analyzer": "^1.2.0",
     "razzle-plugin-compression": "^1.0.0",
     "razzle-plugin-purgecss": "^1.0.1",
     "razzle-plugin-pwa": "^2.2.3",
     "razzle-plugin-runtimeenv": "^1.0.1",
-    "razzle-plugin-scss": "^3.1.4"
+    "razzle-plugin-scss": "^3.1.4",
+    "webpack-cli": "^3.3.12"
   }
 }
