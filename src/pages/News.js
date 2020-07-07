@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+
 import { connect } from "react-redux";
+
 import { fetchNews } from '../app/actions/actions';
 import NewsList from "../app/components/news/NewsList";
 

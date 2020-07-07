@@ -113,216 +113,120 @@ export const all_categories = [
         'id': '4d4b7104d754a06370d81259',
         'name': 'Arts & Entertainment',
         'key': 'arts',
-        'icon': {
-            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-            'suffix': '.png'
-        },
         'categories': [
             {
                 'id': '56aa371be4b08b9a8d5734db',
                 'name': 'Amphitheater',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '4fceea171983d5d06c3e9823',
                 'name': 'Aquarium',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/aquarium_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '4bf58dd8d48988d1e1931735',
                 'name': 'Arcade',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/arcade_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '4bf58dd8d48988d1e2931735',
                 'name': 'Art Gallery',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/artgallery_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '4bf58dd8d48988d1e4931735',
                 'name': 'Bowling Alley',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/bowling_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '4bf58dd8d48988d17c941735',
                 'name': 'Casino',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/casino_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '52e81612bcbc57f1066b79e7',
                 'name': 'Circus',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '4bf58dd8d48988d18e941735',
                 'key' : 'comedy',
                 'name': 'Comedy Club',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/comedyclub_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '5032792091d4c4b30a586d5c',
                 'name': 'Concert Hall',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/musicvenue_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '52e81612bcbc57f1066b79ef',
                 'name': 'Country Dance Club',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_dancestudio_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '52e81612bcbc57f1066b79e8',
                 'name': 'Disc Golf',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '56aa371be4b08b9a8d573532',
                 'name': 'Exhibit',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '4bf58dd8d48988d1f1931735',
                 'name': 'General Entertainment',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '52e81612bcbc57f1066b79ea',
                 'name': 'Go Kart Track',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/racetrack_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '4deefb944765f83613cdba6e',
                 'name': 'Historic Site',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/historicsite_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '5744ccdfe4b0c0459246b4bb',
                 'name': 'Karaoke Box',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/karaoke_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '52e81612bcbc57f1066b79e6',
                 'name': 'Laser Tag',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '5642206c498e4bfca532186c',
                 'name': 'Memorial Site',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/historicsite_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '52e81612bcbc57f1066b79eb',
                 'name': 'Mini Golf',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/golfcourse_',
-                    'suffix': '.png'
-                },
                 'categories': []
             },
             {
                 'id': '4bf58dd8d48988d17f941735',
                 'name': 'Movie Theater',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/movietheater_',
-                    'suffix': '.png'
-                },
                 'categories': [
                     {
                         'id': '56aa371be4b08b9a8d5734de',
                         'name': 'Drive-in Theater',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/movietheater_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d17e941735',
                         'name': 'Indie Movie Theater',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/movietheater_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d180941735',
                         'name': 'Multiplex',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/movietheater_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -330,54 +234,30 @@ export const all_categories = [
             {
                 'id': '4bf58dd8d48988d181941735',
                 'name': 'Museum',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/museum_',
-                    'suffix': '.png'
-                },
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d18f941735',
                         'name': 'Art Museum',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/museum_art_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '559acbe0498e472f1a53fa23',
                         'name': 'Erotic Museum',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/stripclub_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d190941735',
                         'name': 'History Museum',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/museum_history_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d192941735',
                         'name': 'Planetarium',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/museum_planetarium_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d191941735',
                         'name': 'Science Museum',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/museum_science_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -386,36 +266,20 @@ export const all_categories = [
                 'id': '4bf58dd8d48988d1e5931735',
                 'name': 'Music Venue',
                 'key' : 'music',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/musicvenue_',
-                    'suffix': '.png'
-                },
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d1e7931735',
                         'name': 'Jazz Club',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/musicvenue_jazzclub_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d1e8931735',
                         'name': 'Piano Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/musicvenue_pianobar_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d1e9931735',
                         'name': 'Rock Club',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/musicvenue_rockclub_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -423,55 +287,33 @@ export const all_categories = [
             {
                 'id': '5744ccdfe4b0c0459246b4b8',
                 'name': 'Pachinko Parlor',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
                 'id': '4bf58dd8d48988d1f2931735',
                 'name': 'Performing Arts Venue',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d134941735',
                         'name': 'Dance Studio',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_dancestudio_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d135941735',
                         'name': 'Indie Theater',
                         'key': 'performance',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_theater_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d136941735',
                         'name': 'Opera House',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_operahouse_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d137941735',
                         'name': 'Theater',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_theater_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -479,36 +321,22 @@ export const all_categories = [
             {
                 'id': '4bf58dd8d48988d1e3931735',
                 'name': 'Pool Hall',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/billiards_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
                 'id': '507c8c4091d498d9fc8c67a9',
                 'name': 'Public Art',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '52e81612bcbc57f1066b79ed',
                         'name': 'Outdoor Sculpture',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/sculpture_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '52e81612bcbc57f1066b79ee',
                         'name': 'Street Art',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -516,90 +344,55 @@ export const all_categories = [
             {
                 'id': '56aa371be4b08b9a8d573514',
                 'name': 'Racecourse',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_track_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
                 'id': '4bf58dd8d48988d1f4931735',
                 'name': 'Racetrack',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/racetrack_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
                 'id': '52e81612bcbc57f1066b79e9',
                 'name': 'Roller Rink',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
                 'id': '52e81612bcbc57f1066b79ec',
                 'name': 'Salsa Club',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_dancestudio_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
                 'id': '56aa371be4b08b9a8d5734f9',
-                'name': 'Samba School',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_dancestudio_',
-                    'suffix': '.png'
-                },
+                'name': 'Samba School',      
                 'categories': []
             },
             {
                 'id': '4bf58dd8d48988d184941735',
                 'name': 'Stadium',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d18c941735',
                         'name': 'Baseball Stadium',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_baseball_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d18b941735',
                         'name': 'Basketball Stadium',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_basketball_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d18a941735',
                         'name': 'Cricket Ground',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_cricket_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d189941735',
                         'name': 'Football Stadium',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_football_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -607,10 +400,6 @@ export const all_categories = [
                         'name': 'Hockey Arena',
                         'pluralName': 'Hockey Arenas',
                         'shortName': 'Hockey',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_hockey_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -618,10 +407,6 @@ export const all_categories = [
                         'name': 'Rugby Stadium',
                         'pluralName': 'Rugby Stadiums',
                         'shortName': 'Rugby',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_football_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -629,10 +414,6 @@ export const all_categories = [
                         'name': 'Soccer Stadium',
                         'pluralName': 'Soccer Stadiums',
                         'shortName': 'Soccer',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_soccer_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -640,10 +421,6 @@ export const all_categories = [
                         'name': 'Tennis Stadium',
                         'pluralName': 'Tennis Stadiums',
                         'shortName': 'Tennis',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_tennis_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -651,10 +428,6 @@ export const all_categories = [
                         'name': 'Track Stadium',
                         'pluralName': 'Track Stadiums',
                         'shortName': 'Track',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_track_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -664,20 +437,13 @@ export const all_categories = [
                 'name': 'Theme Park',
                 'pluralName': 'Theme Parks',
                 'shortName': 'Theme Park',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/themepark_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '5109983191d435c0d71c2bb1',
                         'name': 'Theme Park Ride / Attraction',
                         'pluralName': 'Theme Park Rides/Attractions',
                         'shortName': 'Theme Park',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/themepark_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -687,10 +453,7 @@ export const all_categories = [
                 'name': 'Tour Provider',
                 'pluralName': 'Tour Providers',
                 'shortName': 'Tour Provider',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -698,10 +461,7 @@ export const all_categories = [
                 'name': 'Water Park',
                 'pluralName': 'Water Parks',
                 'shortName': 'Water Park',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/waterpark_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -709,20 +469,13 @@ export const all_categories = [
                 'name': 'Zoo',
                 'pluralName': 'Zoos',
                 'shortName': 'Zoo',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/zoo_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '58daa1558bbb0b01f18ec1fd',
                         'name': 'Zoo Exhibit',
                         'pluralName': 'Zoo Exhibits',
                         'shortName': 'Zoo Exhibit',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/zoo_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -734,8 +487,9 @@ export const all_categories = [
         'name': 'College & University',
         'key' : 'learning',
         'icon': {
-            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/default_',
-            'suffix': '.png'
+            
+            
+
         },
         'categories': [
             {
@@ -743,20 +497,13 @@ export const all_categories = [
                 'name': 'College Academic Building',
                 'pluralName': 'College Academic Buildings',
                 'shortName': 'Academic Building',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/academicbuilding_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d199941735',
                         'name': 'College Arts Building',
                         'pluralName': 'College Arts Buildings',
                         'shortName': 'Arts',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -764,10 +511,6 @@ export const all_categories = [
                         'name': 'College Communications Building',
                         'pluralName': 'College Communications Buildings',
                         'shortName': 'Communications',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/collegeacademicbuildings_communications_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -775,10 +518,6 @@ export const all_categories = [
                         'name': 'College Engineering Building',
                         'pluralName': 'College Engineering Buildings',
                         'shortName': 'Engineering',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/collegeacademicbuildings_engineering_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -786,10 +525,6 @@ export const all_categories = [
                         'name': 'College History Building',
                         'pluralName': 'College History Buildings',
                         'shortName': 'History',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/collegeacademicbuildings_history_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -797,10 +532,6 @@ export const all_categories = [
                         'name': 'College Math Building',
                         'pluralName': 'College Math Buildings',
                         'shortName': 'Math',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/collegeacademicbuildings_math_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -808,10 +539,6 @@ export const all_categories = [
                         'name': 'College Science Building',
                         'pluralName': 'College Science Buildings',
                         'shortName': 'Science',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/collegeacademicbuildings_science_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -819,10 +546,6 @@ export const all_categories = [
                         'name': 'College Technology Building',
                         'pluralName': 'College Technology Buildings',
                         'shortName': 'Technology',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/collegeacademicbuildings_technology_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -832,10 +555,7 @@ export const all_categories = [
                 'name': 'College Administrative Building',
                 'pluralName': 'College Administrative Buildings',
                 'shortName': 'Administrative Building',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/administrativebuilding_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -843,10 +563,7 @@ export const all_categories = [
                 'name': 'College Auditorium',
                 'pluralName': 'College Auditoriums',
                 'shortName': 'Auditorium',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/auditorium_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -854,10 +571,7 @@ export const all_categories = [
                 'name': 'College Bookstore',
                 'pluralName': 'College Bookstores',
                 'shortName': 'College Bookstore',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/bookstore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -865,10 +579,7 @@ export const all_categories = [
                 'name': 'College Cafeteria',
                 'pluralName': 'College Cafeterias',
                 'shortName': 'Cafeteria',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/cafeteria_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -876,10 +587,7 @@ export const all_categories = [
                 'name': 'College Classroom',
                 'pluralName': 'College Classrooms',
                 'shortName': 'Classroom',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/classroom_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -887,10 +595,7 @@ export const all_categories = [
                 'name': 'College Gym',
                 'pluralName': 'College Gyms',
                 'shortName': 'Gym',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/gym_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -898,10 +603,7 @@ export const all_categories = [
                 'name': 'College Lab',
                 'pluralName': 'College Labs',
                 'shortName': 'Lab',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/lab_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -909,10 +611,7 @@ export const all_categories = [
                 'name': 'College Library',
                 'pluralName': 'College Libraries',
                 'shortName': 'Library',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/library_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -920,10 +619,7 @@ export const all_categories = [
                 'name': 'College Quad',
                 'pluralName': 'College Quads',
                 'shortName': 'Quad',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/quad_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -931,10 +627,7 @@ export const all_categories = [
                 'name': 'College Rec Center',
                 'pluralName': 'College Rec Centers',
                 'shortName': 'Rec Center',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/reccenter_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -942,10 +635,7 @@ export const all_categories = [
                 'name': 'College Residence Hall',
                 'pluralName': 'College Residence Halls',
                 'shortName': 'Residence Hall',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/residencehall_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -953,20 +643,13 @@ export const all_categories = [
                 'name': 'College Stadium',
                 'pluralName': 'College Stadiums',
                 'shortName': 'Stadium',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d1bb941735',
                         'name': 'College Baseball Diamond',
                         'pluralName': 'College Baseball Diamonds',
                         'shortName': 'Baseball',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_baseball_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -974,10 +657,6 @@ export const all_categories = [
                         'name': 'College Basketball Court',
                         'pluralName': 'College Basketball Courts',
                         'shortName': 'Basketball',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_basketball_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -985,10 +664,6 @@ export const all_categories = [
                         'name': 'College Cricket Pitch',
                         'pluralName': 'College Cricket Pitches',
                         'shortName': 'Cricket',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_cricket_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -996,10 +671,6 @@ export const all_categories = [
                         'name': 'College Football Field',
                         'pluralName': 'College Football Fields',
                         'shortName': 'Football',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_football_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -1007,10 +678,6 @@ export const all_categories = [
                         'name': 'College Hockey Rink',
                         'pluralName': 'College Hockey Rinks',
                         'shortName': 'Hockey',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_hockey_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -1018,10 +685,6 @@ export const all_categories = [
                         'name': 'College Soccer Field',
                         'pluralName': 'College Soccer Fields',
                         'shortName': 'Soccer',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_soccer_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -1029,10 +692,6 @@ export const all_categories = [
                         'name': 'College Tennis Court',
                         'pluralName': 'College Tennis Courts',
                         'shortName': 'Tennis Court',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_tennis_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -1040,10 +699,6 @@ export const all_categories = [
                         'name': 'College Track',
                         'pluralName': 'College Tracks',
                         'shortName': 'Track',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_track_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -1053,10 +708,7 @@ export const all_categories = [
                 'name': 'College Theater',
                 'pluralName': 'College Theaters',
                 'shortName': 'Theater',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/performingarts_theater_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1064,10 +716,7 @@ export const all_categories = [
                 'name': 'Community College',
                 'pluralName': 'Community Colleges',
                 'shortName': 'Community College',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/communitycollege_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1075,10 +724,7 @@ export const all_categories = [
                 'name': 'Fraternity House',
                 'pluralName': 'Fraternity Houses',
                 'shortName': 'Frat House',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/frathouse_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1086,10 +732,7 @@ export const all_categories = [
                 'name': 'General College & University',
                 'pluralName': 'General Colleges & Universities',
                 'shortName': 'Education',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/other_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1097,10 +740,7 @@ export const all_categories = [
                 'name': 'Law School',
                 'pluralName': 'Law Schools',
                 'shortName': 'Law School',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/lawschool_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1108,10 +748,7 @@ export const all_categories = [
                 'name': 'Medical School',
                 'pluralName': 'Medical Schools',
                 'shortName': 'Medical School',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1119,10 +756,7 @@ export const all_categories = [
                 'name': 'Sorority House',
                 'pluralName': 'Sorority Houses',
                 'shortName': 'Sorority House',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/frathouse_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1130,10 +764,7 @@ export const all_categories = [
                 'name': 'Student Center',
                 'pluralName': 'Student Centers',
                 'shortName': 'Student Center',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/studentcenter_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1141,10 +772,7 @@ export const all_categories = [
                 'name': 'Trade School',
                 'pluralName': 'Trade Schools',
                 'shortName': 'Trade School',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/tradeschool_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1152,10 +780,7 @@ export const all_categories = [
                 'name': 'University',
                 'pluralName': 'Universities',
                 'shortName': 'University',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             }
         ]
@@ -1164,26 +789,21 @@ export const all_categories = [
         'id': '4d4b7105d754a06373d81259',
         'name': 'Event',
         'icon': {
-            'prefix': 'https://ss3.4sqi.net/img/categories_v2/event/default_',
-            'suffix': '.png'
+            
+            
+
         },
         'categories': [
             {
                 'id': '52f2ab2ebcbc57f1066b8b3b',
                 'name': 'Christmas Market',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
                 'id': '5267e4d9e4b0ec79466e48c6',
                 'name': 'Conference',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/event/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1191,10 +811,7 @@ export const all_categories = [
                 'name': 'Convention',
                 'pluralName': 'Conventions',
                 'shortName': 'Convention',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/event/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1202,10 +819,7 @@ export const all_categories = [
                 'name': 'Festival',
                 'pluralName': 'Festivals',
                 'shortName': 'Festival',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/event/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1213,10 +827,7 @@ export const all_categories = [
                 'name': 'Line / Queue',
                 'pluralName': 'Lines / Queues',
                 'shortName': 'Line / Queue',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/event/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1224,10 +835,7 @@ export const all_categories = [
                 'name': 'Music Festival',
                 'pluralName': 'Music Festivals',
                 'shortName': 'Music Festival',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/musicvenue_rockclub_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1235,10 +843,7 @@ export const all_categories = [
                 'name': 'Other Event',
                 'pluralName': 'Other Events',
                 'shortName': 'Other Event',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/event/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1246,10 +851,7 @@ export const all_categories = [
                 'name': 'Parade',
                 'pluralName': 'Parades',
                 'shortName': 'Parade',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/event/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1257,10 +859,7 @@ export const all_categories = [
                 'name': 'Sporting Event',
                 'pluralName': 'Sporting Events',
                 'shortName': 'Sporting Event',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/event/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1268,10 +867,7 @@ export const all_categories = [
                 'name': 'Stoop Sale',
                 'pluralName': 'Stoop Sales',
                 'shortName': 'Stoop Sale',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/fleamarket_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1279,10 +875,7 @@ export const all_categories = [
                 'name': 'Street Fair',
                 'pluralName': 'Street Fairs',
                 'shortName': 'Fair',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/event/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1290,10 +883,7 @@ export const all_categories = [
                 'name': 'Trade Fair',
                 'pluralName': 'Trade Fairs',
                 'shortName': 'Trade Fair',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/event/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             }
         ]
@@ -1303,8 +893,9 @@ export const all_categories = [
         'name': 'Food',
         'key' : 'food',
         'icon': {
-            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-            'suffix': '.png'
+            
+            
+
         },
         'categories': [
             {
@@ -1312,10 +903,7 @@ export const all_categories = [
                 'name': 'Afghan Restaurant',
                 'pluralName': 'Afghan Restaurants',
                 'shortName': 'Afghan',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/afghan_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -1323,20 +911,13 @@ export const all_categories = [
                 'name': 'African Restaurant',
                 'pluralName': 'African Restaurants',
                 'shortName': 'African',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/african_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d10a941735',
                         'name': 'Ethiopian Restaurant',
                         'pluralName': 'Ethiopian Restaurants',
                         'shortName': 'Ethiopian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/ethiopian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -1346,20 +927,13 @@ export const all_categories = [
                 'name': 'American Restaurant',
                 'pluralName': 'American Restaurants',
                 'shortName': 'American',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d157941735',
                         'name': 'New American Restaurant',
                         'pluralName': 'New American Restaurants',
                         'shortName': 'New American',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/newamerican_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -1369,20 +943,13 @@ export const all_categories = [
                 'name': 'Asian Restaurant',
                 'pluralName': 'Asian Restaurants',
                 'shortName': 'Asian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '56aa371be4b08b9a8d573568',
                         'name': 'Burmese Restaurant',
                         'pluralName': 'Burmese Restaurants',
                         'shortName': 'Burmese',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -1390,10 +957,6 @@ export const all_categories = [
                         'name': 'Cambodian Restaurant',
                         'pluralName': 'Cambodian Restaurants',
                         'shortName': 'Cambodian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -1401,20 +964,13 @@ export const all_categories = [
                         'name': 'Chinese Restaurant',
                         'pluralName': 'Chinese Restaurants',
                         'shortName': 'Chinese',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                            'suffix': '.png'
-                        },
                         'categories': [
                             {
                                 'id': '52af3a5e3cf9994f4e043bea',
                                 'name': 'Anhui Restaurant',
                                 'pluralName': 'Anhui Restaurants',
                                 'shortName': 'Anhui',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1422,10 +978,7 @@ export const all_categories = [
                                 'name': 'Beijing Restaurant',
                                 'pluralName': 'Beijing Restaurants',
                                 'shortName': 'Beijing',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1433,10 +986,7 @@ export const all_categories = [
                                 'name': 'Cantonese Restaurant',
                                 'pluralName': 'Cantonese Restaurants',
                                 'shortName': 'Cantonese',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1444,10 +994,7 @@ export const all_categories = [
                                 'name': 'Cha Chaan Teng',
                                 'pluralName': 'Cha Chaan Tengs',
                                 'shortName': 'Cha Chaan Teng',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1455,10 +1002,7 @@ export const all_categories = [
                                 'name': 'Chinese Aristocrat Restaurant',
                                 'pluralName': 'Chinese Aristocrat Restaurants',
                                 'shortName': 'Aristocrat',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1466,10 +1010,6 @@ export const all_categories = [
                                 'name': 'Chinese Breakfast Place',
                                 'pluralName': 'Chinese Breakfast Places',
                                 'shortName': 'Chinese Breakfast',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
                                 'categories': []
                             },
                             {
@@ -1477,10 +1017,6 @@ export const all_categories = [
                                 'name': 'Dim Sum Restaurant',
                                 'pluralName': 'Dim Sum Restaurants',
                                 'shortName': 'Dim Sum',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/dimsum_',
-                                    'suffix': '.png'
-                                },
                                 'categories': []
                             },
                             {
@@ -1488,10 +1024,6 @@ export const all_categories = [
                                 'name': 'Dongbei Restaurant',
                                 'pluralName': 'Dongbei Restaurants',
                                 'shortName': 'Dongbei',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
                                 'categories': []
                             },
                             {
@@ -1499,10 +1031,7 @@ export const all_categories = [
                                 'name': 'Fujian Restaurant',
                                 'pluralName': 'Fujian Restaurants',
                                 'shortName': 'Fujian',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1510,10 +1039,7 @@ export const all_categories = [
                                 'name': 'Guizhou Restaurant',
                                 'pluralName': 'Guizhou Restaurants',
                                 'shortName': 'Guizhou',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1521,10 +1047,7 @@ export const all_categories = [
                                 'name': 'Hainan Restaurant',
                                 'pluralName': 'Hainan Restaurants',
                                 'shortName': 'Hainan',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1532,10 +1055,7 @@ export const all_categories = [
                                 'name': 'Hakka Restaurant',
                                 'pluralName': 'Hakka Restaurants',
                                 'shortName': 'Hakka',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1543,10 +1063,7 @@ export const all_categories = [
                                 'name': 'Henan Restaurant',
                                 'pluralName': 'Henan Restaurants',
                                 'shortName': 'Henan',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1554,10 +1071,7 @@ export const all_categories = [
                                 'name': 'Hong Kong Restaurant',
                                 'pluralName': 'Hong Kong Restaurants',
                                 'shortName': 'Hong Kong',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1565,10 +1079,7 @@ export const all_categories = [
                                 'name': 'Huaiyang Restaurant',
                                 'pluralName': 'Huaiyang Restaurants',
                                 'shortName': 'Huaiyang',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1576,10 +1087,7 @@ export const all_categories = [
                                 'name': 'Hubei Restaurant',
                                 'pluralName': 'Hubei Restaurants',
                                 'shortName': 'Hubei',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1587,10 +1095,7 @@ export const all_categories = [
                                 'name': 'Hunan Restaurant',
                                 'pluralName': 'Hunan Restaurants',
                                 'shortName': 'Hunan',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1598,10 +1103,7 @@ export const all_categories = [
                                 'name': 'Imperial Restaurant',
                                 'pluralName': 'Imperial Restaurants',
                                 'shortName': 'Imperial',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1609,10 +1111,7 @@ export const all_categories = [
                                 'name': 'Jiangsu Restaurant',
                                 'pluralName': 'Jiangsu Restaurants',
                                 'shortName': 'Jiangsu',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1620,10 +1119,7 @@ export const all_categories = [
                                 'name': 'Jiangxi Restaurant',
                                 'pluralName': 'Jiangxi Restaurants',
                                 'shortName': 'Jiangxi',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1631,10 +1127,7 @@ export const all_categories = [
                                 'name': 'Macanese Restaurant',
                                 'pluralName': 'Macanese Restaurants',
                                 'shortName': 'Macanese',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1642,10 +1135,7 @@ export const all_categories = [
                                 'name': 'Manchu Restaurant',
                                 'pluralName': 'Manchu Restaurants',
                                 'shortName': 'Manchu',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1653,10 +1143,7 @@ export const all_categories = [
                                 'name': 'Peking Duck Restaurant',
                                 'pluralName': 'Peking Duck Restaurants',
                                 'shortName': 'Peking Duck',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1664,10 +1151,7 @@ export const all_categories = [
                                 'name': 'Shaanxi Restaurant',
                                 'pluralName': 'Shaanxi Restaurants',
                                 'shortName': 'Shaanxi',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1675,10 +1159,7 @@ export const all_categories = [
                                 'name': 'Shandong Restaurant',
                                 'pluralName': 'Shandong Restaurants',
                                 'shortName': 'Shandong',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1686,10 +1167,7 @@ export const all_categories = [
                                 'name': 'Shanghai Restaurant',
                                 'pluralName': 'Shanghai Restaurants',
                                 'shortName': 'Shanghai',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1697,10 +1175,7 @@ export const all_categories = [
                                 'name': 'Shanxi Restaurant',
                                 'pluralName': 'Shanxi Restaurants',
                                 'shortName': 'Shanxi',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1708,10 +1183,7 @@ export const all_categories = [
                                 'name': 'Szechuan Restaurant',
                                 'pluralName': 'Szechuan Restaurants',
                                 'shortName': 'Szechuan',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1719,10 +1191,7 @@ export const all_categories = [
                                 'name': 'Taiwanese Restaurant',
                                 'pluralName': 'Taiwanese Restaurants',
                                 'shortName': 'Taiwanese',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1730,10 +1199,7 @@ export const all_categories = [
                                 'name': 'Tianjin Restaurant',
                                 'pluralName': 'Tianjin Restaurants',
                                 'shortName': 'Tianjin',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1741,10 +1207,7 @@ export const all_categories = [
                                 'name': 'Xinjiang Restaurant',
                                 'pluralName': 'Xinjiang Restaurants',
                                 'shortName': 'Xinjiang',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1752,10 +1215,7 @@ export const all_categories = [
                                 'name': 'Yunnan Restaurant',
                                 'pluralName': 'Yunnan Restaurants',
                                 'shortName': 'Yunnan',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1763,10 +1223,7 @@ export const all_categories = [
                                 'name': 'Zhejiang Restaurant',
                                 'pluralName': 'Zhejiang Restaurants',
                                 'shortName': 'Zhejiang',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             }
                         ]
@@ -1776,10 +1233,6 @@ export const all_categories = [
                         'name': 'Filipino Restaurant',
                         'pluralName': 'Filipino Restaurants',
                         'shortName': 'Filipino',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/filipino_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -1787,10 +1240,6 @@ export const all_categories = [
                         'name': 'Himalayan Restaurant',
                         'pluralName': 'Himalayan Restaurants',
                         'shortName': 'Himalayan',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -1798,10 +1247,6 @@ export const all_categories = [
                         'name': 'Hotpot Restaurant',
                         'pluralName': 'Hotpot Restaurants',
                         'shortName': 'Hotpot',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -1809,20 +1254,13 @@ export const all_categories = [
                         'name': 'Indonesian Restaurant',
                         'pluralName': 'Indonesian Restaurants',
                         'shortName': 'Indonesian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/indonesian_',
-                            'suffix': '.png'
-                        },
                         'categories': [
                             {
                                 'id': '52960eda3cf9994f4e043ac9',
                                 'name': 'Acehnese Restaurant',
                                 'pluralName': 'Acehnese Restaurants',
                                 'shortName': 'Acehnese',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/indonesian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1830,10 +1268,7 @@ export const all_categories = [
                                 'name': 'Balinese Restaurant',
                                 'pluralName': 'Balinese Restaurants',
                                 'shortName': 'Balinese',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/indonesian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1841,10 +1276,7 @@ export const all_categories = [
                                 'name': 'Betawinese Restaurant',
                                 'pluralName': 'Betawinese Restaurants',
                                 'shortName': 'Betawinese',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/indonesian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1852,10 +1284,7 @@ export const all_categories = [
                                 'name': 'Indonesian Meatball Place',
                                 'pluralName': 'Indonesian Meatball Places',
                                 'shortName': 'Indonesian Meatball Place',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/indonesian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1863,10 +1292,7 @@ export const all_categories = [
                                 'name': 'Javanese Restaurant',
                                 'pluralName': 'Javanese Restaurants',
                                 'shortName': 'Javanese',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/indonesian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1874,10 +1300,7 @@ export const all_categories = [
                                 'name': 'Manadonese Restaurant',
                                 'pluralName': 'Manadonese Restaurants',
                                 'shortName': 'Manadonese',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/indonesian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1885,10 +1308,7 @@ export const all_categories = [
                                 'name': 'Padangnese Restaurant',
                                 'pluralName': 'Padangnese Restaurants',
                                 'shortName': 'Padangnese',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/indonesian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1896,10 +1316,7 @@ export const all_categories = [
                                 'name': 'Sundanese Restaurant',
                                 'pluralName': 'Sundanese Restaurants',
                                 'shortName': 'Sundanese',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/indonesian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             }
                         ]
@@ -1909,20 +1326,13 @@ export const all_categories = [
                         'name': 'Japanese Restaurant',
                         'pluralName': 'Japanese Restaurants',
                         'shortName': 'Japanese',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                            'suffix': '.png'
-                        },
                         'categories': [
                             {
                                 'id': '55a59bace4b013909087cb0c',
                                 'name': 'Donburi Restaurant',
                                 'pluralName': 'Donburi Restaurants',
                                 'shortName': 'Donburi',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1930,10 +1340,7 @@ export const all_categories = [
                                 'name': 'Japanese Curry Restaurant',
                                 'pluralName': 'Japanese Curry Restaurants',
                                 'shortName': 'Japanese Curry',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1941,10 +1348,7 @@ export const all_categories = [
                                 'name': 'Kaiseki Restaurant',
                                 'pluralName': 'Kaiseki Restaurants',
                                 'shortName': 'Kaiseki',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1952,10 +1356,7 @@ export const all_categories = [
                                 'name': 'Kushikatsu Restaurant',
                                 'pluralName': 'Kushikatsu Restaurants',
                                 'shortName': 'Kushikatsu',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1963,10 +1364,7 @@ export const all_categories = [
                                 'name': 'Monjayaki Restaurant',
                                 'pluralName': 'Monjayaki Restaurants',
                                 'shortName': 'Monjayaki',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1974,10 +1372,7 @@ export const all_categories = [
                                 'name': 'Nabe Restaurant',
                                 'pluralName': 'Nabe Restaurants',
                                 'shortName': 'Nabe',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1985,10 +1380,7 @@ export const all_categories = [
                                 'name': 'Okonomiyaki Restaurant',
                                 'pluralName': 'Okonomiyaki Restaurants',
                                 'shortName': 'Okonomiyaki',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -1996,10 +1388,7 @@ export const all_categories = [
                                 'name': 'Ramen Restaurant',
                                 'pluralName': 'Ramen Restaurants',
                                 'shortName': 'Ramen',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/ramen_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2007,10 +1396,7 @@ export const all_categories = [
                                 'name': 'Shabu-Shabu Restaurant',
                                 'pluralName': 'Shabu-Shabu Restaurants',
                                 'shortName': 'Shabu-Shabu',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2018,10 +1404,7 @@ export const all_categories = [
                                 'name': 'Soba Restaurant',
                                 'pluralName': 'Soba Restaurants',
                                 'shortName': 'Soba',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/ramen_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2029,10 +1412,7 @@ export const all_categories = [
                                 'name': 'Sukiyaki Restaurant',
                                 'pluralName': 'Sukiyaki Restaurants',
                                 'shortName': 'Sukiyaki',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2040,10 +1420,7 @@ export const all_categories = [
                                 'name': 'Sushi Restaurant',
                                 'pluralName': 'Sushi Restaurants',
                                 'shortName': 'Sushi',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/sushi_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2051,10 +1428,7 @@ export const all_categories = [
                                 'name': 'Takoyaki Place',
                                 'pluralName': 'Takoyaki Places',
                                 'shortName': 'Takoyaki',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2062,10 +1436,7 @@ export const all_categories = [
                                 'name': 'Tempura Restaurant',
                                 'pluralName': 'Tempura Restaurants',
                                 'shortName': 'Tempura',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2073,10 +1444,7 @@ export const all_categories = [
                                 'name': 'Tonkatsu Restaurant',
                                 'pluralName': 'Tonkatsu Restaurants',
                                 'shortName': 'Tonkatsu',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2084,10 +1452,7 @@ export const all_categories = [
                                 'name': 'Udon Restaurant',
                                 'pluralName': 'Udon Restaurants',
                                 'shortName': 'Udon',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/ramen_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2095,10 +1460,7 @@ export const all_categories = [
                                 'name': 'Unagi Restaurant',
                                 'pluralName': 'Unagi Restaurants',
                                 'shortName': 'Unagi',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2106,10 +1468,7 @@ export const all_categories = [
                                 'name': 'Wagashi Place',
                                 'pluralName': 'Wagashi Places',
                                 'shortName': 'Wagashi',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/dessert_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2117,10 +1476,7 @@ export const all_categories = [
                                 'name': 'Yakitori Restaurant',
                                 'pluralName': 'Yakitori Restaurants',
                                 'shortName': 'Yakitori',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/japanese_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2128,10 +1484,7 @@ export const all_categories = [
                                 'name': 'Yoshoku Restaurant',
                                 'pluralName': 'Yoshoku Restaurants',
                                 'shortName': 'Yoshoku',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             }
                         ]
@@ -2141,20 +1494,13 @@ export const all_categories = [
                         'name': 'Korean Restaurant',
                         'pluralName': 'Korean Restaurants',
                         'shortName': 'Korean',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/korean_',
-                            'suffix': '.png'
-                        },
                         'categories': [
                             {
                                 'id': '56aa371be4b08b9a8d5734e4',
                                 'name': 'Bossam/Jokbal Restaurant',
                                 'pluralName': 'Bossam/Jokbal Restaurants',
                                 'shortName': 'Bossam/Jokbal',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/korean_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2162,10 +1508,7 @@ export const all_categories = [
                                 'name': 'Bunsik Restaurant',
                                 'pluralName': 'Bunsik Restaurants',
                                 'shortName': 'Bunsik',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/korean_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2173,10 +1516,7 @@ export const all_categories = [
                                 'name': 'Gukbap Restaurant',
                                 'pluralName': 'Gukbap Restaurants',
                                 'shortName': 'Gukbap',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/korean_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2184,10 +1524,7 @@ export const all_categories = [
                                 'name': 'Janguh Restaurant',
                                 'pluralName': 'Janguh Restaurants',
                                 'shortName': 'Janguh',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/korean_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -2195,10 +1532,7 @@ export const all_categories = [
                                 'name': 'Samgyetang Restaurant',
                                 'pluralName': 'Samgyetang Restaurants',
                                 'shortName': 'Samgyetang',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/korean_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             }
                         ]
@@ -2208,20 +1542,13 @@ export const all_categories = [
                         'name': 'Malay Restaurant',
                         'pluralName': 'Malay Restaurants',
                         'shortName': 'Malay',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/malaysian_',
-                            'suffix': '.png'
-                        },
                         'categories': [
                             {
                                 'id': '5ae9595eb77c77002c2f9f26',
                                 'name': 'Mamak Restaurant',
                                 'pluralName': 'Mamak Restaurants',
                                 'shortName': 'Malay',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/malaysian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             }
                         ]
@@ -2231,10 +1558,6 @@ export const all_categories = [
                         'name': 'Mongolian Restaurant',
                         'pluralName': 'Mongolian Restaurants',
                         'shortName': 'Mongolian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/mongolian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2242,10 +1565,6 @@ export const all_categories = [
                         'name': 'Noodle House',
                         'pluralName': 'Noodle Houses',
                         'shortName': 'Noodles',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/ramen_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2253,10 +1572,6 @@ export const all_categories = [
                         'name': 'Satay Restaurant',
                         'pluralName': 'Satay Restaurants',
                         'shortName': 'Satay',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/asian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2264,20 +1579,13 @@ export const all_categories = [
                         'name': 'Thai Restaurant',
                         'pluralName': 'Thai Restaurants',
                         'shortName': 'Thai',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/thai_',
-                            'suffix': '.png'
-                        },
                         'categories': [
                             {
                                 'id': '56aa371be4b08b9a8d573502',
                                 'name': 'Som Tum Restaurant',
                                 'pluralName': 'Som Tum Restaurants',
                                 'shortName': 'Som Tum',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/thai_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             }
                         ]
@@ -2287,10 +1595,6 @@ export const all_categories = [
                         'name': 'Tibetan Restaurant',
                         'pluralName': 'Tibetan Restaurants',
                         'shortName': 'Tibetan',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/tibetan_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2298,10 +1602,6 @@ export const all_categories = [
                         'name': 'Vietnamese Restaurant',
                         'pluralName': 'Vietnamese Restaurants',
                         'shortName': 'Vietnamese',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/vietnamese_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -2311,10 +1611,7 @@ export const all_categories = [
                 'name': 'Australian Restaurant',
                 'pluralName': 'Australian Restaurants',
                 'shortName': 'Australian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/australian_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2322,10 +1619,7 @@ export const all_categories = [
                 'name': 'Austrian Restaurant',
                 'pluralName': 'Austrian Restaurants',
                 'shortName': 'Austrian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/austrian_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2333,10 +1627,7 @@ export const all_categories = [
                 'name': 'BBQ Joint',
                 'pluralName': 'BBQ Joints',
                 'shortName': 'BBQ',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/bbqalt_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2344,10 +1635,7 @@ export const all_categories = [
                 'name': 'Bagel Shop',
                 'pluralName': 'Bagel Shops',
                 'shortName': 'Bagels',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/bagels_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2355,10 +1643,7 @@ export const all_categories = [
                 'name': 'Bakery',
                 'pluralName': 'Bakeries',
                 'shortName': 'Bakery',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/bakery_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2366,10 +1651,7 @@ export const all_categories = [
                 'name': 'Belgian Restaurant',
                 'pluralName': 'Belgian Restaurants',
                 'shortName': 'Belgian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2377,10 +1659,7 @@ export const all_categories = [
                 'name': 'Bistro',
                 'pluralName': 'Bistros',
                 'shortName': 'Bistro',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2388,10 +1667,7 @@ export const all_categories = [
                 'name': 'Breakfast Spot',
                 'pluralName': 'Breakfast Spots',
                 'shortName': 'Breakfast',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/breakfast_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2399,10 +1675,7 @@ export const all_categories = [
                 'name': 'Bubble Tea Shop',
                 'pluralName': 'Bubble Tea Shops',
                 'shortName': 'Bubble Tea',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/bubble_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2410,10 +1683,7 @@ export const all_categories = [
                 'name': 'Buffet',
                 'pluralName': 'Buffets',
                 'shortName': 'Buffet',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2421,10 +1691,7 @@ export const all_categories = [
                 'name': 'Burger Joint',
                 'pluralName': 'Burger Joints',
                 'shortName': 'Burgers',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/burger_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2432,10 +1699,7 @@ export const all_categories = [
                 'name': 'Cafeteria',
                 'pluralName': 'Cafeterias',
                 'shortName': 'Cafeteria',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/cafeteria_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2443,10 +1707,7 @@ export const all_categories = [
                 'name': 'Café',
                 'pluralName': 'Cafés',
                 'shortName': 'Café',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/cafe_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2454,10 +1715,7 @@ export const all_categories = [
                 'name': 'Cajun / Creole Restaurant',
                 'pluralName': 'Cajun / Creole Restaurants',
                 'shortName': 'Cajun / Creole',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/cajun_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2465,20 +1723,13 @@ export const all_categories = [
                 'name': 'Caribbean Restaurant',
                 'pluralName': 'Caribbean Restaurants',
                 'shortName': 'Caribbean',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/caribbean_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d154941735',
                         'name': 'Cuban Restaurant',
                         'pluralName': 'Cuban Restaurants',
                         'shortName': 'Cuban',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/cuban_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -2488,10 +1739,7 @@ export const all_categories = [
                 'name': 'Caucasian Restaurant',
                 'pluralName': 'Caucasian Restaurants',
                 'shortName': 'Caucasian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/caucasian_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2499,10 +1747,7 @@ export const all_categories = [
                 'name': 'Coffee Shop',
                 'pluralName': 'Coffee Shops',
                 'shortName': 'Coffee Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2510,10 +1755,7 @@ export const all_categories = [
                 'name': 'Comfort Food Restaurant',
                 'pluralName': 'Comfort Food Restaurants',
                 'shortName': 'Comfort Food',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2521,10 +1763,7 @@ export const all_categories = [
                 'name': 'Creperie',
                 'pluralName': 'Creperies',
                 'shortName': 'Creperie',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/creperie_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2532,10 +1771,7 @@ export const all_categories = [
                 'name': 'Czech Restaurant',
                 'pluralName': 'Czech Restaurants',
                 'shortName': 'Czech',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2543,10 +1779,7 @@ export const all_categories = [
                 'name': 'Deli / Bodega',
                 'pluralName': 'Delis / Bodegas',
                 'shortName': 'Deli / Bodega',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/deli_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2554,20 +1787,13 @@ export const all_categories = [
                 'name': 'Dessert Shop',
                 'pluralName': 'Dessert Shops',
                 'shortName': 'Desserts',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/dessert_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d1bc941735',
                         'name': 'Cupcake Shop',
                         'pluralName': 'Cupcake Shops',
                         'shortName': 'Cupcakes',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/cupcakes_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2575,10 +1801,6 @@ export const all_categories = [
                         'name': 'Frozen Yogurt Shop',
                         'pluralName': 'Frozen Yogurt Shops',
                         'shortName': 'Yogurt',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/frozenyogurt_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2586,10 +1808,6 @@ export const all_categories = [
                         'name': 'Ice Cream Shop',
                         'pluralName': 'Ice Cream Shops',
                         'shortName': 'Ice Cream',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/icecream_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2597,10 +1815,6 @@ export const all_categories = [
                         'name': 'Pastry Shop',
                         'pluralName': 'Pastry Shops',
                         'shortName': 'Pastry',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/dessert_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2608,10 +1822,6 @@ export const all_categories = [
                         'name': 'Pie Shop',
                         'pluralName': 'Pie Shops',
                         'shortName': 'Pie Shop',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/pieshop_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -2621,10 +1831,7 @@ export const all_categories = [
                 'name': 'Diner',
                 'pluralName': 'Diners',
                 'shortName': 'Diner',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/diner_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2632,10 +1839,7 @@ export const all_categories = [
                 'name': 'Donut Shop',
                 'pluralName': 'Donut Shops',
                 'shortName': 'Donuts',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/donuts_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2643,10 +1847,7 @@ export const all_categories = [
                 'name': 'Dumpling Restaurant',
                 'pluralName': 'Dumpling Restaurants',
                 'shortName': 'Dumplings',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/dumplings_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2654,10 +1855,7 @@ export const all_categories = [
                 'name': 'Dutch Restaurant',
                 'pluralName': 'Dutch Restaurants',
                 'shortName': 'Dutch',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2665,20 +1863,13 @@ export const all_categories = [
                 'name': 'Eastern European Restaurant',
                 'pluralName': 'Eastern European Restaurants',
                 'shortName': 'Eastern European',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '52e928d0bcbc57f1066b7e97',
                         'name': 'Belarusian Restaurant',
                         'pluralName': 'Belarusian Restaurants',
                         'shortName': 'Belarusian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2686,10 +1877,6 @@ export const all_categories = [
                         'name': 'Bosnian Restaurant',
                         'pluralName': 'Bosnian Restaurants',
                         'shortName': 'Bosnian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2697,10 +1884,6 @@ export const all_categories = [
                         'name': 'Bulgarian Restaurant',
                         'pluralName': 'Bulgarian Restaurants',
                         'shortName': 'Bulgarian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2708,10 +1891,6 @@ export const all_categories = [
                         'name': 'Romanian Restaurant',
                         'pluralName': 'Romanian Restaurants',
                         'shortName': 'Romanian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2719,10 +1898,6 @@ export const all_categories = [
                         'name': 'Tatar Restaurant',
                         'pluralName': 'Tatar Restaurants',
                         'shortName': 'Tatar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -2732,10 +1907,7 @@ export const all_categories = [
                 'name': 'English Restaurant',
                 'pluralName': 'English Restaurants',
                 'shortName': 'English',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2743,10 +1915,7 @@ export const all_categories = [
                 'name': 'Falafel Restaurant',
                 'pluralName': 'Falafel Restaurants',
                 'shortName': 'Falafel',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/falafel_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2754,10 +1923,7 @@ export const all_categories = [
                 'name': 'Fast Food Restaurant',
                 'pluralName': 'Fast Food Restaurants',
                 'shortName': 'Fast Food',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/fastfood_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2765,10 +1931,7 @@ export const all_categories = [
                 'name': 'Fish & Chips Shop',
                 'pluralName': 'Fish & Chips Shops',
                 'shortName': 'Fish & Chips',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/fishandchips_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2776,10 +1939,7 @@ export const all_categories = [
                 'name': 'Fondue Restaurant',
                 'pluralName': 'Fondue Restaurants',
                 'shortName': 'Fondue',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2787,10 +1947,7 @@ export const all_categories = [
                 'name': 'Food Court',
                 'pluralName': 'Food Courts',
                 'shortName': 'Food Court',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_foodcourt_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2798,10 +1955,7 @@ export const all_categories = [
                 'name': 'Food Stand',
                 'pluralName': 'Food Stands',
                 'shortName': 'Food Stand',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/movingtarget_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2809,10 +1963,7 @@ export const all_categories = [
                 'name': 'Food Truck',
                 'pluralName': 'Food Trucks',
                 'shortName': 'Food Truck',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/streetfood_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -2820,20 +1971,13 @@ export const all_categories = [
                 'name': 'French Restaurant',
                 'pluralName': 'French Restaurants',
                 'shortName': 'French',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '57558b36e4b065ecebd306b6',
                         'name': 'Alsatian Restaurant',
                         'pluralName': 'Alsatian Restaurants',
                         'shortName': 'Alsatian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2841,10 +1985,6 @@ export const all_categories = [
                         'name': 'Auvergne Restaurant',
                         'pluralName': 'Auvergne Restaurants',
                         'shortName': 'Auvergne',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2852,10 +1992,6 @@ export const all_categories = [
                         'name': 'Basque Restaurant',
                         'pluralName': 'Basque Restaurants',
                         'shortName': 'Basque',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2863,10 +1999,6 @@ export const all_categories = [
                         'name': 'Brasserie',
                         'pluralName': 'Brasseries',
                         'shortName': 'Brasserie',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2874,10 +2006,6 @@ export const all_categories = [
                         'name': 'Breton Restaurant',
                         'pluralName': 'Breton Restaurants',
                         'shortName': 'Breton',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2885,10 +2013,6 @@ export const all_categories = [
                         'name': 'Burgundian Restaurant',
                         'pluralName': 'Burgundian Restaurants',
                         'shortName': 'Burgundian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2896,10 +2020,6 @@ export const all_categories = [
                         'name': 'Catalan Restaurant',
                         'pluralName': 'Catalan Restaurants',
                         'shortName': 'Catalan',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2907,10 +2027,6 @@ export const all_categories = [
                         'name': 'Ch\'ti Restaurant',
                         'pluralName': 'Ch\'ti Restaurants',
                         'shortName': 'Ch\'ti',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2918,10 +2034,6 @@ export const all_categories = [
                         'name': 'Corsican Restaurant',
                         'pluralName': 'Corsican Restaurants',
                         'shortName': 'Corsican',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2929,10 +2041,6 @@ export const all_categories = [
                         'name': 'Estaminet',
                         'pluralName': 'Estaminets',
                         'shortName': 'Estaminet',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2940,10 +2048,6 @@ export const all_categories = [
                         'name': 'Labour Canteen',
                         'pluralName': 'Labour Canteens',
                         'shortName': 'Labour Canteen',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2951,10 +2055,6 @@ export const all_categories = [
                         'name': 'Lyonese Bouchon',
                         'pluralName': 'Lyonese Bouchons',
                         'shortName': 'Bouchon',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2962,10 +2062,6 @@ export const all_categories = [
                         'name': 'Norman Restaurant',
                         'pluralName': 'Norman Restaurants',
                         'shortName': 'Norman',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2973,10 +2069,6 @@ export const all_categories = [
                         'name': 'Provençal Restaurant',
                         'pluralName': 'Provençal Restaurants',
                         'shortName': 'Provençal',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2984,10 +2076,6 @@ export const all_categories = [
                         'name': 'Savoyard Restaurant',
                         'pluralName': 'Savoyard Restaurants',
                         'shortName': 'Savoyard',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -2995,10 +2083,6 @@ export const all_categories = [
                         'name': 'Southwestern French Restaurant',
                         'pluralName': 'Southwestern French Restaurants',
                         'shortName': 'Southwestern French',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/french_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -3008,10 +2092,7 @@ export const all_categories = [
                 'name': 'Fried Chicken Joint',
                 'pluralName': 'Fried Chicken Joints',
                 'shortName': 'Fried Chicken',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/friedchicken_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -3019,10 +2100,7 @@ export const all_categories = [
                 'name': 'Friterie',
                 'pluralName': 'Friteries',
                 'shortName': 'Friterie',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/fastfood_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -3030,10 +2108,7 @@ export const all_categories = [
                 'name': 'Gastropub',
                 'pluralName': 'Gastropubs',
                 'shortName': 'Gastropub',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/gastropub_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -3041,20 +2116,13 @@ export const all_categories = [
                 'name': 'German Restaurant',
                 'pluralName': 'German Restaurants',
                 'shortName': 'German',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/german_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '56aa371ce4b08b9a8d573583',
                         'name': 'Apple Wine Pub',
                         'pluralName': 'Apple Wine Pubs',
                         'shortName': 'Apple Wine',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/german_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3062,10 +2130,6 @@ export const all_categories = [
                         'name': 'Bavarian Restaurant',
                         'pluralName': 'Bavarian Restaurants',
                         'shortName': 'Bavarian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/german_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3073,10 +2137,6 @@ export const all_categories = [
                         'name': 'Bratwurst Joint',
                         'pluralName': 'Bratwurst Joints',
                         'shortName': 'Bratwurst',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/bbqalt_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3084,10 +2144,6 @@ export const all_categories = [
                         'name': 'Currywurst Joint',
                         'pluralName': 'Currywurst Joints',
                         'shortName': 'Currywurst',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/bbqalt_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3095,10 +2151,6 @@ export const all_categories = [
                         'name': 'Franconian Restaurant',
                         'pluralName': 'Franconian Restaurants',
                         'shortName': 'Franconian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/german_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3106,10 +2158,6 @@ export const all_categories = [
                         'name': 'German Pop-Up Restaurant',
                         'pluralName': 'German Pop-Up Restaurants',
                         'shortName': 'German Pop-Up Restaurant',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/german_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3117,10 +2165,6 @@ export const all_categories = [
                         'name': 'Palatine Restaurant',
                         'pluralName': 'Palatine Restaurants',
                         'shortName': 'Palatine',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/german_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3128,10 +2172,6 @@ export const all_categories = [
                         'name': 'Rhenisch Restaurant',
                         'pluralName': 'Rhenisch Restaurants',
                         'shortName': 'Rhenisch',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/german_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3139,10 +2179,6 @@ export const all_categories = [
                         'name': 'Schnitzel Restaurant',
                         'pluralName': 'Schnitzel Restaurants',
                         'shortName': 'Schnitzel',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/german_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3150,10 +2186,6 @@ export const all_categories = [
                         'name': 'Silesian Restaurant',
                         'pluralName': 'Silesian Restaurants',
                         'shortName': 'Silesian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/german_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3161,10 +2193,6 @@ export const all_categories = [
                         'name': 'Swabian Restaurant',
                         'pluralName': 'Swabian Restaurants',
                         'shortName': 'Swabian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/german_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -3174,10 +2202,7 @@ export const all_categories = [
                 'name': 'Gluten-free Restaurant',
                 'pluralName': 'Gluten-free Restaurants',
                 'shortName': 'Gluten-free',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/glutenfree_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -3185,20 +2210,13 @@ export const all_categories = [
                 'name': 'Greek Restaurant',
                 'pluralName': 'Greek Restaurants',
                 'shortName': 'Greek',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/greek_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '53d6c1b0e4b02351e88a83e8',
                         'name': 'Bougatsa Shop',
                         'pluralName': 'Bougatsa Shops',
                         'shortName': 'Bougatsa Shops',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/snacks_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3206,10 +2224,6 @@ export const all_categories = [
                         'name': 'Cretan Restaurant',
                         'pluralName': 'Cretan Restaurants',
                         'shortName': 'Cretan Restaurants',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/greek_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3217,10 +2231,6 @@ export const all_categories = [
                         'name': 'Fish Taverna',
                         'pluralName': 'Fish Tavernas',
                         'shortName': 'Fish Tavernas',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_fishmarket_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3228,10 +2238,6 @@ export const all_categories = [
                         'name': 'Grilled Meat Restaurant',
                         'pluralName': 'Grilled Meat Restaurants',
                         'shortName': 'Grilled Meat Restaurants',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/greek_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3239,10 +2245,6 @@ export const all_categories = [
                         'name': 'Kafenio',
                         'pluralName': 'Kafenia',
                         'shortName': 'Kafenia',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3250,10 +2252,6 @@ export const all_categories = [
                         'name': 'Magirio',
                         'pluralName': 'Magirio',
                         'shortName': 'Magirio',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/diner_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3261,10 +2259,6 @@ export const all_categories = [
                         'name': 'Meze Restaurant',
                         'pluralName': 'Meze Restaurants',
                         'shortName': 'Meze Restaurants',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/greek_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3272,10 +2266,6 @@ export const all_categories = [
                         'name': 'Modern Greek Restaurant',
                         'pluralName': 'Modern Greek Restaurants',
                         'shortName': 'Modern Greek Restaurants',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/greek_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3283,10 +2273,6 @@ export const all_categories = [
                         'name': 'Ouzeri',
                         'pluralName': 'Ouzeries',
                         'shortName': 'Ouzeries',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/greek_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3294,10 +2280,6 @@ export const all_categories = [
                         'name': 'Patsa Restaurant',
                         'pluralName': 'Patsa Restaurants',
                         'shortName': 'Patsa Restaurants',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/soup_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3305,10 +2287,6 @@ export const all_categories = [
                         'name': 'Souvlaki Shop',
                         'pluralName': 'Souvlaki Shops',
                         'shortName': 'Souvlaki',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/souvlaki_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3316,10 +2294,6 @@ export const all_categories = [
                         'name': 'Taverna',
                         'pluralName': 'Tavernas',
                         'shortName': 'Tavernas',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/greek_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3327,10 +2301,6 @@ export const all_categories = [
                         'name': 'Tsipouro Restaurant',
                         'pluralName': 'Tsipouro Restaurants',
                         'shortName': 'Tsipouro Restaurants',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/greek_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -3340,10 +2310,7 @@ export const all_categories = [
                 'name': 'Halal Restaurant',
                 'pluralName': 'Halal Restaurants',
                 'shortName': 'Halal',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/halal_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -3351,20 +2318,13 @@ export const all_categories = [
                 'name': 'Hawaiian Restaurant',
                 'pluralName': 'Hawaiian Restaurants',
                 'shortName': 'Hawaiian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '5bae9231bedf3950379f89d4',
                         'name': 'Poke Place',
                         'pluralName': 'Poke Places',
                         'shortName': 'Poke Place',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -3374,10 +2334,7 @@ export const all_categories = [
                 'name': 'Hot Dog Joint',
                 'pluralName': 'Hot Dog Joints',
                 'shortName': 'Hot Dogs',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/hotdog_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -3385,10 +2342,7 @@ export const all_categories = [
                 'name': 'Hungarian Restaurant',
                 'pluralName': 'Hungarian Restaurants',
                 'shortName': 'Hungarian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -3396,20 +2350,13 @@ export const all_categories = [
                 'name': 'Indian Restaurant',
                 'pluralName': 'Indian Restaurants',
                 'shortName': 'Indian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/indian_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '54135bf5e4b08f3d2429dfe5',
                         'name': 'Andhra Restaurant',
                         'pluralName': 'Andhra Restaurants',
                         'shortName': 'Andhra',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3417,10 +2364,6 @@ export const all_categories = [
                         'name': 'Awadhi Restaurant',
                         'pluralName': 'Awadhi Restaurants',
                         'shortName': 'Awadhi',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3428,10 +2371,6 @@ export const all_categories = [
                         'name': 'Bengali Restaurant',
                         'pluralName': 'Bengali Restaurants',
                         'shortName': 'Bengali',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3439,10 +2378,6 @@ export const all_categories = [
                         'name': 'Chaat Place',
                         'pluralName': 'Chaat Places',
                         'shortName': 'Chaat',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3450,10 +2385,6 @@ export const all_categories = [
                         'name': 'Chettinad Restaurant',
                         'pluralName': 'Chettinad Restaurants',
                         'shortName': 'Chettinad',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3461,10 +2392,6 @@ export const all_categories = [
                         'name': 'Dhaba',
                         'pluralName': 'Dhabas',
                         'shortName': 'Dhaba',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3472,10 +2399,6 @@ export const all_categories = [
                         'name': 'Dosa Place',
                         'pluralName': 'Dosa Places',
                         'shortName': 'Dosa',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3483,10 +2406,6 @@ export const all_categories = [
                         'name': 'Goan Restaurant',
                         'pluralName': 'Goan Restaurants',
                         'shortName': 'Goan',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3494,10 +2413,6 @@ export const all_categories = [
                         'name': 'Gujarati Restaurant',
                         'pluralName': 'Gujarati Restaurants',
                         'shortName': 'Gujarati',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3505,10 +2420,6 @@ export const all_categories = [
                         'name': 'Hyderabadi Restaurant',
                         'pluralName': 'Hyderabadi Restaurants',
                         'shortName': 'Hyderabadi',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3516,10 +2427,6 @@ export const all_categories = [
                         'name': 'Indian Chinese Restaurant',
                         'pluralName': 'Indian Chinese Restaurants',
                         'shortName': 'Indian Chinese',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3527,10 +2434,6 @@ export const all_categories = [
                         'name': 'Indian Sweet Shop',
                         'pluralName': 'Indian Sweet Shops',
                         'shortName': 'Indian Sweets',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3538,10 +2441,6 @@ export const all_categories = [
                         'name': 'Irani Cafe',
                         'pluralName': 'Irani Cafes',
                         'shortName': 'Irani',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3549,10 +2448,6 @@ export const all_categories = [
                         'name': 'Jain Restaurant',
                         'pluralName': 'Jain Restaurants',
                         'shortName': 'Jain',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3560,10 +2455,6 @@ export const all_categories = [
                         'name': 'Karnataka Restaurant',
                         'pluralName': 'Karnataka Restaurants',
                         'shortName': 'Karnataka',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3571,10 +2462,6 @@ export const all_categories = [
                         'name': 'Kerala Restaurant',
                         'pluralName': 'Kerala Restaurants',
                         'shortName': 'Kerala',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3582,10 +2469,6 @@ export const all_categories = [
                         'name': 'Maharashtrian Restaurant',
                         'pluralName': 'Maharashtrian Restaurants',
                         'shortName': 'Maharashtrian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3593,10 +2476,6 @@ export const all_categories = [
                         'name': 'Mughlai Restaurant',
                         'pluralName': 'Mughlai Restaurants',
                         'shortName': 'Mughlai',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3604,10 +2483,6 @@ export const all_categories = [
                         'name': 'Multicuisine Indian Restaurant',
                         'pluralName': 'Multicuisine Indian Restaurants',
                         'shortName': 'Multicuisine Indian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3615,10 +2490,6 @@ export const all_categories = [
                         'name': 'North Indian Restaurant',
                         'pluralName': 'North Indian Restaurants',
                         'shortName': 'North Indian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3626,10 +2497,6 @@ export const all_categories = [
                         'name': 'Northeast Indian Restaurant',
                         'pluralName': 'Northeast Indian Restaurants',
                         'shortName': 'Northeast Indian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3637,10 +2504,6 @@ export const all_categories = [
                         'name': 'Parsi Restaurant',
                         'pluralName': 'Parsi Restaurants',
                         'shortName': 'Parsi',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3648,10 +2511,6 @@ export const all_categories = [
                         'name': 'Punjabi Restaurant',
                         'pluralName': 'Punjabi Restaurants',
                         'shortName': 'Punjabi',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3659,10 +2518,6 @@ export const all_categories = [
                         'name': 'Rajasthani Restaurant',
                         'pluralName': 'Rajasthani Restaurants',
                         'shortName': 'Rajasthani',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3670,10 +2525,6 @@ export const all_categories = [
                         'name': 'South Indian Restaurant',
                         'pluralName': 'South Indian Restaurants',
                         'shortName': 'South Indian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3681,10 +2532,6 @@ export const all_categories = [
                         'name': 'Udupi Restaurant',
                         'pluralName': 'Udupi Restaurants',
                         'shortName': 'Udupi',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -3694,10 +2541,7 @@ export const all_categories = [
                 'name': 'Irish Pub',
                 'pluralName': 'Irish Pubs',
                 'shortName': 'Irish',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/pub_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -3705,20 +2549,13 @@ export const all_categories = [
                 'name': 'Italian Restaurant',
                 'pluralName': 'Italian Restaurants',
                 'shortName': 'Italian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '55a5a1ebe4b013909087cbb6',
                         'name': 'Abruzzo Restaurant',
                         'pluralName': 'Abruzzo Restaurants',
                         'shortName': 'Abruzzo',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3726,10 +2563,6 @@ export const all_categories = [
                         'name': 'Agriturismo',
                         'pluralName': 'Agriturismos',
                         'shortName': 'Agriturismo',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3737,10 +2570,6 @@ export const all_categories = [
                         'name': 'Aosta Restaurant',
                         'pluralName': 'Aosta Restaurants',
                         'shortName': 'Aosta',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3748,10 +2577,6 @@ export const all_categories = [
                         'name': 'Basilicata Restaurant',
                         'pluralName': 'Basilicata Restaurants',
                         'shortName': 'Basilicata',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3759,10 +2584,6 @@ export const all_categories = [
                         'name': 'Calabria Restaurant',
                         'pluralName': 'Calabria Restaurants',
                         'shortName': 'Calabria',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3770,10 +2591,6 @@ export const all_categories = [
                         'name': 'Campanian Restaurant',
                         'pluralName': 'Campanian Restaurants',
                         'shortName': 'Campanian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3781,10 +2598,6 @@ export const all_categories = [
                         'name': 'Emilia Restaurant',
                         'pluralName': 'Emilia Restaurants',
                         'shortName': 'Emilia',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3792,10 +2605,6 @@ export const all_categories = [
                         'name': 'Friuli Restaurant',
                         'pluralName': 'Friuli Restaurants',
                         'shortName': 'Friuli',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3803,10 +2612,6 @@ export const all_categories = [
                         'name': 'Ligurian Restaurant',
                         'pluralName': 'Ligurian Restaurants',
                         'shortName': 'Ligurian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3814,10 +2619,6 @@ export const all_categories = [
                         'name': 'Lombard Restaurant',
                         'pluralName': 'Lombard Restaurants',
                         'shortName': 'Lombard',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3825,10 +2626,6 @@ export const all_categories = [
                         'name': 'Malga',
                         'pluralName': 'Malgas',
                         'shortName': 'Malga',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3836,10 +2633,6 @@ export const all_categories = [
                         'name': 'Marche Restaurant',
                         'pluralName': 'Marche Restaurants',
                         'shortName': 'Marche',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3847,10 +2640,6 @@ export const all_categories = [
                         'name': 'Molise Restaurant',
                         'pluralName': 'Molise Restaurants',
                         'shortName': 'Molise',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3858,10 +2647,6 @@ export const all_categories = [
                         'name': 'Piadineria',
                         'pluralName': 'Piadinerias',
                         'shortName': 'Piadineria',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/taco_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3869,10 +2654,6 @@ export const all_categories = [
                         'name': 'Piedmontese Restaurant',
                         'pluralName': 'Piedmontese Restaurants',
                         'shortName': 'Piedmontese',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3880,10 +2661,6 @@ export const all_categories = [
                         'name': 'Puglia Restaurant',
                         'pluralName': 'Puglia Restaurants',
                         'shortName': 'Puglia',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3891,10 +2668,6 @@ export const all_categories = [
                         'name': 'Romagna Restaurant',
                         'pluralName': 'Romagna Restaurants',
                         'shortName': 'Romagna',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3902,10 +2675,6 @@ export const all_categories = [
                         'name': 'Roman Restaurant',
                         'pluralName': 'Roman Restaurants',
                         'shortName': 'Roman',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3913,10 +2682,6 @@ export const all_categories = [
                         'name': 'Sardinian Restaurant',
                         'pluralName': 'Sardinian Restaurants',
                         'shortName': 'Sardinian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3924,10 +2689,6 @@ export const all_categories = [
                         'name': 'Sicilian Restaurant',
                         'pluralName': 'Sicilian Restaurants',
                         'shortName': 'Sicilian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3935,10 +2696,6 @@ export const all_categories = [
                         'name': 'South Tyrolean Restaurant',
                         'pluralName': 'South Tyrolean Restaurants',
                         'shortName': 'South Tyrolean',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3946,10 +2703,6 @@ export const all_categories = [
                         'name': 'Trattoria/Osteria',
                         'pluralName': 'Trattorias/Osterias',
                         'shortName': 'Trattoria/Osteria',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3957,10 +2710,6 @@ export const all_categories = [
                         'name': 'Trentino Restaurant',
                         'pluralName': 'Trentino Restaurants',
                         'shortName': 'Trentino',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3968,10 +2717,6 @@ export const all_categories = [
                         'name': 'Tuscan Restaurant',
                         'pluralName': 'Tuscan Restaurants',
                         'shortName': 'Tuscan',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3979,10 +2724,6 @@ export const all_categories = [
                         'name': 'Umbrian Restaurant',
                         'pluralName': 'Umbrian Restaurants',
                         'shortName': 'Umbrian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -3990,10 +2731,6 @@ export const all_categories = [
                         'name': 'Veneto Restaurant',
                         'pluralName': 'Veneto Restaurants',
                         'shortName': 'Veneto',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/italian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -4003,20 +2740,13 @@ export const all_categories = [
                 'name': 'Jewish Restaurant',
                 'pluralName': 'Jewish Restaurants',
                 'shortName': 'Jewish',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '52e81612bcbc57f1066b79fc',
                         'name': 'Kosher Restaurant',
                         'pluralName': 'Kosher Restaurants',
                         'shortName': 'Kosher',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -4026,10 +2756,7 @@ export const all_categories = [
                 'name': 'Juice Bar',
                 'pluralName': 'Juice Bars',
                 'shortName': 'Juice Bar',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/juicebar_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4037,10 +2764,7 @@ export const all_categories = [
                 'name': 'Kebab Restaurant',
                 'pluralName': 'Kebab Restaurants',
                 'shortName': 'Kebab',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4048,20 +2772,13 @@ export const all_categories = [
                 'name': 'Latin American Restaurant',
                 'pluralName': 'Latin American Restaurants',
                 'shortName': 'Latin American',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/latinamerican_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d152941735',
                         'name': 'Arepa Restaurant',
                         'pluralName': 'Arepa Restaurants',
                         'shortName': 'Arepas',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/arepas_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4069,10 +2786,6 @@ export const all_categories = [
                         'name': 'Empanada Restaurant',
                         'pluralName': 'Empanada Restaurants',
                         'shortName': 'Empanada',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/latinamerican_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4080,10 +2793,6 @@ export const all_categories = [
                         'name': 'Salvadoran Restaurant',
                         'pluralName': 'Salvadoran Restaurants',
                         'shortName': 'Salvadoran',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/latinamerican_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4091,20 +2800,13 @@ export const all_categories = [
                         'name': 'South American Restaurant',
                         'pluralName': 'South American Restaurants',
                         'shortName': 'South American',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                            'suffix': '.png'
-                        },
                         'categories': [
                             {
                                 'id': '4bf58dd8d48988d107941735',
                                 'name': 'Argentinian Restaurant',
                                 'pluralName': 'Argentinian Restaurants',
                                 'shortName': 'Argentinian',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -4112,10 +2814,7 @@ export const all_categories = [
                                 'name': 'Brazilian Restaurant',
                                 'pluralName': 'Brazilian Restaurants',
                                 'shortName': 'Brazilian',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': [
                                     {
                                         'id': '5294c7523cf9994f4e043a62',
@@ -4123,8 +2822,9 @@ export const all_categories = [
                                         'pluralName': 'Acai Houses',
                                         'shortName': 'Acai',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4134,8 +2834,9 @@ export const all_categories = [
                                         'pluralName': 'Baiano Restaurants',
                                         'shortName': 'Baiano',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4145,8 +2846,9 @@ export const all_categories = [
                                         'pluralName': 'Central Brazilian Restaurants',
                                         'shortName': 'Central Brazilian',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4156,8 +2858,9 @@ export const all_categories = [
                                         'pluralName': 'Churrascarias',
                                         'shortName': 'Churrascaria',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4167,8 +2870,9 @@ export const all_categories = [
                                         'pluralName': 'Empada Houses',
                                         'shortName': 'Empadas',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4178,8 +2882,9 @@ export const all_categories = [
                                         'pluralName': 'Goiano Restaurants',
                                         'shortName': 'Goiano',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4189,8 +2894,9 @@ export const all_categories = [
                                         'pluralName': 'Mineiro Restaurants',
                                         'shortName': 'Mineiro',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4200,8 +2906,9 @@ export const all_categories = [
                                         'pluralName': 'Northeastern Brazilian Restaurants',
                                         'shortName': 'Northeastern Brazilian',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4211,8 +2918,9 @@ export const all_categories = [
                                         'pluralName': 'Northern Brazilian Restaurants',
                                         'shortName': 'Northern Brazilian',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4222,8 +2930,9 @@ export const all_categories = [
                                         'pluralName': 'Pastelarias',
                                         'shortName': 'Pastelaria',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4233,8 +2942,9 @@ export const all_categories = [
                                         'pluralName': 'Southeastern Brazilian Restaurants',
                                         'shortName': 'Southeastern Brazilian',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4244,8 +2954,9 @@ export const all_categories = [
                                         'pluralName': 'Southern Brazilian Restaurants',
                                         'shortName': 'Southern Brazilian',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     },
@@ -4255,8 +2966,9 @@ export const all_categories = [
                                         'pluralName': 'Tapiocarias',
                                         'shortName': 'Tapiocaria',
                                         'icon': {
-                                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                            'suffix': '.png'
+                                            
+                                            
+
                                         },
                                         'categories': []
                                     }
@@ -4267,10 +2979,7 @@ export const all_categories = [
                                 'name': 'Colombian Restaurant',
                                 'pluralName': 'Colombian Restaurants',
                                 'shortName': 'Colombian',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -4278,10 +2987,7 @@ export const all_categories = [
                                 'name': 'Peruvian Restaurant',
                                 'pluralName': 'Peruvian Restaurants',
                                 'shortName': 'Peruvian',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/peruvian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -4289,10 +2995,7 @@ export const all_categories = [
                                 'name': 'Venezuelan Restaurant',
                                 'pluralName': 'Venezuelan Restaurants',
                                 'shortName': 'Venezuelan',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/argentinian_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             }
                         ]
@@ -4304,10 +3007,7 @@ export const all_categories = [
                 'name': 'Mac & Cheese Joint',
                 'pluralName': 'Mac & Cheese Joints',
                 'shortName': 'Mac & Cheese',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/macandcheese_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4315,20 +3015,13 @@ export const all_categories = [
                 'name': 'Mediterranean Restaurant',
                 'pluralName': 'Mediterranean Restaurants',
                 'shortName': 'Mediterranean',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/mediterranean_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d1c3941735',
                         'name': 'Moroccan Restaurant',
                         'pluralName': 'Moroccan Restaurants',
                         'shortName': 'Moroccan',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/moroccan_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -4338,20 +3031,13 @@ export const all_categories = [
                 'name': 'Mexican Restaurant',
                 'pluralName': 'Mexican Restaurants',
                 'shortName': 'Mexican',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/mexican_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '58daa1558bbb0b01f18ec1d9',
                         'name': 'Botanero',
                         'pluralName': 'Botaneros',
                         'shortName': 'Botanero',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/mexican_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4359,10 +3045,6 @@ export const all_categories = [
                         'name': 'Burrito Place',
                         'pluralName': 'Burrito Places',
                         'shortName': 'Burritos',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/burrito_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4370,10 +3052,6 @@ export const all_categories = [
                         'name': 'Taco Place',
                         'pluralName': 'Taco Places',
                         'shortName': 'Tacos',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/taco_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4381,10 +3059,6 @@ export const all_categories = [
                         'name': 'Tex-Mex Restaurant',
                         'pluralName': 'Tex-Mex Restaurants',
                         'shortName': 'Tex-Mex',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/mexican_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4392,10 +3066,6 @@ export const all_categories = [
                         'name': 'Yucatecan Restaurant',
                         'pluralName': 'Yucatecan Restaurants',
                         'shortName': 'Yucatecan',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/mexican_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -4405,20 +3075,13 @@ export const all_categories = [
                 'name': 'Middle Eastern Restaurant',
                 'pluralName': 'Middle Eastern Restaurants',
                 'shortName': 'Middle Eastern',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '5bae9231bedf3950379f89e1',
                         'name': 'Egyptian Restaurant',
                         'pluralName': 'Egyptian Restaurants',
                         'shortName': 'Egyptian Restaurant',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4426,10 +3089,6 @@ export const all_categories = [
                         'name': 'Iraqi Restaurant',
                         'pluralName': 'Iraqi Restaurants',
                         'shortName': 'Iraqi Restaurant',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4437,10 +3096,6 @@ export const all_categories = [
                         'name': 'Israeli Restaurant',
                         'pluralName': 'Israeli Restaurants',
                         'shortName': 'Israeli',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/falafel_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4448,10 +3103,6 @@ export const all_categories = [
                         'name': 'Kurdish Restaurant',
                         'pluralName': 'Kurdish Restaurants',
                         'shortName': 'Kurdish',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4459,10 +3110,6 @@ export const all_categories = [
                         'name': 'Lebanese Restaurant',
                         'pluralName': 'Lebanese Restaurants',
                         'shortName': 'Lebanese',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4470,20 +3117,13 @@ export const all_categories = [
                         'name': 'Persian Restaurant',
                         'pluralName': 'Persian Restaurants',
                         'shortName': 'Persian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                            'suffix': '.png'
-                        },
                         'categories': [
                             {
                                 'id': '58daa1558bbb0b01f18ec1bc',
                                 'name': 'Ash and Haleem Place',
                                 'pluralName': 'Ash and Haleem Places',
                                 'shortName': 'Ash and Haleem',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -4491,10 +3131,7 @@ export const all_categories = [
                                 'name': 'Dizi Place',
                                 'pluralName': 'Dizi Places',
                                 'shortName': 'Dizi',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -4502,10 +3139,7 @@ export const all_categories = [
                                 'name': 'Gilaki Restaurant',
                                 'pluralName': 'Gilaki Restaurants',
                                 'shortName': 'Gilaki',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -4513,10 +3147,7 @@ export const all_categories = [
                                 'name': 'Jegaraki',
                                 'pluralName': 'Jegarakis',
                                 'shortName': 'Jegaraki',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -4524,10 +3155,7 @@ export const all_categories = [
                                 'name': 'Tabbakhi',
                                 'pluralName': 'Tabbakhis',
                                 'shortName': 'Tabbakhi',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             }
                         ]
@@ -4537,10 +3165,6 @@ export const all_categories = [
                         'name': 'Shawarma Place',
                         'pluralName': 'Shawarma Places',
                         'shortName': 'Shawarma Place',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4548,10 +3172,6 @@ export const all_categories = [
                         'name': 'Syrian Restaurant',
                         'pluralName': 'Syrian Restaurants',
                         'shortName': 'Syrian Restaurant',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4559,10 +3179,6 @@ export const all_categories = [
                         'name': 'Yemeni Restaurant',
                         'pluralName': 'Yemeni Restaurants',
                         'shortName': 'Yemeni Restaurant',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/middleeastern_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -4572,10 +3188,7 @@ export const all_categories = [
                 'name': 'Modern European Restaurant',
                 'pluralName': 'Modern European Restaurants',
                 'shortName': 'Modern European',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4583,10 +3196,7 @@ export const all_categories = [
                 'name': 'Molecular Gastronomy Restaurant',
                 'pluralName': 'Molecular Gastronomy Restaurants',
                 'shortName': 'Molecular Gastronomy',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/moleculargastronomy_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4594,10 +3204,7 @@ export const all_categories = [
                 'name': 'Pakistani Restaurant',
                 'pluralName': 'Pakistani Restaurants',
                 'shortName': 'Pakistani',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4605,10 +3212,7 @@ export const all_categories = [
                 'name': 'Pet Café',
                 'pluralName': 'Pet Cafés',
                 'shortName': 'Pet Café',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/dogrun_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4616,10 +3220,7 @@ export const all_categories = [
                 'name': 'Pizza Place',
                 'pluralName': 'Pizza Places',
                 'shortName': 'Pizza',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/pizza_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4627,10 +3228,7 @@ export const all_categories = [
                 'name': 'Polish Restaurant',
                 'pluralName': 'Polish Restaurants',
                 'shortName': 'Polish',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4638,10 +3236,7 @@ export const all_categories = [
                 'name': 'Portuguese Restaurant',
                 'pluralName': 'Portuguese Restaurants',
                 'shortName': 'Portuguese',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/portuguese_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4649,10 +3244,7 @@ export const all_categories = [
                 'name': 'Poutine Place',
                 'pluralName': 'Poutine Places',
                 'shortName': 'Poutine Place',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/fastfood_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4660,10 +3252,7 @@ export const all_categories = [
                 'name': 'Restaurant',
                 'pluralName': 'Restaurants',
                 'shortName': 'Restaurant',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4671,20 +3260,13 @@ export const all_categories = [
                 'name': 'Russian Restaurant',
                 'pluralName': 'Russian Restaurants',
                 'shortName': 'Russian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/russian_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '52e928d0bcbc57f1066b7e9d',
                         'name': 'Blini House',
                         'pluralName': 'Blini Houses',
                         'shortName': 'Blini',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4692,10 +3274,6 @@ export const all_categories = [
                         'name': 'Pelmeni House',
                         'pluralName': 'Pelmeni Houses',
                         'shortName': 'Pelmeni',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -4705,10 +3283,7 @@ export const all_categories = [
                 'name': 'Salad Place',
                 'pluralName': 'Salad Places',
                 'shortName': 'Salad',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/salad_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4716,10 +3291,7 @@ export const all_categories = [
                 'name': 'Sandwich Place',
                 'pluralName': 'Sandwich Places',
                 'shortName': 'Sandwiches',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/deli_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4727,10 +3299,7 @@ export const all_categories = [
                 'name': 'Scandinavian Restaurant',
                 'pluralName': 'Scandinavian Restaurants',
                 'shortName': 'Scandinavian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/scandinavian_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4738,10 +3307,7 @@ export const all_categories = [
                 'name': 'Scottish Restaurant',
                 'pluralName': 'Scottish Restaurants',
                 'shortName': 'Scottish',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4749,10 +3315,7 @@ export const all_categories = [
                 'name': 'Seafood Restaurant',
                 'pluralName': 'Seafood Restaurants',
                 'shortName': 'Seafood',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/seafood_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4760,10 +3323,7 @@ export const all_categories = [
                 'name': 'Slovak Restaurant',
                 'pluralName': 'Slovak Restaurants',
                 'shortName': 'Slovak',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4771,10 +3331,7 @@ export const all_categories = [
                 'name': 'Snack Place',
                 'pluralName': 'Snack Places',
                 'shortName': 'Snacks',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/snacks_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4782,10 +3339,7 @@ export const all_categories = [
                 'name': 'Soup Place',
                 'pluralName': 'Soup Places',
                 'shortName': 'Soup',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/soup_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4793,10 +3347,7 @@ export const all_categories = [
                 'name': 'Southern / Soul Food Restaurant',
                 'pluralName': 'Southern / Soul Food Restaurants',
                 'shortName': 'Southern / Soul',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/southern_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4804,20 +3355,13 @@ export const all_categories = [
                 'name': 'Spanish Restaurant',
                 'pluralName': 'Spanish Restaurants',
                 'shortName': 'Spanish',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/spanish_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d14d941735',
                         'name': 'Paella Restaurant',
                         'pluralName': 'Paella Restaurants',
                         'shortName': 'Paella',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/paella_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4825,10 +3369,6 @@ export const all_categories = [
                         'name': 'Tapas Restaurant',
                         'pluralName': 'Tapas Restaurants',
                         'shortName': 'Tapas',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/tapas_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -4838,10 +3378,7 @@ export const all_categories = [
                 'name': 'Sri Lankan Restaurant',
                 'pluralName': 'Sri Lankan Restaurants',
                 'shortName': 'Sri Lankan',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4849,10 +3386,7 @@ export const all_categories = [
                 'name': 'Steakhouse',
                 'pluralName': 'Steakhouses',
                 'shortName': 'Steakhouse',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/steakhouse_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4860,10 +3394,7 @@ export const all_categories = [
                 'name': 'Swiss Restaurant',
                 'pluralName': 'Swiss Restaurants',
                 'shortName': 'Swiss',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/swiss_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4871,10 +3402,7 @@ export const all_categories = [
                 'name': 'Tea Room',
                 'pluralName': 'Tea Rooms',
                 'shortName': 'Tea Room',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/tearoom_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4882,10 +3410,7 @@ export const all_categories = [
                 'name': 'Theme Restaurant',
                 'pluralName': 'Theme Restaurants',
                 'shortName': 'Theme Restaurant',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4893,10 +3418,7 @@ export const all_categories = [
                 'name': 'Truck Stop',
                 'pluralName': 'Truck Stops',
                 'shortName': 'Truck Stop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -4904,20 +3426,13 @@ export const all_categories = [
                 'name': 'Turkish Restaurant',
                 'pluralName': 'Turkish Restaurants',
                 'shortName': 'Turkish',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '530faca9bcbc57f1066bc2f3',
                         'name': 'Borek Place',
                         'pluralName': 'Borek Places',
                         'shortName': 'Borek',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4925,10 +3440,6 @@ export const all_categories = [
                         'name': 'Cigkofte Place',
                         'pluralName': 'Cigkofte Places',
                         'shortName': 'Cigkofte',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4936,10 +3447,6 @@ export const all_categories = [
                         'name': 'Doner Restaurant',
                         'pluralName': 'Doner Restaurants',
                         'shortName': 'Doner',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4947,10 +3454,6 @@ export const all_categories = [
                         'name': 'Gozleme Place',
                         'pluralName': 'Gozleme Places',
                         'shortName': 'Gozleme',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4958,10 +3461,6 @@ export const all_categories = [
                         'name': 'Kofte Place',
                         'pluralName': 'Kofte Places',
                         'shortName': 'Kofte',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4969,10 +3468,6 @@ export const all_categories = [
                         'name': 'Kokoreç Restaurant',
                         'pluralName': 'Kokoreç Restaurants',
                         'shortName': 'Kokoreç',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4980,10 +3475,6 @@ export const all_categories = [
                         'name': 'Kumpir Restaurant',
                         'pluralName': 'Kumpir Restaurants',
                         'shortName': 'Kumpir',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -4991,10 +3482,6 @@ export const all_categories = [
                         'name': 'Kumru Restaurant',
                         'pluralName': 'Kumru Restaurants',
                         'shortName': 'Kumru',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5002,10 +3489,6 @@ export const all_categories = [
                         'name': 'Manti Place',
                         'pluralName': 'Manti Places',
                         'shortName': 'Manti',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5013,10 +3496,6 @@ export const all_categories = [
                         'name': 'Meyhane',
                         'pluralName': 'Meyhanes',
                         'shortName': 'Meyhane',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5024,10 +3503,6 @@ export const all_categories = [
                         'name': 'Pide Place',
                         'pluralName': 'Pide Places',
                         'shortName': 'Pide',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5035,10 +3510,6 @@ export const all_categories = [
                         'name': 'Pilavcı',
                         'pluralName': 'Pilavcıs',
                         'shortName': 'Pilavcı',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5046,10 +3517,6 @@ export const all_categories = [
                         'name': 'Söğüş Place',
                         'pluralName': 'Söğüş Places',
                         'shortName': 'Söğüş',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5057,10 +3524,6 @@ export const all_categories = [
                         'name': 'Tantuni Restaurant',
                         'pluralName': 'Tantuni Restaurants',
                         'shortName': 'Tantuni',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5068,10 +3531,6 @@ export const all_categories = [
                         'name': 'Turkish Coffeehouse',
                         'pluralName': 'Turkish Coffeehouses',
                         'shortName': 'Turkish Coffeehouse',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5079,10 +3538,6 @@ export const all_categories = [
                         'name': 'Turkish Home Cooking Restaurant',
                         'pluralName': 'Turkish Home Cooking Restaurants',
                         'shortName': 'Turkish Home Cooking',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5090,10 +3545,6 @@ export const all_categories = [
                         'name': 'Çöp Şiş Place',
                         'pluralName': 'Çöp Şiş Places',
                         'shortName': 'Çöp Şiş',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/turkish_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -5103,20 +3554,13 @@ export const all_categories = [
                 'name': 'Ukrainian Restaurant',
                 'pluralName': 'Ukrainian Restaurants',
                 'shortName': 'Ukrainian',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '52e928d0bcbc57f1066b7e9a',
                         'name': 'Varenyky restaurant',
                         'pluralName': 'Varenyky Restaurants',
                         'shortName': 'Varenyky',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5124,10 +3568,6 @@ export const all_categories = [
                         'name': 'West-Ukrainian Restaurant',
                         'pluralName': 'West-Ukrainian Restaurants',
                         'shortName': 'West-Ukrainian',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -5137,10 +3577,7 @@ export const all_categories = [
                 'name': 'Vegetarian / Vegan Restaurant',
                 'pluralName': 'Vegetarian / Vegan Restaurants',
                 'shortName': 'Vegetarian / Vegan',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/vegetarian_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5148,10 +3585,7 @@ export const all_categories = [
                 'name': 'Wings Joint',
                 'pluralName': 'Wings Joints',
                 'shortName': 'Wings',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/wings_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             }
         ]
@@ -5161,27 +3595,21 @@ export const all_categories = [
         'name': 'Nightlife Spot',
         'key' : 'nightlife',
         'icon': {
-            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/default_',
-            'suffix': '.png'
+            
+            
+
         },
         'categories': [
             {
                 'id': '4bf58dd8d48988d116941735',
                 'name': 'Bar',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/pub_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '52e81612bcbc57f1066b7a0d',
                         'name': 'Beach Bar',
                         'pluralName': 'Beach Bars',
                         'shortName': 'Beach Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5189,10 +3617,6 @@ export const all_categories = [
                         'name': 'Beer Bar',
                         'pluralName': 'Beer Bars',
                         'shortName': 'Beer Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/pub_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5200,10 +3624,6 @@ export const all_categories = [
                         'name': 'Beer Garden',
                         'pluralName': 'Beer Gardens',
                         'shortName': 'Beer Garden',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/beergarden_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5211,10 +3631,6 @@ export const all_categories = [
                         'name': 'Champagne Bar',
                         'pluralName': 'Champagne Bars',
                         'shortName': 'Champagne Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/winery_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5222,10 +3638,6 @@ export const all_categories = [
                         'name': 'Cocktail Bar',
                         'pluralName': 'Cocktail Bars',
                         'shortName': 'Cocktail',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/cocktails_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5233,10 +3645,6 @@ export const all_categories = [
                         'name': 'Dive Bar',
                         'pluralName': 'Dive Bars',
                         'shortName': 'Dive Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/divebar_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5244,10 +3652,6 @@ export const all_categories = [
                         'name': 'Gay Bar',
                         'pluralName': 'Gay Bars',
                         'shortName': 'Gay Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/gaybar_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5255,10 +3659,6 @@ export const all_categories = [
                         'name': 'Hookah Bar',
                         'pluralName': 'Hookah Bars',
                         'shortName': 'Hookah Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/hookahbar_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5266,10 +3666,6 @@ export const all_categories = [
                         'name': 'Hotel Bar',
                         'pluralName': 'Hotel Bars',
                         'shortName': 'Hotel Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/hotel_bar_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5277,10 +3673,6 @@ export const all_categories = [
                         'name': 'Karaoke Bar',
                         'pluralName': 'Karaoke Bars',
                         'shortName': 'Karaoke',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/karaoke_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5288,10 +3680,6 @@ export const all_categories = [
                         'name': 'Pub',
                         'pluralName': 'Pubs',
                         'shortName': 'Pub',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/pub_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5299,10 +3687,6 @@ export const all_categories = [
                         'name': 'Sake Bar',
                         'pluralName': 'Sake Bars',
                         'shortName': 'Sake Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/sake_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5310,10 +3694,6 @@ export const all_categories = [
                         'name': 'Speakeasy',
                         'pluralName': 'Speakeasies',
                         'shortName': 'Speakeasy',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/secretbar_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5321,10 +3701,6 @@ export const all_categories = [
                         'name': 'Sports Bar',
                         'pluralName': 'Sports Bars',
                         'shortName': 'Sports Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/sportsbar_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5332,10 +3708,6 @@ export const all_categories = [
                         'name': 'Tiki Bar',
                         'pluralName': 'Tiki Bars',
                         'shortName': 'Tiki Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/cocktails_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5343,10 +3715,6 @@ export const all_categories = [
                         'name': 'Whisky Bar',
                         'pluralName': 'Whisky Bars',
                         'shortName': 'Whisky Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/whiskey_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5354,10 +3722,6 @@ export const all_categories = [
                         'name': 'Wine Bar',
                         'pluralName': 'Wine Bars',
                         'shortName': 'Wine Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/winery_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -5367,10 +3731,7 @@ export const all_categories = [
                 'name': 'Brewery',
                 'pluralName': 'Breweries',
                 'shortName': 'Brewery',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/brewery_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5378,10 +3739,7 @@ export const all_categories = [
                 'name': 'Lounge',
                 'pluralName': 'Lounges',
                 'shortName': 'Lounge',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5389,10 +3747,7 @@ export const all_categories = [
                 'name': 'Night Market',
                 'pluralName': 'Night Markets',
                 'shortName': 'Night Market',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/fleamarket_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5400,10 +3755,7 @@ export const all_categories = [
                 'name': 'Nightclub',
                 'pluralName': 'Nightclubs',
                 'shortName': 'Nightclub',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/nightclub_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5411,10 +3763,7 @@ export const all_categories = [
                 'name': 'Other Nightlife',
                 'pluralName': 'Other Nightlife',
                 'shortName': 'Nightlife',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5422,10 +3771,7 @@ export const all_categories = [
                 'name': 'Strip Club',
                 'pluralName': 'Strip Clubs',
                 'shortName': 'Strip Club',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/stripclub_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             }
         ]
@@ -5435,8 +3781,9 @@ export const all_categories = [
         'name': 'Outdoors & Recreation',
         'key': 'outdoors',
         'icon': {
-            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-            'suffix': '.png'
+            
+            
+
         },
         'categories': [
             {
@@ -5444,20 +3791,13 @@ export const all_categories = [
                 'name': 'Athletics & Sports',
                 'pluralName': 'Athletics & Sports',
                 'shortName': 'Athletics & Sports',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/sports_outdoors_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '52e81612bcbc57f1066b7a2b',
                         'name': 'Badminton Court',
                         'pluralName': 'Badminton Courts',
                         'shortName': 'Badminton Court',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_tennis_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5465,10 +3805,6 @@ export const all_categories = [
                         'name': 'Baseball Field',
                         'pluralName': 'Baseball Fields',
                         'shortName': 'Baseball Field',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/baseballfield_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5476,10 +3812,6 @@ export const all_categories = [
                         'name': 'Basketball Court',
                         'pluralName': 'Basketball Courts',
                         'shortName': 'Basketball Court',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/basketballcourt_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5487,10 +3819,6 @@ export const all_categories = [
                         'name': 'Bowling Green',
                         'pluralName': 'Bowling Greens',
                         'shortName': 'Bowling Green',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/bowling_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5498,10 +3826,6 @@ export const all_categories = [
                         'name': 'Curling Ice',
                         'pluralName': 'Curling Ices',
                         'shortName': 'Curling Ice',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/skatingrink_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5509,10 +3833,6 @@ export const all_categories = [
                         'name': 'Golf Course',
                         'pluralName': 'Golf Courses',
                         'shortName': 'Golf Course',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/golfcourse_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5520,10 +3840,6 @@ export const all_categories = [
                         'name': 'Golf Driving Range',
                         'pluralName': 'Golf Driving Ranges',
                         'shortName': 'Golf Driving Range',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/golfcourse_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5531,20 +3847,13 @@ export const all_categories = [
                         'name': 'Gym / Fitness Center',
                         'pluralName': 'Gyms or Fitness Centers',
                         'shortName': 'Gym / Fitness',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/gym_',
-                            'suffix': '.png'
-                        },
                         'categories': [
                             {
                                 'id': '52f2ab2ebcbc57f1066b8b47',
                                 'name': 'Boxing Gym',
                                 'pluralName': 'Boxing Gyms',
                                 'shortName': 'Boxing Gym',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/gym_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -5552,10 +3861,7 @@ export const all_categories = [
                                 'name': 'Climbing Gym',
                                 'pluralName': 'Climbing Gyms',
                                 'shortName': 'Climbing Gym',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/gym_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -5563,10 +3869,7 @@ export const all_categories = [
                                 'name': 'Cycle Studio',
                                 'pluralName': 'Cycle Studios',
                                 'shortName': 'Cycle Studio',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/bikeshop_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -5574,10 +3877,7 @@ export const all_categories = [
                                 'name': 'Gym Pool',
                                 'pluralName': 'Gym Pools',
                                 'shortName': 'Pool',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/pool_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -5585,10 +3885,7 @@ export const all_categories = [
                                 'name': 'Gymnastics Gym',
                                 'pluralName': 'Gymnastics Gyms',
                                 'shortName': 'Gymnastics Gym',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/gym_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -5596,10 +3893,7 @@ export const all_categories = [
                                 'name': 'Gym',
                                 'pluralName': 'Gyms',
                                 'shortName': 'Gym',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/gym_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -5607,10 +3901,7 @@ export const all_categories = [
                                 'name': 'Martial Arts Dojo',
                                 'pluralName': 'Martial Arts Dojos',
                                 'shortName': 'Martial Arts',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/gym_martialarts_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -5618,10 +3909,7 @@ export const all_categories = [
                                 'name': 'Outdoor Gym',
                                 'pluralName': 'Outdoor Gyms',
                                 'shortName': 'Outdoor Gym',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/gym_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -5629,10 +3917,7 @@ export const all_categories = [
                                 'name': 'Pilates Studio',
                                 'pluralName': 'Pilates Studios',
                                 'shortName': 'Pilates Studio',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/gym_yogastudio_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -5640,10 +3925,7 @@ export const all_categories = [
                                 'name': 'Track',
                                 'pluralName': 'Tracks',
                                 'shortName': 'Track',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_track_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -5651,10 +3933,7 @@ export const all_categories = [
                                 'name': 'Weight Loss Center',
                                 'pluralName': 'Weight Loss Centers',
                                 'shortName': 'Weight Loss Center',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/gym_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             },
                             {
@@ -5662,10 +3941,7 @@ export const all_categories = [
                                 'name': 'Yoga Studio',
                                 'pluralName': 'Yoga Studios',
                                 'shortName': 'Yoga Studio',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/gym_yogastudio_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             }
                         ]
@@ -5675,10 +3951,6 @@ export const all_categories = [
                         'name': 'Hockey Field',
                         'pluralName': 'Hockey Fields',
                         'shortName': 'Hockey Field',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_hockey_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5686,10 +3958,6 @@ export const all_categories = [
                         'name': 'Hockey Rink',
                         'pluralName': 'Hockey Rinks',
                         'shortName': 'Hockey Rink',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_hockey_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5697,10 +3965,6 @@ export const all_categories = [
                         'name': 'Paintball Field',
                         'pluralName': 'Paintball Fields',
                         'shortName': 'Paintball Field',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5708,10 +3972,6 @@ export const all_categories = [
                         'name': 'Rugby Pitch',
                         'pluralName': 'Rugby Pitches',
                         'shortName': 'Pitch',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_football_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5719,10 +3979,6 @@ export const all_categories = [
                         'name': 'Skate Park',
                         'pluralName': 'Skate Parks',
                         'shortName': 'Skate Park',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/skate_park_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5730,10 +3986,6 @@ export const all_categories = [
                         'name': 'Skating Rink',
                         'pluralName': 'Skating Rinks',
                         'shortName': 'Skating Rink',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/skatingrink_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5741,10 +3993,6 @@ export const all_categories = [
                         'name': 'Soccer Field',
                         'pluralName': 'Soccer Fields',
                         'shortName': 'Soccer Field',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_soccer_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5752,10 +4000,6 @@ export const all_categories = [
                         'name': 'Sports Club',
                         'pluralName': 'Sports Clubs',
                         'shortName': 'Sports Club',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/sports_outdoors_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5763,10 +4007,6 @@ export const all_categories = [
                         'name': 'Squash Court',
                         'pluralName': 'Squash Courts',
                         'shortName': 'Squash Court',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_tennis_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5774,10 +4014,6 @@ export const all_categories = [
                         'name': 'Tennis Court',
                         'pluralName': 'Tennis Courts',
                         'shortName': 'Tennis Court',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/stadium_tennis_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5785,10 +4021,6 @@ export const all_categories = [
                         'name': 'Volleyball Court',
                         'pluralName': 'Volleyball Courts',
                         'shortName': 'Volleyball Court',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/volleyballcourt_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -5798,10 +4030,7 @@ export const all_categories = [
                 'name': 'Bathing Area',
                 'pluralName': 'Bathing Areas',
                 'shortName': 'Bathing Area',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5809,10 +4038,7 @@ export const all_categories = [
                 'name': 'Bay',
                 'pluralName': 'Bays',
                 'shortName': 'Bay',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/harbor_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5820,20 +4046,13 @@ export const all_categories = [
                 'name': 'Beach',
                 'pluralName': 'Beaches',
                 'shortName': 'Beach',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/beach_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '52e81612bcbc57f1066b7a30',
                         'name': 'Nudist Beach',
                         'pluralName': 'Nudist Beaches',
                         'shortName': 'Nudist Beach',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/beach_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -5841,10 +4060,6 @@ export const all_categories = [
                         'name': 'Surf Spot',
                         'pluralName': 'Surf Spots',
                         'shortName': 'Surf Spot',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/surfspot_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -5854,10 +4069,7 @@ export const all_categories = [
                 'name': 'Bike Trail',
                 'pluralName': 'Bike Trails',
                 'shortName': 'Bike Trail',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/hikingtrail_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5865,10 +4077,7 @@ export const all_categories = [
                 'name': 'Botanical Garden',
                 'pluralName': 'Botanical Gardens',
                 'shortName': 'Botanical Garden',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/botanicalgarden_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5876,10 +4085,7 @@ export const all_categories = [
                 'name': 'Bridge',
                 'pluralName': 'Bridges',
                 'shortName': 'Bridge',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/bridge_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5887,10 +4093,7 @@ export const all_categories = [
                 'name': 'Campground',
                 'pluralName': 'Campgrounds',
                 'shortName': 'Campground',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/campground_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5898,10 +4101,7 @@ export const all_categories = [
                 'name': 'Canal Lock',
                 'pluralName': 'Canal Locks',
                 'shortName': 'Canal Lock',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/bridge_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5909,10 +4109,7 @@ export const all_categories = [
                 'name': 'Canal',
                 'pluralName': 'Canals',
                 'shortName': 'Canal',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/river_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5920,10 +4117,7 @@ export const all_categories = [
                 'name': 'Castle',
                 'pluralName': 'Castles',
                 'shortName': 'Castle',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/beach_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5931,10 +4125,7 @@ export const all_categories = [
                 'name': 'Cave',
                 'pluralName': 'Caves',
                 'shortName': 'Cave',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5942,10 +4133,7 @@ export const all_categories = [
                 'name': 'Cemetery',
                 'pluralName': 'Cemeteries',
                 'shortName': 'Cemetery',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/cemetery_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5953,10 +4141,7 @@ export const all_categories = [
                 'name': 'Dive Spot',
                 'pluralName': 'Dive Spots',
                 'shortName': 'Dive Spot',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/divespot_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5964,10 +4149,7 @@ export const all_categories = [
                 'name': 'Dog Run',
                 'pluralName': 'Dog Runs',
                 'shortName': 'Dog Run',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/dogrun_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5975,10 +4157,7 @@ export const all_categories = [
                 'name': 'Farm',
                 'pluralName': 'Farms',
                 'shortName': 'Farm',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/farm_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5986,10 +4165,7 @@ export const all_categories = [
                 'name': 'Field',
                 'pluralName': 'Fields',
                 'shortName': 'Field',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/field_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -5997,10 +4173,7 @@ export const all_categories = [
                 'name': 'Fishing Spot',
                 'pluralName': 'Fishing Spots',
                 'shortName': 'Fishing Spot',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_fishmarket_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6008,10 +4181,7 @@ export const all_categories = [
                 'name': 'Forest',
                 'pluralName': 'Forests',
                 'shortName': 'Forest',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6019,10 +4189,7 @@ export const all_categories = [
                 'name': 'Fountain',
                 'pluralName': 'Fountains',
                 'shortName': 'Fountain',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/plaza_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6030,10 +4197,7 @@ export const all_categories = [
                 'name': 'Garden',
                 'pluralName': 'Gardens',
                 'shortName': 'Garden',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/garden_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6041,10 +4205,7 @@ export const all_categories = [
                 'name': 'Gun Range',
                 'pluralName': 'Gun Ranges',
                 'shortName': 'Gun Range',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/gun_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6052,10 +4213,7 @@ export const all_categories = [
                 'name': 'Harbor / Marina',
                 'pluralName': 'Harbors / Marinas',
                 'shortName': 'Harbor / Marina',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/harbor_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6063,10 +4221,7 @@ export const all_categories = [
                 'name': 'Hill',
                 'pluralName': 'Hills',
                 'shortName': 'Hill',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6074,10 +4229,7 @@ export const all_categories = [
                 'name': 'Hot Spring',
                 'pluralName': 'Hot Springs',
                 'shortName': 'Hot Spring',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/hotspring_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6085,10 +4237,7 @@ export const all_categories = [
                 'name': 'Indoor Play Area',
                 'pluralName': 'Indoor Play Areas',
                 'shortName': 'Indoor Play Area',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/playground_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6096,10 +4245,7 @@ export const all_categories = [
                 'name': 'Island',
                 'pluralName': 'Islands',
                 'shortName': 'Island',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/neighborhood_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6107,10 +4253,7 @@ export const all_categories = [
                 'name': 'Lake',
                 'pluralName': 'Lakes',
                 'shortName': 'Lake',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/lake_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6118,10 +4261,7 @@ export const all_categories = [
                 'name': 'Lighthouse',
                 'pluralName': 'Lighthouses',
                 'shortName': 'Lighthouse',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/lighthouse_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6129,10 +4269,7 @@ export const all_categories = [
                 'name': 'Mountain Hut',
                 'pluralName': 'Mountain Huts',
                 'shortName': 'Mountain Hut',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/mountain_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6140,10 +4277,7 @@ export const all_categories = [
                 'name': 'Mountain',
                 'pluralName': 'Mountains',
                 'shortName': 'Mountain',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/mountain_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6151,10 +4285,7 @@ export const all_categories = [
                 'name': 'National Park',
                 'pluralName': 'National Parks',
                 'shortName': 'National Park',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/hikingtrail_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6162,10 +4293,7 @@ export const all_categories = [
                 'name': 'Nature Preserve',
                 'pluralName': 'Nature Preserves',
                 'shortName': 'Preserve',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/naturepreserve_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6173,10 +4301,7 @@ export const all_categories = [
                 'name': 'Other Great Outdoors',
                 'pluralName': 'Other Great Outdoors',
                 'shortName': 'Other Outdoors',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/outdoors_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6184,10 +4309,7 @@ export const all_categories = [
                 'name': 'Palace',
                 'pluralName': 'Palaces',
                 'shortName': 'Palace',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6195,10 +4317,7 @@ export const all_categories = [
                 'name': 'Park',
                 'pluralName': 'Parks',
                 'shortName': 'Park',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/park_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6206,10 +4325,7 @@ export const all_categories = [
                 'name': 'Pedestrian Plaza',
                 'pluralName': 'Pedestrian Plazas',
                 'shortName': 'Pedestrian Street/Plaza',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6217,10 +4333,7 @@ export const all_categories = [
                 'name': 'Playground',
                 'pluralName': 'Playgrounds',
                 'shortName': 'Playground',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/playground_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6228,10 +4341,7 @@ export const all_categories = [
                 'name': 'Plaza',
                 'pluralName': 'Plazas',
                 'shortName': 'Plaza',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/plaza_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6239,10 +4349,7 @@ export const all_categories = [
                 'name': 'Pool',
                 'pluralName': 'Pools',
                 'shortName': 'Pool',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/pool_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6250,10 +4357,7 @@ export const all_categories = [
                 'name': 'Rafting',
                 'pluralName': 'Rafting Spots',
                 'shortName': 'Rafting',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/rafting_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6261,10 +4365,7 @@ export const all_categories = [
                 'name': 'Recreation Center',
                 'pluralName': 'Recreation Centers',
                 'shortName': 'Recreation Center',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/sports_outdoors_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6272,10 +4373,7 @@ export const all_categories = [
                 'name': 'Reservoir',
                 'pluralName': 'Reservoirs',
                 'shortName': 'Reservoir',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/lake_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6283,10 +4381,7 @@ export const all_categories = [
                 'name': 'River',
                 'pluralName': 'Rivers',
                 'shortName': 'River',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/river_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6294,10 +4389,7 @@ export const all_categories = [
                 'name': 'Rock Climbing Spot',
                 'pluralName': 'Rock Climbing Spots',
                 'shortName': 'Rock Climbing',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/rockclimbing_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6305,10 +4397,7 @@ export const all_categories = [
                 'name': 'Roof Deck',
                 'pluralName': 'Roof Decks',
                 'shortName': 'Roof Deck',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/hotel_roofdeck_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6316,10 +4405,7 @@ export const all_categories = [
                 'name': 'Scenic Lookout',
                 'pluralName': 'Scenic Lookouts',
                 'shortName': 'Scenic Lookout',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/sceniclookout_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6327,10 +4413,7 @@ export const all_categories = [
                 'name': 'Sculpture Garden',
                 'pluralName': 'Sculpture Gardens',
                 'shortName': 'Sculpture',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/sculpture_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6338,20 +4421,13 @@ export const all_categories = [
                 'name': 'Ski Area',
                 'pluralName': 'Ski Areas',
                 'shortName': 'Ski Area',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/ski_snowboard_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d1ea941735',
                         'name': 'Apres Ski Bar',
                         'pluralName': 'Apres Ski Bars',
                         'shortName': 'Apres Ski Bar',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/ski_apresskibar_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6359,10 +4435,6 @@ export const all_categories = [
                         'name': 'Ski Chairlift',
                         'pluralName': 'Ski Chairlifts',
                         'shortName': 'Chairlift',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/ski_chairlift_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6370,10 +4442,6 @@ export const all_categories = [
                         'name': 'Ski Chalet',
                         'pluralName': 'Ski Chalets',
                         'shortName': 'Ski Chalet',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/ski_chalet_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6381,10 +4449,6 @@ export const all_categories = [
                         'name': 'Ski Lodge',
                         'pluralName': 'Ski Lodges',
                         'shortName': 'Lodge',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/ski_lodge_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6392,10 +4456,6 @@ export const all_categories = [
                         'name': 'Ski Trail',
                         'pluralName': 'Ski Trails',
                         'shortName': 'Trail',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/ski_trail_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -6405,10 +4465,7 @@ export const all_categories = [
                 'name': 'Skydiving Drop Zone',
                 'pluralName': 'Skydiving Drop Zones',
                 'shortName': 'Drop Zone',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6416,10 +4473,7 @@ export const all_categories = [
                 'name': 'Stables',
                 'pluralName': 'Stables',
                 'shortName': 'Stables',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/stable_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6427,10 +4481,7 @@ export const all_categories = [
                 'name': 'State / Provincial Park',
                 'pluralName': 'State / Provincial Parks',
                 'shortName': 'State / Provincial Park',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6438,20 +4489,13 @@ export const all_categories = [
                 'name': 'States & Municipalities',
                 'pluralName': 'States & Municipalities',
                 'shortName': 'States & Municipalities',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/neighborhood_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '50aa9e094b90af0d42d5de0d',
                         'name': 'City',
                         'pluralName': 'Cities',
                         'shortName': 'City',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/neighborhood_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6459,10 +4503,6 @@ export const all_categories = [
                         'name': 'County',
                         'pluralName': 'Counties',
                         'shortName': 'County',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/neighborhood_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6470,10 +4510,6 @@ export const all_categories = [
                         'name': 'Country',
                         'pluralName': 'Countries',
                         'shortName': 'Country',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/neighborhood_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6481,10 +4517,6 @@ export const all_categories = [
                         'name': 'Neighborhood',
                         'pluralName': 'Neighborhoods',
                         'shortName': 'Neighborhood',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/neighborhood_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6492,10 +4524,6 @@ export const all_categories = [
                         'name': 'State',
                         'pluralName': 'States',
                         'shortName': 'State',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/neighborhood_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6503,10 +4531,6 @@ export const all_categories = [
                         'name': 'Town',
                         'pluralName': 'Towns',
                         'shortName': 'Town',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/neighborhood_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6514,10 +4538,6 @@ export const all_categories = [
                         'name': 'Village',
                         'pluralName': 'Villages',
                         'shortName': 'Village',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/neighborhood_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -6527,10 +4547,7 @@ export const all_categories = [
                 'name': 'Summer Camp',
                 'pluralName': 'Summer Camps',
                 'shortName': 'Summer Camp',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/campground_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6538,10 +4555,7 @@ export const all_categories = [
                 'name': 'Trail',
                 'pluralName': 'Trails',
                 'shortName': 'Trail',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/hikingtrail_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6549,10 +4563,7 @@ export const all_categories = [
                 'name': 'Tree',
                 'pluralName': 'Trees',
                 'shortName': 'Tree',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6560,10 +4571,7 @@ export const all_categories = [
                 'name': 'Vineyard',
                 'pluralName': 'Vineyards',
                 'shortName': 'Vineyard',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/vineyard_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6571,10 +4579,7 @@ export const all_categories = [
                 'name': 'Volcano',
                 'pluralName': 'Volcanoes',
                 'shortName': 'Volcano',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/mountain_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6582,10 +4587,7 @@ export const all_categories = [
                 'name': 'Waterfall',
                 'pluralName': 'Waterfalls',
                 'shortName': 'Waterfall',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6593,10 +4595,7 @@ export const all_categories = [
                 'name': 'Waterfront',
                 'pluralName': 'Waterfronts',
                 'shortName': 'Waterfront',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/river_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6604,10 +4603,7 @@ export const all_categories = [
                 'name': 'Well',
                 'pluralName': 'Wells',
                 'shortName': 'Well',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/well_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6615,10 +4611,7 @@ export const all_categories = [
                 'name': 'Windmill',
                 'pluralName': 'Windmills',
                 'shortName': 'Windmill',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             }
         ]
@@ -6629,8 +4622,9 @@ export const all_categories = [
         'pluralName': 'Professional & Other Places',
         'shortName': 'Professional',
         'icon': {
-            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-            'suffix': '.png'
+            
+            
+
         },
         'categories': [
             {
@@ -6639,10 +4633,7 @@ export const all_categories = [
                 'pluralName': 'Animal Shelters',
                 'shortName': 'Animal Shelter',
                 'key': 'animals',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/animalshelter_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6650,10 +4641,7 @@ export const all_categories = [
                 'name': 'Art Studio',
                 'pluralName': 'Art Studios',
                 'shortName': 'Art Studio',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/artgallery_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6661,10 +4649,7 @@ export const all_categories = [
                 'name': 'Auditorium',
                 'pluralName': 'Auditoriums',
                 'shortName': 'Auditorium',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/auditorium_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6672,10 +4657,7 @@ export const all_categories = [
                 'name': 'Ballroom',
                 'pluralName': 'Ballrooms',
                 'shortName': 'Ballroom',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6683,10 +4665,7 @@ export const all_categories = [
                 'name': 'Building',
                 'pluralName': 'Buildings',
                 'shortName': 'Building',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6694,10 +4673,7 @@ export const all_categories = [
                 'name': 'Business Center',
                 'pluralName': 'Business Centers',
                 'shortName': 'Business Center',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6705,10 +4681,7 @@ export const all_categories = [
                 'name': 'Club House',
                 'pluralName': 'Club Houses',
                 'shortName': 'Club',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6716,10 +4689,7 @@ export const all_categories = [
                 'name': 'Community Center',
                 'pluralName': 'Community Centers',
                 'shortName': 'Community Center',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6727,20 +4697,13 @@ export const all_categories = [
                 'name': 'Convention Center',
                 'pluralName': 'Convention Centers',
                 'shortName': 'Convention Center',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/conventioncenter_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d100941735',
                         'name': 'Meeting Room',
                         'pluralName': 'Meeting Rooms',
                         'shortName': 'Meeting Room',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/conventioncenter_meetingroom_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -6750,10 +4713,7 @@ export const all_categories = [
                 'name': 'Cultural Center',
                 'pluralName': 'Cultural Centers',
                 'shortName': 'Cultural Center',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6761,10 +4721,7 @@ export const all_categories = [
                 'name': 'Distillery',
                 'pluralName': 'Distilleries',
                 'shortName': 'Distillery',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/brewery_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6772,10 +4729,7 @@ export const all_categories = [
                 'name': 'Distribution Center',
                 'pluralName': 'Distribution Centers',
                 'shortName': 'Distributor',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6783,20 +4737,13 @@ export const all_categories = [
                 'name': 'Event Space',
                 'pluralName': 'Event Spaces',
                 'shortName': 'Event Space',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/eventspace_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '56aa371be4b08b9a8d57356a',
                         'name': 'Outdoor Event Space',
                         'pluralName': 'Outdoor Event Spaces',
                         'shortName': 'Outdoor Event Space',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/eventspace_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -6806,10 +4753,7 @@ export const all_categories = [
                 'name': 'Factory',
                 'pluralName': 'Factories',
                 'shortName': 'Factory',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/factory_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6817,10 +4761,7 @@ export const all_categories = [
                 'name': 'Fair',
                 'pluralName': 'Fairs',
                 'shortName': 'Fair',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/fair_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6828,10 +4769,7 @@ export const all_categories = [
                 'name': 'Funeral Home',
                 'pluralName': 'Funeral Homes',
                 'shortName': 'Funeral Home',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/funeralhome_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6839,20 +4777,13 @@ export const all_categories = [
                 'name': 'Government Building',
                 'pluralName': 'Government Buildings',
                 'shortName': 'Government',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/government_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d12a941735',
                         'name': 'Capitol Building',
                         'pluralName': 'Capitol Buildings',
                         'shortName': 'Capitol Building',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/government_capitolbuilding_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6860,10 +4791,6 @@ export const all_categories = [
                         'name': 'City Hall',
                         'pluralName': 'City Halls',
                         'shortName': 'City Hall',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/cityhall_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6871,10 +4798,6 @@ export const all_categories = [
                         'name': 'Courthouse',
                         'pluralName': 'Courthouses',
                         'shortName': 'Courthouse',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/government_courthouse_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6882,10 +4805,6 @@ export const all_categories = [
                         'name': 'Embassy / Consulate',
                         'pluralName': 'Embassies / Consulates',
                         'shortName': 'Embassy',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/embassy_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6893,10 +4812,6 @@ export const all_categories = [
                         'name': 'Fire Station',
                         'pluralName': 'Fire Stations',
                         'shortName': 'Fire Station',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/government_firestation_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6904,10 +4819,6 @@ export const all_categories = [
                         'name': 'Monument / Landmark',
                         'pluralName': 'Monuments / Landmarks',
                         'shortName': 'Landmark',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/government_monument_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6915,10 +4826,6 @@ export const all_categories = [
                         'name': 'Police Station',
                         'pluralName': 'Police Stations',
                         'shortName': 'Police Station',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/government_policestation_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6926,10 +4833,6 @@ export const all_categories = [
                         'name': 'Town Hall',
                         'pluralName': 'Town Halls',
                         'shortName': 'Town Hall',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/cityhall_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -6939,10 +4842,7 @@ export const all_categories = [
                 'name': 'Industrial Estate',
                 'pluralName': 'Industrial Estates',
                 'shortName': 'Industrial Estate',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6950,10 +4850,7 @@ export const all_categories = [
                 'name': 'Laboratory',
                 'pluralName': 'Laboratories',
                 'shortName': 'Laboratory',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/lab_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6961,10 +4858,7 @@ export const all_categories = [
                 'name': 'Library',
                 'pluralName': 'Libraries',
                 'shortName': 'Library',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/library_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -6972,20 +4866,13 @@ export const all_categories = [
                 'name': 'Medical Center',
                 'pluralName': 'Medical Centers',
                 'shortName': 'Medical',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '52e81612bcbc57f1066b7a3b',
                         'name': 'Acupuncturist',
                         'pluralName': 'Acupuncturists',
                         'shortName': 'Acupuncturist',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_doctorsoffice_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -6993,10 +4880,6 @@ export const all_categories = [
                         'name': 'Alternative Healer',
                         'pluralName': 'Alternative Healers',
                         'shortName': 'Alternative Healer',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_doctorsoffice_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7004,28 +4887,16 @@ export const all_categories = [
                         'name': 'Chiropractor',
                         'pluralName': 'Chiropractors',
                         'shortName': 'Chiropractors',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_doctorsoffice_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d178941735',
                         'name': 'Dentist\'s Office',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_dentist_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d177941735',
                         'name': 'Doctor\'s Office',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_doctorsoffice_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7033,10 +4904,6 @@ export const all_categories = [
                         'name': 'Emergency Room',
                         'pluralName': 'Emergency Rooms',
                         'shortName': 'Emergency Room',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_ems_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7044,10 +4911,6 @@ export const all_categories = [
                         'name': 'Eye Doctor',
                         'pluralName': 'Eye Doctors',
                         'shortName': 'Eye Doctor',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_opticalshop_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7055,20 +4918,13 @@ export const all_categories = [
                         'name': 'Hospital',
                         'pluralName': 'Hospitals',
                         'shortName': 'Hospital',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_',
-                            'suffix': '.png'
-                        },
                         'categories': [
                             {
                                 'id': '58daa1558bbb0b01f18ec1f7',
                                 'name': 'Hospital Ward',
                                 'pluralName': 'Hospital Wards',
                                 'shortName': 'Hospital Ward',
-                                'icon': {
-                                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_',
-                                    'suffix': '.png'
-                                },
+
                                 'categories': []
                             }
                         ]
@@ -7078,10 +4934,6 @@ export const all_categories = [
                         'name': 'Maternity Clinic',
                         'pluralName': 'Maternity Clinics',
                         'shortName': 'Maternity Clinic',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7089,10 +4941,6 @@ export const all_categories = [
                         'name': 'Medical Lab',
                         'pluralName': 'Medical Labs',
                         'shortName': 'Medical Lab',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/lab_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7100,10 +4948,6 @@ export const all_categories = [
                         'name': 'Mental Health Office',
                         'pluralName': 'Mental Health Offices',
                         'shortName': 'Mental Health',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_doctorsoffice_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7111,10 +4955,6 @@ export const all_categories = [
                         'name': 'Nutritionist',
                         'pluralName': 'Nutritionists',
                         'shortName': 'Nutritionist',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_doctorsoffice_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7122,10 +4962,6 @@ export const all_categories = [
                         'name': 'Physical Therapist',
                         'pluralName': 'Physical Therapists',
                         'shortName': 'Physical Therapist',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_doctorsoffice_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7133,10 +4969,6 @@ export const all_categories = [
                         'name': 'Rehab Center',
                         'pluralName': 'Rehab Centers',
                         'shortName': 'Rehab Center',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7144,10 +4976,6 @@ export const all_categories = [
                         'name': 'Urgent Care Center',
                         'pluralName': 'Urgent Care Centers',
                         'shortName': 'Urgent Care Center',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7155,10 +4983,6 @@ export const all_categories = [
                         'name': 'Veterinarian',
                         'pluralName': 'Veterinarians',
                         'shortName': 'Veterinarians',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_veterinarian_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -7168,10 +4992,7 @@ export const all_categories = [
                 'name': 'Military Base',
                 'pluralName': 'Military Bases',
                 'shortName': 'Military Base',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/militarybase_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7179,10 +5000,7 @@ export const all_categories = [
                 'name': 'Non-Profit',
                 'pluralName': 'Non-Profits',
                 'shortName': 'Non-Profit',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7190,10 +5008,7 @@ export const all_categories = [
                 'name': 'Observatory',
                 'pluralName': 'Observatories',
                 'shortName': 'Observatory',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/museum_planetarium_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7201,20 +5016,13 @@ export const all_categories = [
                 'name': 'Office',
                 'pluralName': 'Offices',
                 'shortName': 'Office',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '52e81612bcbc57f1066b7a3d',
                         'name': 'Advertising Agency',
                         'pluralName': 'Advertising Agencies',
                         'shortName': 'Advertising Agency',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7222,10 +5030,6 @@ export const all_categories = [
                         'name': 'Campaign Office',
                         'pluralName': 'Campaign Offices',
                         'shortName': 'Campaign',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7233,10 +5037,6 @@ export const all_categories = [
                         'name': 'Conference Room',
                         'pluralName': 'Conference Rooms',
                         'shortName': 'Conference room',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/office_conferenceroom_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7244,10 +5044,6 @@ export const all_categories = [
                         'name': 'Corporate Amenity',
                         'pluralName': 'Corporate Amenities',
                         'shortName': 'Corporate Amenity',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7255,10 +5051,6 @@ export const all_categories = [
                         'name': 'Corporate Cafeteria',
                         'pluralName': 'Corporate Cafeterias',
                         'shortName': 'Corporate Cafeteria',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/cafeteria_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7266,10 +5058,6 @@ export const all_categories = [
                         'name': 'Corporate Coffee Shop',
                         'pluralName': 'Corporate Coffee Shops',
                         'shortName': 'Corporate Coffee Shop',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7277,10 +5065,6 @@ export const all_categories = [
                         'name': 'Coworking Space',
                         'pluralName': 'Coworking Spaces',
                         'shortName': 'Coworking Space',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/office_coworkingspace_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7288,10 +5072,6 @@ export const all_categories = [
                         'name': 'Tech Startup',
                         'pluralName': 'Tech Startups',
                         'shortName': 'Tech Startup',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/technology_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -7301,10 +5081,7 @@ export const all_categories = [
                 'name': 'Parking',
                 'pluralName': 'Parking',
                 'shortName': 'Parking',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/parking_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7312,10 +5089,7 @@ export const all_categories = [
                 'name': 'Post Office',
                 'pluralName': 'Post Offices',
                 'shortName': 'Post Office',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/postoffice_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7323,10 +5097,7 @@ export const all_categories = [
                 'name': 'Power Plant',
                 'pluralName': 'Power Plants',
                 'shortName': 'Power Plant',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/factory_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7334,10 +5105,7 @@ export const all_categories = [
                 'name': 'Prison',
                 'pluralName': 'Prisons',
                 'shortName': 'Prison',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7345,10 +5113,7 @@ export const all_categories = [
                 'name': 'Radio Station',
                 'pluralName': 'Radio Stations',
                 'shortName': 'Radio Station',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7356,10 +5121,7 @@ export const all_categories = [
                 'name': 'Recruiting Agency',
                 'pluralName': 'Recruiting Agencies',
                 'shortName': 'Recruiting Agency',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7367,10 +5129,7 @@ export const all_categories = [
                 'name': 'Research Station',
                 'pluralName': 'Research Stations',
                 'shortName': 'Research Station',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7378,20 +5137,13 @@ export const all_categories = [
                 'name': 'School',
                 'pluralName': 'Schools',
                 'shortName': 'School',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/school_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '56aa371ce4b08b9a8d573570',
                         'name': 'Adult Education Center',
                         'pluralName': 'Adult Education Centers',
                         'shortName': 'Adult Education Center',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/school_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7399,10 +5151,6 @@ export const all_categories = [
                         'name': 'Circus School',
                         'pluralName': 'Circus Schools',
                         'shortName': 'Circus School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7410,10 +5158,6 @@ export const all_categories = [
                         'name': 'Cooking School',
                         'pluralName': 'Cooking Schools',
                         'shortName': 'Cooking School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/school_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7421,10 +5165,6 @@ export const all_categories = [
                         'name': 'Driving School',
                         'pluralName': 'Driving Schools',
                         'shortName': 'Driving School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/automotive_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7432,10 +5172,6 @@ export const all_categories = [
                         'name': 'Elementary School',
                         'pluralName': 'Elementary Schools',
                         'shortName': 'Elementary School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/school_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7443,10 +5179,6 @@ export const all_categories = [
                         'name': 'Flight School',
                         'pluralName': 'Flight Schools',
                         'shortName': 'Flight School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/airport_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7454,10 +5186,6 @@ export const all_categories = [
                         'name': 'High School',
                         'pluralName': 'High Schools',
                         'shortName': 'High School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/school_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7465,10 +5193,6 @@ export const all_categories = [
                         'name': 'Language School',
                         'pluralName': 'Language Schools',
                         'shortName': 'Language School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7476,10 +5200,6 @@ export const all_categories = [
                         'name': 'Middle School',
                         'pluralName': 'Middle Schools',
                         'shortName': 'Middle School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/school_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7487,10 +5207,6 @@ export const all_categories = [
                         'name': 'Music School',
                         'pluralName': 'Music Schools',
                         'shortName': 'Music School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/school_music_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7498,10 +5214,6 @@ export const all_categories = [
                         'name': 'Nursery School',
                         'pluralName': 'Nursery Schools',
                         'shortName': 'Nursery School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/school_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7509,10 +5221,6 @@ export const all_categories = [
                         'name': 'Preschool',
                         'pluralName': 'Preschools',
                         'shortName': 'Preschool',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/school_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7520,10 +5228,6 @@ export const all_categories = [
                         'name': 'Private School',
                         'pluralName': 'Private Schools',
                         'shortName': 'Private School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7531,10 +5235,6 @@ export const all_categories = [
                         'name': 'Religious School',
                         'pluralName': 'Religious Schools',
                         'shortName': 'Religious School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7542,10 +5242,6 @@ export const all_categories = [
                         'name': 'Swim School',
                         'pluralName': 'Swim Schools',
                         'shortName': 'Swim School',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/pool_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -7555,10 +5251,7 @@ export const all_categories = [
                 'name': 'Social Club',
                 'pluralName': 'Social Clubs',
                 'shortName': 'Social Club',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7566,20 +5259,13 @@ export const all_categories = [
                 'name': 'Spiritual Center',
                 'pluralName': 'Spiritual Centers',
                 'shortName': 'Spiritual',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '52e81612bcbc57f1066b7a3e',
                         'name': 'Buddhist Temple',
                         'pluralName': 'Buddhist Temples',
                         'shortName': 'Buddhist Temple',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7587,10 +5273,6 @@ export const all_categories = [
                         'name': 'Cemevi',
                         'pluralName': 'Cemevis',
                         'shortName': 'Cemevi',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7598,10 +5280,6 @@ export const all_categories = [
                         'name': 'Church',
                         'pluralName': 'Churches',
                         'shortName': 'Church',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_church_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7609,10 +5287,6 @@ export const all_categories = [
                         'name': 'Confucian Temple',
                         'pluralName': 'Confucian Temples',
                         'shortName': 'Confucian Temple',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7620,10 +5294,6 @@ export const all_categories = [
                         'name': 'Hindu Temple',
                         'pluralName': 'Hindu Temples',
                         'shortName': 'Hindu Temple',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7631,10 +5301,6 @@ export const all_categories = [
                         'name': 'Kingdom Hall',
                         'pluralName': 'Kingdom Halls',
                         'shortName': 'Kingdom Hall',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7642,10 +5308,6 @@ export const all_categories = [
                         'name': 'Monastery',
                         'pluralName': 'Monasteries',
                         'shortName': 'Monastery',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7653,10 +5315,6 @@ export const all_categories = [
                         'name': 'Mosque',
                         'pluralName': 'Mosques',
                         'shortName': 'Mosque',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7664,10 +5322,6 @@ export const all_categories = [
                         'name': 'Prayer Room',
                         'pluralName': 'Prayer Rooms',
                         'shortName': 'Prayer Room',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7675,10 +5329,6 @@ export const all_categories = [
                         'name': 'Shrine',
                         'pluralName': 'Shrines',
                         'shortName': 'Shrine',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_shrine_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7686,10 +5336,6 @@ export const all_categories = [
                         'name': 'Sikh Temple',
                         'pluralName': 'Sikh Temples',
                         'shortName': 'Sikh Temple',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7697,10 +5343,6 @@ export const all_categories = [
                         'name': 'Synagogue',
                         'pluralName': 'Synagogues',
                         'shortName': 'Synagogue',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_synagogue_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7708,10 +5350,6 @@ export const all_categories = [
                         'name': 'Temple',
                         'pluralName': 'Temples',
                         'shortName': 'Temple',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_temple_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -7719,10 +5357,6 @@ export const all_categories = [
                         'name': 'Terreiro',
                         'pluralName': 'Terreiros',
                         'shortName': 'Terreiro',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/religious_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -7732,10 +5366,7 @@ export const all_categories = [
                 'name': 'TV Station',
                 'pluralName': 'TV Stations',
                 'shortName': 'TV Station',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7743,10 +5374,7 @@ export const all_categories = [
                 'name': 'Voting Booth',
                 'pluralName': 'Voting Booths',
                 'shortName': 'Voting Booth',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/votingbooth_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7754,10 +5382,7 @@ export const all_categories = [
                 'name': 'Warehouse',
                 'pluralName': 'Warehouses',
                 'shortName': 'Warehouse',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7765,10 +5390,7 @@ export const all_categories = [
                 'name': 'Waste Facility',
                 'pluralName': 'Waste Facilities',
                 'shortName': 'Waste Facility',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7776,10 +5398,7 @@ export const all_categories = [
                 'name': 'Wedding Hall',
                 'pluralName': 'Wedding Halls',
                 'shortName': 'Wedding Hall',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/bridal_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7787,10 +5406,7 @@ export const all_categories = [
                 'name': 'Winery',
                 'pluralName': 'Wineries',
                 'shortName': 'Winery',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/winery_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             }
         ]
@@ -7801,8 +5417,9 @@ export const all_categories = [
         'pluralName': 'Residences',
         'shortName': 'Residence',
         'icon': {
-            'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/home_',
-            'suffix': '.png'
+            
+            
+
         },
         'categories': [
             {
@@ -7810,10 +5427,7 @@ export const all_categories = [
                 'name': 'Assisted Living',
                 'pluralName': 'Assisted Living',
                 'shortName': 'Assisted Living',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/apartment_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7821,10 +5435,7 @@ export const all_categories = [
                 'name': 'Home (private)',
                 'pluralName': 'Homes (private)',
                 'shortName': 'Home',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/home_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7832,10 +5443,7 @@ export const all_categories = [
                 'name': 'Housing Development',
                 'pluralName': 'Housing Developments',
                 'shortName': 'Housing Development',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/housingdevelopment_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7843,10 +5451,7 @@ export const all_categories = [
                 'name': 'Residential Building (Apartment / Condo)',
                 'pluralName': 'Residential Buildings (Apartments / Condos)',
                 'shortName': 'Residential',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/apartment_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7854,10 +5459,7 @@ export const all_categories = [
                 'name': 'Trailer Park',
                 'pluralName': 'Trailer Parks',
                 'shortName': 'Trailer Park',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/home_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             }
         ]
@@ -7867,8 +5469,9 @@ export const all_categories = [
         'name': 'Shop & Service',
         'key' : 'shops',
         'icon': {
-            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-            'suffix': '.png'
+            
+            
+
         },
         'categories': [
             {
@@ -7876,10 +5479,7 @@ export const all_categories = [
                 'name': 'ATM',
                 'pluralName': 'ATMs',
                 'shortName': 'ATM',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/financial_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7887,10 +5487,7 @@ export const all_categories = [
                 'name': 'Adult Boutique',
                 'pluralName': 'Adult Boutiques',
                 'shortName': 'Adult Boutique',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/stripclub_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7898,10 +5495,7 @@ export const all_categories = [
                 'name': 'Antique Shop',
                 'pluralName': 'Antique Shops',
                 'shortName': 'Antiques',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/antique_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7909,10 +5503,7 @@ export const all_categories = [
                 'name': 'Arts & Crafts Store',
                 'pluralName': 'Arts & Crafts Stores',
                 'shortName': 'Arts & Crafts',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/artstore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7920,10 +5511,7 @@ export const all_categories = [
                 'name': 'Astrologer',
                 'pluralName': 'Astrologers',
                 'shortName': 'Astrologer',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7931,10 +5519,7 @@ export const all_categories = [
                 'name': 'Auto Dealership',
                 'pluralName': 'Auto Dealerships',
                 'shortName': 'Auto Dealer',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/automotive_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7942,10 +5527,7 @@ export const all_categories = [
                 'name': 'Auto Garage',
                 'pluralName': 'Auto Garages',
                 'shortName': 'Auto Garage',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/automotive_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7953,10 +5535,7 @@ export const all_categories = [
                 'name': 'Auto Workshop',
                 'pluralName': 'Auto Workshops',
                 'shortName': 'Auto Workshop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/automotive_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7964,10 +5543,7 @@ export const all_categories = [
                 'name': 'Automotive Shop',
                 'pluralName': 'Automotive Shops',
                 'shortName': 'Automotive',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/automotive_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7975,10 +5551,7 @@ export const all_categories = [
                 'name': 'Baby Store',
                 'pluralName': 'Baby Stores',
                 'shortName': 'Baby Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/apparel_kids_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7986,10 +5559,7 @@ export const all_categories = [
                 'name': 'Bank',
                 'pluralName': 'Banks',
                 'shortName': 'Bank',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/financial_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -7997,10 +5567,7 @@ export const all_categories = [
                 'name': 'Bath House',
                 'pluralName': 'Bath Houses',
                 'shortName': 'Bath House',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/neighborhood_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8008,10 +5575,7 @@ export const all_categories = [
                 'name': 'Batik Shop',
                 'pluralName': 'Batik Shops',
                 'shortName': 'Batik Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8019,10 +5583,7 @@ export const all_categories = [
                 'name': 'Betting Shop',
                 'pluralName': 'Betting Shops',
                 'shortName': 'Betting Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/financial_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8030,10 +5591,7 @@ export const all_categories = [
                 'name': 'Big Box Store',
                 'pluralName': 'Big Box Stores',
                 'shortName': 'Big Box Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8041,10 +5599,7 @@ export const all_categories = [
                 'name': 'Bike Shop',
                 'pluralName': 'Bike Shops',
                 'shortName': 'Bike Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/bikeshop_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8052,10 +5607,7 @@ export const all_categories = [
                 'name': 'Board Shop',
                 'pluralName': 'Board Shops',
                 'shortName': 'Board Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/surfspot_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8064,10 +5616,7 @@ export const all_categories = [
                 'pluralName': 'Bookstores',
                 'shortName': 'Bookstore',
                 'key' : 'literature',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/bookstore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8075,10 +5624,7 @@ export const all_categories = [
                 'name': 'Bridal Shop',
                 'pluralName': 'Bridal Shops',
                 'shortName': 'Bridal',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/bridal_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8086,10 +5632,7 @@ export const all_categories = [
                 'name': 'Business Service',
                 'pluralName': 'Business Services',
                 'shortName': 'Business Services',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8097,10 +5640,7 @@ export const all_categories = [
                 'name': 'Camera Store',
                 'pluralName': 'Camera Stores',
                 'shortName': 'Camera Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/camerastore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8108,10 +5648,7 @@ export const all_categories = [
                 'name': 'Candy Store',
                 'pluralName': 'Candy Stores',
                 'shortName': 'Candy Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/candystore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8119,10 +5656,7 @@ export const all_categories = [
                 'name': 'Car Wash',
                 'pluralName': 'Car Washes',
                 'shortName': 'Car Washes',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/carwash_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8130,10 +5664,7 @@ export const all_categories = [
                 'name': 'Carpet Store',
                 'pluralName': 'Carpet Stores',
                 'shortName': 'Carpet Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8141,10 +5672,7 @@ export const all_categories = [
                 'name': 'Check Cashing Service',
                 'pluralName': 'Check Cashing Services',
                 'shortName': 'Check Cashing Service',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/financial_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8152,20 +5680,13 @@ export const all_categories = [
                 'name': 'Child Care Service',
                 'pluralName': 'Child Care Services',
                 'shortName': 'Child Care',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/daycare_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4f4532974b9074f6e4fb0104',
                         'name': 'Daycare',
                         'pluralName': 'Daycares',
                         'shortName': 'Daycare',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/daycare_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -8175,10 +5696,7 @@ export const all_categories = [
                 'name': 'Chocolate Shop',
                 'pluralName': 'Chocolate Shops',
                 'shortName': 'Chocolate Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/candystore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8186,20 +5704,13 @@ export const all_categories = [
                 'name': 'Clothing Store',
                 'pluralName': 'Clothing Stores',
                 'shortName': 'Apparel',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/apparel_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d102951735',
                         'name': 'Accessories Store',
                         'pluralName': 'Accessories Stores',
                         'shortName': 'Accessories',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/apparel_accessories_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8207,10 +5718,6 @@ export const all_categories = [
                         'name': 'Boutique',
                         'pluralName': 'Boutiques',
                         'shortName': 'Boutique',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/apparel_boutique_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8218,10 +5725,6 @@ export const all_categories = [
                         'name': 'Kids Store',
                         'pluralName': 'Kids Stores',
                         'shortName': 'Kids Store',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/apparel_kids_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8229,19 +5732,11 @@ export const all_categories = [
                         'name': 'Lingerie Store',
                         'pluralName': 'Lingerie Stores',
                         'shortName': 'Lingerie',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/apparel_lingerie_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d106951735',
                         'name': 'Men\'s Store',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/apparel_men_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8249,19 +5744,11 @@ export const all_categories = [
                         'name': 'Shoe Store',
                         'pluralName': 'Shoe Stores',
                         'shortName': 'Shoes',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/apparel_shoestore_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d108951735',
                         'name': 'Women\'s Store',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/apparel_women_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -8271,10 +5758,7 @@ export const all_categories = [
                 'name': 'Comic Shop',
                 'pluralName': 'Comic Shops',
                 'shortName': 'Comic Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/comic_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8282,10 +5766,7 @@ export const all_categories = [
                 'name': 'Construction & Landscaping',
                 'pluralName': 'Construction & Landscaping',
                 'shortName': 'Construction',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/realestate_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8293,10 +5774,7 @@ export const all_categories = [
                 'name': 'Convenience Store',
                 'pluralName': 'Convenience Stores',
                 'shortName': 'Convenience Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/conveniencestore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8304,10 +5782,7 @@ export const all_categories = [
                 'name': 'Cosmetics Shop',
                 'pluralName': 'Cosmetics Shops',
                 'shortName': 'Cosmetics',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/beauty_cosmetic_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8315,10 +5790,7 @@ export const all_categories = [
                 'name': 'Costume Shop',
                 'pluralName': 'Costume Shops',
                 'shortName': 'Costume Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8326,10 +5798,7 @@ export const all_categories = [
                 'name': 'Credit Union',
                 'pluralName': 'Credit Unions',
                 'shortName': 'Credit Union',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/financial_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8337,10 +5806,7 @@ export const all_categories = [
                 'name': 'Currency Exchange',
                 'pluralName': 'Currency Exchanges',
                 'shortName': 'Currency Exchange',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/financial_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8348,10 +5814,7 @@ export const all_categories = [
                 'name': 'Department Store',
                 'pluralName': 'Department Stores',
                 'shortName': 'Department Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/departmentstore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8359,10 +5822,7 @@ export const all_categories = [
                 'name': 'Design Studio',
                 'pluralName': 'Design Studios',
                 'shortName': 'Design',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/design_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8370,10 +5830,7 @@ export const all_categories = [
                 'name': 'Discount Store',
                 'pluralName': 'Discount Stores',
                 'shortName': 'Discount Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/discountstore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8381,10 +5838,7 @@ export const all_categories = [
                 'name': 'Dive Shop',
                 'pluralName': 'Dive Shops',
                 'shortName': 'Dive Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/divespot_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8392,10 +5846,7 @@ export const all_categories = [
                 'name': 'Drugstore',
                 'pluralName': 'Drugstores',
                 'shortName': 'Drugstore',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/pharmacy_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8403,10 +5854,7 @@ export const all_categories = [
                 'name': 'Dry Cleaner',
                 'pluralName': 'Dry Cleaners',
                 'shortName': 'Dry Cleaner',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/drycleaner_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8414,10 +5862,7 @@ export const all_categories = [
                 'name': 'EV Charging Station',
                 'pluralName': 'EV Charging Stations',
                 'shortName': 'EV Charging',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/automotive_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8425,10 +5870,7 @@ export const all_categories = [
                 'name': 'Electronics Store',
                 'pluralName': 'Electronics Stores',
                 'shortName': 'Electronics',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/technology_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8436,10 +5878,7 @@ export const all_categories = [
                 'name': 'Entertainment Service',
                 'pluralName': 'Entertainment Services',
                 'shortName': 'Entertainment Service',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8447,10 +5886,7 @@ export const all_categories = [
                 'name': 'Event Service',
                 'pluralName': 'Event Services',
                 'shortName': 'Event Services',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/event/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8458,10 +5894,7 @@ export const all_categories = [
                 'name': 'Fabric Shop',
                 'pluralName': 'Fabric Shops',
                 'shortName': 'Fabric Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8469,10 +5902,7 @@ export const all_categories = [
                 'name': 'Film Studio',
                 'pluralName': 'Film Studios',
                 'shortName': 'Film Studio',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/movietheater_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8480,10 +5910,7 @@ export const all_categories = [
                 'name': 'Financial or Legal Service',
                 'pluralName': 'Financial or Legal Services',
                 'shortName': 'Financial / Legal',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/financial_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8491,10 +5918,7 @@ export const all_categories = [
                 'name': 'Fireworks Store',
                 'pluralName': 'Fireworks Stores',
                 'shortName': 'Fireworks Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8502,10 +5926,7 @@ export const all_categories = [
                 'name': 'Fishing Store',
                 'pluralName': 'Fishing Stores',
                 'shortName': 'Fishing Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_fishmarket_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8513,10 +5934,7 @@ export const all_categories = [
                 'name': 'Flea Market',
                 'pluralName': 'Flea Markets',
                 'shortName': 'Flea Market',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/fleamarket_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8524,10 +5942,7 @@ export const all_categories = [
                 'name': 'Floating Market',
                 'pluralName': 'Floating Markets',
                 'shortName': 'Floating Market',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8535,10 +5950,7 @@ export const all_categories = [
                 'name': 'Flower Shop',
                 'pluralName': 'Flower Shops',
                 'shortName': 'Flower Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/flowershop_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8546,20 +5958,13 @@ export const all_categories = [
                 'name': 'Food & Drink Shop',
                 'pluralName': 'Food & Drink Shops',
                 'shortName': 'Food & Drink',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/foodanddrink_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '5370f356bcbc57f1066c94c2',
                         'name': 'Beer Store',
                         'pluralName': 'Beer Stores',
                         'shortName': 'Beer Store',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/beergarden_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8567,10 +5972,6 @@ export const all_categories = [
                         'name': 'Butcher',
                         'pluralName': 'Butchers',
                         'shortName': 'Butcher',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_butcher_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8578,10 +5979,6 @@ export const all_categories = [
                         'name': 'Cheese Shop',
                         'pluralName': 'Cheese Shops',
                         'shortName': 'Cheese Shop',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_cheese_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8589,19 +5986,11 @@ export const all_categories = [
                         'name': 'Dairy Store',
                         'pluralName': 'Dairy Stores',
                         'shortName': 'Dairy Store',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_grocery_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
                         'id': '4bf58dd8d48988d1fa941735',
                         'name': 'Farmers Market',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_farmersmarket_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8609,10 +5998,6 @@ export const all_categories = [
                         'name': 'Fish Market',
                         'pluralName': 'Fish Markets',
                         'shortName': 'Fish Market',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_fishmarket_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8620,10 +6005,6 @@ export const all_categories = [
                         'name': 'Food Service',
                         'pluralName': 'Food Services',
                         'shortName': 'Food Service',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/foodanddrink_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8631,10 +6012,6 @@ export const all_categories = [
                         'name': 'Gourmet Shop',
                         'pluralName': 'Gourmet Shops',
                         'shortName': 'Gourmet',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_gourmet_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8642,10 +6019,6 @@ export const all_categories = [
                         'name': 'Grocery Store',
                         'pluralName': 'Grocery Stores',
                         'shortName': 'Grocery Store',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_grocery_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8653,10 +6026,6 @@ export const all_categories = [
                         'name': 'Health Food Store',
                         'pluralName': 'Health Food Stores',
                         'shortName': 'Health Food Store',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_grocery_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8664,10 +6033,6 @@ export const all_categories = [
                         'name': 'Kuruyemişçi',
                         'pluralName': 'Kuruyemişçis',
                         'shortName': 'Kuruyemişçi',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/foodanddrink_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8675,10 +6040,6 @@ export const all_categories = [
                         'name': 'Liquor Store',
                         'pluralName': 'Liquor Stores',
                         'shortName': 'Liquor Store',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_liquor_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8686,10 +6047,6 @@ export const all_categories = [
                         'name': 'Organic Grocery',
                         'pluralName': 'Organic Groceries',
                         'shortName': 'Organic Grocery',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_grocery_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8697,10 +6054,6 @@ export const all_categories = [
                         'name': 'Sausage Shop',
                         'pluralName': 'Sausage Shops',
                         'shortName': 'Sausage Shop',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/bbqalt_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8708,10 +6061,6 @@ export const all_categories = [
                         'name': 'Street Food Gathering',
                         'pluralName': 'Street a Gatherings',
                         'shortName': 'Street Food Gathering',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/streetfood_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8719,10 +6068,6 @@ export const all_categories = [
                         'name': 'Supermarket',
                         'pluralName': 'Supermarkets',
                         'shortName': 'Supermarket',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_grocery_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8730,10 +6075,6 @@ export const all_categories = [
                         'name': 'Turşucu',
                         'pluralName': 'Turşucus',
                         'shortName': 'Turşucu',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/foodanddrink_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -8741,10 +6082,6 @@ export const all_categories = [
                         'name': 'Wine Shop',
                         'pluralName': 'Wine Shops',
                         'shortName': 'Wine Shop',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_wineshop_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -8754,10 +6091,7 @@ export const all_categories = [
                 'name': 'Frame Store',
                 'pluralName': 'Frame Stores',
                 'shortName': 'Frame Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/arts_entertainment/artgallery_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8765,10 +6099,7 @@ export const all_categories = [
                 'name': 'Fruit & Vegetable Store',
                 'pluralName': 'Fruit & Vegetable Stores',
                 'shortName': 'Fruit & Vegetable Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_grocery_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8776,20 +6107,13 @@ export const all_categories = [
                 'name': 'Furniture / Home Store',
                 'pluralName': 'Furniture / Home Stores',
                 'shortName': 'Furniture / Home',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/furniture_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '55888a5a498e782e3303b43a',
                         'name': 'Lighting Store',
                         'pluralName': 'Lighting Stores',
                         'shortName': 'Lighting',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -8799,10 +6123,7 @@ export const all_categories = [
                 'name': 'Gaming Cafe',
                 'pluralName': 'Gaming Cafes',
                 'shortName': 'Gaming Cafe',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/gamingcafe_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8810,10 +6131,7 @@ export const all_categories = [
                 'name': 'Garden Center',
                 'pluralName': 'Garden Centers',
                 'shortName': 'Garden Center',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/gardencenter_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8821,10 +6139,7 @@ export const all_categories = [
                 'name': 'Gas Station',
                 'pluralName': 'Gas Stations',
                 'shortName': 'Gas Station',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/gas_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8832,10 +6147,7 @@ export const all_categories = [
                 'name': 'Gift Shop',
                 'pluralName': 'Gift Shops',
                 'shortName': 'Gift Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/giftshop_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8843,10 +6155,7 @@ export const all_categories = [
                 'name': 'Gun Shop',
                 'pluralName': 'Gun Shops',
                 'shortName': 'Gun Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/gun_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8854,10 +6163,7 @@ export const all_categories = [
                 'name': 'Hardware Store',
                 'pluralName': 'Hardware Stores',
                 'shortName': 'Hardware',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/hardware_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8865,10 +6171,7 @@ export const all_categories = [
                 'name': 'Health & Beauty Service',
                 'pluralName': 'Health & Beauty Services',
                 'shortName': 'Health & Beauty',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/salon_barber_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8876,10 +6179,7 @@ export const all_categories = [
                 'name': 'Herbs & Spices Store',
                 'pluralName': 'Herbs & Spices Stores',
                 'shortName': 'Herbs & Spices Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8887,10 +6187,7 @@ export const all_categories = [
                 'name': 'Hobby Shop',
                 'pluralName': 'Hobby Shops',
                 'shortName': 'Hobbies',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/hobbyshop_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8898,10 +6195,7 @@ export const all_categories = [
                 'name': 'Home Service',
                 'pluralName': 'Home Services & Repairs',
                 'shortName': 'Home Services',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/hardware_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8909,10 +6203,7 @@ export const all_categories = [
                 'name': 'Hunting Supply',
                 'pluralName': 'Hunting Supplies',
                 'shortName': 'Hunting Supply',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8920,10 +6211,7 @@ export const all_categories = [
                 'name': 'IT Services',
                 'pluralName': 'IT Services',
                 'shortName': 'IT Services',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/technology_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8931,10 +6219,7 @@ export const all_categories = [
                 'name': 'Insurance Office',
                 'pluralName': 'Insurance Offices',
                 'shortName': 'Insurance Office',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/financial_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8942,10 +6227,7 @@ export const all_categories = [
                 'name': 'Internet Cafe',
                 'pluralName': 'Internet Cafes',
                 'shortName': 'Internet Cafe',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/internetcafe_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8953,10 +6235,7 @@ export const all_categories = [
                 'name': 'Jewelry Store',
                 'pluralName': 'Jewelry Stores',
                 'shortName': 'Jewelry',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/jewelry_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8964,10 +6243,7 @@ export const all_categories = [
                 'name': 'Kitchen Supply Store',
                 'pluralName': 'Kitchen Supply Stores',
                 'shortName': 'Kitchen Supply',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/food_butcher_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8975,10 +6251,7 @@ export const all_categories = [
                 'name': 'Knitting Store',
                 'pluralName': 'Knitting Stores',
                 'shortName': 'Knitting Supplies',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8986,10 +6259,7 @@ export const all_categories = [
                 'name': 'Laundromat',
                 'pluralName': 'Laundromats',
                 'shortName': 'Laundromat',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/laundry_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -8997,10 +6267,7 @@ export const all_categories = [
                 'name': 'Laundry Service',
                 'pluralName': 'Laundry Services',
                 'shortName': 'Laundry',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/laundry_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9008,10 +6275,7 @@ export const all_categories = [
                 'name': 'Lawyer',
                 'pluralName': 'Lawyers',
                 'shortName': 'Lawyer',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/lawschool_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9019,10 +6283,7 @@ export const all_categories = [
                 'name': 'Leather Goods Store',
                 'pluralName': 'Leather Goods Stores',
                 'shortName': 'Leather Goods',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9030,10 +6291,7 @@ export const all_categories = [
                 'name': 'Locksmith',
                 'pluralName': 'Locksmiths',
                 'shortName': 'Locksmith',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9041,10 +6299,7 @@ export const all_categories = [
                 'name': 'Lottery Retailer',
                 'pluralName': 'Lottery Retailers',
                 'shortName': 'Lottery',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/financial_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9052,10 +6307,7 @@ export const all_categories = [
                 'name': 'Luggage Store',
                 'pluralName': 'Luggage Stores',
                 'shortName': 'Luggage Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9063,10 +6315,7 @@ export const all_categories = [
                 'name': 'Marijuana Dispensary',
                 'pluralName': 'Marijuana Dispensaries',
                 'shortName': 'Dispensary',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/dispensary_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9074,10 +6323,7 @@ export const all_categories = [
                 'name': 'Market',
                 'pluralName': 'Markets',
                 'shortName': 'Market',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/market_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9085,10 +6331,7 @@ export const all_categories = [
                 'name': 'Massage Studio',
                 'pluralName': 'Massage Studios',
                 'shortName': 'Massage Studio',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/spa_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9096,10 +6339,7 @@ export const all_categories = [
                 'name': 'Mattress Store',
                 'pluralName': 'Mattress Stores',
                 'shortName': 'Mattress Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9107,10 +6347,7 @@ export const all_categories = [
                 'name': 'Medical Supply Store',
                 'pluralName': 'Medical Supply Stores',
                 'shortName': 'Medical Supply',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9118,10 +6355,7 @@ export const all_categories = [
                 'name': 'Miscellaneous Shop',
                 'pluralName': 'Miscellaneous Shops',
                 'shortName': 'Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9129,10 +6363,7 @@ export const all_categories = [
                 'name': 'Mobile Phone Shop',
                 'pluralName': 'Mobile Phone Shops',
                 'shortName': 'Mobile Phones',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/mobilephoneshop_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9140,10 +6371,7 @@ export const all_categories = [
                 'name': 'Mobility Store',
                 'pluralName': 'Mobility Stores',
                 'shortName': 'Mobility Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9151,10 +6379,7 @@ export const all_categories = [
                 'name': 'Motorcycle Shop',
                 'pluralName': 'Motorcycle Shops',
                 'shortName': 'Motorcycle Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/motorcycle_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9162,10 +6387,7 @@ export const all_categories = [
                 'name': 'Motorsports Shop',
                 'pluralName': 'Motorsports Shops',
                 'shortName': 'Motorsports Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/automotive_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9173,10 +6395,7 @@ export const all_categories = [
                 'name': 'Music Store',
                 'pluralName': 'Music Stores',
                 'shortName': 'Music Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/music_instruments_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9184,10 +6403,7 @@ export const all_categories = [
                 'name': 'Nail Salon',
                 'pluralName': 'Nail Salons',
                 'shortName': 'Nail Salon',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/nailsalon_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9195,10 +6411,7 @@ export const all_categories = [
                 'name': 'Newsstand',
                 'pluralName': 'Newsstands',
                 'shortName': 'Newsstand',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/newsstand_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9206,10 +6419,7 @@ export const all_categories = [
                 'name': 'Notary',
                 'pluralName': 'Notaries',
                 'shortName': 'Notary',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/lawschool_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9217,10 +6427,7 @@ export const all_categories = [
                 'name': 'Optical Shop',
                 'pluralName': 'Optical Shops',
                 'shortName': 'Optical',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/medical_opticalshop_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9228,10 +6435,7 @@ export const all_categories = [
                 'name': 'Other Repair Shop',
                 'pluralName': 'Other Repair Shops',
                 'shortName': 'Other Repair',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9239,10 +6443,7 @@ export const all_categories = [
                 'name': 'Outdoor Supply Store',
                 'pluralName': 'Outdoor Supply Stores',
                 'shortName': 'Outdoor Supplies',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9250,10 +6451,7 @@ export const all_categories = [
                 'name': 'Outlet Mall',
                 'pluralName': 'Outlet Malls',
                 'shortName': 'Outlet Mall',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/mall_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9261,10 +6459,7 @@ export const all_categories = [
                 'name': 'Outlet Store',
                 'pluralName': 'Outlet Stores',
                 'shortName': 'Outlet Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9272,10 +6467,7 @@ export const all_categories = [
                 'name': 'Paper / Office Supplies Store',
                 'pluralName': 'Paper / Office Supplies Stores',
                 'shortName': 'Office Supplies',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/papergoods_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9283,10 +6475,7 @@ export const all_categories = [
                 'name': 'Pawn Shop',
                 'pluralName': 'Pawn Shops',
                 'shortName': 'Pawn Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9294,10 +6483,7 @@ export const all_categories = [
                 'name': 'Perfume Shop',
                 'pluralName': 'Perfume Shops',
                 'shortName': 'Perfume Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9305,10 +6491,7 @@ export const all_categories = [
                 'name': 'Pet Service',
                 'pluralName': 'Pet Services',
                 'shortName': 'Pet Service',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/pet_store_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9316,10 +6499,7 @@ export const all_categories = [
                 'name': 'Pet Store',
                 'pluralName': 'Pet Stores',
                 'shortName': 'Pet Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/pet_store_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9327,10 +6507,7 @@ export const all_categories = [
                 'name': 'Pharmacy',
                 'pluralName': 'Pharmacies',
                 'shortName': 'Pharmacy',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/pharmacy_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9338,10 +6515,7 @@ export const all_categories = [
                 'name': 'Photography Lab',
                 'pluralName': 'Photography Labs',
                 'shortName': 'Photography Lab',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/photographylab_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9349,10 +6523,7 @@ export const all_categories = [
                 'name': 'Photography Studio',
                 'pluralName': 'Photography Studios',
                 'shortName': 'Photo Studio',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/camerastore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9360,10 +6531,7 @@ export const all_categories = [
                 'name': 'Piercing Parlor',
                 'pluralName': 'Piercing Parlors',
                 'shortName': 'Piercing Parlor',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/piercing_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9371,10 +6539,7 @@ export const all_categories = [
                 'name': 'Pop-Up Shop',
                 'pluralName': 'Pop-Up Shops',
                 'shortName': 'Pop-Up Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9382,10 +6547,7 @@ export const all_categories = [
                 'name': 'Print Shop',
                 'pluralName': 'Print Shops',
                 'shortName': 'Print Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9393,10 +6555,7 @@ export const all_categories = [
                 'name': 'Public Bathroom',
                 'pluralName': 'Public Bathrooms',
                 'shortName': 'Public Bathroom',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/neighborhood_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9404,10 +6563,7 @@ export const all_categories = [
                 'name': 'Real Estate Office',
                 'pluralName': 'Real Estate Offices',
                 'shortName': 'Real Estate',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/realestate_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9415,10 +6571,7 @@ export const all_categories = [
                 'name': 'Record Shop',
                 'pluralName': 'Record Shops',
                 'shortName': 'Record Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/record_shop_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9426,10 +6579,7 @@ export const all_categories = [
                 'name': 'Recording Studio',
                 'pluralName': 'Recording Studios',
                 'shortName': 'Recording Studio',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/building/school_music_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9437,10 +6587,7 @@ export const all_categories = [
                 'name': 'Recycling Facility',
                 'pluralName': 'Recycling Facilities',
                 'shortName': 'Recycling',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/recycling_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9448,10 +6595,7 @@ export const all_categories = [
                 'name': 'Rental Service',
                 'pluralName': 'Rental Services',
                 'shortName': 'Rental Service',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9459,10 +6603,7 @@ export const all_categories = [
                 'name': 'Salon / Barbershop',
                 'pluralName': 'Salons / Barbershops',
                 'shortName': 'Salon / Barbershop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/salon_barber_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9470,10 +6611,7 @@ export const all_categories = [
                 'name': 'Sauna / Steam Room',
                 'pluralName': 'Saunas / Steam Rooms',
                 'shortName': 'Sauna / Steam Room',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/spa_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9481,10 +6619,7 @@ export const all_categories = [
                 'name': 'Shipping Store',
                 'pluralName': 'Shipping Stores',
                 'shortName': 'Shipping Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9492,10 +6627,7 @@ export const all_categories = [
                 'name': 'Shoe Repair',
                 'pluralName': 'Shoe Repair Shops',
                 'shortName': 'Shoe Repair',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/apparel_shoestore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9503,10 +6635,7 @@ export const all_categories = [
                 'name': 'Shopping Mall',
                 'pluralName': 'Shopping Malls',
                 'shortName': 'Mall',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/mall_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9514,10 +6643,7 @@ export const all_categories = [
                 'name': 'Shopping Plaza',
                 'pluralName': 'Shopping Plazas',
                 'shortName': 'Shopping Plaza',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/mall_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9525,10 +6651,7 @@ export const all_categories = [
                 'name': 'Skate Shop',
                 'pluralName': 'Skate Shops',
                 'shortName': 'Skate Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9536,10 +6659,7 @@ export const all_categories = [
                 'name': 'Ski Shop',
                 'pluralName': 'Ski Shops',
                 'shortName': 'Ski Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/ski_snowboard_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9547,10 +6667,7 @@ export const all_categories = [
                 'name': 'Smoke Shop',
                 'pluralName': 'Smoke Shops',
                 'shortName': 'Smoke Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/tobacco_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9558,10 +6675,7 @@ export const all_categories = [
                 'name': 'Smoothie Shop',
                 'pluralName': 'Smoothie Shops',
                 'shortName': 'Smoothie Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/food/juicebar_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9569,10 +6683,7 @@ export const all_categories = [
                 'name': 'Souvenir Shop',
                 'pluralName': 'Souvenir Shops',
                 'shortName': 'Souvenir Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9580,10 +6691,7 @@ export const all_categories = [
                 'name': 'Spa',
                 'pluralName': 'Spas',
                 'shortName': 'Spa',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/spa_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9591,10 +6699,7 @@ export const all_categories = [
                 'name': 'Sporting Goods Shop',
                 'pluralName': 'Sporting Goods Shops',
                 'shortName': 'Sporting Goods',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/sports_outdoors_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9602,10 +6707,7 @@ export const all_categories = [
                 'name': 'Stationery Store',
                 'pluralName': 'Stationery Stores',
                 'shortName': 'Stationery Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9613,10 +6715,7 @@ export const all_categories = [
                 'name': 'Storage Facility',
                 'pluralName': 'Storage Facilities',
                 'shortName': 'Storage',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/storage_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9624,10 +6723,7 @@ export const all_categories = [
                 'name': 'Supplement Shop',
                 'pluralName': 'Supplement Shops',
                 'shortName': 'Supplement Shop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/education/lab_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9635,10 +6731,7 @@ export const all_categories = [
                 'name': 'Tailor Shop',
                 'pluralName': 'Tailor Shops',
                 'shortName': 'Tailor',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/apparel_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9646,10 +6739,7 @@ export const all_categories = [
                 'name': 'Tanning Salon',
                 'pluralName': 'Tanning Salons',
                 'shortName': 'Tanning Salon',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/tanning_salon_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9657,10 +6747,7 @@ export const all_categories = [
                 'name': 'Tattoo Parlor',
                 'pluralName': 'Tattoo Parlors',
                 'shortName': 'Tattoo',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/tattoos_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9668,10 +6755,7 @@ export const all_categories = [
                 'name': 'Thrift / Vintage Store',
                 'pluralName': 'Thrift / Vintage Stores',
                 'shortName': 'Thrift / Vintage',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9679,10 +6763,7 @@ export const all_categories = [
                 'name': 'Toy / Game Store',
                 'pluralName': 'Toy / Game Stores',
                 'shortName': 'Toys & Games',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/toys_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9690,10 +6771,7 @@ export const all_categories = [
                 'name': 'Travel Agency',
                 'pluralName': 'Travel Agencies',
                 'shortName': 'Travel Agency',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/travelagency_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9701,10 +6779,7 @@ export const all_categories = [
                 'name': 'Used Bookstore',
                 'pluralName': 'Used Bookstores',
                 'shortName': 'Used Bookstore',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/bookstore_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9712,10 +6787,7 @@ export const all_categories = [
                 'name': 'Vape Store',
                 'pluralName': 'Vape Stores',
                 'shortName': 'Vape Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/tobacco_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9723,10 +6795,7 @@ export const all_categories = [
                 'name': 'Video Game Store',
                 'pluralName': 'Video Game Stores',
                 'shortName': 'Video Games',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/videogames_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9734,10 +6803,7 @@ export const all_categories = [
                 'name': 'Video Store',
                 'pluralName': 'Video Stores',
                 'shortName': 'Video Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/video_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9745,10 +6811,7 @@ export const all_categories = [
                 'name': 'Warehouse Store',
                 'pluralName': 'Warehouse Stores',
                 'shortName': 'Warehouse Store',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9756,10 +6819,7 @@ export const all_categories = [
                 'name': 'Watch Shop',
                 'pluralName': 'Watch Shops',
                 'shortName': 'Watch Shops',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             }
         ]
@@ -9770,8 +6830,9 @@ export const all_categories = [
         'pluralName': 'Travel & Transport',
         'shortName': 'Travel',
         'icon': {
-            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/default_',
-            'suffix': '.png'
+            
+            
+
         },
         'categories': [
             {
@@ -9779,20 +6840,13 @@ export const all_categories = [
                 'name': 'Airport',
                 'pluralName': 'Airports',
                 'shortName': 'Airport',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/airport_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d1ef931735',
                         'name': 'Airport Food Court',
                         'pluralName': 'Airport Food Courts',
                         'shortName': 'Food Court',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/airport_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -9800,10 +6854,6 @@ export const all_categories = [
                         'name': 'Airport Gate',
                         'pluralName': 'Airport Gates',
                         'shortName': 'Gate',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/airport_gate_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -9811,10 +6861,6 @@ export const all_categories = [
                         'name': 'Airport Lounge',
                         'pluralName': 'Airport Lounges',
                         'shortName': 'Lounge',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -9822,10 +6868,6 @@ export const all_categories = [
                         'name': 'Airport Service',
                         'pluralName': 'Airport Services',
                         'shortName': 'Airport Service',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/airport_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -9833,10 +6875,6 @@ export const all_categories = [
                         'name': 'Airport Terminal',
                         'pluralName': 'Airport Terminals',
                         'shortName': 'Terminal',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/airport_gate_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -9844,10 +6882,6 @@ export const all_categories = [
                         'name': 'Airport Tram',
                         'pluralName': 'Airport Trams',
                         'shortName': 'Tram',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/airport_tram_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -9855,10 +6889,6 @@ export const all_categories = [
                         'name': 'Baggage Claim',
                         'pluralName': 'Baggage Claims',
                         'shortName': 'Baggage Claim',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/default_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -9866,10 +6896,6 @@ export const all_categories = [
                         'name': 'Plane',
                         'pluralName': 'Planes',
                         'shortName': 'Plane',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/airport_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -9879,10 +6905,7 @@ export const all_categories = [
                 'name': 'Baggage Locker',
                 'pluralName': 'Baggage Lockers',
                 'shortName': 'Baggage Locker',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9890,10 +6913,7 @@ export const all_categories = [
                 'name': 'Bike Rental / Bike Share',
                 'pluralName': 'Bike Rentals / Bike Shares',
                 'shortName': 'Bike',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/bikeshop_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9901,10 +6921,7 @@ export const all_categories = [
                 'name': 'Boat Rental',
                 'pluralName': 'Boat Rentals',
                 'shortName': 'Boat Rental',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/boat_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9912,10 +6929,7 @@ export const all_categories = [
                 'name': 'Boat or Ferry',
                 'pluralName': 'Boats or Ferries',
                 'shortName': 'Boat / Ferry',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/boat_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9923,10 +6937,7 @@ export const all_categories = [
                 'name': 'Border Crossing',
                 'pluralName': 'Border Crossings',
                 'shortName': 'Border Crossing',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9934,20 +6945,13 @@ export const all_categories = [
                 'name': 'Bus Station',
                 'pluralName': 'Bus Stations',
                 'shortName': 'Bus Station',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/busstation_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d12b951735',
                         'name': 'Bus Line',
                         'pluralName': 'Bus Lines',
                         'shortName': 'Bus',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/busstation_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -9957,10 +6961,7 @@ export const all_categories = [
                 'name': 'Bus Stop',
                 'pluralName': 'Bus Stops',
                 'shortName': 'Bus Stop',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/busstation_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9968,10 +6969,7 @@ export const all_categories = [
                 'name': 'Cable Car',
                 'pluralName': 'Cable Cars',
                 'shortName': 'Cable Car',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/trainstation_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9979,10 +6977,7 @@ export const all_categories = [
                 'name': 'Cruise',
                 'pluralName': 'Cruises',
                 'shortName': 'Cruise',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/boat_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -9990,10 +6985,7 @@ export const all_categories = [
                 'name': 'Duty-free Shop',
                 'pluralName': 'Duty-free Shops',
                 'shortName': 'Duty-free',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10001,10 +6993,7 @@ export const all_categories = [
                 'name': 'General Travel',
                 'pluralName': 'General Travel',
                 'shortName': 'Travel',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10012,10 +7001,7 @@ export const all_categories = [
                 'name': 'Heliport',
                 'pluralName': 'Heliports',
                 'shortName': 'Heliport',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10023,20 +7009,13 @@ export const all_categories = [
                 'name': 'Hotel',
                 'pluralName': 'Hotels',
                 'shortName': 'Hotel',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/hotel_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4bf58dd8d48988d1f8931735',
                         'name': 'Bed & Breakfast',
                         'pluralName': 'Bed & Breakfasts',
                         'shortName': 'B & B',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/bedandbreakfast_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -10044,10 +7023,6 @@ export const all_categories = [
                         'name': 'Boarding House',
                         'pluralName': 'Boarding Houses',
                         'shortName': 'Boarding',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/hotel_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -10055,10 +7030,6 @@ export const all_categories = [
                         'name': 'Hostel',
                         'pluralName': 'Hostels',
                         'shortName': 'Hostel',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/hostel_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -10066,10 +7037,6 @@ export const all_categories = [
                         'name': 'Hotel Pool',
                         'pluralName': 'Hotel Pools',
                         'shortName': 'Pool',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/pool_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -10077,10 +7044,6 @@ export const all_categories = [
                         'name': 'Inn',
                         'pluralName': 'Inns',
                         'shortName': 'Inn',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/hotel_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -10088,10 +7051,6 @@ export const all_categories = [
                         'name': 'Motel',
                         'pluralName': 'Motels',
                         'shortName': 'Motel',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/hotel_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -10099,10 +7058,6 @@ export const all_categories = [
                         'name': 'Resort',
                         'pluralName': 'Resorts',
                         'shortName': 'Resort',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/resort_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -10110,10 +7065,6 @@ export const all_categories = [
                         'name': 'Vacation Rental',
                         'pluralName': 'Vacation Rentals',
                         'shortName': 'Vacation Rental',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/hostel_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -10123,10 +7074,7 @@ export const all_categories = [
                 'name': 'Intersection',
                 'pluralName': 'Intersections',
                 'shortName': 'Intersection',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10134,10 +7082,7 @@ export const all_categories = [
                 'name': 'Light Rail Station',
                 'pluralName': 'Light Rail Stations',
                 'shortName': 'Light Rail',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/lightrail_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10145,10 +7090,7 @@ export const all_categories = [
                 'name': 'Metro Station',
                 'pluralName': 'Metro Stations',
                 'shortName': 'Metro',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/subway_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10156,10 +7098,7 @@ export const all_categories = [
                 'name': 'Moving Target',
                 'pluralName': 'Moving Targets',
                 'shortName': 'Moving Target',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/movingtarget_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10167,10 +7106,7 @@ export const all_categories = [
                 'name': 'Pier',
                 'pluralName': 'Piers',
                 'shortName': 'Piers',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/ferry_pier_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10178,10 +7114,7 @@ export const all_categories = [
                 'name': 'Port',
                 'pluralName': 'Ports',
                 'shortName': 'Port',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/boat_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10189,10 +7122,7 @@ export const all_categories = [
                 'name': 'RV Park',
                 'pluralName': 'RV Parks',
                 'shortName': 'RV Park',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10200,10 +7130,7 @@ export const all_categories = [
                 'name': 'Rental Car Location',
                 'pluralName': 'Rental Car Locations',
                 'shortName': 'Rental Car',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/shops/airport_rentalcar_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10211,10 +7138,7 @@ export const all_categories = [
                 'name': 'Rest Area',
                 'pluralName': 'Rest Areas',
                 'shortName': 'Rest Areas',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/restarea_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10222,10 +7146,7 @@ export const all_categories = [
                 'name': 'Road',
                 'pluralName': 'Roads',
                 'shortName': 'Road',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/highway_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10233,10 +7154,7 @@ export const all_categories = [
                 'name': 'Taxi Stand',
                 'pluralName': 'Taxi Stands',
                 'shortName': 'Taxi Stand',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/taxi_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10244,10 +7162,7 @@ export const all_categories = [
                 'name': 'Taxi',
                 'pluralName': 'Taxis',
                 'shortName': 'Taxi',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/taxi_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10255,10 +7170,7 @@ export const all_categories = [
                 'name': 'Toll Booth',
                 'pluralName': 'Toll Booths',
                 'shortName': 'Toll Booth',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10266,10 +7178,7 @@ export const all_categories = [
                 'name': 'Toll Plaza',
                 'pluralName': 'Toll Plazas',
                 'shortName': 'Toll Plaza',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10277,10 +7186,7 @@ export const all_categories = [
                 'name': 'Tourist Information Center',
                 'pluralName': 'Tourist Information Centers',
                 'shortName': 'Tourist Information',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/touristinformation_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10288,20 +7194,13 @@ export const all_categories = [
                 'name': 'Train Station',
                 'pluralName': 'Train Stations',
                 'shortName': 'Train Station',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/trainstation_',
-                    'suffix': '.png'
-                },
+                
                 'categories': [
                     {
                         'id': '4f4531504b9074f6e4fb0102',
                         'name': 'Platform',
                         'pluralName': 'Platforms',
                         'shortName': 'Platform',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/trainstation_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     },
                     {
@@ -10309,10 +7208,6 @@ export const all_categories = [
                         'name': 'Train',
                         'pluralName': 'Trains',
                         'shortName': 'Train',
-                        'icon': {
-                            'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/trainstation_',
-                            'suffix': '.png'
-                        },
                         'categories': []
                     }
                 ]
@@ -10322,10 +7217,7 @@ export const all_categories = [
                 'name': 'Tram Station',
                 'pluralName': 'Tram Stations',
                 'shortName': 'Tram',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/trainstation_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10333,10 +7225,7 @@ export const all_categories = [
                 'name': 'Transportation Service',
                 'pluralName': 'Transportation Services',
                 'shortName': 'Transportation Services',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/taxi_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10344,10 +7233,7 @@ export const all_categories = [
                 'name': 'Travel Lounge',
                 'pluralName': 'Travel Lounges',
                 'shortName': 'Lounge',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/nightlife/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             },
             {
@@ -10355,10 +7241,7 @@ export const all_categories = [
                 'name': 'Tunnel',
                 'pluralName': 'Tunnels',
                 'shortName': 'Tunnel',
-                'icon': {
-                    'prefix': 'https://ss3.4sqi.net/img/categories_v2/travel/default_',
-                    'suffix': '.png'
-                },
+                
                 'categories': []
             }
         ]

@@ -13,7 +13,7 @@ export default class Pins extends PureComponent {
             marginTop: '-' + this.props.size / 2 + 'em',
             width: this.props.size + 'em'
           }}
-          src={process.env.PUBLIC_URL + '/images/selected.svg'} />
+          src={'/images/selected.svg'} />
     </div>
 
   }

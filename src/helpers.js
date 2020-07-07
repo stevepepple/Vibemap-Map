@@ -36,8 +36,6 @@ const helpers = {
 
         return distance
     },              
-
-
     getRadius: function (bounds) {        
         //let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
         let diameter = turf.distance(
@@ -135,6 +133,8 @@ const helpers = {
 
     getCategoryMatch(categories) {
         const all_categories = Constants.place_categories.map(category => category.key)
+
+        console.log('all_categories: ', all_categories)
         let matches = []
         /* TODO: use a combination of filter & map */
         categories.map(category => {
@@ -427,8 +427,6 @@ const helpers = {
 
         return scaled_size
     },
-
-
     getMax: function(items, attribute) {
         let max = 0;
         items.forEach(item => {
@@ -459,8 +457,6 @@ const helpers = {
         let _this;
         let _arguments;
         let timeout;
-
-
         const executeNow = () => {
             timeout = null;
             return func.apply(_this, _arguments);
@@ -468,8 +464,6 @@ const helpers = {
         };
 
         console.log(_this, _arguments)
-
-
         return function () {
             _this = this;
             _arguments = arguments;

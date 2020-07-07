@@ -471,9 +471,7 @@ class Page extends Component {
         if (placeType === 'guides' ) list_data = guidesData
 
         // TODOL Also handle guide here.
-        let LeftPanel = <ListSearch 
-                            data={list_data} 
-                            type='places' />
+        let LeftPanel = <ListSearch data={list_data} type='places' />
 
         if (this.props.detailsShown) {
             LeftPanel = <ItemDetails id={this.props.detailsId} clearDetails={this.clearDetails} />
