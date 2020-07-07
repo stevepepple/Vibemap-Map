@@ -194,8 +194,6 @@ module.exports = {
                 .then(data => data.json())
                 .then(result => {
 
-                    console.log('Got Place Details: ', result)
-
                     clearTimeout(timeout);
                     resolve({ data: result, loading: false, timedOut: false })
 
@@ -633,8 +631,6 @@ module.exports = {
                     //=featureIndex
                     //console.log("Cluster: ", currentFeature.properties.dbscan)
                 })
-
-
             } else {
                 turf.featureEach(cluster, function (currentFeature, featureIndex) {
                     currentFeature.properties.in_cluster = false
