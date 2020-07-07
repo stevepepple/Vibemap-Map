@@ -21,6 +21,7 @@ const store = createStore(
     ),
 )
 
+/*
 if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('./reducers', () => {
@@ -28,5 +29,6 @@ if (module.hot) {
         store.replaceReducer(nextRootReducer);
     });
 }
+*/
 
 export { store };

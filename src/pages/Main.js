@@ -3,7 +3,7 @@ import Media from 'react-media'
 
 // REDUX STUFF
 import { connect } from 'react-redux'
-import { fetchCities } from '../app/actions/actions'
+import { fetchCities, fetchVibes, setPlaceType } from '../redux/actions'
 
 // Router, Mobile, & SEO
 import { Helmet } from 'react-helmet'
@@ -17,6 +17,11 @@ import Header from '../components/elements/header.js'
 import Navigation from '../components/events/navigation.js'
 import Map from '../components/map'
 
+// Layouts
+import TwoColumnLayout from '../components/layouts/TwoColumnLayout'
+import ItemDetails from '../components/layouts/ItemDetails.js'
+import ListSearch from '../components/layouts/ListSearch.js'
+
 import { Placeholder } from 'semantic-ui-react'
 
 
@@ -29,9 +34,23 @@ class Main extends Component {
     // Match handles any params in the URL
     const id = match.params.id
 
-    const params = req.query
+    try {
+      const params = req.query
+      const { place_type, activity } = params
+      console.log('URL path on main: ', params)
+      
+      // Set Redux Store from URL on server so it can be used for SEO
+      if (place_type) store.dispatch(setPlaceType(place_type))
+      if (activity) {
+        store.dispatch(setActivity(activity))
+        store.dispatch(lookUpActivity(activity))
 
-    console.log('URL path on main: ', params, match )
+      } 
+
+    } catch (error) {
+      console.log('Problem parsing history.')
+    }
+
 
     if (match.params.city) {
       console.log('Handle route for city: ', match.params.city)
@@ -65,23 +84,23 @@ class Main extends Component {
 
   }
 
-  // Aever let a process live forever 
-  // always kill a process everytime we are done using it
   componentDidMount() {
     // TODO: Pattern for if data is loaded or errored out
-    fetchCities()
+    console.log("Main component did mount")
+    //fetchCities()
+    let vibes = this.props.fetchVibes()
+
+
     if (!this.props.cities) {
       //this.props.dispatch(Main.initialAction())
     }
 
-    console.log('Browser history: ', this.props.history)
-
     let { history } = this.props
-
-    history.push({ search: '?test=test' })
     
   }
 
+  // Aever let a process live forever 
+  // always kill a process everytime we are done using it
   componentWillUnmount() {
     if (this.state.intervalIsSet) {
       clearInterval(this.state.intervalIsSet)
@@ -90,7 +109,7 @@ class Main extends Component {
   }
 
   render() {
-    let { cities } = this.props
+    let { cities, history, detailsShown, placeType } = this.props
 
     let isMobile = pickMatch(this.context, {
       mobile: true,
@@ -105,12 +124,26 @@ class Main extends Component {
       isMobile={isMobile} />
 
 
+    // Pick the list that should be display
+    let list_data = null
+    if (placeType === 'places' || placeType === 'events') list_data = topPicks
+    if (placeType === 'guides') list_data = guidesData
+
+
+    // TODOL Also handle guide here.
+    const LeftPanel = detailsShown ?
+      <ItemDetails id={this.props.detailsId} clearDetails={this.clearDetails} /> :      
+      <ListSearch data={list_data} type='places' />
+
+    const Map = <div>Map will go here</div>
+
     let mobile = <div>
       { navigation }
       Mobile here. The document is less than 600px wide.
 
     </div>
     let web = <div>
+      <Header />
       { navigation }
       Web here. The document is at least 600px wide.
     </div>
@@ -122,6 +155,12 @@ class Main extends Component {
         <MediaMatcher
           desktop={web}
           mobile={mobile} />
+        
+        <TwoColumnLayout
+          leftPanel={LeftPanel}
+          rightPanel={Map}
+          showLeft={this.props.showList} />
+
 
       </div>
     );
@@ -129,7 +168,13 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => ({
-  cities: state.cities
+  cities: state.cities,
+  showList: state.showList
 });
 
-export default connect(mapStateToProps)(Main);
+const mapDispatchToProps = dispatch => ({ 
+  fetchVibes: () => dispatch(fetchVibes()) 
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -1,5 +1,13 @@
 import React, { Component } from 'react'
 
+/* REDUX STUFF */
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions'
+import { store } from '../../redux/store'
+import { push } from 'connected-react-router'
+
+import { withRouter } from 'react-router-dom';
+
 import qs from 'qs'
 import isEqual from 'react-fast-compare'
 
@@ -23,12 +31,6 @@ import Navigation from '../events/navigation.js'
 import EventsMap from '../events/events_map.js'
 
 //import PlaceCards from '../places/place_cards.js'
-
-/* REDUX STUFF */
-import { connect } from 'react-redux'
-import * as actions from '../../redux/actions'
-import { store } from '../../redux/store'
-import { push } from 'connected-react-router'
 
 // TODO: Seperate data rendering from layout from UI logic? 
 // TODO: Move to main page component, i.e main.js or index.js
@@ -556,4 +558,4 @@ const EventsPage = connect(
     actions
 )(Page)
 
-export default EventsPage
+export default withRouter(EventsPage)

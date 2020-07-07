@@ -2,6 +2,8 @@ import React from 'react';
 
 import Main from "./Main";
 import News from "./News";
+
+import MapPage from "./MapPage";
 import Details from "./Details";
 
 // Handles prefetching of async data
@@ -9,8 +11,7 @@ import { asyncComponent } from '@jaredpalmer/after';
 
 const routes = [
   {
-    path: "/",
-    component: Main,
+    path: "/:city?",
     exact: true,
     component: asyncComponent({
       loader: () => import('./Main'), // required
@@ -18,9 +19,12 @@ const routes = [
     })
   },
   {
-    path: "/main",
+    path: "/map/:city?",
     exact: true,
-    component: Main
+    component: asyncComponent({
+      loader: () => import('./MapPage'), // required
+      Placeholder: () => <div>...LOADING...</div>
+    })
   },
   {
     path: "/details/:id",

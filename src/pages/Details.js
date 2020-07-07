@@ -30,7 +30,7 @@ class Details extends Component {
 
     let details = await getDetails(id, type)
 
-    details = store.dispatch(detailsReceived(details))
+    store.dispatch(detailsReceived(details))
 
   }
 
@@ -40,7 +40,7 @@ class Details extends Component {
     this.state =  {
       id: null,
       vibes: [],
-      market_size: 12,
+      marker_size: 12,
       vibes_expanded: false,
       vibes_to_show: 8
     }

@@ -97,7 +97,7 @@ export const activity = (state = "", action) => {
     if (action.activity === "any"){
       action.activity = null
     }
-    console.log("SEt activity: ", action.activity)
+    console.log("SET_ACTIVITY: ", action.activity)
     state = action.activity
   }
   return state
@@ -248,6 +248,7 @@ export const topVibes = (state = [], action) => {
 
 export const signatureVibes = (state = [], action) => {
   if (action.type === 'SET_SIGNATURE_VIBES') {
+    console.log('SET_SIGNATURE_VIBES')
     state = action.signatureVibes
   }
   return state
