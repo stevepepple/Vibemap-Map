@@ -3,11 +3,6 @@ import "isomorphic-fetch";
 // Use Thunks with Vibemap service
 import VibeMap from '../services/VibeMap.js'
 
-export const setUIState = state => ({
-  type: 'SET_UI_STATE',
-  state,
-})
-
 export const addFeature = feature => ({
   type: 'ADD_FEATURE',
   feature,
@@ -23,26 +18,80 @@ export const setShowList = show => ({
   show,
 })
 
-
 // Place Actions
 export const detailsRequest = () => ({ type: "DETAILS_LOADING" });
 export const detailsReceived = details => ({ type: "DETAILS_SUCCESS", payload: details });
 export const detailsError = () => ({ type: "FETCH_DETAILS_FAILURE" });
 
-export const fetchDetails = (id, type) => (dispatch, getState) => {
-  dispatch(detailsRequest())
+export const requestCities = () => ({ type: "CITIES_LOADING" });
+export const receivedCities = cities => ({ type: "SET_CITIES", cities });
+export const citiesError = () => ({ type: "CITIES_ERROR" });
 
-  VibeMap.getPlaceDetails(id, type)
-    .then(response => response.data)
-    .then(details => {
-      console.log('DISPATCH DETAILS RECIEVED: ', details.properties)
-      dispatch(detailsReceived(details))
-      return details
+export const fetchCategories = () => {
+  return (dispatch, getState) => {
+    return new Promise(resolve => {
+
+      VibeMap.getCategories().then(results => {
+        dispatch(setAllCategories(results.data['place_categories']))
+        resolve(results)
+      })
     })
-    .catch(err => dispatch(detailsError(err)))
+  }
+}
 
+export const fetchCities = () => (dispatch, getState) => {
+  //dispatch(requestCities())
+  return new Promise(resolve => {
+    VibeMap.getCities()
+      .then(response => response.data)
+      .then(cities => {
+        dispatch(setCities(cities))
+        resolve(cities)
+      })
+      .catch(err => dispatch(citiesError(err)))
+  })
 };
 
+export const fetchDetails = (id, type) => (dispatch, getState) => {
+  return new Promise(resolve => {
+    //dispatch(detailsRequest())
+
+    VibeMap.getPlaceDetails(id, type)
+      .then(response => response.data)
+      .then(details => {
+        resolve(details)
+
+        console.log('DISPATCH DETAILS RECIEVED: ', details.properties)
+        dispatch(detailsReceived(details))
+      })
+      .catch(err => dispatch(detailsError(err)))
+  })
+}
+
+export const fetchVibes = () => {
+  return (dispatch, getState) => {
+    return new Promise(resolve => {
+
+      VibeMap.getVibes().then(results => {
+        //return console.log('fetchVibes...', results)
+        dispatch(setSignatureVibes(results.data['signature_vibes']))
+        dispatch(setAllVibes(results.data['all_vibes']))
+        resolve(results)
+      })
+    })
+  } 
+}  
+
+// Dispatch is called in getInitialProps of Details
+export const getDetails = (id, type) => {
+
+  return new Promise(resolve => {
+    VibeMap.getPlaceDetails(id, type)
+      .then(response => response.data)
+      .then(details => resolve(details))
+
+  })
+}
 
 export const setDetailsId = id => ({
   type: 'SET_DETAILS_ID',
@@ -103,8 +152,6 @@ export const setWindowSize = size => ({
   type: 'SET_WINDOW_SIZE',
   size,
 })
-
-
 export const setLayers = layers => ({
   type: 'SET_LAYERS',
   layers,

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
+import { setCurrentLocation } from '../redux/actions'
+
+import SEO from '../components/seo/'
 
 import { Marker } from 'react-map-gl'
 
@@ -14,14 +17,8 @@ class MapPage extends Component {
     try {
       const params = req.query
       const { latitude, longitude, city } = params
-      console.log('URL path on main: ', params)
 
-      // Set Redux Store from URL on server so it can be used for SEO
-      // Set location by city or coordinates
-      if (activity) {
-        store.dispatch(setActivity(activity))
-        store.dispatch(lookUpActivity(activity))
-      }
+      if (latitude && longitude) store.dispatch(setCurrentLocation({ latitude: latitude, longitude: longitude }))
 
     } catch (error) {
       console.log('Problem parsing history.')
@@ -39,27 +36,36 @@ class MapPage extends Component {
   }
 
   render() {
-    const { longitude, latitude } = this.props;
-    return <div>
+    const { currentLocation, zoom } = this.props;
+    return <div style={{ height : '100%'}}>
+      <SEO />
+
       <Map
-        longitude={longitude}
-        latitude={latitude}
+        height={'100vh'}
+        width={'100vw'}
+        longitude={currentLocation.longitude}
+        latitude={currentLocation.latitude}
         onViewportChange={this.onViewportChange}
-        zoom={15}>
-        <Marker
-          longitude={longitude}
-          latitude={latitude}
-          offsetTop={-2}
-          offsetLeft={-2}>
-          <Selected size={20} />
-        </Marker>
+        zoom={zoom}>
       </Map>
     </div>
   }
 }
 
+MapPage.defaultProps = {
+  latitude: 37.7577,
+  longitude: -122.4376,
+  zoom: 14
+}
+
 const mapStateToProps = state => ({
-  news: state.news
-});
+  news: state.news,
+  currentLocation: state.currentLocation
+})
+
+
+const mapDispatchToProps = dispatch => ({
+  setCurrentLocation: () => dispatch(setCurrentLocation())
+})
 
 export default connect(mapStateToProps)(MapPage);

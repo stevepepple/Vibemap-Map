@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 
 import placesReducer from './places.reducers'
+import mapReducer from './map.reducers'
 
 //import { connectRouter } from 'connected-react-router'
 
@@ -107,7 +108,7 @@ export const activity = (state = "", action) => {
 // then returns a state
 export const currentLocation = (state = { latitude: 0, longitude: 0, name : null, distance_changed : 0 }, action) => {
   if (action.type === 'SET_CURRENT_LOCATION') {
-    //console.log("SET_CURRENT_LOCATION", action.location.latitude, action.location.longitude, action.distance_changed)
+    console.log("SET_CURRENT_LOCATION", action.location.latitude, action.location.longitude, action.distance_changed)
     action.location.latitude = parseFloat(action.location.latitude)
     action.location.longitude = parseFloat(action.location.longitude)
     state = action.location
@@ -306,11 +307,11 @@ export const nearby_places = (state = [], action) => {
   return state
 }
 
+
 export const cities = (state = [], action) => {
 
   if (action.type === 'SET_CITIES') {
     // Save the processed data to state.
-    
     return action.cities
   }
 
@@ -506,6 +507,7 @@ let history = null
 
 const rootReducer = combineReducers({
   placesReducer,
+  mapReducer,
   activity,
   allCategories,
   allVibes,

@@ -3,7 +3,7 @@ import Media from 'react-media'
 
 // REDUX STUFF
 import { connect } from 'react-redux'
-import { fetchCities, fetchVibes, setPlaceType } from '../redux/actions'
+import { fetchCategories, fetchCities, fetchVibes, setPlaceType } from '../redux/actions'
 
 // Router, Mobile, & SEO
 import { Helmet } from 'react-helmet'
@@ -15,7 +15,9 @@ import SEO from '../components/seo/'
 // Page elements
 import Header from '../components/elements/header.js'
 import Navigation from '../components/events/navigation.js'
-import Map from '../components/map'
+import EventsMap from '../components/events/events_map.js'
+//import Map from '../components/map'
+
 
 // Layouts
 import TwoColumnLayout from '../components/layouts/TwoColumnLayout'
@@ -36,16 +38,30 @@ class Main extends Component {
 
     try {
       const params = req.query
-      const { place_type, activity } = params
+      const { place_type, activity, longitude, latitude } = params
       console.log('URL path on main: ', params)
+
+      // TODO: Handle browser vs. client logic here.
       
       // Set Redux Store from URL on server so it can be used for SEO
       if (place_type) store.dispatch(setPlaceType(place_type))
+      if (latitude && longitude) {
+        store.dispatch(setCurrentLocation({ latitude: latitude, longitude: longitude }))
+      } 
+
       if (activity) {
         store.dispatch(setActivity(activity))
         store.dispatch(lookUpActivity(activity))
-
-      } 
+      }  else {
+        helpers.getPosition()
+          .then((position) => {
+            if (position) {
+              this.props.setCurrentLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude })
+            } else {
+              // TODO: what if the user disallows location
+            }
+          })
+      }
 
     } catch (error) {
       console.log('Problem parsing history.')
@@ -87,15 +103,22 @@ class Main extends Component {
   componentDidMount() {
     // TODO: Pattern for if data is loaded or errored out
     console.log("Main component did mount")
-    //fetchCities()
-    let vibes = this.props.fetchVibes()
 
+
+
+    const cities = this.props.fetchCities()
+    const vibes = this.props.fetchVibes()
+    const categories = this.props.fetchCategories()
+
+    console.log('Redux after fetch: ', cities, vibes)
 
     if (!this.props.cities) {
       //this.props.dispatch(Main.initialAction())
     }
 
-    let { history } = this.props
+    const isBrowser = !!((typeof window !== 'undefined' && window.document && window.document.createElement))
+
+    console.log('isBrowser: ', isBrowser)
     
   }
 
@@ -135,7 +158,7 @@ class Main extends Component {
       <ItemDetails id={this.props.detailsId} clearDetails={this.clearDetails} /> :      
       <ListSearch data={list_data} type='places' />
 
-    const Map = <div>Map will go here</div>
+    const Map = <EventsMap setLocationParams={this.setLocationParams} />
 
     let mobile = <div>
       { navigation }
@@ -145,7 +168,10 @@ class Main extends Component {
     let web = <div>
       <Header />
       { navigation }
-      Web here. The document is at least 600px wide.
+      <TwoColumnLayout
+        leftPanel={LeftPanel}
+        rightPanel={Map}
+        showLeft={this.props.showList} />
     </div>
 
     return (
@@ -155,11 +181,6 @@ class Main extends Component {
         <MediaMatcher
           desktop={web}
           mobile={mobile} />
-        
-        <TwoColumnLayout
-          leftPanel={LeftPanel}
-          rightPanel={Map}
-          showLeft={this.props.showList} />
 
 
       </div>
@@ -169,12 +190,16 @@ class Main extends Component {
 
 const mapStateToProps = state => ({
   cities: state.cities,
-  showList: state.showList
+  searchTerm: state.searchTerm,
+
+  showList: state.showList,
+  topPicks: state.topPicks
 });
 
-const mapDispatchToProps = dispatch => ({ 
-  fetchVibes: () => dispatch(fetchVibes()) 
+const mapDispatchToProps = dispatch => ({
+  fetchCategories: () => dispatch(fetchCategories()), 
+  fetchCities: () => dispatch(fetchCities()), 
+  fetchVibes: () => dispatch(fetchVibes())
 })
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

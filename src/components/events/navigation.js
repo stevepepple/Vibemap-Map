@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Dropdown, Form, Menu } from 'semantic-ui-react'
 import isEqual from 'react-fast-compare'
 
 // MOve query string and 
@@ -11,17 +10,16 @@ import TopVibes from '../elements/topVibes'
 
 import { Translation } from 'react-i18next'
 
-
 import { connect } from 'react-redux'
-import { store } from '../../redux/store'
 import * as actions from '../../redux/actions'
-import { push } from 'connected-react-router'
+import { withRouter } from 'react-router-dom';
+
+import { Dropdown, Form, Menu } from 'semantic-ui-react'
 
 import '../../styles/navigation.scss'
 //import vibe_styles from '../../styles/vibes.scss'
-
-
 class Navigation extends Component {
+
     constructor(props) {
         super(props)
 
@@ -47,13 +45,19 @@ class Navigation extends Component {
             height: this.navRef.current.offsetHeight,
             width: this.navRef.current.offsetWidth
         })
+
     }
 
     componentWillMount() {
+        const { history } = this.props
+        
+        let params = queryString.parse(history.location.search, { ignoreQueryPrefix: true })
 
-        let params = queryString.parse(this.props.search, { ignoreQueryPrefix: true })
+        console.log('Browser history: ', params)
+
         this.setState({ params: params })
 
+        // TODO: Move to Details page
         if (params.place) {
             this.props.setDetailsId(params.place)
             if(params.type) {
@@ -69,15 +73,11 @@ class Navigation extends Component {
         if (params.latitude && params.longitude) this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude, distance_changed: 0 })
         if (params.mainVibe) this.props.setMainVibe(params.mainVibe)
         if (params.days) this.props.setDays(params.days)
-        if (params.place_type) this.props.setPlaceType(params.place_type)                    
+        //if (params.place_type) this.props.setPlaceType(params.place_type)                    
         if (params.search) this.props.setSearchTerm(params.search)
         if (params.zoom) this.props.setZoom(parseFloat(params.zoom))
         
-        if (params.activity) {
-            this.props.setActivity(params.activity)
-            this.lookUpActivity(params.activity)
-        } 
-
+        if (params.activity) this.lookUpActivity(params.activity)
 
         if (params.vibes) {
             let vibes = []
@@ -86,7 +86,6 @@ class Navigation extends Component {
             } else {
                 vibes = params.vibes
             }
-            console.log('Vibes from url: ', vibes)
 
             this.setState({ vibes: vibes })
             this.props.setCurrentVibes(vibes)
@@ -96,9 +95,6 @@ class Navigation extends Component {
     // Sync URL params with React Router history in Redux store
     componentDidUpdate(prevProps, prevState) {
                         
-        let new_history = queryString.stringify(this.state.params)    
-        push(new_history)
-
         if (!isEqual(prevProps.activity, this.props.activity)) this.updateURL("activity", this.props.activity)
         if (!isEqual(prevProps.detailsId, this.props.detailsId)) this.updateURL("place", this.props.detailsId)
         if (!isEqual(prevProps.detailsType, this.props.detailsType)) this.updateURL("type", this.props.detailsType)
@@ -141,7 +137,15 @@ class Navigation extends Component {
         }
         
         let string = queryString.stringify(params)
-        store.dispatch(push({ search: string }))
+
+        // TODO: Handle route and push param here
+        // How does this work for SSR
+        // store.dispatch(push({ search: string }))
+
+        const { history } = this.props
+
+        if (history) history.push({ search: string })
+
     }        
     
     // Event Handlers
@@ -308,13 +312,15 @@ const mapStateToProps = state => {
         zoom: state.zoom,
         currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,
-        pathname: state.router.location.pathname,
+        //pathname: state.router.location.pathname,
         placeType: state.placeType,
-        search: state.router.location.search,
+        //search: state.router.location.search,
         searchTerm: state.searchTerm,
         mainVibe: state.mainVibe,
         signatureVibes: state.signatureVibes
     }
 }
 
-export default connect(mapStateToProps, actions)(Navigation)
+const navWithRouter = withRouter(Navigation)
+
+export default connect(mapStateToProps, actions)(navWithRouter)

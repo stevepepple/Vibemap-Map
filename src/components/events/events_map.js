@@ -4,8 +4,6 @@ import isEqual from 'react-fast-compare'
 import * as actions from '../../redux/actions'
 import * as turf from '@turf/turf'
 
-import geojsonhint from '@mapbox/geojsonhint'
-
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup, ScaleControl } from 'react-map-gl'
 import CustomMapController from '../map/map-conroller'
 
@@ -26,6 +24,9 @@ import * as Constants from '../../constants.js'
 import helpers from '../../helpers.js'
 
 import '../../styles/map.scss'
+
+import { withRouter } from 'react-router-dom';
+import qs from 'qs'
 
 class EventsMap extends React.Component {
 
@@ -68,7 +69,7 @@ class EventsMap extends React.Component {
         // TODO: make valid GeoJSON in Redux?
 
         // TODO: Remove this is just a temporary work around to get the JSON to work with Mapbox
-        let places_data = nextProps.places_data.map(place => { 
+        let places_data = nextProps.placesData.map(place => { 
             
             delete place.properties.data_sources
             delete place.properties.hotspots_events
@@ -77,7 +78,7 @@ class EventsMap extends React.Component {
         }) 
 
         let places_geojson = turf.featureCollection(places_data)
-        let events_geojson = turf.featureCollection(nextProps.events_data)
+        let events_geojson = turf.featureCollection(nextProps.eventsData)
 
         //console.log('Marker json: ', JSON.stringify(places_geojson))
         //let guides_geojson = turf.featureCollection(nextProps.guideData)
@@ -94,6 +95,8 @@ class EventsMap extends React.Component {
 
         // Truncate long coordinates
         places_geojson = turf.truncate(places_geojson, { precision: 6, coordinates: 2 })
+
+        console.log('currentLocation: ', nextProps.currentLocation)
         
         this.setState({ 
             places_geojson: places_geojson,
@@ -204,14 +207,31 @@ class EventsMap extends React.Component {
 
         // Update Location in one
         if (setLocation) {
-            this.props.setCurrentLocation({ latitude: viewport.latitude, longitude: viewport.longitude, distance_changed: distance })
-            this.props.setLocationParams(this.props.currentLocation)
+            const location = { latitude: viewport.latitude, longitude: viewport.longitude, distance_changed: distance }
+            
+            this.props.setCurrentLocation(location)
+            this.setLocationParams(location)
         }
 
         // Update bearing
         if (setBearing) this.props.setZoom(viewport.zoom)
 
-    }    
+    }   
+    
+    // TODO: Make this into a reusable utility
+    setLocationParams = (currentLocation) => {
+        const { history } = this.props
+
+        let params = qs.parse(history.location.search, { ignoreQueryPrefix: true })
+
+        params["latitude"] = currentLocation.latitude
+        params["longitude"] = currentLocation.longitude
+
+        let string = qs.stringify(params)
+
+        if (history) history.push({ search: string })
+
+    }
 
     // Set details when marker or icon is clicked
     _onClick = (event, feature) => {
@@ -329,18 +349,11 @@ class EventsMap extends React.Component {
         const { densityBonus, guideDetails } = this.props
         const { has_marker_data, has_route_data, marker_data, marker_data_geojson, route_data, score_markers } = this.state
 
-        let has_places_data = this.props.places_data.length > 0
-        let has_events_data = this.props.events_data.length > 0
+        let has_places_data = this.props.placesData.length > 0
+        let has_events_data = this.props.eventsData.length > 0
 
         const mapController = new CustomMapController()
         const mapStyles = this.state.mapStyles
-
-        if (has_route_data) {
-
-            let validate = geojsonhint.hint(guideDetails.route, {
-                precisionWarning: true
-            })
-        } 
 
         let heat_map_filter = [this.props.activity]
         if (this.props.activity === 'all' || this.props.activity === '') {
@@ -585,6 +598,7 @@ const mapStateToProps = state => ({
     currentLocation: state.currentLocation,
     currentItem: state.currentItem,
     densityBonus: state.densityBonus,
+    eventsData: state.eventsData,
     guidesData: state.guidesData,
     guideDetails: state.guideDetails,
     guideMarkers: state.guideMarkers,
@@ -598,13 +612,14 @@ const mapStateToProps = state => ({
     mapReady: state.mapReady,
     mainVibe: state.mainVibe,
     mapSize: state.mapSize,
-    pathname: state.router.location.pathname,
     placeType: state.placeType,
+    placesData: state.placesData,
     params: state.params,
-    search: state.router.location.search,
     topPicks: state.topPicks,
     windowSize: state.windowSize,
     viewport: state.viewport
 })
 
-export default connect(mapStateToProps, actions)(EventsMap)
+const MapWithRouter = withRouter(EventsMap)
+
+export default connect(mapStateToProps, actions)(MapWithRouter)

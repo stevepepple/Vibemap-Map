@@ -6,8 +6,6 @@ import CustomMapController from './map-conroller'
 import { Placeholder, Label, Segment } from 'semantic-ui-react'
 
 import * as Constants from '../../constants.js'
-
-
 class Map extends Component {
   constructor(props) {
     super(props)
@@ -33,7 +31,9 @@ class Map extends Component {
   }    
 
   render() {
-    const { loading, categories, hours, address, url, is_closed } = this.props.currentItem
+    const { loading, height, width } = this.props
+    // TODO: Map should require current item
+    // const { categories, hours, address, url, is_closed } = this.props.currentItem
 
     const mapController = new CustomMapController()
 
@@ -58,7 +58,8 @@ class Map extends Component {
                 //getCursor={this._getCursor}
                 onHover={this._onHover}
                 onViewportChange={this._onViewportChange}
-                width={'100%'}
+                height={height}
+                width={width}
               >
                 {this.props.children}
               </ReactMapGL>
@@ -71,10 +72,12 @@ class Map extends Component {
 }
 
 Map.defaultProps = {
+  loading: false,
+  height: '600px',
+  width: '600px',
   latitude: 37.7577,
   longitude: -122.4376,
   zoom: 12
 }
-
 
 export default Map;

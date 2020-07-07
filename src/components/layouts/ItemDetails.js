@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 
 import { find } from 'lodash'
 import isEqual from 'react-fast-compare'
-import MetaTags from 'react-meta-tags'
+
+import SEO from '../../components/seo/'
+
 
 import { Button, Divider, Icon, Image, Label, List, Reveal, Placeholder, Segment } from 'semantic-ui-react'
 import Directions from '../places/directions'
@@ -243,20 +245,11 @@ class PlaceDetails extends Component {
 
         return (
             <div className='details'>
-
-                <MetaTags>
-                    <title>{title}</title>
-                    <meta property="og:title" content={title} />
-                    <meta property="twitter:title" content={title} />
-
-                    <meta property="og:description" content={this.state.description} />
-                    <meta property="twitter:description" content={this.state.description} />
-
-                    <meta property="og:image" content={image.src} />
-                    <meta name="og:image" content={image.src} />
-                    <meta name="twitter:image" content={image.src} />
-                    
-                </MetaTags>
+                <SEO 
+                    title={title}
+                    description={description}
+                    img={image.src} />
+                
                 <Divider hidden />
                 <Button basic icon='settings' onClick={this.props.clearDetails}>Back</Button>                
     
