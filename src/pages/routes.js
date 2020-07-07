@@ -11,7 +11,7 @@ import { asyncComponent } from '@jaredpalmer/after';
 
 const routes = [
   {
-    path: "/:city?",
+    path: "/cities/:city?",
     exact: true,
     component: asyncComponent({
       loader: () => import('./Main'), // required
@@ -19,8 +19,7 @@ const routes = [
     })
   },
   {
-    path: "/map/:city?",
-    exact: true,
+    path: "/map",
     component: asyncComponent({
       loader: () => import('./MapPage'), // required
       Placeholder: () => <div>...LOADING...</div>
