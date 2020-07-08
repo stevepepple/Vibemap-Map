@@ -14,6 +14,7 @@ import { Provider } from 'react-redux';
 
 class Document extends React.Component {
     static async getInitialProps({ renderPage, store }) {
+        //console.log('store on load: ', store.getState())
         const page = await renderPage(App => props => (
             <Provider store={store}>
                 <App {...props} />
