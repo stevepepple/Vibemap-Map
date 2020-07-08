@@ -123,7 +123,6 @@ export const getDetails = (id, type) => {
     VibeMap.getPlaceDetails(id, type)
       .then(response => response.data)
       .then(details => resolve(details))
-
   })
 }
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Media from 'react-media'
 
 // REDUX STUFF
@@ -6,11 +6,11 @@ import { connect } from 'react-redux'
 import { fetchCategories, fetchCities, fetchVibes, setPlaceType, setZoom } from '../redux/actions'
 
 // Router, Mobile, & SEO
-import { Helmet } from 'react-helmet'
 import { MediaMatcher, pickMatch } from 'react-media-match';
-import { withRouter } from "react-router";
 import SEO from '../components/seo/'
 
+// TODO: MOve to compnoents
+import './Main.scss'
 
 // Page elements
 import Header from '../components/elements/header.js'
@@ -23,9 +23,6 @@ import EventsMap from '../components/events/events_map.js'
 import TwoColumnLayout from '../components/layouts/TwoColumnLayout'
 import ItemDetails from '../components/layouts/ItemDetails.js'
 import ListSearch from '../components/layouts/ListSearch.js'
-
-import { Placeholder } from 'semantic-ui-react'
-
 
 import './Main.scss';
 
@@ -160,14 +157,14 @@ class Main extends Component {
       Mobile here. The document is less than 600px wide.
 
     </div>
-    let web = <div>
+    let web = <Fragment>
       <Header />
       { navigation }
       <TwoColumnLayout
         leftPanel={LeftPanel}
         rightPanel={Map}
         showLeft={this.props.showList} />
-    </div>
+    </Fragment>
 
     return (
       <div className="Main">

@@ -3,6 +3,8 @@ import ErrorBoundary from '../pages/GlobalError.js'
 
 import { Button, Grid, Transition } from 'semantic-ui-react'
 
+import './TwoColumn.scss'
+
 class TwoColumnLayout extends Component {
 
     constructor(props) {

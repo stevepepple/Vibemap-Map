@@ -1,0 +1,46 @@
+@import '../styles/variables.scss';
+
+@import 'vibemap-constants/design-system/build/scss/_variables.scss';
+
+html, body, #root, div.App, div.App > div {
+  height: 100%;
+  font-family: 'Public Sans', sans-serif;
+}
+
+#root, .Main {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#header, #navigation, #content {    
+    display: flex;    
+    justify-content: left;    
+}
+
+#header {        
+    background-repeat: no-repeat;
+    background-position: 12em;
+    background-size: 12em;
+    height: 6%;
+    min-height: 80px;
+    max-height: 8%;
+    width: 100%;
+    border-radius: 0;
+}
+
+#navigation {
+    border-bottom: solid 1px $color-dark-gray;
+    height: 6%;
+    min-height: 80px;
+    max-height: 100px;
+    padding-left: 1em;
+    z-index: 100;    
+}
+
+#header .ui.dropdown {
+    //background: rgba(0,0,0,0.4);
+    //color: #DDDDDD;
+    max-height: 3em;
+    width: 8em;
+}
