@@ -33,8 +33,7 @@ class Navigation extends Component {
             params: {},
             vibes: [],
             vibe_options : [],
-            selected_activity: Constants.main_categories[0],
-            signature_vibes: [],
+            selected_activity: Constants.main_categories[0]
         }
 
         this.navRef = React.createRef()
@@ -169,7 +168,7 @@ class Navigation extends Component {
         this.props.setPlaceType(value)
     }
 
-    handleSignatureVibe = (e, {value}) => {
+    handleVibesets = (e, {value}) => {
 
         // Handled cleareable state
         if (value === '' || value === '') {
@@ -180,7 +179,7 @@ class Navigation extends Component {
         let vibes = [] 
 
         if (value && value !== '') {
-            const current = this.props.signatureVibes.find(({ key }) => key === value);
+            const current = this.props.vibesets.find(({ key }) => key === value);
 
             this.props.setMainVibe(value)
 
@@ -198,7 +197,7 @@ class Navigation extends Component {
 
     render() {
         
-        const { activity, isMobile, mainVibe, signatureVibes, placeType } = this.props
+        const { activity, isMobile, mainVibe, vibesets, placeType } = this.props
 
         let search = <Form size='small'>
             <Form.Group>
@@ -275,8 +274,8 @@ class Navigation extends Component {
                                         //search
                                         labeled
                                         placeholder={t('Vibe sets')}
-                                        onChange={this.handleSignatureVibe}
-                                        options={signatureVibes}
+                                        onChange={this.handleVibesets}
+                                        options={vibesets}
                                         style={{ width: '12em'}}
                                         value={mainVibe}
                                     />

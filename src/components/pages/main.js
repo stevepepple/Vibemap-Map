@@ -543,7 +543,6 @@ const mapStateToProps = state => ({
     placeType: state.placeType,
     searchTerm: state.nav.searchTerm,
     search: state.router.location.search,
-    signatureVibes: state.router.location.signatureVibes,
     showList: state.showList,
     totalPages: state.nav.totalPages,
     topPicks: state.topPicks,

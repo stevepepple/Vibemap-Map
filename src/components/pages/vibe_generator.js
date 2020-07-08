@@ -61,8 +61,8 @@ class VibeGenerator extends Component {
             this.getPlaceDetails()
         }
 
-        if (!isEqual(prevProps.signatureVibes, this.props.signatureVibes)) {
-            this.setState({ options: this.props.signatureVibes })
+        if (!isEqual(prevProps.vibesets, this.props.vibesets)) {
+            this.setState({ options: this.props.vibesets })
         }
     }
 
@@ -305,7 +305,7 @@ const mapStateToProps = state => {
         detailsId: state.detailsId,
         detailsType: state.detailsType,
         detailsShown: state.detailsShown,
-        signatureVibes: state.signatureVibes
+        vibesets: state.nav.vibesets
     }
 }
 
