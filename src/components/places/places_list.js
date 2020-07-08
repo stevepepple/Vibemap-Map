@@ -71,7 +71,7 @@ class PlacesList extends Component {
         let date = <DatePicker 
                         handleChange={this.handleDaysChange.bind(this)}
                         options={this.state.date_options} 
-                        text={(this.state.date_options.find(obj => obj.value === this.props.currentDays).text)} />
+                        text={(this.state.date_options.find(obj => obj.value === this.props.days).text)} />
 
         return (
             <Segment id='list' compact>        
@@ -119,10 +119,10 @@ class PlacesList extends Component {
 
 const mapStateToProps = state => {
     return {
-        activity: state.activity,
-        allCategories: state.allCategories,
-        currentDays: state.currentDays,
-        searchTerm: state.searchTerm,
+        activity: state.nav.activity,
+        allCategories: state.nav.allCategories,
+        days: state.nav.days,
+        searchTerm: state.nav.searchTerm,
         detailsId: state.detailsId,
         detailsType: state.detailsType,
         detailsShown: state.detailsShown,

@@ -137,7 +137,7 @@ class Directions extends Component {
 const mapStateToProps = state => {
     return {
         name : state.name,
-        currentLocation: state.currentLocation,
+        currentLocation: state.nav.currentLocation,
         currentPlace: state.currentPlace,
         detailsShown: state.detailsShown
     }

@@ -87,7 +87,7 @@ class Navigation extends Component {
             }
 
             this.setState({ vibes: vibes })
-            this.props.setCurrentVibes(vibes)
+            this.props.setVibes(vibes)
         }
     }
 
@@ -117,10 +117,10 @@ class Navigation extends Component {
             this.setState({ vibe_options : vibe_options})
         }
 
-        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
-            this.setState({ vibes: this.props.currentVibes })
-            this.props.setCurrentVibes(this.props.currentVibes)
-            this.updateURL("vibes", this.props.currentVibes)
+        if (!isEqual(prevProps.vibes, this.props.vibes)) {
+            this.setState({ vibes: this.props.vibes })
+            this.props.setVibes(this.props.vibes)
+            this.updateURL("vibes", this.props.vibes)
         }
     }
 
@@ -174,7 +174,7 @@ class Navigation extends Component {
         // Handled cleareable state
         if (value === '' || value === '') {
             this.props.setMainVibe(null)
-            this.props.setCurrentVibes([])
+            this.props.setVibes([])
         }
         
         let vibes = [] 
@@ -187,13 +187,13 @@ class Navigation extends Component {
             if (current !== undefined || current !== null) vibes = current.vibes
 
             this.setState({ vibes: vibes })
-            this.props.setCurrentVibes(vibes)
+            this.props.setVibes(vibes)
         }    
     }
 
     handleVibeChange = (event, { value }) => {
         this.setState({ vibes: value })
-        this.props.setCurrentVibes(value)
+        this.props.setVibes(value)
     }
 
     render() {
@@ -301,21 +301,24 @@ class Navigation extends Component {
 
 const mapStateToProps = state => {
     return {
-        activity: state.activity,
-        allVibes: state.allVibes,
-        detailsId: state.detailsId,
-        detailsType: state.detailsType,
-        nearby_places: state.nearby_places,
-        currentLocation: state.currentLocation,
+        allVibes: state.nav.allVibes,
+        activity: state.nav.activity,
+        currentLocation: state.nav.currentLocation,
+        mainVibe: state.nav.mainVibe,
+        searchTerm: state.nav.searchTerm,
+        vibes: state.nav.vibes,
+        vibesets: state.nav.vibesets,
+
+        // Map
         zoom: state.map.zoom,
         currentDistance: state.currentDistance,
-        currentVibes: state.currentVibes,
-        //pathname: state.router.location.pathname,
+
+        // Places
+        nearby_places: state.nearby_places,
         placeType: state.placeType,
-        //search: state.router.location.search,
-        searchTerm: state.searchTerm,
-        mainVibe: state.mainVibe,
-        signatureVibes: state.signatureVibes
+        detailsId: state.detailsId,
+        detailsType: state.detailsType,
+
     }
 }
 

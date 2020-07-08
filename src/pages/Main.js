@@ -3,7 +3,7 @@ import Media from 'react-media'
 
 // REDUX STUFF
 import { connect } from 'react-redux'
-import { fetchCategories, fetchCities, fetchVibes, setPlaceType } from '../redux/actions'
+import { fetchCategories, fetchCities, fetchVibes, setPlaceType, setZoom } from '../redux/actions'
 
 // Router, Mobile, & SEO
 import { Helmet } from 'react-helmet'
@@ -38,16 +38,16 @@ class Main extends Component {
 
     try {
       const params = req.query
-      const { place_type, activity, longitude, latitude } = params
+      const { place_type, activity, longitude, latitude, zoom } = params
       console.log('URL path on main: ', params)
 
       // TODO: Handle browser vs. client logic here.
       
       // Set Redux Store from URL on server so it can be used for SEO
       if (place_type) store.dispatch(setPlaceType(place_type))
-      if (latitude && longitude) {
-        store.dispatch(setCurrentLocation({ latitude: latitude, longitude: longitude }))
-      } 
+      
+      if (latitude && longitude) store.dispatch(setCurrentLocation({ latitude: latitude, longitude: longitude }))
+      if (zoom) store.dispatch(setZoom(zoom))
 
       if (activity) {
         store.dispatch(setActivity(activity))
@@ -97,20 +97,15 @@ class Main extends Component {
       time_of_day: 'morning'
       // Used for mobile adaptive layout
     }
-
   }
 
   componentDidMount() {
     // TODO: Pattern for if data is loaded or errored out
-    console.log("Main component did mount")
-
-
+    console.log("Main component did mount", this.props)
 
     const cities = this.props.fetchCities()
     const vibes = this.props.fetchVibes()
     const categories = this.props.fetchCategories()
-
-    console.log('Redux after fetch: ', cities, vibes)
 
     if (!this.props.cities) {
       //this.props.dispatch(Main.initialAction())
@@ -182,24 +177,27 @@ class Main extends Component {
           desktop={web}
           mobile={mobile} />
 
-
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  cities: state.cities,
-  searchTerm: state.searchTerm,
+  cities: state.nav.allCities,
+  searchTerm: state.nav.searchTerm,
 
   showList: state.showList,
-  topPicks: state.topPicks
+  topPicks: state.topPicks,
+
+  zoom: state.map.zoom
+
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchCategories: () => dispatch(fetchCategories()), 
   fetchCities: () => dispatch(fetchCities()), 
-  fetchVibes: () => dispatch(fetchVibes())
+  fetchVibes: () => dispatch(fetchVibes()),
+  setZoom: () => dispatch(setZoom())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

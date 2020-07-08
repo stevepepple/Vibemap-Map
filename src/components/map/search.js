@@ -35,7 +35,7 @@ class LocationSearchInput extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         
         // Handle city or locations changes
-        if (this.props.cities.length > 0 && !isEqual(prevProps.cities, this.props.cities)) this.handleCities()
+        if (this.props.allCities.length > 0 && !isEqual(prevProps.allCities, this.props.allCities)) this.handleCities()
         if (prevProps.currentLocation.latitude !== this.props.currentLocation.latitude) this.setNearest()
     }
 
@@ -51,7 +51,7 @@ class LocationSearchInput extends React.Component {
 
     handleCities() {
         
-        let locations = this.props.cities.map(function (item) {            
+        let locations = this.props.allCities.map(function (item) {            
             // Attributes for dropdown
             item['key'] = item['id']
             item['value'] = item['id']
@@ -170,9 +170,8 @@ class LocationSearchInput extends React.Component {
 
 const mapStateToProps = state => ({
     bearing: state.map.bearing,
-    geod: state.geod,
-    cities: state.cities,  
-    currentLocation: state.currentLocation,
+    allCities: state.nav.allCities,  
+    currentLocation: state.nav.currentLocation,
     zoom: state.map.zoom
 });
 

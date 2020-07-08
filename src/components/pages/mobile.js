@@ -60,11 +60,9 @@ class Mobile extends Component {
 }
 
 const mapStateToProps = state => ({
-    geod: state.geod,
-    currentCategory: state.currentCategory,
-    currentLocation: state.currentLocation,
+    currentLocation: state.nav.currentLocation,
     zoom: state.map.zoom,
-    currentDays: state.currentDays,
+    days: state.nav.days,
     currentDistance: state.currentDistance,
     eventsData: state.eventsData,
     placesData: state.placesData

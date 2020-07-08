@@ -362,21 +362,21 @@ class PlaceDetails extends Component {
 
 const mapStateToProps = state => {
     return {
-        activity: state.activity,
+        activity: state.nav.activity,
         detailsId: state.detailsId,
         detailsType: state.detailsType,
         nearby_places: state.nearby_places,
-        currentLocation: state.currentLocation,
-        currentItem: state.currentItem,
+        currentLocation: state.nav.currentLocation,
+        currentItem: state.placesReducer.currentItem,
         guidesData: state.guidesData,
         guideMarkers: state.guideMarkers,
         zoom: state.map.zoom,
-        currentDays: state.currentDays,
+        days: state.nav.days,
         currentDistance: state.currentDistance,
-        currentVibes: state.currentVibes,
+        vibes: state.nav.vibes,
         pathname: state.router.location.pathname,
         search: state.router.location.search,
-        searchTerm: state.searchTerm
+        searchTerm: state.nav.searchTerm
     }
 }
 

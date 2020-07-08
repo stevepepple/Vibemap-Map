@@ -60,7 +60,7 @@ MapPage.defaultProps = {
 
 const mapStateToProps = state => ({
   news: state.news,
-  currentLocation: state.currentLocation
+  currentLocation: state.nav.currentLocation
 })
 
 

@@ -1,48 +1,25 @@
 import { combineReducers } from 'redux'
 
-import placesReducer from './places.reducers'
-
-import map from './map.reducers'
-
-//import { connectRouter } from 'connected-react-router'
-
+// TODO: Load only the package from NPM
 import { unionBy } from 'lodash'
-
 import helpers from '../../helpers'
 
 import initialGuides from '../guides.json'
 
-const editorState = { features: [], numFeatures: 0 }
-
-export const editorReducer = (state = editorState, action) => {
-  switch(action.type) {
-    case 'ADD_FEATURE': {
-      return Object.assign({}, state, {
-        features: state.features.concat(action.feature),
-        numFeatures: state.numFeatures++
-      })
-    }
-    default: 
-      return state
-  }
-}
-
+// Load organized reducers
 // reducer takes state and action (in our a javascript object) as parameters
-// then returns a state
-export const uiState = (state = {}, action) => {
-  if (action.type === 'SET_UI_STATE') {
-    //console.log("Setting initial Redux state with: ", action)
-    state = action.state
-  }
-  return state
-}
+import editor from './editor.reducers'
+import map from './map.reducers'
+import nav from './nav.reducers'
+import placesReducer from './places.reducers'
 
+// Global State
+// TODO: Make loading page specific
 export const loading = (state = false, action) => {
   if (action.type === 'SET_LOADING') {
     state = action.state
   }
   return state
-
 }
 
 export const detailsShown = (state = false, action) => {
@@ -74,26 +51,6 @@ export const detailsType = (state = "place", action) => {
   return state
 }
 
-export const activity = (state = "", action) => {
-  if (action.type === 'SET_ACTIVITY') {
-    if (action.activity === "any"){
-      action.activity = null
-    }
-    state = action.activity
-  }
-  return state
-}
-
-// reducer takes state and action (in our a javascript object) as parameters
-// then returns a state
-export const currentLocation = (state = { latitude: 0, longitude: 0, name : null, distance_changed : 0 }, action) => {
-  if (action.type === 'SET_CURRENT_LOCATION') {
-    action.location.latitude = parseFloat(action.location.latitude)
-    action.location.longitude = parseFloat(action.location.longitude)
-    state = action.location
-  }
-  return state
-}
 
 export const windowSize = (state = { width: 1024, height: 768 }, action) => {
   if (action.type === 'SET_WINDOW_SIZE') {
@@ -103,56 +60,9 @@ export const windowSize = (state = { width: 1024, height: 768 }, action) => {
   return state
 }
 
-export const layers = (state = { clusters: false, heatmap: true, neighborhoods: true, places_markers: true, photo_markers: true }, action) => {
-  if (action.type === 'SET_LAYERS') {    
-    state = action.layers
-  }
-  return state
-}
-
-export const layersChanged = (state = false, action) => {
-  if (action.type === 'SET_LAYERS_CHANGED') {
-    // Always change he state to the opposite.
-
-    state = !state
-  }
-  return state
-}
-
 export const headerSize = (state = { width: 0, height: 0 }, action) => {
   if (action.type === 'SET_HEADER_SIZE') {
     state = action.size
-  }
-  return state
-}
-
-export const bounds = (state = [], action) => {
-  if (action.type === 'SET_BOUNDS') {    
-    state = action.bounds    
-  }
-  return state
-}
-
-// Default state is one day
-export const currentDays = (state = "1", action) => {
-  if (action.type === 'SET_DAYS') {
-    //console.log('Setting Days ', action)
-    state = action.days
-  }
-  return state
-}
-
-// Default state is one day
-export const searchTerm = (state = "", action) => {
-  if (action.type === 'SET_SEARCH_TERM') {
-    state = action.term
-  }
-  return state
-}
-
-export const currentVibes = (state = [], action) => {
-  if (action.type === 'SET_CURRENT_VIBES') {
-    state = action.vibes
   }
   return state
 }
@@ -165,37 +75,10 @@ export const placeType = (state = 'places', action) => {
   }
   return state
 }
+
 export const topVibes = (state = [], action) => {
   if (action.type === 'SET_TOP_VIBES') {
     state = action.top_vibes
-  }
-  return state
-}
-
-export const signatureVibes = (state = [], action) => {
-  if (action.type === 'SET_SIGNATURE_VIBES') {
-    state = action.signatureVibes
-  }
-  return state
-}
-
-export const mainVibe = (state = null, action) => {
-  if (action.type === 'SET_MAIN_VIBE') {
-    state = action.vibe
-  }
-  return state
-}
-
-export const allVibes = (state = [], action) => {
-  if (action.type === 'SET_ALL_VIBES') {
-    state = action.allVibes
-  }
-  return state
-}
-
-export const allCategories = (state = [], action) => {
-  if (action.type === 'SET_ALL_CATEGORIES') {
-    state = action.allCategories
   }
   return state
 }
@@ -228,17 +111,6 @@ export const nearby_places = (state = [], action) => {
 
     state = places
   }
-  return state
-}
-
-
-export const cities = (state = [], action) => {
-
-  if (action.type === 'SET_CITIES') {
-    // Save the processed data to state.
-    return action.cities
-  }
-
   return state
 }
 
@@ -327,42 +199,6 @@ export const placesData = (state = [], action) => {
   return state
 }
 
-// TODO: Remove and merge with place.reducers
-export const currentItem = (state = {
-  name: null,
-  description: null,
-  address: null,
-  categories: [],
-  hours: null,
-  instagram: null,
-  phone: null,
-  location: null,
-  reason: null,
-  tips: [],
-  vibes: [],
-  images: []
-}, action) => {
-  if (action.type === "SET_CURRENT_ITEM") {
-    console.log('SET_CURRENT_VIBES: ', action.place)
-    return action.place
-  }
-
-  return state
-}
-
-export const currentPage = (state = 0, action) => {
-  if (action.type === 'SET_CURRENT_PAGE') {
-    state = action.page
-  }
-  return state
-}
-
-export const totalPages = (state = 5, action) => {
-  if (action.type === 'SET_TOTAL_PAGES') {
-    state = action.pages
-  }
-  return state
-}
 
 export const topPicks = (state = [], action) => {
 
@@ -415,35 +251,12 @@ export const name = (state = 'Steve', action) => {
   }
 }
 
-export const geod = (state = {}, action) => {
-
-  switch (action.type) {
-    case 'ACTIVATE_GEOD':
-      return action.geod;
-    case 'CLOSE_GEOD':
-      return {};
-    default:
-      return state;
-  }
-}
-
-let history = null
-
 const rootReducer = combineReducers({
-  placesReducer,
+  editor,
   map,
-  activity,
-  allCategories,
-  allVibes,
-  cities,
-  editorReducer,
-  geod,
-  currentLocation,
-  currentItem,
-  currentDays,
-  currentPage,
-  currentVibes,
-  detailsId,
+  nav,
+  placesReducer,
+
   detailsType,
   detailsShown,
   eventsData,
@@ -451,20 +264,13 @@ const rootReducer = combineReducers({
   guideDetails,
   guideMarkers,
   headerSize,
-  layers,
-  layersChanged,
   name,
   nearby_places,
   placesData,
   placeType,
-  searchTerm,
   showList,
-  totalPages,
   topPicks,
   topVibes,
-  mainVibe,
-  signatureVibes,
-  uiState,
   windowSize
 })
 

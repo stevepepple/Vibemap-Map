@@ -49,7 +49,7 @@ class VibeGenerator extends Component {
     componentDidMount() {
         VibeMap.getVibes()
             .then(results => {
-                this.props.setSignatureVibes(results.data['signature_vibes'])
+                this.props.setVibesets(results.data['signature_vibes'])
             })
 
         this.setColors(this.state.current)

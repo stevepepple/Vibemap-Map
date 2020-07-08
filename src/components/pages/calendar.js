@@ -160,7 +160,7 @@ class EventCalendar extends Component {
 
         const navigation = <Navigation
             setActivity={this.setActivity}
-            days={this.props.currentDays}
+            days={this.props.days}
             vibes={this.state.vibe_categories}
             activities={this.state.event_categories}
             activity={this.state.activity}
@@ -194,11 +194,11 @@ class EventCalendar extends Component {
 
 const mapStateToProps = state => {
     return {
-        activity: state.activity,
-        cities: state.cities,
-        currentLocation: state.currentLocation,
+        activity: state.nav.activity,
+        cities: state.nav.allCities,
+        currentLocation: state.nav.currentLocation,
         distance: state.map.distance,
-        searchTerm: state.searchTerm,
+        searchTerm: state.nav.searchTerm,
         eventsData: state.eventsData,
     }
 }

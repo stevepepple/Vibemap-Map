@@ -420,7 +420,7 @@ class SketchMap extends Component {
 const mapStateToProps = state => {
 
     return {
-        currentLocation: state.currentLocation,
+        currentLocation: state.nav.currentLocation,
         editorReducer: state.editorReducer,
         windowSize: state.windowSize,
         // Map

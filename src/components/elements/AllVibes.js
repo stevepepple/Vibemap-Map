@@ -23,12 +23,14 @@ class AllVibes extends Component {
                 return { key: vibe, value: vibe, className: 'vibe', text: vibe }
             })
 
+            console.log('Vibe options: ', vibe_options)
+
             this.setState({ vibe_options : vibe_options})
         }
         
-        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
+        if (!isEqual(prevProps.vibes, this.props.vibes)) {
 
-            this.setState({ vibes: this.props.currentVibes })
+            this.setState({ vibes: this.props.vibes })
         }
     }    
 
@@ -39,7 +41,7 @@ class AllVibes extends Component {
         console.log('Vibe changed: ',)
 
         this.setState({ vibes: value })
-        this.props.setCurrentVibes(value)
+        this.props.setVibes(value)
     }
 
     clearVibes = () => {
@@ -72,7 +74,7 @@ class AllVibes extends Component {
                                 closeOnChange
                                 onChange={this.handleVibeChange}
                                 options={this.state.vibe_options}
-                                value={this.props.currentVibes}
+                                value={this.props.vibes}
                                 renderLabel={this.renderVibesLabel}
                             />
                         }</Translation>
@@ -95,7 +97,7 @@ class AllVibes extends Component {
                         multiple
                         search
                         onChange={this.handleVibeChange}
-                        value={this.props.currentVibes}
+                        value={this.props.vibes}
                         options={this.state.vibe_options}                        
                         style={{ minWidth: '12em' }}
                         label='Add Vibe'
@@ -112,8 +114,8 @@ class AllVibes extends Component {
 const mapStateToProps = state => {
     //console.log('store to weather: ', state)
     return {
-        allVibes: state.allVibes,
-        currentVibes: state.currentVibes,
+        allVibes: state.nav.allVibes,
+        vibes: state.nav.vibes,
         topVibes: state.topVibes
     }
 }

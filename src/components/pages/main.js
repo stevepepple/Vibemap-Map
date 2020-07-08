@@ -122,7 +122,7 @@ class Page extends Component {
         //let distanceChanged = false
 
         // TODO: Move this to actions or service layer as shouldFetchData        
-        if (!isEqual(prevProps.currentVibes, this.props.currentVibes)) {
+        if (!isEqual(prevProps.vibes, this.props.vibes)) {
             updateData = true
             refreshResults = true
         }
@@ -266,7 +266,7 @@ class Page extends Component {
     fetchVibes() {
         VibeMap.getVibes()
             .then(results => {                
-                this.props.setSignatureVibes(results.data['signature_vibes'])
+                this.props.setVibesets(results.data['signature_vibes'])
                 this.props.setAllVibes(results.data['all_vibes'])                
             })
     }
@@ -274,7 +274,7 @@ class Page extends Component {
     fetchCategories() {
         VibeMap.getCategories()
             .then(results => {
-                //this.props.setSignatureVibes(results.data['signature_vibes'])
+                //this.props.setVibesets(results.data['signature_vibes'])
                 this.props.setAllCategories(results.data['place_categories'])
             })
     }
@@ -297,7 +297,7 @@ class Page extends Component {
 
         /* Get current events, then set them in the state */
         /* TODO: package args into spread object? */
-        VibeMap.getEvents(point, this.props.distance, this.props.bounds, this.state.event_categories, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
+        VibeMap.getEvents(point, this.props.distance, this.props.bounds, this.state.event_categories, this.props.days, this.props.vibes, this.props.searchTerm)
             .then(results => {
 
                 const page = this.props.currentPage
@@ -323,11 +323,11 @@ class Page extends Component {
 
         /* Get nearby places, then set them in the Redux state */
         // If there a search term or vibes do a top pick search
-        if (this.props.currentVibes.length > 0 || this.props.searchTerm !== "") {
+        if (this.props.vibes.length > 0 || this.props.searchTerm !== "") {
             this.setState({ searching: true })
 
             // TODO: add search variable.
-            VibeMap.getPicks(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentVibes, this.props.searchTerm)
+            VibeMap.getPicks(point, this.props.distance, this.props.bounds, this.props.activity, this.props.vibes, this.props.searchTerm)
                 .then(results => {
                     // Set places in he results
                     this.setTopPlaces(results, refreshResults)
@@ -339,7 +339,7 @@ class Page extends Component {
             this.setState({ searching: false })
         }
 
-        VibeMap.getPlaces(point, this.props.distance, this.props.bounds, this.props.activity, this.props.currentDays, this.props.currentVibes, this.props.searchTerm)
+        VibeMap.getPlaces(point, this.props.distance, this.props.bounds, this.props.activity, this.props.days, this.props.vibes, this.props.searchTerm)
             .then(results => {
 
                 if (this.state.searching !== true) {
@@ -497,7 +497,7 @@ class Page extends Component {
 
                     <Navigation
                         setActivity={this.setActivity}
-                        days={this.props.currentDays}
+                        days={this.props.days}
                         activities={this.state.event_categories}
                         activity={this.state.activity}
                         isMobile={isMobile} />                    
@@ -514,9 +514,9 @@ class Page extends Component {
 }
 
 const mapStateToProps = state => ({
-    activity: state.activity,
-    allCategories: state.allCategories,
-    allVibes: state.allVibes,
+    activity: state.nav.activity,
+    allCategories: state.nav.allCategories,
+    allVibes: state.nav.allVibes,
     // Map
     bounds: state.map.bounds,
     boundsReady: state.map.boundsReady,
@@ -529,13 +529,11 @@ const mapStateToProps = state => ({
     zoom: state.map.zoom,
 
     // Navigation
-    cities: state.cities,
-    geod: state.geod,
-    currentCategory: state.currentCategory,
-    currentLocation: state.currentLocation,
-    currentPage: state.currentPage,
-    currentDays: state.currentDays,
-    currentVibes: state.currentVibes,
+    cities: state.nav.allCities,
+    currentLocation: state.nav.currentLocation,
+    currentPage: state.nav.currentPage,
+    days: state.nav.days,
+    vibes: state.nav.vibes,
     detailsShown: state.detailsShown,
     detailsId: state.detailsId,
     detailsType: state.detailsType,
@@ -543,11 +541,11 @@ const mapStateToProps = state => ({
     guidesData: state.guidesData,
     placesData: state.placesData,
     placeType: state.placeType,
-    searchTerm: state.searchTerm,
+    searchTerm: state.nav.searchTerm,
     search: state.router.location.search,
     signatureVibes: state.router.location.signatureVibes,
     showList: state.showList,
-    totalPages: state.totalPages,
+    totalPages: state.nav.totalPages,
     topPicks: state.topPicks,
     topVibes: state.topVibes,
     windowSize: state.windowSize,

@@ -147,9 +147,9 @@ class VectorTile extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    activity: state.activity,
-    layers: state.layers,
-    layersChanged: state.layersChanged
+    activity: state.nav.activity,
+    layers: state.map.layers,
+    layersChanged: state.map.layersChanged
 })
 
 export default connect(mapStateToProps, actions)(VectorTile)

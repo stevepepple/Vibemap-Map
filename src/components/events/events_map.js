@@ -426,7 +426,7 @@ class EventsMap extends React.Component {
                                 {this.props.layers.photo_markers &&
                                     <Markers
                                         data={marker_data}
-                                        currentVibes={this.props.currentVibes}
+                                        vibes={this.props.vibes}
                                         zoom={this.props.zoom}
                                         onClick={this._onClick}
                                         score_markers={score_markers}
@@ -584,36 +584,36 @@ class EventsMap extends React.Component {
 const mapStateToProps = state => ({
     // General
     windowSize: state.windowSize,
+
     // Navigation
-    currentLocation: state.currentLocation,
-    activity: state.activity,
-    allVibes: state.allVibes,
+    currentLocation: state.nav.currentLocation,
+    activity: state.nav.activity,
+    allVibes: state.nav.allVibes,
+    vibes: state.nav.vibes,
+
     // Map
     bearing: state.map.bearing,
     bounds: state.map.bounds,
     densityBonus: state.map.densityBonus,
+    layersChanged: state.map.layersChanged,
     mapReady: state.map.mapReady,
     mapSize: state.map.mapSize,
     zoom: state.map.zoom,
     viewport: state.map.viewport,
     currentItem: state.placesReducer.currentItem,
 
-
     // Places
     nearby_places: state.nearby_places,
-    currentVibes: state.currentVibes,
-    currentItem: state.currentItem,
     eventsData: state.eventsData,
     guidesData: state.guidesData,
     guideDetails: state.guideDetails,
     guideMarkers: state.guideMarkers,
-    layers: state.layers,
-    layersChanged: state.layersChanged,
+    layers: state.map.layers,
     currentDistance: state.currentDistance,
     detailsId: state.detailsId,
     detailsType: state.detailsType,
     detailsShown: state.detailsShown,
-    mainVibe: state.mainVibe,
+    mainVibe: state.nav.mainVibe,
     placeType: state.placeType,
     placesData: state.placesData,
     params: state.params,

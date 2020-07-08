@@ -67,8 +67,8 @@ class LayersFilter extends React.Component {
 const mapStateToProps = state => {
     //console.log('State in events map:', state)
     return {
-        layers: state.layers,
-        layersChanged: state.layersChanged
+        layers: state.map.layers,
+        layersChanged: state.map.layersChanged
     }
 }
 

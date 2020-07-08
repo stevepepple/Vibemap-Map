@@ -35,12 +35,12 @@ class TopVibes extends Component {
     handleClick = (e, vibe) => {        
         let combinedVibes = []
 
-        combinedVibes.concat(this.props.currentVibes)
+        combinedVibes.concat(this.props.vibes)
         
         // Only add vibes that haven't been added.
         if (combinedVibes.indexOf(vibe) < 0) combinedVibes.push(vibe)
 
-        this.props.setCurrentVibes(combinedVibes)
+        this.props.setVibes(combinedVibes)
     }
 
     render() {   
@@ -85,8 +85,8 @@ class TopVibes extends Component {
 const mapStateToProps = state => {
     //console.log('store to weather: ', state)
     return {
-        location: state.currentLocation,
-        currentVibes: state.currentVibes,
+        location: state.nav.currentLocation,
+        vibes: state.nav.vibes,
         topVibes: state.topVibes
     }
 }
