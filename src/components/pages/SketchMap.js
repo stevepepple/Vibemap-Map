@@ -422,10 +422,11 @@ const mapStateToProps = state => {
     return {
         currentLocation: state.currentLocation,
         editorReducer: state.editorReducer,
-        mapSize: state.mapSize,
         windowSize: state.windowSize,
-        viewport: state.viewport, 
-        zoom: state.zoom
+        // Map
+        mapSize: state.map.mapSize,
+        viewport: state.map.viewport, 
+        zoom: state.map.zoom
     }
 }
 

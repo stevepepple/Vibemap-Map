@@ -63,7 +63,7 @@ const mapStateToProps = state => ({
     geod: state.geod,
     currentCategory: state.currentCategory,
     currentLocation: state.currentLocation,
-    zoom: state.zoom,
+    zoom: state.map.zoom,
     currentDays: state.currentDays,
     currentDistance: state.currentDistance,
     eventsData: state.eventsData,

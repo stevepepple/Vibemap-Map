@@ -169,11 +169,11 @@ class LocationSearchInput extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    bearing: state.bearing,
+    bearing: state.map.bearing,
     geod: state.geod,
     cities: state.cities,  
     currentLocation: state.currentLocation,
-    zoom: state.zoom
+    zoom: state.map.zoom
 });
 
 export default connect(mapStateToProps, actions)(LocationSearchInput)

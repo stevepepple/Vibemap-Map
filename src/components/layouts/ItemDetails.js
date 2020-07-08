@@ -370,7 +370,7 @@ const mapStateToProps = state => {
         currentItem: state.currentItem,
         guidesData: state.guidesData,
         guideMarkers: state.guideMarkers,
-        zoom: state.zoom,
+        zoom: state.map.zoom,
         currentDays: state.currentDays,
         currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,

@@ -82,8 +82,6 @@ class EventsMap extends React.Component {
 
         //console.log('Marker json: ', JSON.stringify(places_geojson))
         //let guides_geojson = turf.featureCollection(nextProps.guideData)
-
-        let zoom = this.props.zoom
         
         if (guidesData) this.handleMarkers(nextProps)
         if (topPicks) this.handleMarkers(nextProps)
@@ -95,8 +93,6 @@ class EventsMap extends React.Component {
 
         // Truncate long coordinates
         places_geojson = turf.truncate(places_geojson, { precision: 6, coordinates: 2 })
-
-        console.log('currentLocation: ', nextProps.currentLocation)
         
         this.setState({ 
             places_geojson: places_geojson,
@@ -106,7 +102,7 @@ class EventsMap extends React.Component {
                 bearing: nextProps.bearing,
                 latitude: nextProps.currentLocation.latitude,
                 longitude: nextProps.currentLocation.longitude,
-                zoom: zoom
+                zoom: nextProps.zoom
             }
         })
 
@@ -175,31 +171,28 @@ class EventsMap extends React.Component {
     }
 
     _onViewportChange = viewport => {
-        
         // Keep Redux in sync with current map
+
         // TODO: how to transtlate greater of viewport width or height to search radius
         this.props.setViewport(viewport)
-
         this.setState({ viewport })   
 
-        // If the user pans by more than 2 kilometers, update the map
+        // Calculate distance: If the user pans by more than 2 kilometers, update the map
         let new_location = turf.point([viewport.longitude, viewport.latitude])
         let original_location = turf.point([this.props.currentLocation.longitude, this.props.currentLocation.latitude])
         let distance = turf.distance(original_location, new_location)
 
+        //  Should location be updated in Redux? 
         let setLocation = false
-        let setBearing = false
 
-        // TODO: there's still a problem in how the new and old values sync...
-        // Need to throttle and take the last, most recent value
-        if (viewport.longitude > 0) setLocation = true
-
-        if (distance > 0.25) setLocation = true
+        // TODO: Need to throttle and take the last, most recent value
+        if (viewport.longitude != 0 && viewport.latitude != 0 && distance > 0.25) setLocation = true
 
         if (viewport.bearing !== this.props.bearing) this.props.setBearing(viewport.bearing)
     
         if (viewport.zoom > 2 && viewport.zoom !== this.props.zoom) {
-            setBearing = true
+            setLocation = true
+            this.props.setZoom(viewport.zoom)
         
             // TODO: Can distance be remove from here? 
             //this.props.setDistance(helpers.zoomToRadius(viewport.zoom))
@@ -209,23 +202,24 @@ class EventsMap extends React.Component {
         if (setLocation) {
             const location = { latitude: viewport.latitude, longitude: viewport.longitude, distance_changed: distance }
             
+            // TODO: This is causing the location to be set to zero!!!
             this.props.setCurrentLocation(location)
-            this.setLocationParams(location)
+            //this.setLocationParams(location, viewport.zoom)
         }
 
-        // Update bearing
-        if (setBearing) this.props.setZoom(viewport.zoom)
 
     }   
     
     // TODO: Make this into a reusable utility
-    setLocationParams = (currentLocation) => {
+    // Actually it can be reomved because Navigation handles it
+    setLocationParams = (currentLocation, zoom) => {
         const { history } = this.props
 
         let params = qs.parse(history.location.search, { ignoreQueryPrefix: true })
 
         params["latitude"] = currentLocation.latitude
         params["longitude"] = currentLocation.longitude
+        params["zoom"] = zoom
 
         let string = qs.stringify(params)
 
@@ -588,36 +582,43 @@ class EventsMap extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    // General
+    windowSize: state.windowSize,
+    // Navigation
+    currentLocation: state.currentLocation,
     activity: state.activity,
     allVibes: state.allVibes,
-    baseZoom: state.baseZoom,
-    bearing: state.bearing,
-    bounds: state.bounds,
+    // Map
+    bearing: state.map.bearing,
+    bounds: state.map.bounds,
+    densityBonus: state.map.densityBonus,
+    mapReady: state.map.mapReady,
+    mapSize: state.map.mapSize,
+    zoom: state.map.zoom,
+    viewport: state.map.viewport,
+    currentItem: state.placesReducer.currentItem,
+
+
+    // Places
     nearby_places: state.nearby_places,
     currentVibes: state.currentVibes,
-    currentLocation: state.currentLocation,
     currentItem: state.currentItem,
-    densityBonus: state.densityBonus,
     eventsData: state.eventsData,
     guidesData: state.guidesData,
     guideDetails: state.guideDetails,
     guideMarkers: state.guideMarkers,
     layers: state.layers,
     layersChanged: state.layersChanged,
-    zoom: state.zoom,
     currentDistance: state.currentDistance,
     detailsId: state.detailsId,
     detailsType: state.detailsType,
     detailsShown: state.detailsShown,
-    mapReady: state.mapReady,
     mainVibe: state.mainVibe,
-    mapSize: state.mapSize,
     placeType: state.placeType,
     placesData: state.placesData,
     params: state.params,
     topPicks: state.topPicks,
-    windowSize: state.windowSize,
-    viewport: state.viewport
+    
 })
 
 const MapWithRouter = withRouter(EventsMap)

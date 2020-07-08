@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
 
 import placesReducer from './places.reducers'
-import mapReducer from './map.reducers'
+
+import map from './map.reducers'
 
 //import { connectRouter } from 'connected-react-router'
 
@@ -10,12 +11,6 @@ import { unionBy } from 'lodash'
 import helpers from '../../helpers'
 
 import initialGuides from '../guides.json'
-
-export function uiReducer(state = uiState, action) {
-  switch(action.type) {
-    
-  }
-}
 
 const editorState = { features: [], numFeatures: 0 }
 
@@ -64,20 +59,6 @@ export const showList = (state = true, action) => {
   return state
 }
 
-export const mapReady = (state = false, action) => {
-  if (action.type === 'SET_MAP_READY') {
-    state = action.ready
-  }
-  return state
-}
-
-export const boundsReady = (state = false, action) => {
-  if (action.type === 'SET_BOUNDS_READY') {
-    state = action.ready
-  }
-  return state
-}
-
 export const detailsId = (state = null, action) => {
   if (action.type === 'SET_DETAILS_ID') {
     state = action.id
@@ -98,7 +79,6 @@ export const activity = (state = "", action) => {
     if (action.activity === "any"){
       action.activity = null
     }
-    console.log("SET_ACTIVITY: ", action.activity)
     state = action.activity
   }
   return state
@@ -108,7 +88,6 @@ export const activity = (state = "", action) => {
 // then returns a state
 export const currentLocation = (state = { latitude: 0, longitude: 0, name : null, distance_changed : 0 }, action) => {
   if (action.type === 'SET_CURRENT_LOCATION') {
-    console.log("SET_CURRENT_LOCATION", action.location.latitude, action.location.longitude, action.distance_changed)
     action.location.latitude = parseFloat(action.location.latitude)
     action.location.longitude = parseFloat(action.location.longitude)
     state = action.location
@@ -116,25 +95,9 @@ export const currentLocation = (state = { latitude: 0, longitude: 0, name : null
   return state
 }
 
-export const viewport = (state = {}, action) => {
-  if (action.type === 'SET_VIEWPORT') {
-    
-    state = action.viewport
-  }
-  return state
-}
-
 export const windowSize = (state = { width: 1024, height: 768 }, action) => {
   if (action.type === 'SET_WINDOW_SIZE') {
     //console.log("Set windows size: ", action.size)
-    state = action.size
-  }
-  return state
-}
-
-export const mapSize = (state = { width: 800, height: 600 }, action) => {
-  if (action.type === 'SET_MAP_SIZE') {
-    console.log("Set map size: ", action.size)
     state = action.size
   }
   return state
@@ -166,44 +129,6 @@ export const headerSize = (state = { width: 0, height: 0 }, action) => {
 export const bounds = (state = [], action) => {
   if (action.type === 'SET_BOUNDS') {    
     state = action.bounds    
-  }
-  return state
-}
-
-export const pixelDistance = (state = [], action) => {
-  if (action.type === 'SET_PIXEL_DISTANCE') {
-    state = action.distance
-  }
-  return state
-}
-
-export const densityBonus = (state = 0.2, action) => {
-  if (action.type === 'SET_DENSITY_BONUS') {
-    state = action.bonus
-  }
-  return state
-}
-
-export const bearing = (state = 0, action) => {
-  if (action.type === 'SET_BEARING') {
-    console.log("SET BEARING: ", action.bearing)
-    state = action.bearing
-  }
-  return state
-}
-
-export const zoom = (state = 14, action) => {
-  if (action.type === 'SET_ZOOM') {
-    state = action.zoom
-  }
-  return state
-}
-
-// TODO: create a mathematical relationship between zoom and distance
-export const distance = (state = 1.4, action) => {
-  if (action.type === 'SET_DISTANCE') {
-    console.log('SET_DISTANCE: ', action.distance)
-    state = action.distance
   }
   return state
 }
@@ -249,7 +174,6 @@ export const topVibes = (state = [], action) => {
 
 export const signatureVibes = (state = [], action) => {
   if (action.type === 'SET_SIGNATURE_VIBES') {
-    console.log('SET_SIGNATURE_VIBES')
     state = action.signatureVibes
   }
   return state
@@ -507,13 +431,10 @@ let history = null
 
 const rootReducer = combineReducers({
   placesReducer,
-  mapReducer,
+  map,
   activity,
   allCategories,
   allVibes,
-  bearing,
-  bounds,
-  boundsReady,
   cities,
   editorReducer,
   geod,
@@ -522,11 +443,9 @@ const rootReducer = combineReducers({
   currentDays,
   currentPage,
   currentVibes,
-  densityBonus,
   detailsId,
   detailsType,
   detailsShown,
-  distance,
   eventsData,
   guidesData,
   guideDetails,
@@ -534,11 +453,8 @@ const rootReducer = combineReducers({
   headerSize,
   layers,
   layersChanged,
-  mapReady,
-  mapSize,
   name,
   nearby_places,
-  pixelDistance,
   placesData,
   placeType,
   searchTerm,
@@ -549,9 +465,7 @@ const rootReducer = combineReducers({
   mainVibe,
   signatureVibes,
   uiState,
-  viewport,
-  windowSize,
-  zoom
+  windowSize
 })
 
 export default rootReducer

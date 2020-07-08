@@ -135,9 +135,9 @@ const mapStateToProps = state => {
 
     return {
         editorReducer: state.editorReducer,
-        mapSize: state.mapSize,
+        mapSize: state.map.mapSize,
         windowSize: state.windowSize,
-        viewport: state.viewport,
+        viewport: state.map.viewport,
     }
 }
 

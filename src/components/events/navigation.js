@@ -53,8 +53,6 @@ class Navigation extends Component {
         
         let params = queryString.parse(history.location.search, { ignoreQueryPrefix: true })
 
-        console.log('Browser history: ', params)
-
         this.setState({ params: params })
 
         // TODO: Move to Details page
@@ -75,6 +73,7 @@ class Navigation extends Component {
         if (params.days) this.props.setDays(params.days)
         //if (params.place_type) this.props.setPlaceType(params.place_type)                    
         if (params.search) this.props.setSearchTerm(params.search)
+
         if (params.zoom) this.props.setZoom(parseFloat(params.zoom))
         
         if (params.activity) this.lookUpActivity(params.activity)
@@ -123,11 +122,12 @@ class Navigation extends Component {
             this.props.setCurrentVibes(this.props.currentVibes)
             this.updateURL("vibes", this.props.currentVibes)
         }
-
     }
 
     updateURL(key, value) {
         // Update state and push to Redux search history
+        const { history } = this.props
+
         let params = this.state.params;
 
         if (value && value !== "") {
@@ -141,8 +141,6 @@ class Navigation extends Component {
         // TODO: Handle route and push param here
         // How does this work for SSR
         // store.dispatch(push({ search: string }))
-
-        const { history } = this.props
 
         if (history) history.push({ search: string })
 
@@ -309,7 +307,7 @@ const mapStateToProps = state => {
         detailsType: state.detailsType,
         nearby_places: state.nearby_places,
         currentLocation: state.currentLocation,
-        zoom: state.zoom,
+        zoom: state.map.zoom,
         currentDistance: state.currentDistance,
         currentVibes: state.currentVibes,
         //pathname: state.router.location.pathname,

@@ -517,26 +517,30 @@ const mapStateToProps = state => ({
     activity: state.activity,
     allCategories: state.allCategories,
     allVibes: state.allVibes,
-    bounds: state.bounds,
-    boundsReady: state.boundsReady,
+    // Map
+    bounds: state.map.bounds,
+    boundsReady: state.map.boundsReady,
+    densityBonus: state.map.densityBonus,
+    distance: state.map.distance,
+    mapReady: state.map.mapReady,
+    mapSize: state.map.mapSize,
+    pixelDistance: state.map.pixelDistance,
+    viewport: state.map.viewport,
+    zoom: state.map.zoom,
+
+    // Navigation
     cities: state.cities,
     geod: state.geod,
     currentCategory: state.currentCategory,
     currentLocation: state.currentLocation,
     currentPage: state.currentPage,
-    zoom: state.zoom,
     currentDays: state.currentDays,
     currentVibes: state.currentVibes,
-    densityBonus: state.densityBonus,
     detailsShown: state.detailsShown,
     detailsId: state.detailsId,
     detailsType: state.detailsType,
-    distance: state.distance,
     eventsData: state.eventsData,
     guidesData: state.guidesData,
-    mapReady: state.mapReady,
-    mapSize: state.mapSize,
-    pixelDistance: state.pixelDistance,
     placesData: state.placesData,
     placeType: state.placeType,
     searchTerm: state.searchTerm,
@@ -547,7 +551,6 @@ const mapStateToProps = state => ({
     topPicks: state.topPicks,
     topVibes: state.topVibes,
     windowSize: state.windowSize,
-    viewport: state.viewport
 })
 
 const EventsPage = connect(

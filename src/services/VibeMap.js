@@ -39,7 +39,6 @@ module.exports = {
                 .then(data => data.json())
                 .then(res => {                  
                     clearTimeout(timeout);
-                    console.log('Resolving city data: ', res.results)
                     resolve({ data: res.results, loading: false, timedOut: false })
                 }, (error) => {
                     console.log(error)

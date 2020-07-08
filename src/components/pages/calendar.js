@@ -197,7 +197,7 @@ const mapStateToProps = state => {
         activity: state.activity,
         cities: state.cities,
         currentLocation: state.currentLocation,
-        distance: state.distance,
+        distance: state.map.distance,
         searchTerm: state.searchTerm,
         eventsData: state.eventsData,
     }
