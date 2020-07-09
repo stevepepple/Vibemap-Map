@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-
-import { find } from 'lodash'
 import isEqual from 'react-fast-compare'
+
+// TODO: Replace with Array.prototype.find
+import find from 'lodash.find'
 
 import SEO from '../../components/seo/'
 
@@ -367,7 +368,7 @@ const mapStateToProps = state => {
         detailsType: state.detailsType,
         nearby_places: state.nearby_places,
         currentLocation: state.nav.currentLocation,
-        currentItem: state.placesReducer.currentItem,
+        currentItem: state.places.currentItem,
         guidesData: state.guidesData,
         guideMarkers: state.guideMarkers,
         zoom: state.map.zoom,

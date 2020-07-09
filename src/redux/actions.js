@@ -1,22 +1,17 @@
 import "isomorphic-fetch";
 
+import store from './configureStore'
+
 // Use Thunks with Vibemap service
 import VibeMap from '../services/VibeMap.js'
+import { isBrowser } from "./reducers";
 
-export const addFeature = feature => ({
-  type: 'ADD_FEATURE',
-  feature,
-})
+export const addFeature = feature => ({ type: 'ADD_FEATURE', feature })
 
-export const setDetailsShown = show => ({
-  type: 'SET_DETAILS_SHOWN',
-  show,
-})
+export const setIsBrowser = isBrowser => ({ type: 'SET_IS_BROWSER', isBrowser })
 
-export const setShowList = show => ({
-  type: 'SET_SHOW_LIST',
-  show,
-})
+export const setDetailsShown = show => ({ type: 'SET_DETAILS_SHOWN', show })
+export const setShowList = show => ({ type: 'SET_SHOW_LIST', show })
 
 // Map Actions
 // Reducers are in map.reducers
@@ -31,7 +26,6 @@ export const setMapSize = mapSize => ({ type: 'SET_MAP_SIZE', mapSize })
 export const setPixelDistance = pixelDistance => ({ type: 'SET_PIXEL_DISTANCE', pixelDistance })
 export const setViewport = viewport => ({ type: 'SET_VIEWPORT', viewport })
 export const setZoom = zoom => ({ type: 'SET_ZOOM', zoom })
-
 
 // Navigation Actions
 // Reducers are in nav.reducers
@@ -83,9 +77,10 @@ export const detailsReceived = details => ({ type: "DETAILS_SUCCESS", payload: d
 export const detailsError = () => ({ type: "FETCH_DETAILS_FAILURE" });
 export const setCurrentItem = place => ({ type: 'SET_CURRENT_ITEM', place })
 
+export const setPlacesLoading = placesLoading => ({ type: 'SET_PLACES_LOADING', placesLoading })
+export const setPlacesError = error => ({ type: 'SET_PLACES_ERROR', error })
 
-
-
+// Get Place Details
 export const fetchDetails = (id, type) => (dispatch, getState) => {
   return new Promise(resolve => {
     //dispatch(detailsRequest())
@@ -100,6 +95,64 @@ export const fetchDetails = (id, type) => (dispatch, getState) => {
       })
       .catch(err => dispatch(detailsError(err)))
   })
+}
+
+// Dispatch is called in getInitialProps of Details
+// args: 
+export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', days, vibes, searchTerm, refreshResults) => (dispatch, getState) => {
+
+  dispatch(setPlacesLoading(true))
+
+  const should_search = vibes.length > 0 || searchTerm !== ""
+  // Do a Search
+  if (should_search) {
+    // TODO: search for top picks...
+  }
+  
+  return new Promise(resolve => {
+    
+    // Vibemap service handles the logic and data wranggling
+    // This module shoudl just get and set
+    VibeMap.getPlaces(point, distance, bounds, activity, days, vibes, searchTerm)
+      .then(response => {
+        const results = response.data
+
+        console.log('fetchPlaces Thunk... results', response.count, results)
+
+        // Set Data with minor side effects
+        dispatch(setPlacesLoading(false))
+        dispatch(setPlacesData(results, refreshResults))
+        dispatch(setTopPlaces(results, refreshResults))
+        dispatch(setDensityBonus(response.densityBonus))
+
+        // Return to component promise
+        resolve(results)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  })
+}
+
+export const setTopPlaces = (results, refreshResults) => (dispatch, getState) =>{
+  // Handle Pagination from State
+  const { currentPage, numTopPicks, clusterSize } = getState().nav
+
+  const first = currentPage * numTopPicks
+  const last = first + numTopPicks
+
+  const top_picks = results.splice(first, last)
+  const num_results = results.length
+  const num_pages = Math.floor(num_results / numTopPicks) - 1
+
+  const top_picks_clustered = VibeMap.clusterPlaces(top_picks, clusterSize)
+
+  // TODO: dynamic value for merge top
+  dispatch(setTopPicks(top_picks_clustered, refreshResults, true))
+  dispatch(setTotalPages(num_pages))
+
+  console.log('fetchPlaces thunk top_picks_clustered: ', top_picks_clustered)
+
 }
 
 export const fetchVibes = () => {
@@ -125,6 +178,7 @@ export const getDetails = (id, type) => {
       .then(details => resolve(details))
   })
 }
+
 
 export const setDetailsId = id => ({ 
   type: 'SET_DETAILS_ID', 
@@ -160,6 +214,7 @@ export const setWindowSize = size => ({
   type: 'SET_WINDOW_SIZE',
   size,
 })
+
 export const setLayers = layers => ({
   type: 'SET_LAYERS',
   layers,

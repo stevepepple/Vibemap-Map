@@ -598,11 +598,13 @@ const mapStateToProps = state => ({
     layersChanged: state.map.layersChanged,
     mapReady: state.map.mapReady,
     mapSize: state.map.mapSize,
+    mainVibe: state.nav.mainVibe,
+    placeType: state.nav.placeType,
     zoom: state.map.zoom,
     viewport: state.map.viewport,
-    currentItem: state.placesReducer.currentItem,
 
     // Places
+    currentItem: state.places.currentItem,
     nearby_places: state.nearby_places,
     eventsData: state.eventsData,
     guidesData: state.guidesData,
@@ -613,8 +615,7 @@ const mapStateToProps = state => ({
     detailsId: state.detailsId,
     detailsType: state.detailsType,
     detailsShown: state.detailsShown,
-    mainVibe: state.nav.mainVibe,
-    placeType: state.placeType,
+
     placesData: state.placesData,
     params: state.params,
     topPicks: state.topPicks,

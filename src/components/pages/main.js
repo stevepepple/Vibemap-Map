@@ -112,6 +112,7 @@ class Page extends Component {
         window.addEventListener('resize', this.handleWindowSizeChange)
     }
 
+    // Should update and Debounce API Requests
     componentDidUpdate(prevProps, prevState) {
 
         // TODO: One-time recommended nearby search if the user has selected a place.
@@ -525,6 +526,7 @@ const mapStateToProps = state => ({
     mapReady: state.map.mapReady,
     mapSize: state.map.mapSize,
     pixelDistance: state.map.pixelDistance,
+    placeType: state.nav.placeType,
     viewport: state.map.viewport,
     zoom: state.map.zoom,
 
@@ -540,7 +542,6 @@ const mapStateToProps = state => ({
     eventsData: state.eventsData,
     guidesData: state.guidesData,
     placesData: state.placesData,
-    placeType: state.placeType,
     searchTerm: state.nav.searchTerm,
     search: state.router.location.search,
     showList: state.showList,

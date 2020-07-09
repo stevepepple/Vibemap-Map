@@ -304,6 +304,7 @@ const mapStateToProps = state => {
         activity: state.nav.activity,
         currentLocation: state.nav.currentLocation,
         mainVibe: state.nav.mainVibe,
+        placeType: state.nav.placeType,
         searchTerm: state.nav.searchTerm,
         vibes: state.nav.vibes,
         vibesets: state.nav.vibesets,
@@ -314,7 +315,6 @@ const mapStateToProps = state => {
 
         // Places
         nearby_places: state.nearby_places,
-        placeType: state.placeType,
         detailsId: state.detailsId,
         detailsType: state.detailsType,
 
