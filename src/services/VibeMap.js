@@ -297,9 +297,17 @@ module.exports = {
             fetch(ApiUrl + "/v0.3/places/?" + query)
                 .then(data => data.json())
                 .then(res => {
-
-                    const count = res.count
                     clearTimeout(timeout);
+
+                    // TODO: Make this a util func and move to the backend
+                    const count = res.count
+
+                    let area = helpers.default.getArea(bounds)
+                    let density = count / area
+
+                    let relative_density = helpers.default.scaleDensityArea(density)
+                    let density_bonus = helpers.default.scaleDensityBonus(relative_density)
+
                     let places = module.exports.formatPlaces(res.results.features)
                     let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])
                     //let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
@@ -307,7 +315,13 @@ module.exports = {
                     let top_vibes = module.exports.getTopVibes(res.results.features)
                     // TODO: remove this quick way of export the current data results to a map
                     //console.log(JSON.stringify(res))
-                    resolve({ data: places_scored_and_sorted, count: count,  top_vibes: top_vibes, loading: false, timedOut: false })
+                    resolve({ 
+                        data: places_scored_and_sorted, 
+                        density_bonus: density_bonus,
+                        count: count,  
+                        top_vibes: top_vibes, 
+                        loading: false, 
+                        timedOut: false })
 
                 }, (error) => {
                     console.log(error)
