@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import isEqual from 'react-fast-compare'
-import { debounce } from 'lodash'
+
+import debounce from 'lodash.debounce'
+
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
@@ -126,7 +127,7 @@ const mapStateToProps = state => {
         detailsId: state.detailsId,
         detailsType: state.detailsType,
         detailsShown: state.detailsShown,
-        placeType: state.placeType
+        placeType: state.nav.placeType
     }
 }
 

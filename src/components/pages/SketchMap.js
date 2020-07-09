@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Button, Dropdown, Icon, Menu, Segment } from 'semantic-ui-react'
 
-import { find } from 'lodash'
+import find from 'lodash.find'
 
 //import simplify from '@turf/simplify';
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { debounce } from 'lodash'
+
+// TODO: Doesn't this even work or can it be done with a smaller library
+import debounce from 'lodash.debounce'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
@@ -146,7 +148,7 @@ const mapStateToProps = state => {
         detailsId: state.detailsId,
         detailsType: state.detailsType,
         detailsShown: state.detailsShown,
-        placeType: state.placeType,
+        placeType: state.nav.placeType,
         totalPages: state.nav.totalPages
     }
 }

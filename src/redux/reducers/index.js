@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
 // TODO: Load only the package from NPM
-import { unionBy } from 'lodash'
+import unionBy from 'lodash.unionby'
 import helpers from '../../helpers'
 
 import initialGuides from '../guides.json'
@@ -11,7 +11,7 @@ import initialGuides from '../guides.json'
 import editor from './editor.reducers'
 import map from './map.reducers'
 import nav from './nav.reducers'
-import placesReducer from './places.reducers'
+import places from './places.reducers'
 
 // Global State
 // TODO: Make loading page specific
@@ -25,6 +25,13 @@ export const loading = (state = false, action) => {
 export const detailsShown = (state = false, action) => {
   if (action.type === 'SET_DETAILS_SHOWN') {
     state = action.show
+  }
+  return state
+}
+
+export const isBrowser = (state = false, action) => {
+  if (action.type === 'SET_IS_BROWSER') {
+    state = action.isBrowser
   }
   return state
 }
@@ -252,11 +259,12 @@ export const name = (state = 'Steve', action) => {
 }
 
 const rootReducer = combineReducers({
+  // Module reducers
   editor,
   map,
   nav,
-  placesReducer,
-
+  places,
+  // And general ones
   detailsType,
   detailsShown,
   eventsData,
@@ -264,6 +272,7 @@ const rootReducer = combineReducers({
   guideDetails,
   guideMarkers,
   headerSize,
+  isBrowser,
   name,
   nearby_places,
   placesData,
