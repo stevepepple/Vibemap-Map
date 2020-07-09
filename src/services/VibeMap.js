@@ -4,13 +4,15 @@ const moment = require('moment')
 const helpers = require('../helpers.js')
 const truncate = require('truncate')
 
-import { point, featureCollection, featureEach } from '@turf/helpers'
-import { distance } from '@turf/distance'
-import { clusterEach } from '@turf/clusters'
-import { clustersDbscan } from '@turf/clusters-dbscan'
-import { rhumbBearing } from '@turf/rhumb-bearing'
-import { rhumbDistance } from '@turf/rhumb-distance'
-import { rhumbDestination } from '@turf/rhumb-destination'
+const { point, featureCollection } = require('@turf/helpers')
+const { featureEach } = require('@turf/meta')
+const { clusterEach } = require('@turf/clusters')
+const turf_center = require('@turf/center').default
+const turf_distance = require('@turf/distance').default
+const clustersDbscan = require('@turf/clusters-dbscan').default
+const rhumbBearing = require('@turf/rhumb-bearing').default
+const rhumbDistance = require('@turf/rhumb-distance').default
+const rhumbDestination = require('@turf/rhumb-destination').default
 
 //const fetch = require('node-fetch');
 //global.Headers = fetch.Headers;
@@ -210,11 +212,11 @@ module.exports = {
     },
 
     // TODO: Include a way to query by time of day
-    getPicks: function (point, distance, bounds, activity, vibes, search) {
+    getPicks: function (point, search_distance, bounds, activity, vibes, search) {
  
         // Don't allow distance to be negative.
         let distanceInMeters = 1
-        if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
+        if (search_distance > 0) distanceInMeters = search_distance * Constants.METERS_PER_MILE
 
         if (activity === 'all') activity = null
         
@@ -271,9 +273,9 @@ module.exports = {
     },
 
     // TODO: Include a way to query by time of day
-    getPlaces: function (point, distance, bounds, activity, days, vibes, search_term) {
+    getPlaces: function (point, search_distance, bounds, activity, days, vibes, search_term) {
         let distanceInMeters = 1
-        if (distance > 0) distanceInMeters = distance * Constants.METERS_PER_MILE
+        if (search_distance > 0) distanceInMeters = search_distance * Constants.METERS_PER_MILE
         let center_point = point.split(',').map(value => parseFloat(value))
 
         if (activity === 'all') activity = null
@@ -387,9 +389,9 @@ module.exports = {
         })
     },
 
-    getEvents: function (point, distance, bounds, activity, days, vibes, search_term) {
+    getEvents: function (point, search_distance, bounds, activity, days, vibes, search_term) {
 
-        let distanceInMeters = distance * Constants.METERS_PER_MILE
+        let distanceInMeters = search_distance * Constants.METERS_PER_MILE
         let center_point = point.split(',').map(value => parseFloat(value))
 
         let day_start = moment().startOf('day').format("YYYY-MM-DD HH:MM")
@@ -488,11 +490,11 @@ module.exports = {
             let fields = place.properties
 
             if (scoreby.includes('distance')) {
-                const point = point(place.geometry.coordinates)
-                fields.distance = distance(center_point, point)
+                const score_point = point(place.geometry.coordinates)
+                fields['distance'] = turf_distance(center_point, score_point)
                 // Set max distance
-                if (fields.distance > max_scores['distance']) {
-                    max_scores['distance'] = fields.distance
+                if (fields['distance'] > max_scores['distance']) {
+                    max_scores['distance'] = fields['distance']
                 }
             }
 
@@ -609,7 +611,7 @@ module.exports = {
         clusterEach(clustered, 'cluster', function (cluster, clusterValue, currentIndex) {
             // Only adjust clusters
             if (clusterValue !== 'null') {
-                let center = center(cluster)
+                let center = turf_center(cluster)
 
                 let max_score = helpers.default.getMax(cluster.features, 'average_score')
                 let size = cluster.features.length
@@ -627,9 +629,9 @@ module.exports = {
                     let vibes_score = fields.vibes_score
                     let score_diff = max_score - vibes_score
 
-                    let distance = rhumbDistance(center, currentFeature)
+                    let rhumb_distance = rhumbDistance(center, currentFeature)
                     let bearing = rhumbBearing(center, currentFeature)
-                    let destination = rhumbDestination(center, distance * 2, bearing)
+                    let destination = rhumbDestination(center, rhumb_distance * 2, bearing)
 
                     // Move the point based on the rhumb distance and bearing from the cluster center.
                     fields.offset = destination.geometry

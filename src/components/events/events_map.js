@@ -4,10 +4,8 @@ import isEqual from 'react-fast-compare'
 import * as actions from '../../redux/actions'
 
 import { featureCollection, point } from '@turf/helpers'
-import { center } from '@turf/center'
-import { distance } from '@turf/distance'
-import { truncate } from '@turf/truncate'
-
+import distance from '@turf/distance'
+import truncate from '@turf/truncate'
 
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup, ScaleControl } from 'react-map-gl'
 import CustomMapController from '../map/map-conroller'
@@ -185,13 +183,13 @@ class EventsMap extends React.Component {
         // Calculate distance: If the user pans by more than 2 kilometers, update the map
         let new_location = point([viewport.longitude, viewport.latitude])
         let original_location = point([this.props.currentLocation.longitude, this.props.currentLocation.latitude])
-        let distance = distance(original_location, new_location)
+        let distance_changed = distance(original_location, new_location)
 
         //  Should location be updated in Redux? 
         let setLocation = false
 
         // TODO: Need to throttle and take the last, most recent value
-        if (viewport.longitude != 0 && viewport.latitude != 0 && distance > 0.25) setLocation = true
+        if (viewport.longitude != 0 && viewport.latitude != 0 && distance_changed > 0.25) setLocation = true
 
         if (viewport.bearing !== this.props.bearing) this.props.setBearing(viewport.bearing)
     
@@ -205,7 +203,7 @@ class EventsMap extends React.Component {
 
         // Update Location in one
         if (setLocation) {
-            const location = { latitude: viewport.latitude, longitude: viewport.longitude, distance_changed: distance }
+            const location = { latitude: viewport.latitude, longitude: viewport.longitude, distance: distance_changed }
             
             // TODO: This is causing the location to be set to zero!!!
             this.props.setCurrentLocation(location)

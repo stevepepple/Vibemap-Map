@@ -1,11 +1,12 @@
 import * as Constants from './constants.js'
 
 import { scalePow } from 'd3-scale'
-
 import chroma from 'chroma-js'
 
+import dayjs from 'dayjs'
+
 import { point } from '@turf/helpers'
-import { distance } from '@turf/distance'
+import distance from '@turf/distance'
 
 import geoViewport from '@mapbox/geo-viewport'
 
@@ -31,13 +32,13 @@ const helpers = {
     },
 
     getDistance: function (point_a, point_b) {
-        let distance = distance(
+        let new_distance = distance(
             [point_a[0], point_a[1]],
             [point_b[0], point_b[1]],
             { units: 'miles' }
         )
 
-        return distance
+        return new_distance
     },              
     getRadius: function (bounds) {        
         //let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
@@ -47,9 +48,9 @@ const helpers = {
             { units: 'miles'}
         )
 
-        let distance = diameter / 2
+        let new_distance = diameter / 2
 
-        return distance
+        return new_distance
     },
 
     getArea: function (bounds) {
@@ -245,14 +246,14 @@ const helpers = {
     },
 
     // Adapted from https://gist.github.com/James1x0/8443042
-    getTimeOfDay : function(moment) {
+    getTimeOfDay : function(time) {
 	    var time_of_day = null; //return g
 	
-	    if(!moment || !moment.isValid()) { return; } //if we can't find a valid or filled moment, we return.
+	    if(!time || !time.isValid()) { return; } //if we can't find a valid or filled moment, we return.
 	
 	    var split_afternoon = 12 // 24hr time to split the afternoon
 	    var split_evening = 17 // 24hr time to split the evening
-	    var currentHour = parseFloat(moment.format("HH"));
+	    var currentHour = parseFloat(time.format("HH"));
 	
         if(currentHour >= split_afternoon && currentHour <= split_evening) {
             time_of_day = "afternoon";
