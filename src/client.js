@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './client.css';
+
 import { hydrate } from 'react-dom';
 import { ensureReady, After, getSerializedData } from '@jaredpalmer/after';
 import routes from './pages/routes';
@@ -13,6 +15,7 @@ import configureStore from "./redux/configureStore";
 
 // TODO: How to chuck and minimize this
 import 'vibemap-constants/design-system/semantic/dist/semantic.min.css';
+
 
 // This is a key step that gets the preloaded inialProps
 const preloadedState = getSerializedData('preloaded_state');
