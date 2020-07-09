@@ -1,8 +1,6 @@
 import React from 'react';
 
 import Main from "./Main";
-import News from "./News";
-
 import MapPage from "./MapPage";
 import Details from "./Details";
 

@@ -131,11 +131,11 @@ class Details extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentItem: state.placesReducer.currentItem,
+  currentItem: state.places.currentItem,
   details: state.details,
   loading: state.loading,
   name: state.name,
-  loading: state.placesReducer.loading,
+  loading: state.places.loading,
 });
 
 export default connect(mapStateToProps)(withRouter(Details));

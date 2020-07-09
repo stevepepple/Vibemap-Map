@@ -1,22 +1,23 @@
 const initialState = {
-  loading: false,
-  currentItem: {
-    name: null,
-    description: null,
-    address: null,
-    categories: [],
-    hours: null,
-    instagram: null,
-    phone: null,
-    location: null,
-    reason: null,
-    tips: [],
-    vibes: [],
-    images: []
-  }
+    loading: false,
+    placesLoading: false,
+    currentItem: {
+        name: null,
+        description: null,
+        address: null,
+        categories: [],
+        hours: null,
+        instagram: null,
+        phone: null,
+        location: null,
+        reason: null,
+        tips: [],
+        vibes: [],
+        images: []
+    }
 }
 
-const placesReducer = (state = initialState, action) => {
+const places = (state = initialState, action) => {
     switch (action.type) {
         // TODO: Do we need loading state per end point. 
         case "DETAILS_LOADING":
@@ -24,7 +25,13 @@ const placesReducer = (state = initialState, action) => {
                 ...state,
                 loading: true
             }
-        
+
+        case "SET_PLACES_LOADING":
+            return {
+                ...state,
+                placesLoading: action.placesLoading
+            }
+
         case "DETAILS_SUCCESS":
             let currentItem = action.payload.properties
             const point = action.payload.geometry.coordinates
@@ -36,7 +43,7 @@ const placesReducer = (state = initialState, action) => {
                 currentItem: currentItem,
                 loading: false
             }
-        
+
         case "SET_CURRENT_ITEM":
             return {
                 ...state,
@@ -50,4 +57,4 @@ const placesReducer = (state = initialState, action) => {
     }
 }
 
-export default placesReducer;
+export default places;

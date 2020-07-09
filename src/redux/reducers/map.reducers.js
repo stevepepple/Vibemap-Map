@@ -1,7 +1,7 @@
 const initialState = {
     loading: false,
     bearing: 0,
-    bounds: [],
+    bounds: [10, 10, 10, 10],
     boundsReady: false,
     densityBonus: 0.2,
     distance: 1.4,
@@ -40,7 +40,7 @@ const map = (state = initialState, action) => {
         case "SET_BOUNDS":
             return {
                 ...state,
-                bearing: action.bounds,
+                bounds: action.bounds,
             }
 
         case "SET_BOUNDS_READY":
