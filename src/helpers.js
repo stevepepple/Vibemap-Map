@@ -3,7 +3,10 @@ import * as Constants from './constants.js'
 import { scalePow } from 'd3-scale'
 
 import chroma from 'chroma-js'
-import * as turf from '@turf/turf'
+
+import { point } from '@turf/helpers'
+import { distance } from '@turf/distance'
+
 import geoViewport from '@mapbox/geo-viewport'
 
 import * as style_variables from 'vibemap-constants/design-system/build/json/variables.json';
@@ -28,7 +31,7 @@ const helpers = {
     },
 
     getDistance: function (point_a, point_b) {
-        let distance = turf.distance(
+        let distance = distance(
             [point_a[0], point_a[1]],
             [point_b[0], point_b[1]],
             { units: 'miles' }
@@ -38,7 +41,7 @@ const helpers = {
     },              
     getRadius: function (bounds) {        
         //let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
-        let diameter = turf.distance(
+        let diameter = distance(
             [bounds[0], bounds[1]],
             [bounds[2], bounds[3]],
             { units: 'miles'}
@@ -52,13 +55,13 @@ const helpers = {
     getArea: function (bounds) {
         
         //let bounds = geoViewport.bounds([location.longitude, location.latitude], zoom, [window.width, window.height])
-        let height = turf.distance(
+        let height = distance(
             [bounds[0], bounds[1]], // Southwest
             [bounds[0], bounds[3]], // Northwest
             { units: 'miles' }
         )
 
-        let width = turf.distance(
+        let width = distance(
             [bounds[0], bounds[1]], // Southwest
             [bounds[2], bounds[1]], // Southeast
             { units: 'miles' }
@@ -77,8 +80,8 @@ const helpers = {
 
         const options = { unit: 'miles' }
         
-        const latitudinal_distance = turf.distance([left, bottom],[right, bottom], options)
-        //const longitudinal_distance = turf.distance([left, bottom], [left, top], options)
+        const latitudinal_distance = distance([left, bottom],[right, bottom], options)
+        //const longitudinal_distance = distance([left, bottom], [left, top], options)
 
         let pixel_ratio = latitudinal_distance / window.width
 
@@ -293,13 +296,13 @@ const helpers = {
 
     sortLocations: function(locations, currentLocation) {
 
-        let current = turf.point([currentLocation.longitude, currentLocation.latitude])
+        let current = point([currentLocation.longitude, currentLocation.latitude])
         // Sort the list of places based on closness to the users
         let sorted_locations = locations.sort((a, b) => {
-            let point_a = turf.point(a.centerpoint)
-            let point_b = turf.point(b.centerpoint)
-            a.distance = turf.distance(current, point_a)
-            b.distance = turf.distance(current, point_b)
+            let point_a = point(a.centerpoint)
+            let point_b = point(b.centerpoint)
+            a.distance = distance(current, point_a)
+            b.distance = distance(current, point_b)
             
             if (a.distance > b.distance) {
                 return 1

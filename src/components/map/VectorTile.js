@@ -135,8 +135,11 @@ class VectorTile extends React.Component {
             this.addHeatMap()
         } 
         
-        if (this._map.style._loaded && this.state.update_layer) {            
-            this._map.setFilter("heat_layer", this.props.filter)
+        if (this._map.style._loaded && this.state.update_layer) {        
+            //console.log('Update heatmap with filter: ', this.props.filter)    
+            // TODO: Add back this heatmap
+            // Why does it fire so much; use props did update
+            // this._map.setFilter("heat_layer", this.props.filter)
         }
             
     }

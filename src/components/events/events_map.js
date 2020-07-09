@@ -2,7 +2,12 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import isEqual from 'react-fast-compare'
 import * as actions from '../../redux/actions'
-import * as turf from '@turf/turf'
+
+import { featureCollection, point } from '@turf/helpers'
+import { center } from '@turf/center'
+import { distance } from '@turf/distance'
+import { truncate } from '@turf/truncate'
+
 
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup, ScaleControl } from 'react-map-gl'
 import CustomMapController from '../map/map-conroller'
@@ -77,11 +82,11 @@ class EventsMap extends React.Component {
             return place
         }) 
 
-        let places_geojson = turf.featureCollection(places_data)
-        let events_geojson = turf.featureCollection(nextProps.eventsData)
+        let places_geojson = featureCollection(places_data)
+        let events_geojson = featureCollection(nextProps.eventsData)
 
         //console.log('Marker json: ', JSON.stringify(places_geojson))
-        //let guides_geojson = turf.featureCollection(nextProps.guideData)
+        //let guides_geojson = featureCollection(nextProps.guideData)
         
         if (guidesData) this.handleMarkers(nextProps)
         if (topPicks) this.handleMarkers(nextProps)
@@ -92,7 +97,7 @@ class EventsMap extends React.Component {
         if (nextProps.detailsShown === false) this.setState({ has_route_data: false })
 
         // Truncate long coordinates
-        places_geojson = turf.truncate(places_geojson, { precision: 6, coordinates: 2 })
+        places_geojson = truncate(places_geojson, { precision: 6, coordinates: 2 })
         
         this.setState({ 
             places_geojson: places_geojson,
@@ -178,9 +183,9 @@ class EventsMap extends React.Component {
         this.setState({ viewport })   
 
         // Calculate distance: If the user pans by more than 2 kilometers, update the map
-        let new_location = turf.point([viewport.longitude, viewport.latitude])
-        let original_location = turf.point([this.props.currentLocation.longitude, this.props.currentLocation.latitude])
-        let distance = turf.distance(original_location, new_location)
+        let new_location = point([viewport.longitude, viewport.latitude])
+        let original_location = point([this.props.currentLocation.longitude, this.props.currentLocation.latitude])
+        let distance = distance(original_location, new_location)
 
         //  Should location be updated in Redux? 
         let setLocation = false
@@ -276,7 +281,7 @@ class EventsMap extends React.Component {
 
         if (placeType === 'places' || placeType === 'events') {
             marker_data = topPicks
-            marker_data_geojson = turf.featureCollection(marker_data)
+            marker_data_geojson = featureCollection(marker_data)
 
         } 
         if (placeType === 'guides') {
@@ -288,7 +293,7 @@ class EventsMap extends React.Component {
             if (detailsShown && guideDetails.route !== null && guideMarkers.length > 0) {
                 //route_data = guideDetails.route
                 marker_data = guideMarkers
-                marker_data_geojson = turf.featureCollection(marker_data)
+                marker_data_geojson = featureCollection(marker_data)
                 
                 //this.setState({ viewport: { longitude: center.geometry.coordinates[0], latitude: center.geometry.coordinates[1] }})
 
@@ -317,10 +322,10 @@ class EventsMap extends React.Component {
         if (has_route_data) {
             this.setState({ route_data: route_data, has_route_data: true })
 
-            let bounds = turf.bbox(route_data);
+            let bounds = bbox(route_data);
             // This zooms in too much: mapGL.fitBounds(bounds);
 
-            let center = turf.center(route_data)
+            let center = center(route_data)
 
             this.props.setCurrentLocation({ latitude: center.geometry.coordinates[1], longitude: center.geometry.coordinates[0] })
             this.props.setZoom(14)

@@ -3,7 +3,14 @@ const querystring = require('querystring')
 const moment = require('moment')
 const helpers = require('../helpers.js')
 const truncate = require('truncate')
-const turf = require('@turf/turf')
+
+import { point, featureCollection, featureEach } from '@turf/helpers'
+import { distance } from '@turf/distance'
+import { clusterEach } from '@turf/clusters'
+import { clustersDbscan } from '@turf/clusters-dbscan'
+import { rhumbBearing } from '@turf/rhumb-rhumb-bearing'
+import { rhumbDistance } from '@turf/rhumb-distance'
+import { rhumbDestination } from '@turf/rhumb-destination'
 
 //const fetch = require('node-fetch');
 //global.Headers = fetch.Headers;
@@ -481,8 +488,8 @@ module.exports = {
             let fields = place.properties
 
             if (scoreby.includes('distance')) {
-                const point = turf.point(place.geometry.coordinates)
-                fields.distance = turf.distance(center_point, point)
+                const point = point(place.geometry.coordinates)
+                fields.distance = distance(center_point, point)
                 // Set max distance
                 if (fields.distance > max_scores['distance']) {
                     max_scores['distance'] = fields.distance
@@ -592,17 +599,17 @@ module.exports = {
 
     clusterPlaces: function(places, cluster_size) {
         
-        let collection = turf.featureCollection(places)
+        let collection = featureCollection(places)
 
         // TODO: Adjust cluster measure at each zoom level? 
-        let clustered = turf.clustersDbscan(collection, cluster_size, { mutate: false, minPoints: 2 })
+        let clustered = clustersDbscan(collection, cluster_size, { mutate: false, minPoints: 2 })
 
         let results = []
 
-        turf.clusterEach(clustered, 'cluster', function (cluster, clusterValue, currentIndex) {
+        clusterEach(clustered, 'cluster', function (cluster, clusterValue, currentIndex) {
             // Only adjust clusters
             if (clusterValue !== 'null') {
-                let center = turf.center(cluster)
+                let center = center(cluster)
 
                 let max_score = helpers.default.getMax(cluster.features, 'average_score')
                 let size = cluster.features.length
@@ -614,15 +621,15 @@ module.exports = {
                 */
 
                 // TODO: Handle sorting & sizing based on score and distance. 
-                turf.featureEach(cluster, function (currentFeature, featureIndex) {
+                featureEach(cluster, function (currentFeature, featureIndex) {
 
                     let fields = currentFeature.properties
                     let vibes_score = fields.vibes_score
                     let score_diff = max_score - vibes_score
 
-                    let distance = turf.rhumbDistance(center, currentFeature)
-                    let bearing = turf.rhumbBearing(center, currentFeature)
-                    let destination = turf.rhumbDestination(center, distance * 2, bearing)
+                    let distance = rhumbDistance(center, currentFeature)
+                    let bearing = rhumbBearing(center, currentFeature)
+                    let destination = rhumbDestination(center, distance * 2, bearing)
 
                     // Move the point based on the rhumb distance and bearing from the cluster center.
                     fields.offset = destination.geometry
@@ -645,7 +652,7 @@ module.exports = {
                     //console.log("Cluster: ", currentFeature.properties.dbscan)
                 })
             } else {
-                turf.featureEach(cluster, function (currentFeature, featureIndex) {
+                featureEach(cluster, function (currentFeature, featureIndex) {
                     currentFeature.properties.in_cluster = false
                     currentFeature.properties.top_in_cluster = 'true'
 
