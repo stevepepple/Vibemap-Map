@@ -8,7 +8,7 @@ import { point, featureCollection, featureEach } from '@turf/helpers'
 import { distance } from '@turf/distance'
 import { clusterEach } from '@turf/clusters'
 import { clustersDbscan } from '@turf/clusters-dbscan'
-import { rhumbBearing } from '@turf/rhumb-rhumb-bearing'
+import { rhumbBearing } from '@turf/rhumb-bearing'
 import { rhumbDistance } from '@turf/rhumb-distance'
 import { rhumbDestination } from '@turf/rhumb-destination'
 
