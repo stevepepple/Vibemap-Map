@@ -29,13 +29,7 @@ module.exports = {
     'compression',
     'scss', 
     'compression', 
-    { func: modify },
-    {
-      name: 'purgecss',
-      options: {
-        path: path.resolve(__dirname, 'src/**/*'),
-        only: ['bundle', 'vendor'],
-      }
-    }
+    // TODO: Add back css purge but without breaking teh styles.
+    { func: modify }
   ]
 }
