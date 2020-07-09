@@ -108,65 +108,6 @@ html, body, #root, div.App, div.App > div {
     width: 50vw;
 }
 
-/* List */
-.list_details {
-    display: flex;
-    align-items: stretch;
-    flex-direction: column;    
-    background: #FFFFFF;
-    border-right: solid 1px #999999;
-}
-
-.ui.items, .details {
-    //height: 40vh;
-    overflow: auto;
-    flex-grow: 1;
-    
-}
-
-.ui.items .item {
-    padding: 1em !important;    
-}
-
-.ui.items .item .content .date {
-    font-size: 1.1em;
-    color: $color-base-gray-600;
-    padding: 0.2em;
-    padding-bottom: 0.4em;
-}
-
-.ui.items .item .content .header {
-    font-size: 1.2em;
-}
-
-.ui.items .image {
-    height: 10vmin;
-    width: 12vmin;
-    margin-top: 1vmin !important;
-    background-color: #DDDDDD;
-    overflow: hidden;
-}
-
-.ui.items .item:hover .image img {
-    transform: scale(1.3);
-}
-
-.ui.items .image img {
-    height: 10vmin !important;
-    transform: scale(1);
-    will-change: transform;
-    transition: all 0.2s ease-in-out 0s;
-}
-
-.ui.items .extra, 
-.ui.items .interested {
-    font-family: 'Public Sans', sans-serif;
-}
-
-.ui.items .top_match {
-    color: $color-base-green-deep;
-}
-
 .details {
     padding: 0;
     padding-left: 1em; 
