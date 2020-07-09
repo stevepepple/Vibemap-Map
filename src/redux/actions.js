@@ -117,8 +117,6 @@ export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', 
       .then(response => {
         const results = response.data
 
-        console.log('fetchPlaces Thunk... results', response.count, results)
-
         // Set Data with minor side effects
         dispatch(setPlacesLoading(false))
         dispatch(setPlacesData(results, refreshResults))

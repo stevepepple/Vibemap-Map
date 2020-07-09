@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Header, Modal, Image } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 class EventModal extends Component {
 
@@ -38,7 +38,7 @@ class EventModal extends Component {
 
         console.log('Modal props: ', this.props.data)
         let content = this.props.data.properties
-        let date = moment(content.date)
+        let date = dayjs(content.date)
         let categories = content.categories.map((category) => <span className={'pink image label ' + category}>{category}</span>);
         console.log('categories: ', categories)
 

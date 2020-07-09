@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import querystring from 'querystring';
 import WeatherIcon from 'react-icons-weather';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import helpers from '../../helpers.js'
 import variables from '../../styles/variables.scss'
@@ -27,7 +27,7 @@ class TimeAndTemp extends Component {
     componentWillMount() {
 
         this.getWeather()
-        let time_of_day = helpers.getTimeOfDay(moment())
+        let time_of_day = helpers.getTimeOfDay(dayjs())
         this.setState({ time_of_day })
 
     }

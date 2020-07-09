@@ -17,7 +17,7 @@ class ListItem extends React.Component {
         
         let title = this.props.content.name;
         //let start = this.props.content.start_time
-        //let date = moment(this.props.content.start_date)
+        //let date = dayjs(this.props.content.start_date)
         //let score = Math.round(this.props.content.score)
 
         //console.log(this.props.content.categories)    

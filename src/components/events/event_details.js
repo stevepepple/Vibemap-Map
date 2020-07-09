@@ -4,7 +4,7 @@ import { Button, Header, Image, Label, Loader } from 'semantic-ui-react'
 import Directions from '../places/directions'
 import VibeMap from '../../services/VibeMap.js'
 
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 class EventDetails extends Component {
 
@@ -40,7 +40,7 @@ class EventDetails extends Component {
         
 
         let content = this.state.details_data.properties;
-        let date = moment(content.date)
+        let date = dayjs(content.date)
         let categories = content.categories.map((category) => <Label className={'pink image label ' + category}>{category}</Label>);
 
         console.log(content.vibes)

@@ -12,6 +12,8 @@ import SEO from '../components/seo/'
 import Header from '../components/elements/header.js'
 import Logo from '../components/elements/logo.js'
 
+import dayjs from 'dayjs'
+
 import Navigation from '../components/events/navigation.js'
 import EventsMap from '../components/events/events_map.js'
 //import Map from '../components/map'
@@ -169,14 +171,11 @@ class Main extends Component {
         if (refreshResults) this.setState({ mergeTopPicks: false })
 
         /* Once map and radius are ready, fetch data */
-        if (updateData === true) this.getPlacesOrEvents(refreshResults)
-        
-        if (updateData) console.log('API SHOULD UPDATE ')
+        if (updateData === true) this.getPlacesOrEvents(refreshResults)        
     }
 
     getPlacesOrEvents = debounce((refreshResults) => {
         
-        console.log('getPlacesOrEvents debounced?')
         // TODO: Add preferece for places or events
         switch (this.props.placeType) {
             case 'events':
@@ -281,7 +280,7 @@ class Main extends Component {
             <ListSearch data={list_data} type='places' />
 
         const Map = <Fragment>
-            {placesLoading && <Logo size={120} /> }
+            {placesLoading && <Logo size={100} /> }
 
             <EventsMap setLocationParams={this.setLocationParams} />
         </Fragment>

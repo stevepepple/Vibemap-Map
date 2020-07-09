@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import dayjs from 'dayjs';
+
 const descriptionStyle = {
     position: 'relative',
     height: '6.6em', /* exactly three lines */
@@ -13,7 +14,7 @@ class EventCard extends Component {
     render() {
         let content = this.props.content
         let categories = this.props.content.categories.map((category) => <span class={category}>Category</span>);
-        let date = moment(this.props.content.date)
+        let date = dayjs(this.props.content.date)
         let start = this.props.content.start_time
         let title = this.props.content.title
         // TODO: Move to server side

@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { Item, Icon, Image, Label } from 'semantic-ui-react'
+import React from 'react';
+import { Item, Icon, Label } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import helpers from '../../helpers';
 
 class ListItem extends React.Component {

@@ -1,6 +1,6 @@
 const Constants = require('../constants')
 const querystring = require('querystring')
-const moment = require('moment')
+const dayjs = require('dayjs')
 const helpers = require('../helpers.js')
 const truncate = require('truncate')
 
@@ -280,8 +280,11 @@ module.exports = {
 
         if (activity === 'all') activity = null
 
-        let day_start = moment().startOf('day').utc().format("YYYY-MM-DD HH:MM")
-        let day_end = moment().add(days, 'days').utc().format("YYYY-MM-DD HH:MM")
+        // TODO: Fix UTC format problem...
+        // let day_start = dayjs().startOf('day').utc().format("YYYY-MM-DD HH:MM")
+        // let day_end = dayjs().add(days, 'days').utc().format("YYYY-MM-DD HH:MM")
+        let day_start = dayjs().startOf('day')
+        let day_end = dayjs().add(days, 'days')
         
         // TODO: Load more points at greater distances?
         return new Promise(function (resolve, reject) {
@@ -294,8 +297,9 @@ module.exports = {
                 end_date_before: day_end,
                 categories: activity,
                 search: search_term,
-                per_page: 300
+                per_page: 200
             }
+            console.log('Search Params: ', params)
 
             if (activity) {
                 params["category"] = activity
@@ -394,8 +398,8 @@ module.exports = {
         let distanceInMeters = search_distance * Constants.METERS_PER_MILE
         let center_point = point.split(',').map(value => parseFloat(value))
 
-        let day_start = moment().startOf('day').format("YYYY-MM-DD HH:MM")
-        let day_end = moment().add(days, 'days').format("YYYY-MM-DD HH:MM")
+        let day_start = dayjs().startOf('day').format("YYYY-MM-DD HH:MM")
+        let day_end = dayjs().add(days, 'days').format("YYYY-MM-DD HH:MM")
 
         return new Promise(function (resolve, reject) {
             let query = querystring.stringify({

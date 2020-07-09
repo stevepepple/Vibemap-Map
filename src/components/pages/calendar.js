@@ -7,7 +7,7 @@ import * as actions from '../../redux/actions'
 import helpers from '../../helpers.js'
 import queryString from 'querystring'
 import isEqual from 'react-fast-compare'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 
@@ -25,21 +25,21 @@ class EventCalendar extends Component {
         this.state = {
             // TODO: Update from YAML or API list
             vibe_categories: ['adventurous', 'artsy', 'authentic', 'civic', 'chill', 'cozy', 'creative', 'energetic', 'exclusive', 'festive', 'free', 'friendly', 'healthy', 'local', 'romantic', 'interactive', 'inspired', 'vibrant', 'lively', 'outdoors', 'scenic', 'positive', 'unique'],
-            localizer: momentLocalizer(moment),
+            localizer: momentLocalizer(dayjs),
             height: window.innerHeight,
             events: [
                 {
                     id: 0,
                     title: 'All Day Event very long title',
                     allDay: true,
-                    start: moment(),
-                    end: moment().add(1, 'hours').toDate(),
+                    start: dayjs(),
+                    end: dayjs().add(1, 'hours').toDate(),
                 },
                 {
                     id: 1,
                     title: 'Long Event',
-                    start: moment(),
-                    end: moment().add(1, 'hours').toDate(),
+                    start: dayjs(),
+                    end: dayjs().add(1, 'hours').toDate(),
                 }
             ]
 
@@ -139,11 +139,11 @@ class EventCalendar extends Component {
                     let event = result.properties
 
                     event.title = event.name
-                    event.start = moment(event.start_date).toDate()
-                    event.end = moment(event.start_date).add(1, 'hours').toDate()
+                    event.start = dayjs(event.start_date).toDate()
+                    event.end = dayjs(event.start_date).add(1, 'hours').toDate()
 
                     if(event.end_date !== null) {
-                        event.end = moment(event.end_date).toDate()
+                        event.end = dayjs(event.end_date).toDate()
                     }
 
                     return event
