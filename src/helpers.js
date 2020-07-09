@@ -134,7 +134,6 @@ const helpers = {
     getCategoryMatch(categories) {
         const all_categories = Constants.place_categories.map(category => category.key)
 
-        console.log('all_categories: ', all_categories)
         let matches = []
         /* TODO: use a combination of filter & map */
         categories.map(category => {
