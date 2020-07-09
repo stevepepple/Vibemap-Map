@@ -1,9 +1,13 @@
 const initialState = {
-    allCities: [], 
+    allCities: [],
+    // TODO: Not the best place for this. 
+    clusterSize: 80,
     currentLocation: { latitude: 0, longitude: 0, name: null, distance_changed: 0 },
     currentPage: 0,
     vibes: [],
     days: "1",
+    placeType: "places",
+    numTopPicks: 10,
     searchTerm: "",
     totalPages: 5
 }
@@ -39,8 +43,14 @@ export const nav = (state = initialState, action) => {
             }
         
         case 'SET_CURRENT_LOCATION':
-            action.location.latitude = parseFloat(action.location.latitude)
-            action.location.longitude = parseFloat(action.location.longitude)
+            console.log("SET_CURRENT_LOCATION: ", action)
+            try {
+                action.location.latitude = parseFloat(action.location.latitude)
+                action.location.longitude = parseFloat(action.location.longitude)
+                
+            } catch (error) {
+                console.log('Problem with SET_CURRENT_LOCATION', error)
+            }
 
             return {
                 ...state,
@@ -65,7 +75,11 @@ export const nav = (state = initialState, action) => {
                 mainVibe: action.vibe
             }
 
-        
+        case 'SET_PLACE_TYPE':
+            return {
+                ...state,
+                placeType: action.type
+            }
         
         case 'SET_SEARCH_TERM':
             return {
