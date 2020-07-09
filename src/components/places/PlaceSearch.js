@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Search, Form, Input, Label } from 'semantic-ui-react'
-import { debounce } from 'lodash'
+
+import debounce from 'lodash.debounce'
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'

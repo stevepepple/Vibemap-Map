@@ -1,7 +1,7 @@
 const initialState = {
     allCities: [],
     // TODO: Not the best place for this. 
-    clusterSize: 80,
+    clusterSize: 20,
     currentLocation: { latitude: 0, longitude: 0, name: null, distance_changed: 0 },
     currentPage: 0,
     vibes: [],
@@ -43,15 +43,9 @@ export const nav = (state = initialState, action) => {
             }
         
         case 'SET_CURRENT_LOCATION':
-            console.log("SET_CURRENT_LOCATION: ", action)
-            try {
-                action.location.latitude = parseFloat(action.location.latitude)
-                action.location.longitude = parseFloat(action.location.longitude)
+            action.location.latitude = parseFloat(action.location.latitude)
+            action.location.longitude = parseFloat(action.location.longitude)
                 
-            } catch (error) {
-                console.log('Problem with SET_CURRENT_LOCATION', error)
-            }
-
             return {
                 ...state,
                 currentLocation: action.location
