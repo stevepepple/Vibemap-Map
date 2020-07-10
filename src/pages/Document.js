@@ -36,6 +36,9 @@ class Document extends React.Component {
                     <meta charSet="utf-8" />
                     <title>Welcome to the Afterparty</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    <link rel="preconnect" href="https://tiles.vibemap.com"/>
+                    <link rel="preconnect" href="https://api.vibemap.com"/>
+
                     {helmet.title.toComponent()}
                     {helmet.meta.toComponent()}
                     {helmet.link.toComponent()}
