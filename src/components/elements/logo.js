@@ -11,6 +11,7 @@ class Logo extends Component {
             position: 'absolute', 
             marginBottom: size / 2,
             marginRight: size / 2,
+            opacity: 0.8,
             top: '50%', 
             left: '50%', 
             width: size + 'px',
