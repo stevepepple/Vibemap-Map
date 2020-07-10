@@ -36,6 +36,7 @@
     "lodash.unionby": "^4.8.0",
     "pure-react-carousel": "^1.27.1",
     "react": "16.8",
+    "react-device-detect": "^1.13.1",
     "react-dom": "16.8",
     "react-ga": "^3.1.2",
     "react-helmet": "^6.1.0",

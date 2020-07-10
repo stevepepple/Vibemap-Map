@@ -76,6 +76,7 @@ export const detailsRequest = () => ({ type: "DETAILS_LOADING" });
 export const detailsReceived = details => ({ type: "DETAILS_SUCCESS", payload: details });
 export const detailsError = () => ({ type: "FETCH_DETAILS_FAILURE" });
 export const setCurrentItem = place => ({ type: 'SET_CURRENT_ITEM', place })
+export const setDetailsLoading = detailsLoading => ({ type: "SET_DETAILS_LOADING", detailsLoading });
 
 export const setPlacesLoading = placesLoading => ({ type: 'SET_PLACES_LOADING', placesLoading })
 export const setPlacesError = error => ({ type: 'SET_PLACES_ERROR', error })
@@ -92,6 +93,9 @@ export const fetchDetails = (id, type) => (dispatch, getState) => {
 
         console.log('DISPATCH DETAILS RECIEVED: ', details.properties)
         dispatch(detailsReceived(details))
+        dispatch(setDetailsLoading(false))
+
+        
       })
       .catch(err => dispatch(detailsError(err)))
   })

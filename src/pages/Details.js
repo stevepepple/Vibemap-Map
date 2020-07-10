@@ -7,6 +7,7 @@ import { withRouter } from "react-router";
 
 import SEO from '../components/seo/'
 
+import Header from '../components/places/header'
 import Vibe from '../components/places/vibe'
 import Plan from '../components/places/plan'
 
@@ -69,19 +70,7 @@ class Details extends Component {
     if (loading === false && currentItem == null) { return 'No data for the component.' }
 
     let profile = <Fragment>
-      { loading ? (
-        <Placeholder>
-          <Placeholder.Header>
-            <Placeholder.Line length='very short' />
-            <Placeholder.Line length='medium' />
-          </Placeholder.Header>
-        </Placeholder>
-      ) : (
-          <h2>{currentItem.name}</h2>
-        )}
-
-      <p> Id is: {this.state.id}, {loading}</p>
-
+      <Header loading={loading} currentItem={currentItem} />
       <Vibe loading={loading} currentItem={currentItem} vibes_expanded={vibes_expanded} />
       <Plan loading={loading} currentItem={currentItem} />
     </Fragment>

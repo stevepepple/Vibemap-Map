@@ -537,7 +537,7 @@ const mapStateToProps = state => ({
     days: state.nav.days,
     vibes: state.nav.vibes,
     detailsShown: state.detailsShown,
-    detailsId: state.detailsId,
+    detailsId: state.places.detailsId,
     detailsType: state.detailsType,
     eventsData: state.eventsData,
     guidesData: state.guidesData,

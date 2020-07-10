@@ -120,7 +120,7 @@ const mapStateToProps = state => {
     console.log('State in PlaceSearch mapping !!!', state)
     return {
         currentPlace: state.currentPlace,
-        detailsId: state.detailsId,
+        detailsId: state.places.detailsId,
         detailsType: state.detailsType,
         detailsShown: state.detailsShown
     }

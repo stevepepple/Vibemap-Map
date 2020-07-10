@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import isEqual from 'react-fast-compare'
 
 // TODO: Replace with Array.prototype.find
@@ -16,6 +16,10 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
 import AppStoreLink from '../elements/AppStoreLink'
+
+import Header from '../places/header'
+import Vibe from '../places/vibe'
+import Plan from '../places/plan'
 import Tip from '../elements/Tip'
 
 import CardCarousel from './CardCarousel'
@@ -74,42 +78,10 @@ class PlaceDetails extends Component {
 
     // TODO: Move this module to layouts and make this function more explicitly agnostic to type. 
     getPlaceDetails = function() {
-        const { detailsId, detailsType, setCurrentItem } = this.props
-        VibeMap.getPlaceDetails(detailsId, detailsType)
-            .then(result => {      
-                // Handle Error
-                console.log('getPlaceDetails: ', result.data.detail)
-                if (result.data.detail === 'Not found.') {
-                    this.setState({ currentItem: null, loading: false})
-                } else  {
-                    this.setState({ loading: false })
-                    let point = result.data.geometry.coordinates
-                    let location = { latitude: point[1], longitude: point[0] }
+        const { detailsId, detailsType, setCurrentItem, fetchDetails } = this.props
 
-                    // TEMPORARILY HANDLE MISSING VIBES
-                    if (typeof result.data.properties.vibes === 'undefined') {
-                        result.data.properties.vibes = []
-                    }
-
-                    setCurrentItem({
-                        name: result.data.properties.name,
-                        description: result.data.properties.description,
-                        categories: result.data.properties.categories,
-                        address: result.data.properties.address,
-                        hours: result.data.properties.hours,
-                        phone: result.data.properties.phone,
-                        instagram: result.data.properties.phone,
-                        location: location,
-                        images: result.data.properties.images,
-                        reason: result.data.properties.reason,
-                        tips: result.data.properties.tips,
-                        vibes: result.data.properties.vibes,
-                        url: result.data.properties.url,
-                    })
-                    // TODO: Helper function for coord to lat - long?
-                    this.props.setCurrentLocation(location)
-                }            
-            })
+        let details = fetchDetails(detailsId, detailsType)
+        
     }
 
     getGuideDetails = function () {
@@ -169,8 +141,8 @@ class PlaceDetails extends Component {
 
     render() {
 
-        const { loading, vibes_expanded, vibes_to_show } = this.state
-        const { currentItem } = this.props
+        const { vibes_expanded, vibes_to_show } = this.state
+        const { loading, currentItem } = this.props
         
         if (loading === false && currentItem == null) { return 'No data for the component.' }
 
@@ -179,6 +151,14 @@ class PlaceDetails extends Component {
         let title = this.props.currentItem.name + ' - VibeMap'
         let name = this.props.currentItem.name
         let description = unescape(this.props.currentItem.description)
+
+        let profile = <Fragment>
+            <Header loading={loading} currentItem={currentItem} />
+            <Vibe loading={loading} currentItem={currentItem} vibes_expanded={vibes_expanded} />
+            <Plan loading={loading} currentItem={currentItem} />
+        </Fragment>
+
+        console.log(currentItem)
 
         console.log('Place description: ', description, typeof(description))
 
@@ -254,16 +234,7 @@ class PlaceDetails extends Component {
                 <Divider hidden />
                 <Button basic icon='settings' onClick={this.props.clearDetails}>Back</Button>                
     
-                {this.state.loading ? (
-                    <Placeholder>
-                        <Placeholder.Header>
-                            <Placeholder.Line length='very short'/>
-                            <Placeholder.Line length='medium' />
-                        </Placeholder.Header>
-                    </Placeholder>
-                ): (
-                    <h2>{name}</h2>
-                )} 
+                {profile} 
 
                 {this.state.loading ? (
                     <Placeholder>
@@ -300,7 +271,7 @@ class PlaceDetails extends Component {
                     </List>
                 )}                
 
-                { this.state.loading ? (
+                { loading ? (
                     <Placeholder>
                         <Placeholder.Image square />
                     </Placeholder>
@@ -324,7 +295,7 @@ class PlaceDetails extends Component {
                     </Segment>
                 }
 
-                {this.state.loading ? (
+                {loading ? (
                     <Placeholder>
                         <Placeholder.Line />
                         <Placeholder.Line />
@@ -364,7 +335,8 @@ class PlaceDetails extends Component {
 const mapStateToProps = state => {
     return {
         activity: state.nav.activity,
-        detailsId: state.detailsId,
+        detailsId: state.places.detailsId,
+        loading: state.places.detailsLoading,
         detailsType: state.detailsType,
         nearby_places: state.nearby_places,
         currentLocation: state.nav.currentLocation,
@@ -375,8 +347,6 @@ const mapStateToProps = state => {
         days: state.nav.days,
         currentDistance: state.currentDistance,
         vibes: state.nav.vibes,
-        pathname: state.router.location.pathname,
-        search: state.router.location.search,
         searchTerm: state.nav.searchTerm
     }
 }

@@ -29,21 +29,6 @@ export default function reducer(state = {}, action) {
           loading: true
         };
 
-      case "DETAILS_SUCCESS":
-        // TODO: Push properties to current item...
-        let currentItem = action.payload.properties
-
-        const point = action.payload.geometry.coordinates
-        currentItem['location'] = { latitude: point[1], longitude: point[0] }
-        
-        console.log('current item: ', currentItem)
-
-        return { 
-          ...state, 
-          details: action.payload,
-          currentItem: currentItem,
-          loading: false };
-
       default:
         return state;
     }

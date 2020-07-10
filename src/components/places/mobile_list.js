@@ -82,7 +82,7 @@ class MobileList extends Component {
 const mapStateToProps = state => {
     return {
         searchTerm: state.nav.searchTerm,
-        detailsId: state.detailsId,
+        detailsId: state.places.detailsId,
         detailsShown: state.detailsShown
     }
 }

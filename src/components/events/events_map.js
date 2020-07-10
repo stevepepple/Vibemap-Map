@@ -196,9 +196,6 @@ class EventsMap extends React.Component {
         if (viewport.zoom > 2 && viewport.zoom !== this.props.zoom) {
             setLocation = true
             this.props.setZoom(viewport.zoom)
-        
-            // TODO: Can distance be remove from here? 
-            //this.props.setDistance(helpers.zoomToRadius(viewport.zoom))
         }
 
         // Update Location in one
@@ -207,29 +204,9 @@ class EventsMap extends React.Component {
             
             // TODO: This is causing the location to be set to zero!!!
             this.props.setCurrentLocation(location)
-            //this.setLocationParams(location, viewport.zoom)
         }
-
-
     }   
     
-    // TODO: Make this into a reusable utility
-    // Actually it can be reomved because Navigation handles it
-    setLocationParams = (currentLocation, zoom) => {
-        const { history } = this.props
-
-        let params = qs.parse(history.location.search, { ignoreQueryPrefix: true })
-
-        params["latitude"] = currentLocation.latitude
-        params["longitude"] = currentLocation.longitude
-        params["zoom"] = zoom
-
-        let string = qs.stringify(params)
-
-        if (history) history.push({ search: string })
-
-    }
-
     // Set details when marker or icon is clicked
     _onClick = (event, feature) => {
         console.log("Clicked this: ", event.lngLat, feature)
@@ -343,7 +320,7 @@ class EventsMap extends React.Component {
 
     render() {
 
-        const { densityBonus, guideDetails } = this.props
+        const { densityBonus, guideDetails, isMobile } = this.props
         const { has_marker_data, has_route_data, marker_data, marker_data_geojson, route_data, score_markers } = this.state
 
         let has_places_data = this.props.placesData.length > 0
@@ -373,10 +350,14 @@ class EventsMap extends React.Component {
         return (
             <Fragment>
                 <div className = 'map_container' ref={this.map}>
-                    {/* Floating legend */}    
-                    <ZoomLegend zoom={this.props.zoom}/>          
-
-                    <LayersFilter/>
+                              
+                    {isMobile === false && <Fragment>
+                        {/* Floating legend */}
+                        <ZoomLegend zoom={this.props.zoom} />
+                        <LayersFilter />    
+                    </Fragment> 
+                     }
+                    
 
                     {/* TODO: Move to it's own class <Map> */}
                     <ReactMapGL
@@ -615,7 +596,7 @@ const mapStateToProps = state => ({
     guideMarkers: state.guideMarkers,
     layers: state.map.layers,
     currentDistance: state.currentDistance,
-    detailsId: state.detailsId,
+    detailsId: state.places.detailsId,
     detailsType: state.detailsType,
     detailsShown: state.detailsShown,
 

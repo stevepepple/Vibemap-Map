@@ -145,7 +145,7 @@ const mapStateToProps = state => {
         days: state.nav.days,
         currentPage: state.nav.currentPage,
         searchTerm: state.nav.searchTerm,
-        detailsId: state.detailsId,
+        detailsId: state.places.detailsId,
         detailsType: state.detailsType,
         detailsShown: state.detailsShown,
         placeType: state.nav.placeType,

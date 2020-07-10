@@ -20,10 +20,16 @@ const initialState = {
 const places = (state = initialState, action) => {
     switch (action.type) {
         // TODO: Do we need loading state per end point. 
-        case "DETAILS_LOADING":
+        case "SET_DETAILS_LOADING":
             return {
                 ...state,
-                loading: true
+                detailsLoading: action.detailsLoading
+            }
+
+        case "SET_DETAILS_ID":
+            return {
+                ...state,
+                detailsId: action.id
             }
 
         case "SET_PLACES_LOADING":

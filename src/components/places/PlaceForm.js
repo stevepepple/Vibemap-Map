@@ -63,7 +63,7 @@ class PlaceForm extends Component {
 const mapStateToProps = state => {
     return {
         currentPlace: state.currentPlace,
-        detailsId: state.detailsId,
+        detailsId: state.places.detailsId,
         detailsType: state.detailsType,
         detailsShown: state.detailsShown
     }

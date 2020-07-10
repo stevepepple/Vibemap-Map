@@ -164,7 +164,7 @@ class Markers extends Component {
 
 const mapStateToProps = state => {
     return {
-        detailsId: state.detailsId
+        detailsId: state.places.detailsId
     }
 }
 

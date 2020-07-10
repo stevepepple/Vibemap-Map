@@ -5,7 +5,8 @@ import helpers from '../helpers.js'
 import debounce from 'lodash.debounce'
 
 // Router, Mobile, & SEO
-import { MediaMatcher, pickMatch } from 'react-media-match';
+import { MediaMatcher, pickMatch, MediaConsumer } from 'react-media-match';
+import { isMobile } from 'react-device-detect';
 import SEO from '../components/seo/'
 
 // Page elements
@@ -64,7 +65,6 @@ class Main extends Component {
         // State includes some globals only for the main page; 
         // Most other UI state is managed by Redux
         this.state = {
-            clusterSize: 80,
             // TODO: set state form YAML
             event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             place_categories: ['Arts & Entertainment', 'Food'],
@@ -260,7 +260,7 @@ class Main extends Component {
         </div>)
 
         // Responsive check
-        let isMobile = pickMatch(this.context, { mobile: true, desktop: false })
+        console.log('isMobile', isMobile)
 
         let navigation = <Navigation
             activities={this.state.event_categories}
@@ -282,13 +282,13 @@ class Main extends Component {
         const Map = <Fragment>
             {placesLoading && <Logo size={100} /> }
 
-            <EventsMap setLocationParams={this.setLocationParams} />
+            <EventsMap setLocationParams={this.setLocationParams} isMobile={isMobile} />
         </Fragment>
 
-        let mobile = <div>
-            {navigation}
-             Mobile here. The document is less than 600px wide.
-            </div>
+        let mobile = <Fragment>
+            <Header />
+            {Map}
+        </Fragment>
 
         let web = <Fragment>
             <Header />
@@ -336,8 +336,10 @@ const mapStateToProps = state => ({
     searchTerm: state.nav.searchTerm,
     vibes: state.nav.vibes,
     // Place
+    detailsId: state.places.detailsId,
     placesLoading: state.places.placesLoading,
     // List
+    detailsShown: state.detailsShown,
     showList: state.showList,
     topPicks: state.topPicks,
     windowSize: state.windowSize
