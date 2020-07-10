@@ -6,7 +6,6 @@ import queryString from 'query-string'
 import * as Constants from '../../constants.js'
 
 import LocationSearchInput from '../map/search'
-import TopVibes from '../elements/topVibes'
 
 import { Translation } from 'react-i18next'
 
@@ -286,9 +285,7 @@ class Navigation extends Component {
                                 {/* TODO: for some reason the dropdown as a problem with prop changes. */}
                                 
                             </Menu.Item>
-                            <Menu.Item position='right'>
-                                <TopVibes />
-                            </Menu.Item>
+                            <Menu.Item position='right'></Menu.Item>
                         </Menu>
                     </div >
                 )}
@@ -315,7 +312,7 @@ const mapStateToProps = state => {
 
         // Places
         nearby_places: state.nearby_places,
-        detailsId: state.detailsId,
+        detailsId: state.places.detailsId,
         detailsType: state.detailsType,
 
     }
