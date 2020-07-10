@@ -8,6 +8,7 @@ import routes from './pages/routes';
 
 // React Router 
 import { BrowserRouter as Router } from 'react-router-dom'
+import GA from './services/GoogleAnalytics'
 
 // React Redux
 import { Provider } from "react-redux";
@@ -29,6 +30,8 @@ function renderApp() {
     hydrate(
       <Provider store={store}>
           <Router>
+            {GA.init() && <GA.RouteTracker />}
+
             {/* App.js replaced by After which preloads initial props */}
             <After data={data} routes={routes} store={store} />            
           </Router>
