@@ -58,7 +58,13 @@ html, body, #root, div.App, div.App > div {
     //height: 40vh;
     overflow: auto;
     flex-grow: 1;
-    
+}
+
+.details {
+    padding: 2em;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
 
 .ui.items .item {

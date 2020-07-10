@@ -27,7 +27,6 @@ import Tip from '../elements/Tip'
 
 import CardCarousel from './CardCarousel'
 
-import ShowMoreText from 'react-show-more-text'
 
 /* TODO: Break this into styles for each component */
 import '../../styles/place_details.scss'
@@ -143,6 +142,11 @@ class PlaceDetails extends Component {
         this.setState({ vibes_expanded: !this.state.vibes_expanded })
     }
 
+    scrollToTab(tab) {
+        // If browser
+        window.scrollTo(0, this.planTab.current.offsetTop)  
+    }
+
     render() {
 
         const { vibes_expanded, vibes_to_show } = this.state
@@ -151,53 +155,26 @@ class PlaceDetails extends Component {
         if (loading === false && currentItem == null) { return 'No data for the component.' }
 
         /* TODO: Handle events and places in one place */
-        
         let title = this.props.currentItem.name + ' - VibeMap'
-        let name = this.props.currentItem.name
         let description = unescape(this.props.currentItem.description)
 
+        // Recommendation
+        if (currentItem.reason === undefined) currentItem.reason = 'vibe'
+        const reason = Constants.RECOMMENDATION_REASONS[this.props.currentItem.reason]
+        const recommendation = { score : '95%', reason: reason }        
+
         let profile = <Fragment>
-            <Header loading={loading} currentItem={currentItem} />
-            <Vibe loading={loading} currentItem={currentItem} vibes_expanded={vibes_expanded} />
-            <Plan loading={loading} currentItem={currentItem} />
-        </Fragment>
-
-        console.log(currentItem)
-
-        console.log('Place description: ', description, typeof(description))
-
-        /* TODO: Make recommendation is own component */
-        if (this.props.currentItem.reason === undefined) this.props.currentItem.reason = 'vibe'
-        let reason = Constants.RECOMMENDATION_REASONS[this.props.currentItem.reason]
-        
-        let recommendation = 
-            <List.Item className='recomendation'>
-                <Icon name='heartbeat' color='green' />                
-                <List.Content>
-                    <List.Header>{reason}</List.Header>
-                </List.Content>
-            </List.Item>
-
-        // TODO: Make these components that handle mapping and errors.
-        let categories = null
-        if (this.props.currentItem.categories.length > 0) {
-            categories = this.props.currentItem.categories.map((category) => <Label key={category} className={'image label ' + category}>{category}</Label>);
-        }
-
-        let vibes = null
-        if (this.props.currentItem.vibes.length > 0) {
-            if (vibes_expanded === false) {
-                vibes = currentItem.vibes.slice(0, vibes_to_show).map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
-            } else {
-                vibes = currentItem.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
-            }
-        }
-
-        let image = <Image className = 'placeImage' src={ process.env.PUBLIC_URL + '/images/image.png' } fluid/>
-        let num_images = currentItem.images.length
-        if (num_images > 0) {
-            image = <Image className='placeImage' src={currentItem.images[num_images - 1]} fluid />
-        }
+            <Header loading={loading} currentItem={currentItem} recommendation={recommendation} />
+            {/* TODO: Scroll to content
+                <Button.Group>
+                    <Button onClick={this.scrollToTab}>Vibe</Button>
+                    <Button onClick={this.scrollToTab}>Plan</Button>
+                    <Button>Trip</Button>
+                </Button.Group>
+            */}            
+            <Vibe ref={this.vibeTab} loading={loading} currentItem={currentItem} vibes_expanded={vibes_expanded} />
+            <Plan ref={this.planTab} loading={loading} currentItem={currentItem} />
+        </Fragment>       
 
         let directions = null
 
@@ -225,69 +202,27 @@ class PlaceDetails extends Component {
         if (currentItem && currentItem.tips !== undefined) {
             let all_tips = currentItem.tips.map((tip) => <Tip text={tip}/>)
             tips = <CardCarousel items={all_tips} />
-            
         }
 
+        // Check if there's an image for SEO
+        let preview_image = 'https://pbs.twimg.com/profile_images/1270800120452222977/GFhjmGCz_400x400.jpg'
+        if (currentItem.images.length > 0) preview_image = currentItem.images[0]
+        
         return (
             <div className='details'>
                 <SEO 
                     title={title}
                     description={description}
-                    img={image.src} />
+                    img={preview_image} />
                 
                 <Divider hidden />
-                <Button basic icon='settings' onClick={this.props.clearDetails}>Back</Button>                
+                <Button basic onClick={this.props.clearDetails}>Back</Button>                
     
-                <Link to={'details/' + detailsId}>See Details</Link>
-
                 {profile} 
 
-                {this.state.loading ? (
-                    <Placeholder>
-                        <Placeholder.Line />
-                        <Placeholder.Line />
-                        <Placeholder.Line />
-                    </Placeholder>
-                ) : (
-                    <List verticalAlign='middle'>
-                        <List.Item >
-                            <ShowMoreText
-                                /* Default options */
-                                lines={4}
-                                more='Show more'
-                                less='Show less'
-                                anchorClass=''
-                                onClick={this.executeOnClick}
-                                expanded={false}
-                            >
-                                {description && description !== 'null' ? description : 'No description'}
-                            </ShowMoreText>
-                        </List.Item>
-                        { recommendation }
-                        <List.Item>
-                            {vibes}
-                            {(this.state.vibes_expanded === false && this.props.currentItem.vibes.length > this.state.vibes.length) &&
-                                <Button basic onClick={this.toggleMoreVibes} className='tiny' icon='arrow down' circular />
-                            }
-
-                            { this.state.vibes_expanded === true &&
-                                <Button basic onClick={this.toggleMoreVibes} className='tiny' icon='arrow up' circular />
-                            }
-                        </List.Item>
-                    </List>
-                )}                
-
-                { loading ? (
-                    <Placeholder>
-                        <Placeholder.Image square />
-                    </Placeholder>
-                ): (
-                    <Reveal animated='fade'>
-                        <Reveal.Content hidden>
-                            {image}
-                        </Reveal.Content>
-                    </Reveal>            
-                )}
+                <Link to={'details/' + detailsId}>
+                    <Button basic fluid>Check it out</Button>
+                </Link>
 
                 {places &&
                     <Segment.Group>
@@ -299,27 +234,7 @@ class PlaceDetails extends Component {
                     <Segment basic>
                         {tips}
                     </Segment>
-                }
-
-                {loading ? (
-                    <Placeholder>
-                        <Placeholder.Line />
-                        <Placeholder.Line />
-                        <Placeholder.Line />
-                    </Placeholder>
-                ) : (
-                    <Segment.Group>                    
-                        <Segment>{categories ? categories : 'No categories'}</Segment>
-                        <Segment>{this.props.currentItem.hours ? this.props.currentItem.hours : 'No hours' }</Segment>
-                        <Segment>{this.props.currentItem.address ? this.props.currentItem.address: 'No address' }</Segment>
-                        <Segment>{this.props.currentItem.url ? this.props.currentItem.url : 'No website' }</Segment>
-                    </Segment.Group>
-                    )}
-
-                <div>
-                    
-                </div>                        
-                
+                }                
 
                 {/* TODO: Render Description at HTML the proper way as stored in Mongo and then as own React component */}
 

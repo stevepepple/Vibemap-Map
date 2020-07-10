@@ -2,6 +2,9 @@ import React from 'react'
 
 import { Placeholder, Label, Segment } from 'semantic-ui-react'
 
+import ShowMoreText from 'react-show-more-text'
+
+
 const Vibe = (props) => {
   let { vibes, description, categories, tips, vibes_expanded } = props.currentItem
 
@@ -18,11 +21,8 @@ const Vibe = (props) => {
     categories = props.currentItem.categories.map((category) => <Label key={category} className={'image label ' + category}>{category}</Label>);
   }
 
-
   let top_tip = null
-  if (tips.length > 0) {
-    top_tip = tips[0]
-  }
+  if (tips.length > 0) top_tip = tips[0]
 
   return <div>
     {
@@ -39,7 +39,16 @@ const Vibe = (props) => {
               { vibes.length > 0 ? vibes : 'Add the first vibe...'}
             </Segment>
             <Segment vertical>
-              { description ? description : 'No description'}
+              <ShowMoreText
+                /* Default options */
+                lines={4}
+                more='Show more'
+                less='Show less'
+                expanded={false}
+              >
+                {description ? unescape(description) : 'No description'}
+              </ShowMoreText>
+
             </Segment>
             <Segment vertical>
               <Label basic>Activities</Label>

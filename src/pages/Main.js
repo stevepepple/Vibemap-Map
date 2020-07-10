@@ -259,14 +259,10 @@ class Main extends Component {
             <Logo size={140} />
         </div>)
 
-        // Responsive check
-        console.log('isMobile', isMobile)
-
         let navigation = <Navigation
             activities={this.state.event_categories}
             activity={this.state.activity}
             isMobile={isMobile} />
-
 
         // Pick the list that should be display
         // TODO: Create a cleary way to manage the state between events, places, adn guides. 
