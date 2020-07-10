@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 import { Item, Icon, Label } from 'semantic-ui-react'
 
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 function cardPLaceLayout(props) {
 
@@ -52,7 +52,7 @@ function cardPLaceLayout(props) {
         <Fragment>
             <Item.Image src={content.images[0]} size='small' />
             <Item.Content>
-                <Item.Extra className='date'>{moment(date).format('h:mm a')} {moment(date).format('dddd')}</Item.Extra>
+                <Item.Extra className='date'>{dayjs(date).format('h:mm a')} {dayjs(date).format('dddd')}</Item.Extra>
                 <Item.Header>{name}</Item.Header>
                 <Item.Extra>
                     <div>
