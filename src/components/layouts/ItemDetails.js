@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import isEqual from 'react-fast-compare'
 
+import { Link } from "react-router-dom";
+
+
 // TODO: Replace with Array.prototype.find
 import find from 'lodash.find'
 
@@ -28,6 +31,7 @@ import ShowMoreText from 'react-show-more-text'
 
 /* TODO: Break this into styles for each component */
 import '../../styles/place_details.scss'
+import { detailsId } from '../../redux/reducers';
 
 class PlaceDetails extends Component {
 
@@ -142,7 +146,7 @@ class PlaceDetails extends Component {
     render() {
 
         const { vibes_expanded, vibes_to_show } = this.state
-        const { loading, currentItem } = this.props
+        const { loading, currentItem, detailsId } = this.props
         
         if (loading === false && currentItem == null) { return 'No data for the component.' }
 
@@ -234,6 +238,8 @@ class PlaceDetails extends Component {
                 <Divider hidden />
                 <Button basic icon='settings' onClick={this.props.clearDetails}>Back</Button>                
     
+                <Link to={'details/' + detailsId}>See Details</Link>
+
                 {profile} 
 
                 {this.state.loading ? (

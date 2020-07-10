@@ -101,6 +101,12 @@ export const fetchDetails = (id, type) => (dispatch, getState) => {
   })
 }
 
+export const clearDetails = () => (dispatch, getState) => {
+  dispatch(setDetailsId(null))
+  dispatch(setDetailsType(null))
+  dispatch(setDetailsShown(false))
+}
+
 // Dispatch is called in getInitialProps of Details
 // args: 
 export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', days, vibes, searchTerm, refreshResults) => (dispatch, getState) => {
