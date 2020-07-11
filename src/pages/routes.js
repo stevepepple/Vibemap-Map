@@ -9,6 +9,14 @@ import { asyncComponent } from '@jaredpalmer/after';
 
 const routes = [
 	{
+		path: "/",
+		exact: true,
+		component: asyncComponent({
+			loader: () => import('./Redirect'), // required
+			Placeholder: () => <div>...LOADING...</div>
+		})
+	},
+	{
 		path: "/cities/:city?",
 		exact: true,
 		component: asyncComponent({

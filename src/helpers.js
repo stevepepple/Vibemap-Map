@@ -319,7 +319,7 @@ const helpers = {
     findPlaceCategoriess: function(categories) {
         
         let combined = []
-        Constants.all_categories.map(function(category){
+        Constants.place_categories.map(function(category){
 
             let isMatch = function(name) {
                 var found = categories.indexOf(name)

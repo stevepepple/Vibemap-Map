@@ -16,23 +16,33 @@ class AllVibes extends Component {
         }
     }
 
+    componentWillMount() {
+        const { allVibes, vibes } = this.props
+        this.setOptions(allVibes)
+    }
+
     componentDidUpdate(prevProps) {
+
         if (!isEqual(prevProps.allVibes, this.props.allVibes)) {
-                        
-            let vibe_options = this.props.allVibes.map(function (vibe) {
-                return { key: vibe, value: vibe, className: 'vibe', text: vibe }
-            })
-
-            console.log('Vibe options: ', vibe_options)
-
-            this.setState({ vibe_options : vibe_options})
+            this.setOptions(allVibes)
         }
         
         if (!isEqual(prevProps.vibes, this.props.vibes)) {
 
             this.setState({ vibes: this.props.vibes })
         }
-    }    
+    }  
+    
+    setOptions(allVibes) {
+        let vibe_options = allVibes.map(function (vibe) {
+            return { key: vibe, value: vibe, className: 'vibe', text: vibe }
+        })
+
+        console.log('Vibe options: ', vibe_options)
+
+        this.setState({ vibe_options: vibe_options })
+
+    }
 
     handleVibeChange = (event, { value }) => {
     
@@ -54,7 +64,12 @@ class AllVibes extends Component {
     })
 
     render() {
-        let num_vibes = this.state.vibes.length
+        const { allVibes, vibes } = this.props
+
+        let num_vibes = vibes.length
+
+        console.log('Got vibes: ',num_vibes, vibes)
+
 
         return (
             <div className='allVibes' style={{ position: 'absolute', margin: '1em', zIndex: '90'}}>
