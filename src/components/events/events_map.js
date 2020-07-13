@@ -257,7 +257,6 @@ class EventsMap extends React.Component {
         if (placeType === 'places' || placeType === 'events') {
             marker_data = topPicks
             marker_data_geojson = featureCollection(marker_data)
-
         } 
         if (placeType === 'guides') {
             marker_data = guidesData
@@ -268,14 +267,7 @@ class EventsMap extends React.Component {
             if (detailsShown && guideDetails.route !== null && guideMarkers.length > 0) {
                 //route_data = guideDetails.route
                 marker_data = guideMarkers
-                marker_data_geojson = featureCollection(marker_data)
-                
-                //this.setState({ viewport: { longitude: center.geometry.coordinates[0], latitude: center.geometry.coordinates[1] }})
-
-                //console.log('Center and bounds of route: ', bbox, center)
-
-                //this.props.setCurrentLocation({ longitude: center.geometry.coordinates[0], latitude: center.geometry.coordinates[1] })
-
+                marker_data_geojson = featureCollection(marker_data)            
             }
         }
 
