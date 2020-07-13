@@ -3,6 +3,7 @@ import React from 'react';
 import Main from "./Main";
 import MapPage from "./MapPage";
 import Details from "./Details";
+import Redirect from "./Redirect";
 
 // Handles prefetching of async data
 import { asyncComponent } from '@jaredpalmer/after';
@@ -11,10 +12,7 @@ const routes = [
 	{
 		path: "/",
 		exact: true,
-		component: asyncComponent({
-			loader: () => import('./Redirect'), // required
-			Placeholder: () => <div>...LOADING...</div>
-		})
+		component: Redirect
 	},
 	{
 		path: "/cities/:city?",
