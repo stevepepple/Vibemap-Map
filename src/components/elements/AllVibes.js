@@ -34,13 +34,15 @@ class AllVibes extends Component {
     }  
     
     setOptions(allVibes) {
-        let vibe_options = allVibes.map(function (vibe) {
-            return { key: vibe, value: vibe, className: 'vibe', text: vibe }
-        })
+        const has_vibes = allVibes && allVibes.length > 0
+        
+        if (has_vibes) {
+            let vibe_options = allVibes.map(function (vibe) {
+                return { key: vibe, value: vibe, className: 'vibe', text: vibe }
+            })
 
-        console.log('Vibe options: ', vibe_options)
-
-        this.setState({ vibe_options: vibe_options })
+            this.setState({ vibe_options: vibe_options })
+        }
 
     }
 
