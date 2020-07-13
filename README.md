@@ -12,7 +12,7 @@ To run the app with yarn or npm:
 
 ```bash
 yarn install 
-yarn start
+yarn dev
 ```
 App will start on port 8080 or the port that you have configured in `env.PORT`.
 
@@ -20,7 +20,14 @@ Build and deploy the app.
 
 ```bash
 yarn build
+yarn start
 ```
+
+Or simply running `node build/server.js`. 
+
+This command compiles the app into a production-ready build using webpack and babel to transpile the code. 
+
+To analyze the build package and look dependencies sizes, run `yarn analyze`. 
 
 The build file can then be deploy to an Azure web app or other container running Node version 12. 
 
