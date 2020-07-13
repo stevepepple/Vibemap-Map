@@ -3,14 +3,14 @@ import React, { Component } from "react";
 import { Grid, Message, Segment } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
-import * as actions from '../../redux/actions'
+import * as actions from '../redux/actions'
 
 import isEqual from 'react-fast-compare'
 
-import VibeMap from '../../services/VibeMap.js'
+import VibeMap from '../services/VibeMap.js'
 
-import PlaceSearch from '../places/PlaceSearch'
-import PlaceForm from '../places/PlaceForm'
+import PlaceSearch from '../components/places/PlaceSearch'
+import PlaceForm from '../components/places/PlaceForm'
 
 class ProfileLookUp extends Component {
     constructor(props) {
