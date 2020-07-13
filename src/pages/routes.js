@@ -23,6 +23,13 @@ const routes = [
 		})
 	},
 	{
+		path: "/lookup",
+		component: asyncComponent({
+			loader: () => import('./Lookup'), // required
+			Placeholder: () => <div>...LOADING...</div>
+		})
+	},
+	{
 		path: "/map",
 		component: asyncComponent({
 			loader: () => import('./MapPage'), // required
