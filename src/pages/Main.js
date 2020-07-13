@@ -234,6 +234,15 @@ class Main extends Component {
         return bounds
     }
 
+    pageTopPicks(refreshResults) {
+        const { page, placesData, setTopPicks} = this.props
+        const first = page * this.state.num_top_picks + 1
+        const last = first + this.state.num_top_picks
+
+        let top_picks = placesData.slice(first, last)
+        setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
+    }
+
     handleWindowSizeChange = () => {
         this.props.setWindowSize({
             height: window.innerHeight,
@@ -333,6 +342,7 @@ const mapStateToProps = state => ({
     vibes: state.nav.vibes,
     // Place
     detailsId: state.places.detailsId,
+    placesData: state.placesData,
     placesLoading: state.places.placesLoading,
     // List
     detailsShown: state.detailsShown,

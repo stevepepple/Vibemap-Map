@@ -114,9 +114,26 @@ export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', 
   dispatch(setPlacesLoading(true))
 
   const should_search = vibes.length > 0 || searchTerm !== ""
-  // Do a Search
+  // Do a Specific Search
   if (should_search) {
     // TODO: search for top picks...
+    VibeMap.getPicks(point, distance, bounds, activity, vibes, searchTerm)
+      .then(response => {
+        const results = response.data
+
+        // Set Data with minor side effects
+        if (results && results.length > 0) {
+          // Set places in he results
+          console.log('setTopPlaces: ', refreshResults)
+          dispatch(setTopPlaces(results, refreshResults))
+          dispatch(setPlacesLoading(false))
+        } else {
+          // TODO: Add dispatch for API errors
+          console.log('Error or no results. See in Redux state', results)
+        }
+      }, (error) => {
+        console.log(error)
+      })
   }
   
   return new Promise(resolve => {
@@ -127,11 +144,17 @@ export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', 
       .then(response => {
         const results = response.data
 
-        // Set Data with minor side effects
-        dispatch(setPlacesLoading(false))
-        dispatch(setPlacesData(results, refreshResults))
-        dispatch(setTopPlaces(results, refreshResults))
-        dispatch(setDensityBonus(response.densityBonus))
+        if (results && results.length > 0) {
+          // Set Data with minor side effects
+          dispatch(setPlacesData(results, refreshResults))
+          dispatch(setDensityBonus(response.densityBonus))
+          dispatch(setPlacesLoading(false))
+
+          if (should_search === false) dispatch(setTopPlaces(results, refreshResults))
+
+        } else {
+          console.log('Error or no results. See in Redux state', response)
+        }
 
         // Return to component promise
         resolve(results)
@@ -156,7 +179,7 @@ export const setTopPlaces = (results, refreshResults) => (dispatch, getState) =>
   const top_picks_clustered = VibeMap.clusterPlaces(top_picks, clusterSize)
 
   // TODO: dynamic value for merge top
-  dispatch(setTopPicks(top_picks_clustered, refreshResults, true))
+  dispatch(setTopPicks(top_picks_clustered, refreshResults))
   dispatch(setTotalPages(num_pages))
 
   console.log('fetchPlaces thunk top_picks_clustered: ', top_picks_clustered)
