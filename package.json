@@ -34,6 +34,7 @@
     "i18next": "^19.6.0",
     "i18next-browser-languagedetector": "^5.0.0",
     "i18next-express-middleware": "^2.0.0",
+    "i18next-fs-backend": "^1.0.7",
     "i18next-http-backend": "^1.0.17",
     "i18next-http-middleware": "^3.0.2",
     "isomorphic-fetch": "^2.2.1",
