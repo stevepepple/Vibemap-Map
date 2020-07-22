@@ -7,6 +7,8 @@ import { Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
+import { withTranslation } from 'react-i18next';
+
 import helpers from '../../helpers.js'
 
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
@@ -145,6 +147,13 @@ class LocationSearchInput extends React.Component {
 
     render() {
 
+        const { t } = this.props;
+
+        // TODO: Set this from the backend via prop
+        // Or another preferred mechanism
+        //i18n.changeLanguage('es');
+        //console.log('Got i18n translations: ', t)
+
         // TODO: How to add a divider between new results and other cities
         // TODO: load list from the API and store in Redux
         let options = this.state.locations.concat(this.state.results)
@@ -161,7 +170,7 @@ class LocationSearchInput extends React.Component {
                 onChange={this.handleSelect}
                 options={options}
                 value={this.state.nearest}
-                placeholder='Near you'
+                placeholder={t('Near you')}
                 style={{ width : '12em', marginLeft: '0.6em', zIndex: '100' }}
             />
         );
@@ -175,4 +184,5 @@ const mapStateToProps = state => ({
     zoom: state.map.zoom
 });
 
-export default connect(mapStateToProps, actions)(LocationSearchInput)
+// withNamespaces
+export default connect(mapStateToProps, actions)(withTranslation()(LocationSearchInput))

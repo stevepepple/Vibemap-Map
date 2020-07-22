@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import isEqual from 'react-fast-compare'
+import update from 'react-addons-update';
 
 // MOve query string and 
 import queryString from 'query-string'
@@ -8,6 +9,7 @@ import * as Constants from '../../constants.js'
 import LocationSearchInput from '../map/search'
 
 import { Translation } from 'react-i18next'
+import { withTranslation } from 'react-i18next';
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
@@ -170,14 +172,14 @@ class Navigation extends Component {
     handleVibesets = (e, {value}) => {
 
         // Handled cleareable state
-        if (value === '' || value === '') {
+        if (value === '' || value === 'all') {
             this.props.setMainVibe(null)
             this.props.setVibes([])
         }
         
         let vibes = [] 
 
-        if (value && value !== '') {
+        if (value && value !== '' && value !== 'all') {
             const current = this.props.vibesets.find(({ key }) => key === value);
 
             this.props.setMainVibe(value)
@@ -196,7 +198,12 @@ class Navigation extends Component {
 
     render() {
         
-        const { activity, isMobile, mainVibe, vibesets, placeType } = this.props
+        const { activity, isMobile, mainVibe, vibesets, placeType, t } = this.props
+
+        // TODO: Add this from server side
+        // Add all options in immutable fashion
+        const all = { key: "all", value: "all", text: "All vibes" }        
+        const vibeset_options = update(vibesets, { $unshift: [all] });
 
         let search = <Form size='small'>
             <Form.Group>
@@ -216,69 +223,62 @@ class Navigation extends Component {
                     <div id='navigation' className='navigation' ref={this.navRef}>
                         <Menu fluid secondary borderless>
                             <Menu.Item>
-                                <Translation>{
-                                    (t, { i18n }) => <Dropdown
-                                        //icon='map pin'
-                                        labeled
-                                        compact
-                                        //className='icon basic small'
-                                        style={{ width: '10em', lineHeight: '2.4em', marginLeft: '0.4em' }}
-                                        text={t(placeType)}
-                                        value={placeType}
-                                        onChange={this.handlePlaceType}>
-                                        <Dropdown.Menu>
-                                            {this.state.place_type_options.map((option) => (
-                                                <Dropdown.Item key={option.value} onClick={this.handlePlaceType} text={t(option.text)} value={option.value} />
-                                            ))}
-                                        </Dropdown.Menu>
-                                    </Dropdown>
-                                }</Translation>
+                                <Dropdown
+                                    //icon='map pin'
+                                    labeled
+                                    compact
+                                    //className='icon basic small'
+                                    style={{ width: '10em', lineHeight: '2.4em', marginLeft: '0.4em' }}
+                                    text={t(placeType)}
+                                    value={placeType}
+                                    onChange={this.handlePlaceType}>
+                                    <Dropdown.Menu>
+                                        {this.state.place_type_options.map((option) => (
+                                            <Dropdown.Item key={option.value} onClick={this.handlePlaceType} text={t(option.text)} value={option.value} />
+                                        ))}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                                
                             </Menu.Item>
                             <Menu.Item style={{ width: '16em' }}>
                                 <Form.Group widths='equal'>                        
-                                    <Translation>{
-                                        (t, { i18n }) => <Dropdown
-                                            //button
-                                            className='icon basic small'
-                                            clearable
-                                            //icon={this.state.selected_activity.label.icon}
-                                            //labeled
-                                            style={{ lineHeight: '2.4em', marginLeft: '0.4em' }}                                                                                                                                                                                
-                                            //placeholder={t('Activities')}
-                                            onChange={this.handleActivityChange}
-                                            //options={Constants.main_categories}                                    
-                                            text={this.state.selected_activity.text}
-                                            value={activity}>
-                                            <Dropdown.Menu>
-                                                {Constants.main_categories.map((option) => (
-                                                    <Dropdown.Item key={option.value} label={option.label} onClick={this.handleActivityChange} text={t(option.text)} value={option.value} />
-                                                ))}
-                                                <Dropdown.Divider />
-                                                {Constants.activty_categories.map((option) => (
-                                                    <Dropdown.Item key={option.value} label={option.label} onClick={this.handleActivityChange} text={t(option.text)} value={option.value} />
-                                                ))}
-                                            </Dropdown.Menu>
-                                        </Dropdown>
-
-                                        }</Translation>
-
+                                    <Dropdown
+                                        //button
+                                        className='icon basic small'
+                                        clearable
+                                        //icon={this.state.selected_activity.label.icon}
+                                        //labeled
+                                        style={{ lineHeight: '2.4em', marginLeft: '0.4em' }}                                                                                                                                                                                
+                                        //placeholder={t('Activities')}
+                                        onChange={this.handleActivityChange}
+                                        //options={Constants.main_categories}
+                                        text={t(this.state.selected_activity.text)}
+                                        value={activity}>
+                                        <Dropdown.Menu>
+                                            {Constants.main_categories.map((option) => (
+                                                <Dropdown.Item key={option.value} label={option.label} onClick={this.handleActivityChange} text={t(option.text)} value={option.value} />
+                                            ))}
+                                            <Dropdown.Divider />
+                                            {Constants.activty_categories.map((option) => (
+                                                <Dropdown.Item key={option.value} label={option.label} onClick={this.handleActivityChange} text={t(option.text)} value={option.value} />
+                                            ))}
+                                        </Dropdown.Menu>
+                                    </Dropdown>
                                 </Form.Group>
                             </Menu.Item>
                             <Menu.Item>
-                                <Translation>{
-                                    (t, { i18n }) => <Dropdown
-                                        className={'main_vibe ' + mainVibe}
-                                        clearable
-                                        floating
-                                        //search
-                                        labeled
-                                        placeholder={t('Vibe sets')}
-                                        onChange={this.handleVibesets}
-                                        options={vibesets}
-                                        style={{ width: '12em'}}
-                                        value={mainVibe}
-                                    />
-                                }</Translation>
+                                <Dropdown
+                                    className={'main_vibe ' + mainVibe}
+                                    clearable
+                                    floating
+                                    //search
+                                    labeled
+                                    placeholder={t('Vibe sets')}
+                                    onChange={this.handleVibesets}
+                                    options={vibeset_options}
+                                    style={{ width: '12em' }}
+                                    value={mainVibe}
+                                />
                             </Menu.Item>
                             <Menu.Item>
                                 {/* TODO: replace location input with search able dropdown */}
@@ -320,4 +320,4 @@ const mapStateToProps = state => {
 
 const navWithRouter = withRouter(Navigation)
 
-export default connect(mapStateToProps, actions)(navWithRouter)
+export default connect(mapStateToProps, actions)(withTranslation()(navWithRouter))

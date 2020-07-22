@@ -1,5 +1,6 @@
 const initialState = {
     allCities: [],
+    allVibes: [],
     // TODO: Not the best place for this. 
     clusterSize: 20,
     currentLocation: { latitude: 0, longitude: 0, name: null, distance_changed: 0 },

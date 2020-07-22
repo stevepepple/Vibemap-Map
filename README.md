@@ -42,4 +42,6 @@ Javascript modules that handle business logic.
 ## Pages
 These components handle layouts and UI component includes
 
+## Internationalization
+
 ### Map

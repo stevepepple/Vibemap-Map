@@ -620,6 +620,8 @@ module.exports = {
                 let max_score = helpers.default.getMax(cluster.features, 'average_score')
                 let size = cluster.features.length
 
+
+
                 /* For testing purposes: 
                 console.log('--- Max score for cluster: ', max_score)
                 console.log('--- Center of cluster: ', center)

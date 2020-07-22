@@ -58,6 +58,13 @@ export const detailsType = (state = "place", action) => {
   return state
 }
 
+export const language = (state = "en", action) => {
+  if (action.type === 'SET_LANGUAGE') {
+    state = action.language
+  }
+  return state
+}
+
 
 export const windowSize = (state = { width: 1024, height: 768 }, action) => {
   if (action.type === 'SET_WINDOW_SIZE') {
@@ -273,6 +280,7 @@ const rootReducer = combineReducers({
   guideMarkers,
   headerSize,
   isBrowser,
+  language, 
   name,
   nearby_places,
   placesData,

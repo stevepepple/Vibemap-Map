@@ -25,6 +25,9 @@ import TwoColumnLayout from '../components/layouts/TwoColumnLayout'
 import ItemDetails from '../components/layouts/ItemDetails.js'
 import ListSearch from '../components/layouts/ListSearch.js'
 
+// Localization
+import { withTranslation } from 'react-i18next';
+
 import './Main.scss';
 
 // REDUX STUFF
@@ -80,7 +83,10 @@ class Main extends Component {
         // TODO: Pattern for if data is loaded or errored out
         console.log("Main component did mount", this.props)
 
-        const { fetchCities, fetchVibes, fetchCategories, setIsBrowser, setCurrentLocation } = this.props
+        const { fetchCities, fetchVibes, fetchCategories, i18n, language, setIsBrowser, setCurrentLocation } = this.props
+
+        // Set current language from backend store
+        i18n.changeLanguage(language);
 
         // Always do a fresh load of UI
         fetchCities()
@@ -324,6 +330,8 @@ const mapDispatchToProps = {
 // Map is a container component that manages the following state with Redux Thunks
 const mapStateToProps = state => ({
     isBrowser: state.isBrowser,
+    language: state.language,
+
     // Map
     bounds: state.map.bounds,
     boundsReady: state.map.boundsReady,
@@ -351,4 +359,4 @@ const mapStateToProps = state => ({
     windowSize: state.windowSize
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Main));

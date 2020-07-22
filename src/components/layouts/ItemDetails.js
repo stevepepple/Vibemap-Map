@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import isEqual from 'react-fast-compare'
-
 import { Link } from "react-router-dom";
-
+import { withTranslation } from 'react-i18next';
 
 // TODO: Replace with Array.prototype.find
 import find from 'lodash.find'
 
 import SEO from '../../components/seo/'
+
 
 
 import { Button, Divider, Icon, Image, Label, List, Reveal, Placeholder, Segment } from 'semantic-ui-react'
@@ -150,9 +150,9 @@ class PlaceDetails extends Component {
     render() {
 
         const { vibes_expanded, vibes_to_show } = this.state
-        const { loading, currentItem, detailsId } = this.props
+        const { loading, currentItem, detailsId, t } = this.props
         
-        if (loading === false && currentItem == null) { return 'No data for the component.' }
+        if (loading === false && currentItem == null) { return t("No data for the component.") }
 
         /* TODO: Handle events and places in one place */
         let title = this.props.currentItem.name + ' - VibeMap'
@@ -161,7 +161,7 @@ class PlaceDetails extends Component {
         // Recommendation
         if (currentItem.reason === undefined) currentItem.reason = 'vibe'
         const reason = Constants.RECOMMENDATION_REASONS[this.props.currentItem.reason]
-        const recommendation = { score : '95%', reason: reason }        
+        const recommendation = { score: '95%', reason: t(reason) }        
 
         let profile = <Fragment>
             <Header loading={loading} currentItem={currentItem} recommendation={recommendation} />
@@ -216,12 +216,12 @@ class PlaceDetails extends Component {
                     img={preview_image} />
                 
                 <Divider hidden />
-                <Button basic onClick={this.props.clearDetails}>Back</Button>                
+                <Button basic onClick={this.props.clearDetails}>{t("Back")}</Button>                
     
                 {profile} 
 
                 <Link to={'details/' + detailsId}>
-                    <Button basic fluid>Check it out</Button>
+                    <Button basic fluid>{t("Check it out")}</Button>
                 </Link>
 
                 {places &&
@@ -272,4 +272,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, actions)(PlaceDetails)
+export default connect(mapStateToProps, actions)(withTranslation()(PlaceDetails))
