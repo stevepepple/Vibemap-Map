@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 const Redirect = () => {
     const history = useHistory();
 
-    history.push("/cities/");
+    history.push("/discover/");
 
     const handleClick = () => {
         history.push("/cities/");

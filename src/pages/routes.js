@@ -15,10 +15,17 @@ const routes = [
 		component: Redirect
 	},
 	{
-		path: "/cities/:city?",
+		path: "/discover/:city?",
 		exact: true,
 		component: asyncComponent({
 			loader: () => import('./Main'), // required
+			Placeholder: () => <div>...LOADING...</div>
+		})
+	},
+	{
+		path: "/search",
+		component: asyncComponent({
+			loader: () => import('./MobileSearch'), // required
 			Placeholder: () => <div>...LOADING...</div>
 		})
 	},
