@@ -1,9 +1,6 @@
 @import 'variables.scss';
 
 /* Top Nav and Controls */  
-.menu {
-    padding: 1vmin;
-}
 
 .text {
     //font-family: 'Roboto Condensed', sans-serif !important;
@@ -23,6 +20,10 @@
 /* TODO: is there a cleaner way to do this with Semantic */
 .ui.search {
     line-height: 1.6em !important;
+}
+
+.ui.search .ui.input {
+    width: 90%;
 }
 
 input.search {

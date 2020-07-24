@@ -67,10 +67,6 @@ html, body, #root, div.App, div.App > div {
     width: 100%;
 }
 
-.ui.items .item {
-    padding: 1em !important;    
-}
-
 .ui.items .item .content .date {
     font-size: 1.1em;
     color: $color-base-gray-600;
@@ -78,14 +74,18 @@ html, body, #root, div.App, div.App > div {
     padding-bottom: 0.4em;
 }
 
+.ui.items .item .content {
+    padding-left: 1.2em;
+}
+
 .ui.items .item .content .header {
     font-size: 1.2em;
 }
 
 .ui.items .image {
-    height: 10vmin;
-    width: 12vmin;
-    margin-top: 1vmin !important;
+    border-radius: 1em 0 0 1em;
+    height: 12em;
+    width: 12em;
     background-color: #DDDDDD;
     overflow: hidden;
 }
@@ -95,7 +95,8 @@ html, body, #root, div.App, div.App > div {
 }
 
 .ui.items .image img {
-    height: 10vmin !important;
+    height: 12em;
+    width: 12em;
     transform: scale(1);
     will-change: transform;
     transition: all 0.2s ease-in-out 0s;
@@ -108,4 +109,28 @@ html, body, #root, div.App, div.App > div {
 
 .ui.items .top_match {
     color: $color-base-green-deep;
+}
+
+.MobileCards {
+    width: 100%;
+}
+
+/* TODO: Why are the overrides needed */
+.MobileCards .item {
+    background: #FFFFFF;
+    border-radius: 1em;
+    margin-left: 2%;
+    width: 96%;
+    min-height: 11em;
+}
+
+.item .image,
+.item .content {
+    float: left;
+    height: 100%;
+}
+
+
+.item .content {
+    padding-left: 1em;
 }

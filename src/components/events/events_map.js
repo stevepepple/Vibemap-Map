@@ -10,6 +10,8 @@ import truncate from '@turf/truncate'
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup, ScaleControl } from 'react-map-gl'
 import CustomMapController from '../map/map-conroller'
 
+import { Search } from 'semantic-ui-react'
+
 // TODO: Remove these other map sources
 import Styles from '../../styles/map_styles.js'
 import Markers from '../map/markers'
@@ -28,7 +30,7 @@ import helpers from '../../helpers.js'
 
 import '../../styles/map.scss'
 
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import qs from 'qs'
 
 class EventsMap extends React.Component {
@@ -312,7 +314,7 @@ class EventsMap extends React.Component {
 
     render() {
 
-        const { densityBonus, guideDetails, isMobile } = this.props
+        const { densityBonus, guideDetails, isMobile, searchTerm } = this.props
         const { has_marker_data, has_route_data, marker_data, marker_data_geojson, route_data, score_markers } = this.state
 
         let has_places_data = this.props.placesData.length > 0
@@ -346,10 +348,20 @@ class EventsMap extends React.Component {
                     {isMobile === false && <Fragment>
                         {/* Floating legend */}
                         <ZoomLegend zoom={this.props.zoom} />
-                        <LayersFilter />    
+                        <LayersFilter />
                     </Fragment> 
-                     }
-                    
+                    }
+                    <div className={'map_search'} style={{ position: 'absolute', zIndex: '10', padding: '1em', width: '100%'}}>
+                        {isMobile &&
+                            <Link to='/search/' style={{ display: 'block'}}>
+                                <Search
+                                    fluid 
+                                    placeholder="What's your vibe?"
+                                    style={{ width: '90%' }} value={searchTerm}/>
+                            </Link>
+                        }
+                        <AllVibes vibes={this.props.allVibes} />
+                    </div>
 
                     {/* TODO: Move to it's own class <Map> */}
                     <ReactMapGL
@@ -377,8 +389,6 @@ class EventsMap extends React.Component {
                             positionOptions={{ enableHighAccuracy: true }}
                             trackUserLocation={true}
                         />
-
-                        <AllVibes vibes={this.props.allVibes} />
 
                         <ScaleControl maxWidth={200} unit='imperial' />                        
 
@@ -565,6 +575,7 @@ const mapStateToProps = state => ({
     currentLocation: state.nav.currentLocation,
     activity: state.nav.activity,
     allVibes: state.nav.allVibes,
+    searchTerm: state.nav.searchTerm,
     vibes: state.nav.vibes,
 
     // Map

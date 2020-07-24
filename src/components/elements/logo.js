@@ -9,8 +9,8 @@ class Logo extends Component {
         const style = {
             height: size + 'px',
             position: 'absolute', 
-            marginBottom: size / 2,
-            marginRight: size / 2,
+            marginTop: '-' + size / 2 + 'px',
+            marginLeft: '-' + size / 2 + 'px',
             opacity: 0.8,
             top: '50%', 
             left: '50%', 

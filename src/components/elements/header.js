@@ -10,11 +10,13 @@ import LocationSearchInput from '../map/search'
 class Header extends Component {
     render() {
         return (
-            <Menu id='header' borderless pointing>
+            <Menu id='header' borderless pointing style={{ margin: '0'}}>
                 <Menu.Item>
-                    <SVG style={{ width: '12em', padding: '1em' }} src='/images/logo-type.svg' />
+                    <SVG style={{ width: '10em', padding: '1em' }} src='/images/logo-type.svg' />
                 </Menu.Item>                
 
+                {/* 
+                TODO: MOve city picker to navigation.
                 <Menu.Menu position='right'>
                     <Menu.Item name='city' style={{ zIndex: '200'}}>
                         <SVG style={{ width: '2em' }} src='/images/logo-mark.svg' />
@@ -40,6 +42,8 @@ class Header extends Component {
                         </Dropdown>
                     </Menu.Item>
                 </Menu.Menu>
+                */}
+
                 
             </Menu>
         );

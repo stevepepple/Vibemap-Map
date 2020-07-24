@@ -12,6 +12,7 @@ import SEO from '../components/seo/'
 // Page elements
 import Header from '../components/elements/header.js'
 import Logo from '../components/elements/logo.js'
+import AppLink from '../components/elements/AppLink'
 
 import dayjs from 'dayjs'
 
@@ -24,6 +25,7 @@ import './Main.scss'
 import TwoColumnLayout from '../components/layouts/TwoColumnLayout'
 import ItemDetails from '../components/layouts/ItemDetails.js'
 import ListSearch from '../components/layouts/ListSearch.js'
+import MobileList from '../components/layouts/MobileList.js'
 
 // Localization
 import { withTranslation } from 'react-i18next';
@@ -269,9 +271,13 @@ class Main extends Component {
         let { cities, history, detailsShown, placeType, placesLoading, topPicks } = this.props
         const { loading, width } = this.state
 
-        // TODO: Make this a component
+
+        const size = (isMobile) ? 100 : 140
+
+        console.log('Is Mobile: ', isMobile, size)
+
         if (loading) return (<div className="full-page-loader" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}>
-            <Logo size={140} />
+            <Logo size={size} />
         </div>)
 
         let navigation = <Navigation
@@ -297,8 +303,10 @@ class Main extends Component {
         </Fragment>
 
         let mobile = <Fragment>
+            <AppLink />
             <Header />
             {Map}
+            <MobileList isMobile={true}/>
         </Fragment>
 
         let web = <Fragment>
