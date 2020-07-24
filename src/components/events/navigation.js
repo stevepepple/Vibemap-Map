@@ -33,8 +33,7 @@ class Navigation extends Component {
             ],
             params: {},
             vibes: [],
-            vibe_options : [],
-            selected_activity: Constants.main_categories[0]
+            vibe_options : []
         }
 
         this.navRef = React.createRef()
@@ -76,8 +75,6 @@ class Navigation extends Component {
 
         if (params.zoom) this.props.setZoom(parseFloat(params.zoom))
         
-        if (params.activity) this.lookUpActivity(params.activity)
-
         if (params.vibes) {
             let vibes = []
             if (typeof(params.vibes) == "string") {
@@ -148,21 +145,8 @@ class Navigation extends Component {
     
     // Event Handlers
     handleActivityChange = (event, { value }) => {
-        this.lookUpActivity(value)
-    }
-    
-    // Use for events change and prop to state
-    lookUpActivity = (value) => {
-        const all_categories = Constants.activty_categories.concat(Constants.main_categories)
-
-        let selected_activity = all_categories.find(({ key }) => key === value)
-
-        if (selected_activity === undefined) selected_activity = Constants.main_categories[0]
-
-        this.setState({ current_activity: value, selected_activity: selected_activity })
-        this.props.setActivity(value)        
-
-    }
+        this.props.setActivity(value)
+    }    
 
     handlePlaceType = (e, { value }) => {
         console.log("CHANGED PLACE TYPE: ", value)
@@ -198,7 +182,7 @@ class Navigation extends Component {
 
     render() {
         
-        const { activity, isMobile, mainVibe, vibesets, placeType, t } = this.props
+        const { activity, isMobile, mainVibe, vibesets, placeType, selected_activity, t } = this.props
 
         // TODO: Add this from server side
         // Add all options in immutable fashion
@@ -237,11 +221,10 @@ class Navigation extends Component {
                                             <Dropdown.Item key={option.value} onClick={this.handlePlaceType} text={t(option.text)} value={option.value} />
                                         ))}
                                     </Dropdown.Menu>
-                                </Dropdown>
-                                
+                                </Dropdown>                            
                             </Menu.Item>
                             <Menu.Item style={{ width: '16em' }}>
-                                <Form.Group widths='equal'>                        
+                                <Form.Group widths='equal'>                     
                                     <Dropdown
                                         //button
                                         className='icon basic small'
@@ -252,7 +235,7 @@ class Navigation extends Component {
                                         //placeholder={t('Activities')}
                                         onChange={this.handleActivityChange}
                                         //options={Constants.main_categories}
-                                        text={t(this.state.selected_activity.text)}
+                                        text={t(selected_activity.text)}
                                         value={activity}>
                                         <Dropdown.Menu>
                                             {Constants.main_categories.map((option) => (
@@ -303,6 +286,7 @@ const mapStateToProps = state => {
         mainVibe: state.nav.mainVibe,
         placeType: state.nav.placeType,
         searchTerm: state.nav.searchTerm,
+        selected_activity: state.nav.selected_activity,
         vibes: state.nav.vibes,
         vibesets: state.nav.vibesets,
 

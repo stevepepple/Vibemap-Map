@@ -220,7 +220,7 @@ class PlaceDetails extends Component {
     
                 {profile} 
 
-                <Link to={'details/' + detailsId}>
+                <Link to={'/details/' + detailsId}>
                     <Button basic fluid>{t("Check it out")}</Button>
                 </Link>
 
