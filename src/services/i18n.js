@@ -8,7 +8,7 @@ import translationsES from 'vibemap-constants/translations/spanish.json';
 
 const options = {
   fallbackLng: "en",
-  debug: true,
+  debug: false,
   //load: 'languageOnly', // we only provide en, es -> no region specific locals like en-US, de-DE
   ns: ["translations"], // have a common namespace used around the full app
   defaultNS: "translations",

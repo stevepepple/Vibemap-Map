@@ -10,6 +10,7 @@
     "test": "razzle test --env=jsdom",
     "start": "cross-env NODE_ENV=production node build/server.js"
   },
+  "jest": {},
   "dependencies": {
     "@jaredpalmer/after": "^3.1.2",
     "@mapbox/geo-viewport": "^0.4.0",
@@ -70,6 +71,7 @@
   "devDependencies": {
     "autoprefixer": "^7.1.6",
     "cross-env": "^5.1.1",
+    "jest": "^26.1.0",
     "razzle": "latest",
     "razzle-dev-utils": "^3.1.5",
     "razzle-plugin-bundle-analyzer": "^1.2.0",
@@ -77,6 +79,7 @@
     "razzle-plugin-purgecss": "^1.0.1",
     "razzle-plugin-pwa": "^2.2.3",
     "razzle-plugin-runtimeenv": "^1.0.1",
-    "razzle-plugin-scss": "^3.1.4"
+    "razzle-plugin-scss": "^3.1.4",
+    "react-test-renderer": "16.8"
   }
 }

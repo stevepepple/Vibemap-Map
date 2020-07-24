@@ -72,7 +72,6 @@ i18n
           // Create a new Redux store instance
           const store = configureStore(preloadedState);
 
-          console.log('req.i18n: ', req.i18n.language)
           try {
             const html = await render({
               req,

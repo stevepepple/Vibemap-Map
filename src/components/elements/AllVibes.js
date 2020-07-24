@@ -24,7 +24,7 @@ class AllVibes extends Component {
     componentDidUpdate(prevProps) {
 
         if (!isEqual(prevProps.allVibes, this.props.allVibes)) {
-            this.setOptions(allVibes)
+            this.setOptions(this.props.allVibes)
         }
         
         if (!isEqual(prevProps.vibes, this.props.vibes)) {
