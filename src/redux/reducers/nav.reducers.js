@@ -8,6 +8,7 @@ const initialState = {
     currentLocation: { latitude: 0, longitude: 0, name: null, distance_changed: 0 },
     currentPage: 0,
     vibes: [],
+    vibesets: [],
     days: "1",
     placeType: "places",
     numTopPicks: 10,

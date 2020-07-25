@@ -85,7 +85,7 @@ i18n
             });
             res.send(html);
           } catch (error) {
-            console.error(error);
+            console.error(error, error.stack);
             res.json({ message: error.message, stack: error.stack });
           }
         });

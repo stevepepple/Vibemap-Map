@@ -23,6 +23,7 @@ const options = {
   // we init with resources
   resources: {
     en: { translations: translationsEN },
+    'en-US' : { translations: translationsEN },
     es: { translations: translationsES }
   },
   saveMissing: true,

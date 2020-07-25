@@ -1,4 +1,5 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 
 import { I18nextProvider, useSSR } from 'react-i18next';
 import { StaticRouter } from "react-router-dom";
@@ -11,22 +12,25 @@ import {
     SerializeData,
     __AfterContext,
 } from '@jaredpalmer/after';
-import { Provider } from 'react-redux';
 
 class Document extends React.Component {
-    static async getInitialProps({ req, renderPage, store }) {
-        //console.log('store on load: ', store.getState())
-        const page = await renderPage(App => props => (
-            <Provider store={store}>
-                <I18nextProvider i18n={req.i18n}>
-                    <App {...props} />
-                </I18nextProvider>
-            </Provider>
-        ));
+    static async getInitialProps({ req, res, renderPage, store }) {
+        //console.log('req on load: ', req)
 
         const initialLanguage = req.i18n.language;
+        console.log('initialLanguage: ', req.initialLanguage)
+        
+        //console.log('store on load: ', store.getState())
+        const renderer = App => props => (
+            <Provider store={store}>
+                <App {...props} />
+                <I18nextProvider i18n={req.i18n}>
+                    <App {...props} />
+                </I18nextProvider>                
+            </Provider>
+        );
 
-        console.log('initialLanguage: ', initialLanguage)
+        const page = await renderPage(renderer);
 
         return { ...page, initialLanguage };
     }
