@@ -35,7 +35,7 @@ class AppLink extends Component {
 
         console.log('Trying to open this link', link, storeLink)
 
-        setTimeout(function () { window.location = storeLink }, 25);
+        setTimeout(function () { window.location = storeLink }, 1000);
         window.location = link;
     }
 
