@@ -10,6 +10,7 @@ import { isMobile } from 'react-device-detect';
 import SEO from '../components/seo/'
 
 // Page elements
+import TopMenu from '../components/elements/topMenu.js'
 import Header from '../components/elements/header.js'
 import Logo from '../components/elements/logo.js'
 import AppLink from '../components/elements/AppLink'
@@ -310,6 +311,7 @@ class Main extends Component {
         </Fragment>
 
         let web = <Fragment>
+            <TopMenu />
             <Header />
             {navigation}
             <TwoColumnLayout
