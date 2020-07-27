@@ -44,11 +44,11 @@ class TopMenu extends Component {
         })
 
         return (
-            <nav class="top-menu">
-                <div class="container">
+            <nav className="top-menu">
+                <div className="container">
                     <ul name="Top Navigation" class="menu menu-top-navigation">
                         {navItems}
-                        <li class="post post-id-162 "><a target="_blank" rel="noreferrer noopener" href="#" title="Newsletter">Newsletter</a></li>
+                        <li className="post post-id-162 "><a target="_blank" rel="noreferrer noopener" href="#" title="Newsletter">Newsletter</a></li>
                     </ul>
                 </div>
             </nav>
