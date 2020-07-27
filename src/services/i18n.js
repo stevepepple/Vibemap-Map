@@ -9,7 +9,7 @@ import translationsES from 'vibemap-constants/translations/spanish.json';
 const options = {
   fallbackLng: "en",
   debug: false,
-  //load: 'languageOnly', // we only provide en, es -> no region specific locals like en-US, de-DE
+  load: 'languageOnly', // we only provide en, es -> no region specific locals like en-US, de-DE
   ns: ["translations"], // have a common namespace used around the full app
   defaultNS: "translations",
   keySeparator: false, // we use content as keys
@@ -23,8 +23,9 @@ const options = {
   // we init with resources
   resources: {
     en: { translations: translationsEN },
-    'en-US' : { translations: translationsEN },
-    es: { translations: translationsES }
+    'en-US': { translations: translationsEN },
+    es: { translations: translationsES },
+    'es-MX': { translations: translationsES }
   },
   saveMissing: true,
   wait: process && !process.release
@@ -36,7 +37,6 @@ if (process && !process.release) {
     .use(Backend)
     .use(initReactI18next)
     .use(LanguageDetector)
-
 }
 
 // initialize if not already initialized

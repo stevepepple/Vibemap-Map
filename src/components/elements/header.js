@@ -18,7 +18,7 @@ class Header extends Component {
         let menuItems = links.map((item) => {
             const link = domain + item.link
             const linkStyle = item.current ? 'active' : 'inactive' 
-            return <Menu.Item className='pageLink'>
+            return <Menu.Item className='pageLink' key={link}>
                 <a href={link} className={linkStyle} title={item.text}>
                     {item.text}
                 </a>

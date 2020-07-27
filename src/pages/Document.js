@@ -17,8 +17,9 @@ class Document extends React.Component {
     static async getInitialProps({ req, res, renderPage, store }) {
         //console.log('req on load: ', req)
 
-        const initialLanguage = req.i18n.language;
+        let initialLanguage = req.i18n.language;
         console.log('initialLanguage: ', req.initialLanguage)
+        if (initialLanguage === undefined) initialLanguage = 'en'
         
         //console.log('store on load: ', store.getState())
         const renderer = App => props => (

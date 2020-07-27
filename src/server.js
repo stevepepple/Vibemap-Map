@@ -64,6 +64,8 @@ i18n
         .get('/*', async (req, res) => {
           const context = {};
 
+          //console.log('req.i18n.language: ', req.i18n.language)
+          
           // Compile an initial state
           const preloadedState = {
             language: req.i18n.language
