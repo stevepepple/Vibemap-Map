@@ -73,6 +73,10 @@ html, body, #root, div.App, div.App > div {
     margin-top: 20vmin;
 }
 
+.ui.menu {
+    border: none;
+}
+
 .mobile .ui.menu {
     margin: 0px;
 }

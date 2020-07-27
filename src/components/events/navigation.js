@@ -16,6 +16,7 @@ import * as actions from '../../redux/actions'
 import { withRouter } from 'react-router-dom';
 
 import { Dropdown, Form, Menu } from 'semantic-ui-react'
+import SVG from 'react-inlinesvg'
 
 import '../../styles/navigation.scss'
 //import vibe_styles from '../../styles/vibes.scss'
@@ -186,6 +187,7 @@ class Navigation extends Component {
 
         // TODO: Add this from server side
         // Add all options in immutable fashion
+        
         const all = { key: "all", value: "all", text: "All vibes" }        
         const vibeset_options = update(vibesets, { $unshift: [all] });
 
@@ -206,6 +208,11 @@ class Navigation extends Component {
                     
                     <div id='navigation' className='navigation' ref={this.navRef}>
                         <Menu fluid secondary borderless>
+                            <Menu.Item name='city' style={{ zIndex: '200' }}>
+                                <SVG style={{ width: '2em' }} src='/images/logo-mark.svg' />
+                                <LocationSearchInput className='mobile search' />
+                            </Menu.Item>
+
                             <Menu.Item>
                                 <Dropdown
                                     //icon='map pin'

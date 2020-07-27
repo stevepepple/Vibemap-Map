@@ -31,14 +31,18 @@ class LocationSearchInput extends React.Component {
         this.handleSelect = this.handleSelect.bind(this)
     }
 
-    componentWillMount() {        
+    componentWillMount() {     
+        const { allCities, currentLocation } = this.props
+        if (allCities.length > 0) this.handleCities()
+        if (currentLocation.latitude && currentLocation.longitude) this.setNearest()   
     }
 
     componentDidUpdate(prevProps, prevState) {
-        
+        const { allCities, currentLocation } = this.props
+        console.log('search.js: ', allCities)
         // Handle city or locations changes
-        if (this.props.allCities.length > 0 && !isEqual(prevProps.allCities, this.props.allCities)) this.handleCities()
-        if (prevProps.currentLocation.latitude !== this.props.currentLocation.latitude) this.setNearest()
+        if (allCities.length > 0 && !isEqual(prevProps.allCities, allCities)) this.handleCities()
+        if (prevProps.currentLocation.latitude !== currentLocation.latitude) this.setNearest()
     }
 
     setNearest() {
@@ -148,6 +152,7 @@ class LocationSearchInput extends React.Component {
     render() {
 
         const { t } = this.props;
+        const { locations, results } = this.state;
 
         // TODO: Set this from the backend via prop
         // Or another preferred mechanism
@@ -156,7 +161,7 @@ class LocationSearchInput extends React.Component {
 
         // TODO: How to add a divider between new results and other cities
         // TODO: load list from the API and store in Redux
-        let options = this.state.locations.concat(this.state.results)
+        let options = locations.concat(results)
 
         return (
             <Dropdown
