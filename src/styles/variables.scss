@@ -5,22 +5,12 @@ $color-purple : #811897;
 $color-green : #27AE6D;
 
 $color-dark-gray: #4F4F4F;
-@font-face {
-    font-family:'NantesTrial';
-	src: url('/fonts/NantesTrial/NantesTrialWeb-Regular.eot'); /* IE9 Compat Modes */
-	src: url('/fonts/NantesTrial/NantesTrialWeb-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-	     url('/fonts/NantesTrial/NantesTrialWeb-Regular.woff2') format('woff2'), /* Super Modern Browsers */
-         url('/fonts/NantesTrial/NantesTrialWeb-Regular.woff') format('woff'); /* Pretty Modern Browsers */
-	font-weight: 400;
-	font-style: normal;
-	font-stretch: normal;
-	unicode-range: U+000D-FB04;
-}
 
 a  {
     text-decoration: none;
     color: #999;
-}         
+}
+
 $gray: #B1E2E5;
 $yellow: #F8EE32;
 $orange: #F8EE32;
@@ -37,8 +27,24 @@ $light_yellow: #FFFCC5;
 $light_orange: #FBCBBD;
 $orange: #F09C1F;
 
-$font-family-nantes : 'NantesTrial';
+/* TODO: How to import from design-system */
+@font-face {
+  font-family: 'Nantes';
+  src: url('https://etldev.blob.core.windows.net/fonts/Nantes-Regular.woff') format('woff2'), url('https://etldev.blob.core.windows.net/fonts/Nantes-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Nantes';
+  src: url('https://etldev.blob.core.windows.net/fonts/Nantes-RegularItalic.woff') format('woff2'), url('https://etldev.blob.core.windows.net/fonts/Nantes-RegularItalic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+$font-family-nantes : 'Nantes', serif !important;
 $font-family-public : 'Public Sans', sans-serif;
+
+$font-weight-normal: 300 !important;
 
 $shadow-purple: 1px 1px 4px 0px rgba(189,21,132,0.55);
 $shadow-blue: 1px 1px 6px 1px rgba(210,244,250,1.55);
@@ -70,6 +76,11 @@ $dreamy_gradient: 45deg, $light_purple 0%, $light_blue 100%;
 $oldschool_gradient: 45deg, $light_blue 0%, $light_orange 70%;
 $playtime_gradient: 45deg, $light_green 0%, $light_yellow 100%;
 $together_gradient: 45deg, $light_yellow 0%, $light_teal 100%;
+
+// Sizing and Units
+$unit-small: 4rem;
+$unit-small: 2rem;
+$unit-tiny: 1rem;
 
 $icon-size: 1.8em;
 :export { colorPurple: $color-purple; }
