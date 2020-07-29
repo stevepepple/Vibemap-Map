@@ -18,20 +18,18 @@ export default class Tip extends React.Component {
         const { numLines, text } = this.props 
 
         return (
-            <Card fluid className={styles.tip}>
-                <Card.Content>
-                    <ShowMoreText
-                        /* Default options */
-                        lines={numLines}
-                        more='Show more'
-                        less='Show less'
-                        anchorClass=''
-                        onClick={this.executeOnClick}
-                        expanded={false}>
-                        {text}
-                    </ShowMoreText>
-                </Card.Content>
-            </Card>
+            <div className={styles.tip}>
+                <ShowMoreText
+                    /* Default options */
+                    lines={numLines}
+                    more='Show more'
+                    less='Show less'
+                    anchorClass=''
+                    onClick={this.executeOnClick}
+                    expanded={false}>
+                    {text}
+                </ShowMoreText>
+            </div>
         )
     }
 }
