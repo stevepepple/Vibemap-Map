@@ -2,35 +2,25 @@ import React, { Component, Fragment } from 'react'
 import isEqual from 'react-fast-compare'
 import { Link } from "react-router-dom";
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions'
 
-// TODO: Replace with Array.prototype.find
+import debounce from 'lodash.debounce'
 import find from 'lodash.find'
 
 import SEO from '../../components/seo/'
 
-
-
 import { Button, Divider, Icon, Image, Label, List, Reveal, Placeholder, Segment } from 'semantic-ui-react'
-import Directions from '../places/directions'
 import VibeMap from '../../services/VibeMap.js'
 import * as Constants from '../../constants.js'
-
-import { connect } from 'react-redux'
-import * as actions from '../../redux/actions'
-
-import AppStoreLink from '../elements/AppStoreLink'
 
 import Header from '../places/header'
 import Vibe from '../places/vibe'
 import Plan from '../places/plan'
-import Tip from '../elements/Tip'
+import Tips from '../places/tips'
+import AppStoreLink from '../elements/AppStoreLink'
 
-import CardCarousel from './CardCarousel'
-
-
-/* TODO: Break this into styles for each component */
 import '../../styles/place_details.scss'
-import { detailsId } from '../../redux/reducers';
 
 class PlaceDetails extends Component {
 
@@ -41,19 +31,28 @@ class PlaceDetails extends Component {
             show: props.show,
             id: this.props.id,
             currentItem: this.props.currentItem,
-            directions: null,                     
+            currentSection: 'vibe',
             loading: true,
             name: null,
             description: null,
             categories: [],
-            show_directions: false,
+            offset: 100,
+            showTabs: false,
             vibes: [],
-            vibes_expanded: false,
             vibes_to_show: 8,
-            images: []
+            images: [],
+            sections: [
+                { key: 'vibe', text: 'Vibe' },
+                { key: 'plan', text: 'Plan' },
+                { key: 'tips', text: 'Tips' },
+                { key: 'more', text: 'More' },
+            ]
         }
 
-        this.toggleMoreVibes = this.toggleMoreVibes.bind(this)
+        this.scrollToTab = this.scrollToTab.bind(this)
+        this.detectSections = this.detectSections.bind(this)
+        this.handleScroll = this.handleScroll.bind(this)
+
     }
 
     handleClose = function() {
@@ -66,6 +65,8 @@ class PlaceDetails extends Component {
         if(this.props.detailsType === 'guides') this.getGuideDetails()
 
         if (this.props.detailsType === 'events' || this.props.detailsType === 'places') this.getPlaceDetails()
+    
+        this.detectSections()
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -77,6 +78,7 @@ class PlaceDetails extends Component {
         if (!isEqual(prevProps.currentItem, this.props.currentItem)) {
             this.setState({ currentItem: this.props.currentItem })
         }
+        
     }
 
     // TODO: Move this module to layouts and make this function more explicitly agnostic to type. 
@@ -114,6 +116,7 @@ class PlaceDetails extends Component {
 
         let waypoints = guideDetails['places'].map((place) => place['coordinates'])
 
+        // TODO: Move to redux and service
         VibeMap.getDirections(waypoints)
             .then(result => {
 
@@ -138,18 +141,76 @@ class PlaceDetails extends Component {
             })
     }
 
-    toggleMoreVibes() {
-        this.setState({ vibes_expanded: !this.state.vibes_expanded })
+    detectSections() {
+        const { sections, offset } = this.state
+
+        let sections_with_bounds = sections
+
+        sections_with_bounds.forEach((item) => {
+            const element = document.getElementById(item.key) 
+            const bounds = element.getBoundingClientRect()
+            const offsetTop = element.offsetTop
+            const offsetHeight = element.offsetHeight
+
+            item.top = offsetTop - 200
+            item.bottom = item.top + offsetHeight
+            console.log('tab section bounds (top, bottom): ', item.top, item.bottom)
+
+        })
+
+        this.setState({ sections: sections_with_bounds })
     }
 
+    handleScroll(event) {
+        
+        this.detectSections()
+
+        const { clientHeight, scrollHeight, scrollTop } = event.target
+        const { sections, currentSection } = this.state
+
+        let offsetTop = window.pageYOffset;
+        console.log('tab scrolling: ', scrollTop, scrollHeight, offsetTop)
+
+        const scrolledDown = scrollTop > 160
+        let current = null
+
+        sections.forEach((item) => {
+            if (scrollTop >= item.top && scrollTop < item.bottom ) {
+                current = item.key
+                console.log('New current tab: ', current)
+            } 
+        })
+
+        this.setState({ showTabs: scrolledDown, currentSection: current })
+
+        if (scrollHeight - scrollTop === clientHeight) {
+            console.log('Scrolled to bottom!')
+        }
+    }
+
+
     scrollToTab(tab) {
-        // If browser
-        window.scrollTo(0, this.planTab.current.offsetTop)  
+
+        const { offset } = this.state
+        // If browser    
+        //window.scrollTo(0, this.moreRef.current.offsetTop)  
+    
+        //this.refs[tab].current.scrollIntoView(true)
+        const details = document.getElementById('details')
+        const anchorTarget = document.getElementById(tab)
+
+        console.log('scrollToTab: ', anchorTarget.offsetTop)
+        details.scrollTop = anchorTarget.offsetTop - 180
+
+        // Set active tab after a slight delay (after scroll effect)
+        setTimeout(this.setState({ currentSection: tab }), 200)
+        
+        //anchorTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     render() {
 
-        const { vibes_expanded, vibes_to_show } = this.state
+        const { currentSection, vibes_expanded, vibes_to_show, sections, showTabs } = this.state
         const { loading, currentItem, detailsId, t } = this.props
         
         if (loading === false && currentItem == null) { return t("No data for the component.") }
@@ -161,80 +222,51 @@ class PlaceDetails extends Component {
         // Recommendation
         if (currentItem.reason === undefined) currentItem.reason = 'vibe'
         const reason = Constants.RECOMMENDATION_REASONS[this.props.currentItem.reason]
+        // TODO: connect so same logic as mobile 
         const recommendation = { score: '95%', reason: t(reason) }        
 
-        let profile = <Fragment>
-            <Header loading={loading} currentItem={currentItem} recommendation={recommendation} />
-            {/* TODO: Scroll to content
-                <Button.Group>
-                    <Button onClick={this.scrollToTab}>Vibe</Button>
-                    <Button onClick={this.scrollToTab}>Plan</Button>
-                    <Button>Trip</Button>
-                </Button.Group>
-            */}            
-            <Vibe ref={this.vibeTab} loading={loading} currentItem={currentItem} vibes_expanded={vibes_expanded} />
-            <Plan ref={this.planTab} loading={loading} currentItem={currentItem} />
-        </Fragment>       
+        const tabs = sections.map((section) => {
+            return <a
+                className={(section.key === currentSection) ? 'active item' : 'item'}
+                onClick={this.scrollToTab.bind(this, section.key)}>
+                {section.text}
+            </a>
+        })
 
-        let directions = null
-
-        if (currentItem && this.state.show_directions) {
-            directions = <Directions data={currentItem} />
-        }
-
-        let places = null
-        if (currentItem && currentItem.places !== undefined) {
-            console.log('Details data: ', currentItem.places)
-            let items = currentItem.places.map((place, i) => <List.Item key={place.properties.id}>
-                <Label circular key={i} color='blue' style={{ float: 'left'}}>{i + 1}</Label>
-                <List.Content>
-                    <strong>{place.properties.name}</strong>
-                    {place.properties && place.properties.tips &&
-                        <List.Description>{place.properties.tips[0]}</List.Description>
-                    }
-                </List.Content>
-            </List.Item>)
-
-            places = <List divided>{items}</List>
-        }
-
-        let tips = null
-        if (currentItem && currentItem.tips !== undefined) {
-            let all_tips = currentItem.tips.map((tip) => <Tip text={tip}/>)
-            tips = <CardCarousel items={all_tips} />
-        }
+        let profile = <Fragment>            
+            <Vibe loading={loading} currentItem={currentItem} vibes_expanded={vibes_expanded} />
+            <Plan loading={loading} currentItem={currentItem} />
+            <Tips loading={loading} currentItem={currentItem} />
+        </Fragment>
 
         // Check if there's an image for SEO
         let preview_image = 'https://pbs.twimg.com/profile_images/1270800120452222977/GFhjmGCz_400x400.jpg'
         if (currentItem.images.length > 0) preview_image = currentItem.images[0]
         
         return (
-            <div className='details'>
-                <SEO 
+            <div id='details' className='details' onScroll={this.handleScroll}>
+                <SEO
                     title={title}
                     description={description}
                     img={preview_image} />
-                
-                <Divider hidden />
-                <Button basic onClick={this.props.clearDetails}>{t("Back")}</Button>                
-    
-                {profile} 
 
-                <Link to={'/details/' + detailsId}>
-                    <Button basic fluid>{t("Check it out")}</Button>
-                </Link>
+                <div className='header'>
+                    <Button basic onClick={this.props.clearDetails}>{t("Back")}</Button>                    
+                    
+                    <Header 
+                        loading={loading} 
+                        currentItem={currentItem} 
+                        recommendation={recommendation}
+                        showPhoto={!showTabs} />
+                    
+                    {showTabs &&
+                        <div className='ui pointing secondary menu'>
+                            {tabs}
+                        </div>
+                    }
+                </div>
 
-                {places &&
-                    <Segment.Group>
-                        {places}
-                    </Segment.Group>
-                }
-
-                {tips &&
-                    <Segment basic>
-                        {tips}
-                    </Segment>
-                }                
+                {profile}
 
                 {/* TODO: Render Description at HTML the proper way as stored in Mongo and then as own React component */}
 
@@ -244,9 +276,15 @@ class PlaceDetails extends Component {
                 <p className='small'>Event from {content.source}</p>
                 */}
 
-                {directions}
+                <section id='more' ref={this.moreRef}>
+                    <h4>More</h4>
+                    <AppStoreLink />
 
-                <AppStoreLink/>
+                    <Link to={'/details/' + detailsId}>
+                        <Button basic fluid>{t("Check it out")}</Button>
+                    </Link>
+                </section>
+                
 
             </div>
         );
