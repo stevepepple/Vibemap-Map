@@ -5,11 +5,13 @@ import * as actions from '../../redux/actions'
 import isEqual from 'react-fast-compare'
 
 import { Translation } from 'react-i18next'
-import { Dropdown } from 'semantic-ui-react'
+import { Button, Dropdown, Icon, Label } from 'semantic-ui-react'
+import * as style_variables from 'vibemap-constants/design-system/build/json/variables.json';
+
 
 class AllVibes extends Component {    
-    constructor(props) {
-        super(props)
+    constructor(props, context) {
+        super(props, context)
         this.state = {
             vibe_options : [],
             vibes: []
@@ -50,14 +52,38 @@ class AllVibes extends Component {
     
         // Make strings array
         if (value === 'string') value = [value]
-        console.log('Vibe changed: ',)
+        console.log('Vibe changed: ', value, typeof(value))
 
-        this.setState({ vibes: value })
         this.props.setVibes(value)
+        this.setState({ vibes: value })
+
+    }
+
+    addVibe = (event, { value }) => {
+        let { vibes } = this.props 
+        // Make strings array
+        let new_vibes = vibes
+        new_vibes.push(value)
+        this.props.setVibes(new_vibes)
+        this.setState({ vibes: new_vibes })
+    }
+
+    removeVibe = (value) => {
+        const { vibes } = this.props
+        // Make strings array
+        let new_vibes = vibes
+        let foundIndex = new_vibes.indexOf(value)
+        if (foundIndex > -1) new_vibes.splice(foundIndex, 1)
+        console.log('Remove vibe: ', value, vibes)
+        this.props.setVibes(new_vibes)
+        this.setState({ vibes: new_vibes })
+
     }
 
     clearVibes = () => {
-        this.setState({ vibes : [] })
+        const empty_vibes = []
+        this.props.setVibes(empty_vibes)
+        this.setState({ vibes: empty_vibes })
     }
 
     renderVibesLabel = (label) => ({        
@@ -67,59 +93,44 @@ class AllVibes extends Component {
 
     render() {
         const { allVibes, vibes } = this.props
+        const { vibe_options } = this.state
 
         let num_vibes = vibes.length
 
-        console.log('Got vibes: ',num_vibes, vibes)
+        let white = style_variables.color.base.white
 
+        console.log('Got vibes: ', num_vibes, vibes)
+
+        const vibeItems = vibes.map((vibe) => {
+            return <Label key={vibe} className='vibe' style={{ background: white }} size='large'>
+                {vibe}
+                <Icon name='delete' onClick={this.removeVibe.bind(this, vibe)} />
+            </Label>
+        })
 
         return (
-            <div className='allVibes' style={{ position: 'absolute', margin: '1em', zIndex: '90'}}>
+            <div className='allVibes' style={{ position: 'absolute', margin: '0.2em', zIndex: '90'}}>
+                <Dropdown
+                    button
+                    className='icon'
+                    icon='add'
+                    labeled
+                    basic
+                    options={vibe_options}
+                    onChange={this.addVibe}
+                    search
+                    style={{ background: white, borderRadius: '10em'}}
+                    text='Add vibe' />
+
                 {num_vibes > 0 &&
-                    <Fragment>                        
-                        <Translation>{
-                            (t, { i18n }) => <Dropdown
-                                style={{ minWidth: '12em' }}
-                                placeholder={t("Add more vibes")}
-                                //multiple
-                                icon='add'
-                                label="Vibe"
-                                labeled
-                                clearable
-                                multiple
-                                search
-                                closeOnChange
-                                onChange={this.handleVibeChange}
-                                options={this.state.vibe_options}
-                                value={this.props.vibes}
-                                renderLabel={this.renderVibesLabel}
-                            />
-                        }</Translation>
-                        {/* 
-                        <Button className='icon tiny'
+                    <Fragment>
+                        {vibeItems}
+
+                        <Button basic circular className='icon' style={{ background: white }}
                             onClick={this.clearVibes}>
                             <Icon name='remove' />
                         </Button>
-                        */}
                     </Fragment>
-                }
-
-                {num_vibes === 0 &&
-                    <Translation>{
-                        (t, { i18n }) => <Dropdown
-                        button
-                        className='icon basic'
-                        icon='add'
-                        labeled
-                        multiple
-                        search
-                        onChange={this.handleVibeChange}
-                        value={this.props.vibes}
-                        options={this.state.vibe_options}                        
-                        style={{ minWidth: '12em' }}
-                        label='Add Vibe'
-                    />
-                    }</Translation>
                 }
                 
             </div>
