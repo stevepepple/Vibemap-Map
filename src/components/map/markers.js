@@ -133,6 +133,10 @@ class Markers extends Component {
                     {/* 
                     {label}   
                     */}
+                    
+                    {/* TODO: if a cluster or happening now */}
+                    <div className='pulse'></div>
+
                     <div
                         id={feature.id}
                         title={feature.properties.name}

@@ -608,7 +608,9 @@ module.exports = {
         let collection = featureCollection(places)
 
         // TODO: Adjust cluster measure at each zoom level? 
-        let clustered = clustersDbscan(collection, cluster_size, { mutate: false, minPoints: 2 })
+        let clustered = clustersDbscan(collection, cluster_size / 1000, { mutate: true, minPoints: 2 })
+
+        console.log('clusterPlaces: ', collection, cluster_size / 1000 + ' kilometers', clustered)
 
         let results = []
 
@@ -619,8 +621,6 @@ module.exports = {
 
                 let max_score = helpers.default.getMax(cluster.features, 'average_score')
                 let size = cluster.features.length
-
-
 
                 /* For testing purposes: 
                 console.log('--- Max score for cluster: ', max_score)
@@ -645,6 +645,9 @@ module.exports = {
                     // Give point more cluster attributes
                     fields.in_cluster = true
                     fields.top_in_cluster = 'false'
+
+                    console.log('clusterPlaces, feature: ', fields.address, fields.dbscan, fields.cluster)
+
 
                     if (fields.average_score  >= max_score) {
                         fields.top_in_cluster = 'true'

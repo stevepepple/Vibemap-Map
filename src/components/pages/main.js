@@ -42,7 +42,6 @@ class Page extends Component {
         // State includes some globals only for the main page; 
         // Most other UI state is managed by Redux
         this.state = {
-            clusterSize: 80,
             top_event: [],
             items: [],
             // TODO: set state form YAML
