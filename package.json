@@ -66,13 +66,14 @@
     "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^0.88.2",
     "truncate": "^2.1.0",
-    "vibemap-constants": "^1.0.15"
+    "vibemap-constants": "^1.0.15",
+    "webpack": "^5.0.0-beta.22"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
     "cross-env": "^5.1.1",
     "jest": "^26.1.0",
-    "razzle": "latest",
+    "razzle": "^3.1.6",
     "razzle-dev-utils": "^3.1.5",
     "razzle-plugin-bundle-analyzer": "^1.2.0",
     "razzle-plugin-compression": "^1.0.0",
