@@ -12,7 +12,6 @@ module.exports = {
     geolocateStyle : {
       position: 'absolute',
       right: 3,
-      top: "8em",
       margin: 10,
       width: 30
     },
@@ -213,8 +212,8 @@ module.exports = {
           8, 1,
           10, 16,
           12, 40,
-          13, 60,
-          14, 90,
+          13, 50,
+          14, 80,
           20, 200
       ],
       'heatmap-opacity': [
@@ -222,8 +221,8 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 0.3,
-          11, 0.3,
-          20, 0.3
+          11, 0.2,
+          20, 0.2
       ],
       // This number is adjusted by React based on the relative density of the map area
       'heatmap-intensity' : 0.2,

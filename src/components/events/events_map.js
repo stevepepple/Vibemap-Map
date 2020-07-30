@@ -9,6 +9,7 @@ import truncate from '@turf/truncate'
 
 import ReactMapGL, { Source, Layer, NavigationControl, GeolocateControl, Marker, Popup, ScaleControl } from 'react-map-gl'
 import CustomMapController from '../map/map-conroller'
+import { WebMercatorViewport } from 'react-map-gl';
 
 import { Search } from 'semantic-ui-react'
 
@@ -60,6 +61,8 @@ class EventsMap extends React.Component {
         
         this._onClick = this._onClick.bind(this)
         this._onHover = this._onHover.bind(this)
+        this.mapLoaded = this.mapLoaded.bind(this)
+
         //this._getCursor = this._getCursor.bind(this)
         this.showPopup = this.showPopup.bind(this)
         this._onViewportChange = this._onViewportChange.bind(this)
@@ -146,6 +149,37 @@ class EventsMap extends React.Component {
 
     }
 
+    mapLoaded() {
+        const mapGL = this.mapRef.current.getMap()
+
+        console.log('Map LOADED !!! ', mapGL)
+
+        /* TODO: If the left panel is open 
+        mapGL.easeTo({
+            padding: {
+                left: 600
+            } 
+        });
+        */
+
+    }
+
+    /*
+    shiftViewport() {
+        const mapGL = this.mapRef.current.getMap()
+        const { currentLocation, setCurrentLocation } = this.props
+
+        let padding = -300
+
+        let mapXY = mapGL.project([currentLocation.longitude, currentLocation.latitude])
+        let new_center = mapGL.unproject([mapXY.x + padding, mapXY.y])
+        console.log('Map Get center point: ', mapXY, new_center)
+
+        setCurrentLocation({ latitude: new_center.lat, longitude: new_center.lng })
+
+    }
+    */
+
     styleHeatMap() {
         // TODO: only do this if the main vibe changes?         
         let heatmap = helpers
@@ -176,7 +210,12 @@ class EventsMap extends React.Component {
     }
 
     _onViewportChange = viewport => {
+
+        //const mapGL = this.mapRef.current.getMap()
+
         // Keep Redux in sync with current map
+        const { bounds, currentLocation } = this.props
+        console.log('Map updated: ', bounds)
 
         // TODO: how to transtlate greater of viewport width or height to search radius
         this.props.setViewport(viewport)
@@ -314,7 +353,7 @@ class EventsMap extends React.Component {
 
     render() {
 
-        const { densityBonus, guideDetails, isMobile, searchTerm } = this.props
+        const { currentLocation, densityBonus, guideDetails, isMobile, searchTerm } = this.props
         const { has_marker_data, has_route_data, marker_data, marker_data_geojson, route_data, score_markers } = this.state
 
         let has_places_data = this.props.placesData.length > 0
@@ -340,6 +379,10 @@ class EventsMap extends React.Component {
         mapStyles.marker_layout.visibility = this.props.layers.places_markers ? "visible" : "none"
                 
         let heat_map_visibility = this.props.layers.heatmap ? 'visible' : 'none'
+
+        let mapHeight = '100%', mapWidth = '100%'
+
+        if (isMobile) mapHeight = '100vh'
 
         return (
             <Fragment>
@@ -367,22 +410,25 @@ class EventsMap extends React.Component {
                     <ReactMapGL
                         {...this.state.viewport}
                         controller={mapController}
-                        width={'100%'}
-                        height={'100%'}
+                        ref={this.mapRef}
+                        height={mapHeight}
+                        width={mapWidth}
                         transition={{ "duration": 300, "delay": 0 }}                        
                         mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
-                        mapStyle={Constants.MAPBOX_STYLE}
-                        ref={this.mapRef}
+                        mapStyle={Constants.MAPBOX_STYLE}                    
                         onClick={this._onClick}
+                        onLoad={this.mapLoaded}
                         //getCursor={this._getCursor}
                         onHover={this._onHover}                        
                         onViewportChange={this._onViewportChange}
                     >
                     
-                        <NavigationControl
-                            showZoom={true}
-                            showCompass={true}
-                        />
+                        {isMobile === false &&
+                            <NavigationControl
+                                showZoom={true}
+                                showCompass={true}
+                            />
+                        }
 
                         <GeolocateControl
                             style={mapStyles.geolocateStyle}
@@ -391,7 +437,7 @@ class EventsMap extends React.Component {
                         />
 
                         <ScaleControl maxWidth={200} unit='imperial' />                        
-
+                        
                         {has_marker_data &&
                             <Fragment>
                                 <Source

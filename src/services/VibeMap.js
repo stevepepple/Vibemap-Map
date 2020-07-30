@@ -644,13 +644,13 @@ module.exports = {
 
                     // Give point more cluster attributes
                     fields.in_cluster = true
-                    fields.top_in_cluster = 'false'
+                    fields.top_in_cluster = false
 
                     console.log('clusterPlaces, feature: ', fields.address, fields.dbscan, fields.cluster)
 
 
                     if (fields.average_score  >= max_score) {
-                        fields.top_in_cluster = 'true'
+                        fields.top_in_cluster = true
                     } else {
                         fields.icon_size = fields.icon_size / 1.5
                     }
@@ -665,7 +665,7 @@ module.exports = {
             } else {
                 featureEach(cluster, function (currentFeature, featureIndex) {
                     currentFeature.properties.in_cluster = false
-                    currentFeature.properties.top_in_cluster = 'true'
+                    currentFeature.properties.top_in_cluster = true
 
                     results.push(currentFeature)
                 })
