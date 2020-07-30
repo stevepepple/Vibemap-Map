@@ -1,5 +1,64 @@
 @import 'variables.scss';
 
+/* Styles for Panel */
+.details {
+    padding-bottom: 30em;
+    scroll-behavior: smooth;
+
+    h2 {
+       font-family: $font-family-nantes;
+        font-size: 2.4em;
+        font-weight: 500;
+    }
+}
+
+.details .header {
+    background-color: $color-base-white;
+    position: sticky;
+    padding-top: $unit-small;
+    top: 0;
+    z-index: 10;
+}
+
+.name {
+    position: relative;
+    padding-top: $unit-tiny;
+
+    .recommendation {
+        color: $color-base-green-primary;
+        position: absolute;
+        right: 0px;
+        bottom: $unit-tiny;
+        text-align: right;
+
+        .score {
+            display: block;
+            font-size: $unit-small;
+            line-height: $unit-small;
+        }
+
+        .reason {
+            display: reason;
+            padding-top: $unit-tiny;
+        }
+
+    }
+}
+
+.tabs {
+    transition: 200ms;
+}
+
+h4 {
+    color: $color-base-gray-600;
+    font-family: $font-family-public;
+    font-size: 1.2em;
+    font-weight: 300;
+    text-transform: uppercase;
+    padding-bottom: $unit-tiny;
+    padding-top: 0.2rem;
+}
+
 .placeImage {
     max-height: 300px;
     object-fit: cover;

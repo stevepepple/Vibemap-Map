@@ -31,7 +31,7 @@ input.search {
 }
 
 .datepicker .text {
-    line-height: 2em;
+    line-height: $unit-small;
 }
 
 .ui.search > .text.default {
@@ -40,12 +40,27 @@ input.search {
 
 .allVibes {
     max-width: 70%;
+    font-family: $font-family-public;
+    z-index: 40;
 }
 
 .allVibes .ui.multiple.dropdown >.label {
     background: #FFFFFF;
     border-radius: 3em;
     padding: 0.8em;
+}
+
+.allVibes .label.vibe {
+    padding: 1rem;
+    padding: $unit-tiny;
+    padding-left: $unit-tiny;
+    padding-right: $unit-small;
+    position: relative;
+
+    .delete {
+        position: absolute;
+        right: $unit-tiny;
+    }
 }
 
 .allVibes .ui.label:nth-child(1) {

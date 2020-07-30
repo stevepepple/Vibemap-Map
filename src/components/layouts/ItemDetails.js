@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import isEqual from 'react-fast-compare'
-import { Link } from "react-router-dom";
-import { withTranslation } from 'react-i18next';
+import { Link } from "react-router-dom"
+import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
@@ -223,7 +223,7 @@ class PlaceDetails extends Component {
         if (currentItem.reason === undefined) currentItem.reason = 'vibe'
         const reason = Constants.RECOMMENDATION_REASONS[this.props.currentItem.reason]
         // TODO: connect so same logic as mobile 
-        const recommendation = { score: '95%', reason: t(reason) }        
+        const recommendation = { score: '95%', reason: t(reason) }
 
         const tabs = sections.map((section) => {
             return <a
@@ -251,8 +251,13 @@ class PlaceDetails extends Component {
                     img={preview_image} />
 
                 <div className='header'>
-                    <Button basic onClick={this.props.clearDetails}>{t("Back")}</Button>                    
+                    <Button basic size='small' onClick={this.props.clearDetails}>{t("Back")}</Button>                    
                     
+                    <Button.Group floated='right'>
+                        <Button basic circular color='white' icon='like' />
+
+                        <Button basic circular color='white' icon='share' />
+                    </Button.Group>
                     <Header 
                         loading={loading} 
                         currentItem={currentItem} 

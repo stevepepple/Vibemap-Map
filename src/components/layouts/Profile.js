@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import ErrorBoundary from '../pages/GlobalError.js'
 
-import { Button, Grid, Transition } from 'semantic-ui-react'
+import { Button, Grid, Transition, GridColumn } from 'semantic-ui-react'
 
 class TwoColumnLayout extends Component {
 
@@ -26,7 +26,6 @@ class TwoColumnLayout extends Component {
                             {leftPanel}
                         </Fragment>
                     </Grid.Column>
-                
                     <Grid.Column width={rightWidth}>
                         <Fragment>
                             {rightPanel}
@@ -40,7 +39,7 @@ class TwoColumnLayout extends Component {
 
 TwoColumnLayout.defaultProps = {
     leftWidth: 9,
-    rightWidth: 7,
+    rightWidth: 6,
     expandCollapse: true,
     leftPanel: <div>LeftPanel goes here</div>,
     rightPanel: <div>RightPanel goes here</div>,

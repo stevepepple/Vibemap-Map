@@ -63,7 +63,7 @@ class AppLink extends Component {
     render() {
         
         return (
-            <Button basic color='black' style={{ width: '9em', position: 'absolute', right: '1em', top: '1.4em'}} onClick={this.openLink}>
+            <Button basic color='black' style={{ width: '9em', position: 'absolute', right: '1em', top: '1.4em', zIndex: 14 }} onClick={this.openLink}>
                 Open in App
             </Button>
         );

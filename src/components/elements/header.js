@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from "react-router-dom"
 import { Menu, Dropdown } from 'semantic-ui-react'
 import SVG from 'react-inlinesvg'
 
+import { isMobile } from 'react-device-detect';
+import TopMenu from './topMenu.js'
 
 
 class Header extends Component {
@@ -26,14 +28,22 @@ class Header extends Component {
         })
 
         return (
-            <Menu id='header' borderless pointing style={{ margin: '0'}}>
-                <Menu.Item>
-                    <SVG style={{ width: '14em', padding: '1em' }} src='/images/logo-type.svg' />
-                </Menu.Item>                
-                <Menu.Menu className='pageMenu' position='right'>
-                    {menuItems}
-                </Menu.Menu>
-                {/*
+            <div class='headerMenu' style={{ zIndex: 12 }}>
+                {isMobile === false &&
+                    <TopMenu />
+                }
+                <Menu id='header' borderless pointing style={{ margin: '0', zIndex: 10 }}>
+                    <Menu.Item>
+                        <SVG style={{ width: '12em', padding: '1em' }} src='/images/logo-type.svg' />
+                    </Menu.Item>
+
+                    {isMobile === false &&
+                        <Menu.Menu className='pageMenu' position='right'>
+                            {menuItems}
+                        </Menu.Menu>
+                    }
+
+                    {/*
                 <Menu.Item>
                     <Dropdown button labeled className='icon main_menu' icon='list' text='Menu'>
                         <Dropdown.Menu>
@@ -54,11 +64,17 @@ class Header extends Component {
                 </Menu.Item>
                 */}
 
-                
-            </Menu>
+                </Menu>
+            </div>
+            
         );
     }
 }
+
+Header.defaultProps = {
+    isMobile: false
+}
+
 
 export default Header;
 

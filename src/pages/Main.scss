@@ -13,9 +13,24 @@ html, body, #root, div.App, div.App > div {
   flex-direction: column;
 }
 
+.Main.mobile {
+    .headerMenu {
+        position: fixed;
+    }
+
+    .map_container .map_search {
+        margin-top: 6rem;
+    }
+}
+
 #header, #navigation, #content {    
     display: flex;    
     justify-content: left;    
+}
+
+#navigation {
+    background-color: $color-base-white;
+    width: 100vw;
 }
 
 #header {        
@@ -25,7 +40,7 @@ html, body, #root, div.App, div.App > div {
     height: 6%;
     min-height: 80px;
     max-height: 8%;
-    width: 100%;
+    width: 100vw;
     border-radius: 0;
 }
 
@@ -45,6 +60,18 @@ html, body, #root, div.App, div.App > div {
     width: 8em;
 }
 
+.leftPanel {
+    position: fixed;
+    width: 32vw;
+    height: 82vh;
+    top: 19vh;
+    z-index: 10;
+}
+
+.rightPanel {
+    width: 68vw;
+}
+
 /* List */
 .list_details {
     display: flex;
@@ -61,7 +88,8 @@ html, body, #root, div.App, div.App > div {
 }
 
 .details {
-    padding: 2em;
+    padding-left: $unit-small;
+    padding-right: $unit-small;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -70,7 +98,7 @@ html, body, #root, div.App, div.App > div {
 .ui.items .item .content .date {
     font-size: 1.1em;
     color: $color-base-gray-600;
-    padding: 0.2em;
+    padding-top: 0.2em;
     padding-bottom: 0.4em;
 }
 
@@ -79,7 +107,9 @@ html, body, #root, div.App, div.App > div {
 }
 
 .ui.items .item .content .header {
-    font-size: 1.2em;
+    font-size: 1.6em !important;
+    font-family: $font-family-nantes;
+    font-weight: $font-weight-normal;
 }
 
 .ui.items .image {
@@ -96,6 +126,7 @@ html, body, #root, div.App, div.App > div {
 
 .ui.items .image img {
     height: 12em;
+    max-height: 11em;
     width: 12em;
     transform: scale(1);
     will-change: transform;

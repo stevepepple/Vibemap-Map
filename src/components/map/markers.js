@@ -57,7 +57,7 @@ class Markers extends Component {
                 let min = helpers.getMin(features, 'average_score')
 
                 // Make less high scored marker in cluster smaller 
-                if (feature.properties.in_cluster === true && feature.properties.top_in_cluster === 'false') {
+                if (feature.properties.in_cluster === true && feature.properties.top_in_cluster === false) {
                     score = max / 4
                     if (this.state.show_clusters) {
                         feature.className = 'marker small'
@@ -100,10 +100,11 @@ class Markers extends Component {
             // TODO: @cory this
             markers = this.state.markers.map(feature => {
 
+                const { top_in_cluster, in_cluster } = feature.properties
+
                 {/* TODO: Remove this: 
 
                 let in_cluster = feature.properties.in_cluster
-                let top_in_cluster = feature.properties.top_in_cluster
                 
                 // If the marker is the top in it's cluster show a special label
                 let label = null
@@ -134,8 +135,10 @@ class Markers extends Component {
                     {label}   
                     */}
                     
-                    {/* TODO: if a cluster or happening now */}
-                    <div className='pulse'></div>
+                    {/* if a cluster or happening now */}
+                    {(top_in_cluster == true && in_cluster == true) &&
+                        <div className='pulse'></div>
+                    }
 
                     <div
                         id={feature.id}

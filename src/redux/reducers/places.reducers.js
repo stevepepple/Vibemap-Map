@@ -14,7 +14,13 @@ const initialState = {
         tips: [],
         vibes: [],
         images: []
-    }
+    },
+    sections: [
+        { key: 'vibe', text: 'Vibe' },
+        { key: 'plan', text: 'Plan' },
+        { key: 'tips', text: 'Tips' },
+        { key: 'more', text: 'More' },
+    ]
 }
 
 const places = (state = initialState, action) => {

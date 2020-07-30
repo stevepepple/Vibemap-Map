@@ -1,0 +1,91 @@
+@import '../styles/variables.scss';
+
+.DetailsPage {
+    h2 {
+        font-size: 3em;
+        line-height: 1em;
+        font-family: $font-family-nantes;
+        font-weight: 400;
+        width: 80%;
+    }
+
+    .headerMenu {
+        position: fixed;
+        top: 0;
+    }
+}
+
+.DetailsPage.mobile {
+    padding-top: 6rem;
+
+    .header,
+    #vibe .segment,
+    #plan .segment,
+    #tips .segment,
+    #more .segment {
+        padding-left: $unit-tiny;
+        padding-right: $unit-tiny;
+    }
+
+}
+
+.DetailsPage.web {
+    /* TODO: Handle in menu styles */
+    .top-menu,
+    #header {
+        position: fixed;
+        width: 100%;
+        z-index: 10;
+    }
+
+    #header {
+        top: 3rem;
+    }
+
+    .header {
+        background-color: $color-base-white;
+        padding-top: 4em;
+        position: fixed;
+        top: 8em;
+        width: 86vw;
+        z-index: 10;
+    }
+
+    #content {
+
+        .profile {
+            padding-top: 8em;
+            padding-bottom: 10em;
+            section {
+                scroll-margin-top: 20rem;
+            }
+        }
+
+        .map {
+            position: fixed;
+            top: 24rem;
+            padding-bottom: 4rem;
+            min-width: 30vw;
+        }
+
+        h2 {
+            font-size: 3em;
+            font-family: $font-family-nantes;
+        }
+
+        h4 {
+            color: $color-base-gray-600;
+            font-family: $font-family-public;
+            font-size: 1.2em;
+            font-weight: 300;
+            text-transform: uppercase;
+            padding-bottom: $unit-tiny;
+            padding-top: 0.2rem;
+        }
+    }
+
+    .footer {
+        height: 20rem;
+        background-color: $color-base-gray-100;
+    }
+}

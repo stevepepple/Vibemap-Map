@@ -53,6 +53,7 @@ class MobileList extends Component {
             <div className='MobileCards ui items' style={{ position: 'absolute', bottom: '1em', width: '100%' }}>
                 <CardCarousel 
                     items={items}
+                    height='10em'
                     isMobile={isMobile}/>
             </div>
         );

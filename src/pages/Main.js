@@ -10,7 +10,6 @@ import { isMobile } from 'react-device-detect';
 import SEO from '../components/seo/'
 
 // Page elements
-import TopMenu from '../components/elements/topMenu.js'
 import Header from '../components/elements/header.js'
 import Logo from '../components/elements/logo.js'
 import AppLink from '../components/elements/AppLink'
@@ -275,8 +274,6 @@ class Main extends Component {
 
         const size = (isMobile) ? 100 : 140
 
-        console.log('Is Mobile: ', isMobile, size)
-
         if (loading) return (<div className="full-page-loader" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}>
             <Logo size={size} />
         </div>)
@@ -300,18 +297,19 @@ class Main extends Component {
         const Map = <Fragment>
             {placesLoading && <Logo size={100} /> }
 
-            <EventsMap setLocationParams={this.setLocationParams} isMobile={isMobile} />
+            <EventsMap 
+                setLocationParams={this.setLocationParams} 
+                isMobile={isMobile} />
         </Fragment>
 
         let mobile = <Fragment>
             <AppLink />
-            <Header />
+            <Header isMobile={isMobile} />
             {Map}
             <MobileList isMobile={true}/>
         </Fragment>
 
         let web = <Fragment>
-            <TopMenu />
             <Header />
             {navigation}
             <TwoColumnLayout
@@ -321,7 +319,7 @@ class Main extends Component {
         </Fragment>
 
         return (
-            <div className="Main">
+            <div className={'Main ' + (isMobile ? 'mobile' : 'web')}>
                 <SEO />
 
                 <MediaMatcher

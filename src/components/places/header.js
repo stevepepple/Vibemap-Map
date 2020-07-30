@@ -1,19 +1,15 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { withTranslation } from 'react-i18next'
 
-import { Image, Placeholder, Reveal } from 'semantic-ui-react'
+import { Image, Placeholder } from 'semantic-ui-react'
 
 const Header = (props) => {
-    const { loading, currentItem, recommendation } = props
+    const { loading, currentItem, recommendation, t } = props
 
-    let image = <Image className='placeImage' src={process.env.PUBLIC_URL + '/images/image.png'} fluid />
-    let num_images = currentItem.images.length
-    if (num_images > 0) {
-        image = <Image className='placeImage' src={currentItem.images[num_images - 1]} fluid />
-    }
-
-    console.log('image of ', num_images, image)
+    const { short_description, subcategories } = props.currentItem
   
     return <div>
+
         {loading ? (
             <Placeholder>
                 <Placeholder.Header>
@@ -25,30 +21,26 @@ const Header = (props) => {
                 </Placeholder>
             </Placeholder>
         ) : (
-            <div>
+            <div className='name'>
                 <h2>{currentItem.name}</h2>
+
+                {short_description 
+                    ? <span>{short_description}</span> 
+                    : subcategories && subcategories.length > 0
+                        ? <span>{subcategories[0]}</span>
+                        : <span>{t(None)}</span>
+                }
 
                 {recommendation && 
                     <div className='recommendation'>
-                        <span>{recommendation.score}</span>
-                        {recommendation.reason}
+                        <span className='score'>{recommendation.score}</span>
+                        <span className='reason'>{t(recommendation.reason)}</span>                    
                     </div>
                 }
             </div>
 
         )}
 
-        {loading ? (
-            <Placeholder>
-                <Placeholder.Image square />
-            </Placeholder>
-        ) : (
-                <Reveal animated='fade'>
-                    <Reveal.Content hidden>
-                        {image}
-                    </Reveal.Content>
-                </Reveal>
-            )}
 
 
     </div>
@@ -58,4 +50,4 @@ Header.defaultProps = {
     showRecommendation: true
 }
 
-export default Header
+export default withTranslation()(Header)
