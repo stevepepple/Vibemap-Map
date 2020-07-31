@@ -28,7 +28,7 @@ class Header extends Component {
         })
 
         return (
-            <div class='headerMenu' style={{ zIndex: 12 }}>
+            <div className='headerMenu' style={{ zIndex: 12 }}>
                 {isMobile === false &&
                     <TopMenu />
                 }
