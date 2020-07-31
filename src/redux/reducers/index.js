@@ -65,6 +65,12 @@ export const language = (state = "en", action) => {
   return state
 }
 
+export const mapboxToken = (state = "", action) => {
+  if (action.type === 'SET_MAPBOX_TOKEN') {
+    state = action.token
+  }
+  return state
+}
 
 export const windowSize = (state = { width: 1024, height: 768 }, action) => {
   if (action.type === 'SET_WINDOW_SIZE') {
@@ -281,6 +287,7 @@ const rootReducer = combineReducers({
   headerSize,
   isBrowser,
   language, 
+  mapboxToken,
   name,
   nearby_places,
   placesData,

@@ -353,9 +353,10 @@ class EventsMap extends React.Component {
 
     render() {
 
-        const { currentLocation, densityBonus, guideDetails, layers, isMobile, searchTerm } = this.props
+        const { currentLocation, densityBonus, guideDetails, layers, mapboxToken, isMobile, searchTerm } = this.props
         const { has_marker_data, has_route_data, marker_data, marker_data_geojson, route_data, score_markers } = this.state
-
+        
+        console.log('MAPBOX_TOKEN: ', process.env)
         let has_places_data = this.props.placesData.length > 0
         let has_events_data = this.props.eventsData.length > 0
 
@@ -417,7 +418,7 @@ class EventsMap extends React.Component {
                         height={mapHeight}
                         width={mapWidth}
                         transition={{ "duration": 300, "delay": 0 }}                        
-                        mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
+                        mapboxApiAccessToken={mapboxToken}
                         mapStyle={Constants.MAPBOX_STYLE}                    
                         onClick={this._onClick}
                         onLoad={this.mapLoaded}
@@ -621,6 +622,7 @@ class EventsMap extends React.Component {
 const mapStateToProps = state => ({
     // General
     windowSize: state.windowSize,
+    mapboxToken: state.mapboxToken,
 
     // Navigation
     currentLocation: state.nav.currentLocation,

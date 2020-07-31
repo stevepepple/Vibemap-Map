@@ -243,9 +243,11 @@ class Main extends Component {
     }
 
     pageTopPicks(refreshResults) {
-        const { page, placesData, setTopPicks} = this.props
-        const first = page * this.state.num_top_picks + 1
-        const last = first + this.state.num_top_picks
+        const { currentPage, placesData, numTopPicks, setTopPicks} = this.props
+        const first = currentPage * numTopPicks
+        const last = first + numTopPicks
+
+        console.log('pageTopPicks: ', first, last)
 
         let top_picks = placesData.slice(first, last)
         setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
@@ -339,6 +341,7 @@ const mapDispatchToProps = {
 const mapStateToProps = state => ({
     isBrowser: state.isBrowser,
     language: state.language,
+    mapboxToken: state.mapboxToken,
 
     // Map
     bounds: state.map.bounds,
@@ -346,6 +349,7 @@ const mapStateToProps = state => ({
     distance: state.map.distance,
     mapSize: state.map.mapSize,
     mapReady: state.map.mapReady,
+    numTopPicks: state.map.numTopPicks,
     pixelDistance: state.map.pixelDistance,
     zoom: state.map.zoom,
     // Navigation

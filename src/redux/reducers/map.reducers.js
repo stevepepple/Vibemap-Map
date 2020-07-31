@@ -16,6 +16,7 @@ const initialState = {
     layersChanged: false,
     mapReady: false,
     mapSize: { width: 800, height: 600 },
+    numTopPicks: 10,
     pixelDistance: 0,
     viewport: {},
     zoom: 14

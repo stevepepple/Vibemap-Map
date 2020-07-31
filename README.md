@@ -16,6 +16,8 @@ yarn dev
 ```
 App will start on port 8080 or the port that you have configured in `env.PORT`.
 
+There are a couple of secret keys that you need to add to the `.env` environtment variable read by React in both development and production mode.
+
 Build and deploy the app. 
 
 ```bash

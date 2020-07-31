@@ -26,6 +26,8 @@ const preloadedState = getSerializedData('preloaded_state');
 
 const store = configureStore(preloadedState);
 
+console.log('store with preloaded state: ', store)
+
 function renderApp() {
 
   //useSSR(window.initialI18nStore, window.initialLanguage);

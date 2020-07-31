@@ -32,6 +32,8 @@ class Map extends Component {
 
   render() {
     const { loading, height, width } = this.props
+    const { MAPBOX_TOKEN } = process.env
+
     // TODO: Map should require current item
     // const { categories, hours, address, url, is_closed } = this.props.currentItem
 
@@ -51,7 +53,7 @@ class Map extends Component {
                 {...this.state.viewport}
                 controller={mapController}
                 transition={{ "duration": 300, "delay": 0 }}
-                mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
+                mapboxApiAccessToken={MAPBOX_TOKEN}
                 mapStyle={Constants.MAPBOX_STYLE}
                 ref={this.mapRef}
                 onClick={this._onClick}

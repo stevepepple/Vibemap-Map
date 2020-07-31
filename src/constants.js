@@ -2,22 +2,11 @@ export const SET_ACTIVE_OPTION = 'SET_ACTIVE_OPTION'
 
 export const MAPBOX_STYLE = 'mapbox://styles/stevepepple/cka8kdq0i1dvv1it9nj0l70xn/draft?optimize=true'
 
-export const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3RldmVwZXBwbGUiLCJhIjoiTmd4T0wyNCJ9.1-jWg2J5XmFfnBAhyrORmw'
-
 export const MAPBOX_STYLE_LIGHT = 'mapbox://styles/stevepepple/ck8unzpvf0z5j1itdntgz3lxp'
 
 export const DATABASE = 'mongodb://stevepepple:Hotspot1@ds019101.mlab.com:19101/hotspots'
 
 export const TIMEOUT = 8000;
-
-export const FOURSQUARE_CLIENT_ID = 'MFA1H1MN4RRH33TLXVTMD22NI5YASHPM10WV0HFZQCKW0TA0'
-
-export const FOURSQUARE_SECRET = '2UX3X1FMXUJHRJ3GII2QNBELJ3UEU2HOOQ3X4KG2LRWIMCN5'
-
-export const CITY_MAPPER_SECRET = '6a401321dd665074dfbb9331b16dc02b'
-
-// Token for connecting to GeoDjango API
-export const SYSTEM_TOKEN = 'f486868802f2083ab6a75e2932717ca97a4d298c';
 
 export const METERS_PER_MILE = 1609.34
 

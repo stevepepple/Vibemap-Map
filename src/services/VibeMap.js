@@ -23,6 +23,8 @@ const ApiHeaders = {
     'Authorization': 'Token ' + Constants.SYSTEM_TOKEN
 };
 
+const { MAPBOX_TOKEN } = process.env
+
 // TODO: tie this value to the DEV or PROD var
 //const ApiUrl = 'http://192.168.99.100:8888'
 const ApiUrl = 'https://api.vibemap.com'
@@ -74,7 +76,7 @@ module.exports = {
         return new Promise(function (resolve, reject) {
             const service = 'https://api.mapbox.com/directions/v5/mapbox/walking/'
             let query = querystring.stringify({
-                access_token: Constants.MAPBOX_TOKEN,
+                access_token: MAPBOX_TOKEN,
                 geometries: 'geojson',
                 steps: true,
                 waypoints: []
