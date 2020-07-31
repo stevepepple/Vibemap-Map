@@ -378,16 +378,18 @@ const helpers = {
             .domain([0, 1])
             .range([Constants.HEATMAP_INTENSITY * 2, Constants.HEATMAP_INTENSITY])
 
+        console.log('heatmap: relative density, intensity: ', relative_density, inverted_scale(relative_density))
+
         return inverted_scale(relative_density)
 
     },
 
     scaleDensityArea: function(density, area) {
         let density_scale = scalePow(2)
-            .domain([1, 600, 10000])
-            .range([0, 0.6, 1])
-
+            .domain([1, 60, 1000])
+            .range([0, 0.8, 1])
         let relative_density = density_scale(density)
+
 
         return relative_density
     },

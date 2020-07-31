@@ -3,7 +3,7 @@ const initialState = {
     bearing: 0,
     bounds: [10, 10, 10, 10],
     boundsReady: false,
-    densityBonus: 0.2,
+    densityBonus: 0.4,
     distance: 1.4,
     geod: {},
     layers: { 
@@ -50,6 +50,7 @@ const map = (state = initialState, action) => {
             }
 
         case "SET_DENSITY_BONUS":
+            console.log('heatmap: SET_DENSITY_BONUS: ', action.densityBonus)
             return {
                 ...state,
                 densityBonus: action.densityBonus,

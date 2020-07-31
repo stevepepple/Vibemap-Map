@@ -203,7 +203,7 @@ class EventsMap extends React.Component {
             0.3, heatmap[2],
             0.8, heatmap[3],
             0.9, heatmap[4],
-            1.2, heatmap[5]
+            1.1, heatmap[5]
         ]
 
         this.setState({ mapStyles : mapStyles })
@@ -353,7 +353,7 @@ class EventsMap extends React.Component {
 
     render() {
 
-        const { currentLocation, densityBonus, guideDetails, isMobile, searchTerm } = this.props
+        const { currentLocation, densityBonus, guideDetails, layers, isMobile, searchTerm } = this.props
         const { has_marker_data, has_route_data, marker_data, marker_data_geojson, route_data, score_markers } = this.state
 
         let has_places_data = this.props.placesData.length > 0
@@ -371,12 +371,15 @@ class EventsMap extends React.Component {
             /* TODO: Better scalling for low and high densities */
             // Take the mean of density bonus and the default intensity
             let intensity = this.props.densityBonus
-            //console.log('adjusted intensity: ', intensity)
             mapStyles.places_heatmap['heatmap-intensity'] = intensity
         }
 
         // Marker are better controled with a layout style
-        mapStyles.marker_layout.visibility = this.props.layers.places_markers ? "visible" : "none"
+        try {
+            mapStyles.marker_layout.visibility = layers.places_markers ? "visible" : "none"            
+        } catch (error) {
+            console.log(error, layers)
+        }
                 
         let heat_map_visibility = this.props.layers.heatmap ? 'visible' : 'none'
 
@@ -523,17 +526,19 @@ class EventsMap extends React.Component {
                                 <Layer
                                     id='places_markers'
                                     key='places_markers'
-                                    beforeId='photo_markers'
+                                    //beforeId='photo_markers'
                                     type='symbol'
                                     layout={mapStyles.marker_layout}
                                     paint={mapStyles.marker_paint} />
 
+                                {/* 
                                 <Layer
                                     id='places_circle'
                                     type='circle'
-                                    beforeId='places_markers'
+                                    //beforeId='places_markers'
                                     paint={mapStyles.places_circle}
                                     isLayerChecked={true} />
+                                */}
 
                             </Source>
                         }                    

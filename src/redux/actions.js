@@ -147,7 +147,7 @@ export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', 
         if (results && results.length > 0) {
           // Set Data with minor side effects
           dispatch(setPlacesData(results, refreshResults))
-          dispatch(setDensityBonus(response.densityBonus))
+          dispatch(setDensityBonus(response.density_bonus))
           dispatch(setPlacesLoading(false))
 
           if (should_search === false) dispatch(setTopPlaces(results, refreshResults))

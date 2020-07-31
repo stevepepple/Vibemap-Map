@@ -646,9 +646,6 @@ module.exports = {
                     fields.in_cluster = true
                     fields.top_in_cluster = false
 
-                    console.log('clusterPlaces, feature: ', fields.address, fields.dbscan, fields.cluster)
-
-
                     if (fields.average_score  >= max_score) {
                         fields.top_in_cluster = true
                     } else {
