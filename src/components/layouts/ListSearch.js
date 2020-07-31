@@ -64,7 +64,7 @@ class PlacesList extends Component {
         let has_items = this.props.data && this.props.data.length > 0
         let items = null
 
-        let searchTerm = this.props.searchTerm
+        const { currentPage, searchTerm, totalPages }  = this.props
 
         if (has_items) {
             // TODO: @cory, sorting should happen on the server. 
@@ -117,10 +117,10 @@ class PlacesList extends Component {
                             onPageChange={this.handlePage}
                             boundaryRange={1}
                             siblingRange={1}
-                            totalPages={this.props.totalPages}
+                            totalPages={totalPages}
                             firstItem={false}
                             lastItem={false}
-                            activePage={this.props.currentPage}
+                            activePage={currentPage}
                         />
                     </Item.Group>
                 ) : (
