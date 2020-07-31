@@ -148,17 +148,17 @@
 }
 
 .pulse {
-    background: $color-base-yellow-light;
+    background: $color-base-magenta-bright;
     border-radius: 10em;
     animation: test;
     animation-duration: 3s;
-    animation-iteration-count: 6;
+    animation-iteration-count: 3;
     height: 4rem;
     width: 4rem;
     margin-left: -2em;
     margin-top: -2em;
     position: absolute;
-    opacity: 0.4;
+    opacity: 0.2;
     transform: scale(1);
 }
 
@@ -168,7 +168,7 @@
   }
 
   70% {
-    transform: scale(2);
+    transform: scale(1.6);
   }
 
   100% {
