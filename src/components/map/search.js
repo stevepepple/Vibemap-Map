@@ -39,7 +39,7 @@ class LocationSearchInput extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         const { allCities, currentLocation } = this.props
-        console.log('search.js: ', allCities)
+        
         // Handle city or locations changes
         if (allCities.length > 0 && !isEqual(prevProps.allCities, allCities)) this.handleCities()
         if (prevProps.currentLocation.latitude !== currentLocation.latitude) this.setNearest()

@@ -356,7 +356,6 @@ class EventsMap extends React.Component {
         const { currentLocation, densityBonus, guideDetails, layers, mapboxToken, isMobile, searchTerm } = this.props
         const { has_marker_data, has_route_data, marker_data, marker_data_geojson, route_data, score_markers } = this.state
         
-        console.log('MAPBOX_TOKEN: ', process.env)
         let has_places_data = this.props.placesData.length > 0
         let has_events_data = this.props.eventsData.length > 0
 
