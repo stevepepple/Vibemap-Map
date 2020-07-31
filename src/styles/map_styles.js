@@ -22,7 +22,7 @@ module.exports = {
         "interpolate",
         ["linear"], ["zoom"],
         8, 0.4,
-        22, 100
+        22, 60
       ],
     },
 
@@ -211,9 +211,9 @@ module.exports = {
         ["zoom"],
           8, 1,
           10, 16,
-          12, 40,
-          13, 50,
-          14, 80,
+          12, 30,
+          13, 40,
+          14, 60,
           20, 200
       ],
       'heatmap-opacity': [
@@ -221,8 +221,8 @@ module.exports = {
         ["linear"],
         ["zoom"],
           8, 0.3,
-          11, 0.2,
-          20, 0.2
+          11, 0.3,
+          20, 0.3
       ],
       // This number is adjusted by React based on the relative density of the map area
       'heatmap-intensity' : 0.2,
@@ -256,19 +256,19 @@ module.exports = {
         "hsla(240, 80%, 94%, 0)",
         // Replaced by heatmap.fifth
         0.2,
-        "hsla(125, 63%, 88%, 0.4)",
+        "hsla(125, 63%, 88%, 0.2)",
         // Replaced by heatmap.fourth
         0.4,
-        "hsla(192, 84%, 80%, 0.6)",
+        "hsla(192, 84%, 80%, 0.4)",
         // Replaced by heatmap.third
         0.7,
-        "hsla(274, 100%, 65%, 0.8)",
+        "hsla(274, 100%, 65%, 0.5)",
         // Replaced by heatmap.second
-        0.9,
-        "hsla(300, 100%, 50%, 0.8)",
+        0.95,
+        "hsla(300, 100%, 50%, 0.6)",
         // Replaced by heatmap.first
-        1.2,
-        "hsla(42, 100%, 64%, 0.8)",
+        1.1,
+        "hsla(42, 100%, 64%, 0.6)",
         /* The pink is too much? 
         1.2,
         "hsla(42, 88%, 65%, 0.9)"
