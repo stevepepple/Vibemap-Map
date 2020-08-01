@@ -21,6 +21,10 @@ html, body, #root, div.App, div.App > div {
     .map_container .map_search {
         margin-top: 6rem;
     }
+
+    .ui.items .image {
+        border-radius: 1em 0 0 1em;
+    }
 }
 
 #header, #navigation, #content {    
@@ -113,7 +117,6 @@ html, body, #root, div.App, div.App > div {
 }
 
 .ui.items .image {
-    border-radius: 1em 0 0 1em;
     height: 12em;
     width: 12em;
     background-color: #DDDDDD;
