@@ -16,6 +16,7 @@ import {
 class Document extends React.Component {
     static async getInitialProps({ req, res, renderPage, store }) {
         //console.log('req on load: ', req)
+        //console.log('store: ', store, store.getState())
 
         let initialLanguage = req.i18n.language;
         console.log('initialLanguage: ', req.initialLanguage)
@@ -51,6 +52,7 @@ class Document extends React.Component {
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                     <link rel="preconnect" href="https://tiles.vibemap.com"/>
                     <link rel="preconnect" href="https://api.vibemap.com"/>
+                    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2IfNJpGR6qcaOsgacTLVYuF4tqJ7HejY &libraries=places"></script>
 
                     {helmet.title.toComponent()}
                     {helmet.meta.toComponent()}
