@@ -118,16 +118,20 @@
         "link": "https://www.mrbannock.com/",
         "place_id": ""
     },
-
     {
         "name": "ThoroughBread Order Ahead",
         "description": "Please be sure to select your preferred pick up date. Orders must be placed by noon on 2 days prior to the pickup date.",
         "category": "special",
         "link": "https://www.thoroughbreadandpastry.com/shop",
         "place_id": ""
-    }
+    },
+    {
+        "name": "Slow Street Walk-Up Window",
+        "description": "Stop by our walk-up window for an early morning cup or come inside for our full menu that includes cascara shrub, vanilla cold brew, and single origin nitro, all on tap. Share a pastry from Neighbor Bakehouse, b. patisserie, or Piccino; relax at our community table and catch up with friends; or spend a few minutes people-watching from our benches along Page Street.",
+        "category": "special",
+        "link": "https://sightglasscoffee.com/blogs/shops/divisadero",
+        "place_id": ""
+    },
 
-
-    
 
 ]

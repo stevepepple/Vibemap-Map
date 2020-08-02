@@ -7,12 +7,15 @@ function cardPLaceLayout(props) {
 
     let content = props.properties
 
+    console.log('Item details: ', content)
+
     let name = content.name;    
     let score = Math.round(content.average_score)
 
     let categories = null
     let venue = null
     let vibes = null;
+    let openNow = null;
 
     // TODO: Move to server side
     if (name) {
@@ -55,6 +58,10 @@ function cardPLaceLayout(props) {
     let top_icon = <Icon name='heartbeat' />
     let recommendation = <span className='interested'>{score} Good Vibes</span>
 
+    if (content.open_now) openNow = <span className='openNow'>Open now</span>
+    if (content.popular_now) openNow = <span className='popularNow'>Vibe'n now</span>
+
+
     switch (props.index) {
         case 0:
             recommendation = <span className='interested top_match'>{top_icon} {score} Totally Your Vibe</span>
@@ -78,7 +85,9 @@ function cardPLaceLayout(props) {
                         {vibes}
                     </div>
                     {venue}
+                    {openNow}
                     {recommendation}
+
                 </Item.Extra>
             </Item.Content>
         </Fragment>    

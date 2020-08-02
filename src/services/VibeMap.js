@@ -608,7 +608,7 @@ module.exports = {
                 if (openNow) fields.hours_score += open_bonus
                 if (isPopular) fields.hours_score += popular_bonus
 
-                console.log('Score with hours bonus: ', openNow, isPopular, fields.hours_score)
+                // console.log('Score with hours bonus: ', openNow, isPopular, fields.hours_score)
                 
             }
             var end = window.performance.now();
