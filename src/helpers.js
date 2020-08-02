@@ -4,6 +4,8 @@ import { scalePow } from 'd3-scale'
 import chroma from 'chroma-js'
 
 import dayjs from 'dayjs'
+import isBetween from 'dayjs/plugin/isBetween'
+dayjs.extend(isBetween)
 
 import { point } from '@turf/helpers'
 import distance from '@turf/distance'
@@ -264,6 +266,37 @@ const helpers = {
         }
         
         return time_of_day;
+    },
+
+    // See if a time (default now) is with a places open hours
+    isOpen: function(hours, time = dayjs()) {
+        //console.log('isOpen (hours, day, time): ', hours, time.day(), time.hour())
+
+        const day = time.day()
+        const date = time.format('YYYY-MM-DD')
+        const hour = time.hour()
+
+        let dayFound = hours.find(({ day_of_week }) => day_of_week === day)
+        let openEveryday = hours.find(({ day_of_week }) => day_of_week === 8)
+
+        // If open everyday and no specific hours for current day
+        if (openEveryday !== undefined && dayFound === undefined) dayFound = openEveryday
+
+        // TODO: Handle case for everyday, i.e. day_of_week == 8.
+        if ( dayFound ) {            
+           
+            let opens = dayjs(date + ' ' + dayFound.opens) //.format('HH:mm')
+            let closes = dayjs(date + ' ' + dayFound.closes) //.format('HH:mm')
+
+            // Return if open and if it's a popular time
+            const openNow = time.isBetween(opens, closes)
+            const isPopular = (openNow && dayFound.name === "POPULAR")
+
+            return { 'openNow': openNow, 'openToday': true, 'isPopular': isPopular }
+
+        } else {
+            return { 'openNow': false, 'openToday': false, 'isPopular': false }
+        }
     },
 
     // Counts the number of matches between the two lists and return and integer

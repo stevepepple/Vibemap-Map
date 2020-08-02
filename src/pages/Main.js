@@ -155,6 +155,7 @@ class Main extends Component {
             // Only refresh if it a whole step up or down
             let zoom_diff = Math.abs(this.props.zoom - prevProps.zoom)
             if (zoom_diff <= 0.4) refreshResults = false
+            this.getBounds()
         }
 
         if (page_changed) {
@@ -211,13 +212,17 @@ class Main extends Component {
     // Wrapping a function handled by Thunk calls to the Vibemap service
     fetchPlaces(refreshResults) {
 
+        let currentTime = dayjs().toISOString()
+
+        console.log('currentTime: ', currentTime)
+
         const point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
         const { distance, bounds, activity, days, vibes, searchTerm } = this.props
 
         // TODO: Set in action dispatch, not here
         if (this.state.timedOut === true) this.setState({ timedOut: false, searching: false })
         
-        let args = [point, distance, bounds, activity, days, vibes, searchTerm]
+        let args = [point, distance, bounds, activity, days, vibes, searchTerm, currentTime]
         
         // Important: This fetches the data and update the state in Redux
         const places = this.props.fetchPlaces(...args, refreshResults)

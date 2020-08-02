@@ -1,8 +1,7 @@
 const Constants = require('../constants')
 const querystring = require('querystring')
-const dayjs = require('dayjs')
-const helpers = require('../helpers.js')
 const truncate = require('truncate')
+const dayjs = require('dayjs')
 
 const { point, featureCollection } = require('@turf/helpers')
 const { featureEach } = require('@turf/meta')
@@ -16,8 +15,9 @@ const rhumbDestination = require('@turf/rhumb-destination').default
 
 //const fetch = require('node-fetch');
 //global.Headers = fetch.Headers;
-
 require('isomorphic-fetch');
+
+const helpers = require('../helpers.js')
 
 const ApiHeaders = {
     'Authorization': 'Token ' + Constants.SYSTEM_TOKEN
@@ -221,6 +221,8 @@ module.exports = {
         if (search_distance > 0) distanceInMeters = search_distance * Constants.METERS_PER_MILE
 
         if (activity === 'all') activity = null
+
+        const scoreBy = ['aggregate_rating', 'vibes', 'distance', 'offers', 'hours']
         
         // TODO: Load more points at greater distances?
         // TODO: Load fewer points, once scoring is on the backend.
@@ -250,7 +252,7 @@ module.exports = {
                     const count = res.count
 
                     let places = module.exports.formatPlaces(res.results.features)
-                    let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])                    
+                    let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, scoreBy)                    
                     // TODO: clustering could happen before and after identification of picks; for now just do it after
                     //let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
                 
@@ -275,10 +277,12 @@ module.exports = {
     },
 
     // TODO: Include a way to query by time of day
-    getPlaces: function (point, search_distance, bounds, activity, days, vibes, search_term) {
+    getPlaces: function (point, search_distance, bounds, activity, days, vibes, search_term, time) {
         let distanceInMeters = 1
         if (search_distance > 0) distanceInMeters = search_distance * Constants.METERS_PER_MILE
         let center_point = point.split(',').map(value => parseFloat(value))
+
+        const scoreBy = ['aggregate_rating', 'vibes', 'distance', 'offers', 'hours']
 
         if (activity === 'all') activity = null
 
@@ -295,52 +299,79 @@ module.exports = {
                 point: point,
                 //in_bbox: bounds.toString(),
                 dist: distanceInMeters,
-                start_date_after: day_start,
-                end_date_before: day_end,
+                //start_date_after: day_start,
+                //end_date_before: day_end,
                 categories: activity,
                 search: search_term,
-                per_page: 200
+                per_page: 100
             }
+
+            //if (time !== null) params['is_open_at'] = time
+
             console.log('Search Params: ', params)
 
             if (activity) {
                 params["category"] = activity
             }
 
-            let query = querystring.stringify(params);
+            // Retry recursively
+            fetchAndRetry()
 
-            fetch(ApiUrl + "/v0.3/places/?" + query)
-                .then(data => data.json())
-                .then(res => {
-                    clearTimeout(timeout);
+            function fetchAndRetry(retries = 3) {
+                const query = querystring.stringify(params);
+                const url = ApiUrl + "/v0.3/places/?" + query
 
-                    // TODO: Make this a util func and move to the backend
-                    const count = res.count
+                fetch(url)
+                    .then(data => data.json())
+                    .then(res => {
+                        clearTimeout(timeout);
 
-                    let area = helpers.default.getArea(bounds)
-                    let density = count / area
+                        console.log('Places search: ', res, retries)
+                        // TODO: Make this a util func and move to the backend
+                        const count = res.count                
 
-                    let relative_density = helpers.default.scaleDensityArea(density)
-                    let density_bonus = helpers.default.scaleDensityBonus(relative_density)
+                        // TODO: Retry and back off
+                        if (count == 0) {
+                            // Reduce distance
+                            if (retries > 0) {
+                                params[distanceInMeters] = params[distanceInMeters] / 2
+                                console.log('Retry search: ', count, retries)
+                                return fetchAndRetry(url, retries - 1, params[distanceInMeters])
 
-                    let places = module.exports.formatPlaces(res.results.features)
-                    let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, ['aggregate_rating', 'vibes', 'distance'])
-                    //let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
-                
-                    let top_vibes = module.exports.getTopVibes(res.results.features)
-                    // TODO: remove this quick way of export the current data results to a map
-                    //console.log(JSON.stringify(res))
-                    resolve({ 
-                        data: places_scored_and_sorted, 
-                        density_bonus: density_bonus,
-                        count: count,  
-                        top_vibes: top_vibes, 
-                        loading: false, 
-                        timedOut: false })
+                            } else {
+                                //throw new Error('No results')
+                                //reject({ message: 'No results' })
+                            }
+                        }
 
-                }, (error) => {
-                    console.log(error)
-                });
+                        let area = helpers.default.getArea(bounds)
+                        let density = count / area
+
+                        let relative_density = helpers.default.scaleDensityArea(density)
+                        let density_bonus = helpers.default.scaleDensityBonus(relative_density)
+
+                        let places = module.exports.formatPlaces(res.results.features)
+                        let places_scored_and_sorted = module.exports.scorePlaces(places, center_point, vibes, scoreBy)
+                        //let clustered = module.exports.clusterPlaces(places_scored_and_sorted, 0.2)
+
+                        let top_vibes = module.exports.getTopVibes(res.results.features)
+                        // TODO: remove this quick way of export the current data results to a map
+                        //console.log(JSON.stringify(res))
+                        resolve({
+                            data: places_scored_and_sorted,
+                            density_bonus: density_bonus,
+                            count: count,
+                            top_vibes: top_vibes,
+                            loading: false,
+                            timedOut: false
+                        })
+
+                    }, (error) => {
+                        console.log(error)
+                    });
+
+            }
+
         })
     },
 
@@ -413,7 +444,7 @@ module.exports = {
                 start_date_after: day_start,
                 end_date_before: day_end,
                 search: search_term,
-                per_page: 100
+                per_page: 350
             });
 
             fetch(ApiUrl + "/v0.3/events/?" + query)
@@ -479,23 +510,28 @@ module.exports = {
     },
 
     // Sorts Events and Places by their vibes and other fields
-    scorePlaces: function(places, center_point, vibes, scoreby) {
-        scoreby = scoreby || ['vibes', 'distance']
+    scorePlaces: function(places, center_point, vibes, scoreBy) {
+        scoreBy = scoreBy || ['vibes', 'distance']
 
         // Default max values; These will get set by the max in each field
         let max_scores = {}
-        scoreby.map((field) => max_scores[field] = 1)
+        scoreBy.map((field) => max_scores[field] = 1)
 
         const vibe_match_bonus = 10
         const vibe_rank_bonus = 5
-        const distance_factor = 0.4 // Weight distance different than other fields
+        const distance_factor = 0.6 // Weight distance different than other fields
+        const offer_bonus = 6
+        const open_bonus = 2.5
+        const popular_bonus = 5
         
+        var start = window.performance.now();
+
         // Get scores and max in each category
         let places_scored = places.map((place) => {
 
             let fields = place.properties
 
-            if (scoreby.includes('distance')) {
+            if (scoreBy.includes('distance')) {
                 const score_point = point(place.geometry.coordinates)
                 fields['distance'] = turf_distance(center_point, score_point)
                 // Set max distance
@@ -504,7 +540,7 @@ module.exports = {
                 }
             }
 
-            if (scoreby.includes('vibes')) {
+            if (scoreBy.includes('vibes')) {
                 // Give place a vibe score
                 let [vibe_matches, average_rank, vibe_bonus] = [0, 0, 0]
 
@@ -531,19 +567,53 @@ module.exports = {
                 } 
             }
 
-            if (scoreby.includes('likes')) {
+            if (scoreBy.includes('likes')) {
                 // Set max aggregate score
                 if (fields.likes > max_scores['likes']) {
                     max_scores['likes'] = fields.likes
                 }
             }
 
-            if (scoreby.includes('aggregate_rating')) {
+            if (scoreBy.includes('aggregate_rating')) {
                 // Set max aggregate score
                 if (fields.aggregate_rating > max_scores['aggregate_rating']) {
                     max_scores['aggregate_rating'] = fields.aggregate_rating
                 }
             }
+
+            /* TODO: WIP concept for popular times and hours */
+            //console.log('Score place on these fields: ', fields.offers, fields.opening_hours)
+            fields.offers_score = 0
+            fields.hours_score = 0
+
+            if (scoreBy.includes('offers')) {
+                if (fields.offers.length > 0) {
+                    console.log('Score with offer!!! ', fields.offers[0], fields.opening_hours[0])
+                    fields.offers_score = offer_bonus
+
+                    let currentTime = dayjs()
+                    /* TODO: Add or subract and hour from popular times and compare */
+                    console.log('score with currentTime (day, hour): ', currentTime.day(), currentTime.hour())
+                }
+
+
+                let { openNow, openToday, isPopular} = helpers.default.isOpen(fields.opening_hours)
+
+                // Store in place details
+                fields.open_now = openNow
+                fields.popular_now = isPopular
+
+                // Give bonus if open now
+                if (openToday) fields.hours_score += open_bonus
+                if (openNow) fields.hours_score += open_bonus
+                if (isPopular) fields.hours_score += popular_bonus
+
+                console.log('Score with hours bonus: ', openNow, isPopular, fields.hours_score)
+                
+            }
+            var end = window.performance.now();
+            console.log(`places sorted with isOpen execution time: ${end - start} ms`)
+
 
             place.properties = fields
             return place
@@ -553,24 +623,24 @@ module.exports = {
         let places_scored_averaged = places_scored.map((place) => {
             let fields = place.properties
 
-            if (scoreby.includes('vibes')) fields.vibes_score = helpers.default.normalize(fields.vibes_score, 0, max_scores['vibes'])
+            if (scoreBy.includes('vibes')) fields.vibes_score = helpers.default.normalize(fields.vibes_score, 0, max_scores['vibes'])
 
-            if (scoreby.includes('likes')) fields.likes_score = helpers.default.normalize(fields.likes, 0, max_scores['likes'])
+            if (scoreBy.includes('likes')) fields.likes_score = helpers.default.normalize(fields.likes, 0, max_scores['likes'])
 
-            if (scoreby.includes('aggregate_rating')) fields.aggregate_rating_score = helpers.default.normalize(fields.aggregate_rating, 2, max_scores['aggregate_rating'])
+            if (scoreBy.includes('aggregate_rating')) fields.aggregate_rating_score = helpers.default.normalize(fields.aggregate_rating, 2, max_scores['aggregate_rating'])
             
             // Distance is inverted from max and then normalize 1-10
             // TODO: There might be something off about this score; should come from backend
-            if (scoreby.includes('distance')) {
+            if (scoreBy.includes('distance')) {
                 let max_distance = max_scores['distance']
                 fields.distance_score = helpers.default.normalize(max_distance - fields.distance, 0, max_distance)
 
                 fields.distance_score = fields.distance_score * distance_factor
             }
 
-            let reasons = scoreby
+            let reasons = scoreBy
         
-            let scores = scoreby.map((field) => fields[field + '_score'])
+            let scores = scoreBy.map((field) => fields[field + '_score'])
 
             let largest_index = scores.indexOf(Math.max.apply(null, scores))
             
