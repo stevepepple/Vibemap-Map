@@ -1,0 +1,353 @@
+@import 'variables.scss';
+
+:root {
+  --heatmap_1: rgba(218,95,241,0.1);
+  --heatmap_2: rgba(95,153,241,0.3);
+  --heatmap_3: rgba(136,235,177,0.6);
+  --heatmap_4: rgba(220,248,151,0.8);
+  --heatmap_5: rgba(255,213,0,1);
+  --heatmap_6: rgba(255,153,0,1);
+}
+
+/* Map */
+.map_container, .mapboxgl-map {
+    width: 100%;
+    height: 100%;
+    left:0px;
+    padding:0;
+}
+
+.mapboxgl-ctrl,
+.mapboxgl-ctrl-group {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    width: auto;
+}
+
+.mapboxgl-ctrl-geolocate {
+    width: 40px;
+}
+
+
+.mapboxgl-ctrl-group {
+    top: 6em;
+} 
+
+.mapboxgl-ctrl-scale {
+    right: 8em;    
+    bottom: 4em;
+    top: auto;
+}
+
+.mapboxgl-map:before {
+    content: '';
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    z-index: 10;
+    pointer-events: none;
+    /*
+    -webkit-box-shadow: inset 0px 0px 10px 5px rgba(0,0,0,0.35);
+    -moz-box-shadow: inset 0px 0px 10px 5px rgba(0,0,0,0.35);
+    box-shadow: inset 0px 0px 80px 5px rgba(74,98,124,0.35);
+    */
+}
+
+.map_container #scale {
+    position: absolute; 
+    /*
+    background-color: $color-purple;
+    color: #FFFFFF;
+    */
+    bottom: 1em;
+    right: 5em;
+    font-size: 1em;
+    font-family: 'Roboto Condensed', sans-serif;    
+    font-weight: 700;
+    z-index: 20;
+    opacity: 0.6;
+    //padding: 0.4em;
+    padding-left: 0.8em;
+    padding-right: 0.8em;    
+    text-shadow: 1px 1px 1px rgba(255,255,255,1), 1px 1px 1px rgba(255,255,255,1), 1px 1px 1px rgba(255,255,255,1), -1px 1px 1px rgba(255,255,255,1);
+}
+
+.map_container #heatmap_scale {
+    right: 5em;
+    top: 1.8em;
+    width: 12em;
+    height: 1.4em;
+    background: linear-gradient(45deg, var(--heatmap_1), var(--heatmap_2), var(--heatmap_3), var(--heatmap_4), var(--heatmap_5));
+    border: solid 2px #FFFFFF;
+    position: absolute;
+    z-index: 100;
+}
+
+#heatmap_scale .mild,
+#heatmap_scale .wild {
+    text-shadow: 1px 1px 1px rgba(255,255,255,1), 1px 1px 1px rgba(255,255,255,1), 1px 1px 1px rgba(255,255,255,1), -1px 1px 1px rgba(255,255,255,1);
+    position: absolute;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1em;
+    font-weight: 700;
+    top: 1.2em;
+}
+
+#heatmap_scale .wild {
+    right: 0;    
+}
+
+.mobile .map_container #scale {
+    top: unset;
+    bottom: 1.4vmin;
+    display:none;
+}
+
+.mapboxgl-canvas {
+    position: relative !important;
+}
+
+.mapboxgl-marker .marker {    
+
+    -webkit-border-radius: 50% 50% 50% 50%;
+    -moz-border-radius: 50% 50% 50% 50%;
+    border-radius: 50% 50% 50% 50%;
+    background-size: cover;
+    padding:0.2em;
+    filter: brightness(0.8);
+    filter: saturate(0.8);
+    filter: contrast(1.2);
+    border: solid 1px $color-base-gray-100;
+ 
+    /*
+    background: #000000;
+    border-image-source: linear-gradient(45deg, rgb(0,143,104), rgb(250,224,66));
+    background-origin: border-box;
+    background-clip: content-box, border-box;    
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-image-slice: 1;
+    */
+    cursor: help;
+    opacity: 1.0;
+    /*
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    
+    */
+    -webkit-box-shadow: 1px 1px 6px $color-base-gray-800;
+    -moz-box-shadow: 1px 1px 6px $color-base-gray-800;
+    box-shadow: 1px 1px 6px $color-base-gray-800;
+
+    transition: visibility 0s, opacity 0.5s linear;
+    z-index: 100;
+}
+
+.pulse {
+    background: $color-base-magenta-bright;
+    border-radius: 10em;
+    animation: test;
+    animation-duration: 3s;
+    animation-iteration-count: 3;
+    height: 4rem;
+    width: 4rem;
+    margin-left: -2em;
+    margin-top: -2em;
+    position: absolute;
+    opacity: 0.2;
+    transform: scale(1);
+}
+
+@keyframes test {
+  0% {
+    transform: scale(1);
+  }
+
+  70% {
+    transform: scale(1.6);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.mapboxgl-marker .marker.small {
+    z-index: 10;
+}
+
+.mapboxgl-marker .marker.hidden {
+    display:none !important;
+}
+
+.marker img {
+    border: solid 1px #FFFFFF;
+}
+
+.marker.arts {
+    background-image: url('/images/arts.svg');
+}
+
+.marker.food {
+    background-image: url('/images/food.svg');
+}
+
+.marker.music {
+    background-image: url('/images/music.svg');
+}
+
+.marker.shopping {
+    background-image: url('/images/shopping.svg');
+}
+
+.marker.drinking {
+    background-image: url('/images/drinking.svg');
+}
+
+.marker.outdoors {
+    background-image: url('/images/outdoors.svg');
+}
+
+.marker.selected {
+    /* background-image: url("/images/selected.svg"); */
+    display: none;
+    transform: scale(1.1);
+    z-index: 100;
+    -webkit-box-shadow: $shadow-blue;
+    -moz-box-shadow: $shadow-blue;
+    box-shadow: $shadow-blue;
+    transition: visibility 0s, opacity 2.5s linear;
+}
+
+.marker.selected svg {
+    transition: visibility 0s, opacity 2.5s linear;
+}
+
+.marker.selected img {
+    display: none;
+}
+
+.marker::after {
+    width: 2vmin;
+    height: 2vmin;
+    top: 10px;
+}
+
+.marker-popup {
+    z-index: 100;
+}
+.mapboxgl-popup-content {
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.here {
+    background: #66B5F8;
+    border-radius: 50%;
+    border: solid 1px #FFFFFF;
+    color: #FFFFFF;
+    height: 32px;
+    width: 32px;
+    padding-top: 10px;
+    text-align: center;
+    line-height: 1em;
+    background-color: #0084F4;
+    z-index: 100;
+}
+
+/* TODO: Inherit this from the marker via React */
+.marker-popup .mapboxgl-popup-content {
+    /*
+    background: #3831AB;
+    color: #FFFFFF;
+    */
+}
+
+.marker.place {
+    background-color: #C123E8;
+    border: solid 2px #C123E8; 
+}
+
+.marker.photo {
+    background: none;
+    border: none; 
+    font-size: 1.4em;
+    width: 1.8em;
+    height: 1.8em;
+}
+
+.marker.popular {
+    z-index: 10;
+}
+
+.marker {
+    overflow: hidden;
+    transform: scale(1.2);
+}
+
+.marker:hover, .marker:focus {
+    transform: scale(1.4);
+    will-change: transform;
+    transition: all 0.2s ease-in-out 0s;
+}
+
+.marker img {
+    /* visibility: hidden; */
+    border-radius: 50%;
+    transform: scale(1.2);
+}
+
+.marker:hover img {
+    transform: scale(1.4);
+}
+
+.marker.photo img {
+    visibility: visible;
+    width: 2.0em;
+    height: 2.0em;
+}
+
+.mapboxgl-marker .label {
+    position: absolute;
+    text-align:center;
+    z-index: 10;
+}
+
+.mapboxgl-marker .label .name {
+    font-size: 0.8em;
+    font-family: "Roboto";
+    font-weight: bold;
+    line-height: 0.8;
+    white-space: nowrap;    
+    overflow:hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    width: 10em;
+    margin-left: -5em;
+    text-shadow: 1px 1px 1px rgba(255,255,255,1), 2px 2px 2px rgba(255,255,255,1), 3px 3px 3px rgba(255,255,255,1), 5px 5px 5px rgba(255,255,255,1);
+}
+
+.mapboxgl-marker .label .vibe {
+    font-size: 0.8em;
+    font-style: italic;
+    color:  $color-purple;
+    font-weight: 600;
+    text-shadow: 3px 2px 3px rgba(255,255,255,.8);
+    text-align: center;
+    width: 10em;
+    margin-left: -5em;
+}
+
+.marker.popular img,
+.marker:hover img { 
+    visibility: visible;
+}
+/* Round style photos */
+.marker img, 
+.ui.items .image img {
+    object-fit: cover;
+}

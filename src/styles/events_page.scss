@@ -1,0 +1,157 @@
+@import 'variables.scss';
+
+@import 'vibemap-constants/design-system/build/scss/_variables.scss';
+
+html, body, #root, div.App, div.App > div {
+  height: 100%;
+  font-family: 'Public Sans', sans-serif;
+}
+
+#container {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#header {        
+    background-repeat: no-repeat;
+    background-position: 12em;
+    background-size: 12em;
+    height: 6%;
+    min-height: 80px;
+    max-height: 8%;
+    width: 100%;
+    border-radius: 0;
+}
+
+#header, #navigation, #content {    
+    display: flex;    
+    justify-content: left;    
+}
+
+#navigation {
+    border-bottom: solid 1px $color-dark-gray;
+    height: 6%;
+    min-height: 80px;
+    max-height: 100px;
+    padding-left: 1em;
+    z-index: 100;    
+}
+
+#header .ui.dropdown {
+    //background: rgba(0,0,0,0.4);
+    //color: #DDDDDD;
+    max-height: 3em;
+    width: 8em;
+}
+
+/* Container */
+#content {
+    flex: 1;
+    /*
+    padding-left: 14vmin;
+    padding-right: 14vmin;    
+    height: 88%;
+    */
+}
+
+#content .columns {
+    height: 100%;
+    padding: 0;    
+}
+
+#content .columns .column {
+    padding: 0;
+}
+
+.collapsed.row.stretched { margin: 0 1rem; }
+.collapsed.row.stretched .column { padding: 0; }
+
+.empty_state {
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 20vmin;
+}
+
+.ui.menu {
+    border: none;
+}
+
+.mobile .ui.menu {
+    margin: 0px;
+}
+
+.mobile .menu .dropdown .text {
+    display:none;
+}
+
+.mobile #scale {
+    display: hidden;
+}
+
+.mobile .ui.menu.secondary {
+    position: absolute;
+    width: 100px;
+    top: 120px;
+    z-index: 10;
+}
+
+/*
+.mobile .mobileListItem {
+    height: 30vmin;
+    width: 98vw;
+    vertical-align: top;
+}
+*/
+
+.mobileList::-webkit-scrollbar { 
+    display: none;  // Safari and Chrome
+}
+
+.mobile .mobileListItem .content {
+    width: 50vw;
+}
+
+.details {
+    padding: 0;
+    padding-left: 1em; 
+    padding-right: 1em;
+}
+
+.details .full_description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.details .eta {
+    padding-left: 1vmin;
+}
+
+.place_cards {
+    position: fixed; 
+    bottom: 2vmin;
+    padding: 1vmin;
+    width: 52%;
+    z-index: 10;
+}
+
+.place_cards .grid {
+    padding: 1vmin;
+}
+
+.place_cards .segment {
+    margin-left: 2vmin;
+}
+
+.nearby_place {
+    min-width: 30vmin;
+}
+
+.place_cards .segment {
+    border: solid 3px #C123E8;
+    /* TODO: Move to SASS */
+    -webkit-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
+    -moz-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
+    box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.55);
+}
+

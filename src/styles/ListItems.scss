@@ -1,0 +1,63 @@
+@import 'variables';
+
+#list {
+    position: absolute;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    padding-right: 0;
+    padding-top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#list .ui.items {
+    flex-grow: 1;
+    margin: 0.5em;
+}
+
+#list .listSearch input {
+    border-width: 2px;
+    border-radius: 3em;
+}
+
+#list .datepicker {
+    border: solid 2px rgba(34,36,38,.15); 
+    border-left: solid 1px rgba(34,36,38,.05);
+    border-bottom-right-radius: 3em;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 3em;
+}
+
+#list .datepicker .icon {
+    background: none;
+    border-width: 2px;
+    border-left-width: 0px;
+    border-bottom-right-radius: 3em;
+    border-top-right-radius: 3em;
+    font-size: 1.2em;
+    vertical-align: middle;
+}
+
+.listType {
+    margin-left: 2% !important;
+    width: 98%
+}
+
+.ui.inverted.purple .button {
+    color: $color-purple !important;
+}
+
+ui.inverted.purple.buttons .active.button {
+    background-color: $color-purple !important;
+    color: #FFFFFF !important
+}
+
+.list_pagination {
+    background: #FFFFFF !important;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+}

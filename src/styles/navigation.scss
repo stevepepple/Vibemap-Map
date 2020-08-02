@@ -1,0 +1,126 @@
+@import 'variables.scss';
+
+/* Top Nav and Controls */  
+
+.text {
+    //font-family: 'Roboto Condensed', sans-serif !important;
+    font-family: 'Public Sans', sans-serif !important;
+}
+
+.dropdown:hover, .ui.label, .item {
+    color: $color-purple;
+}
+
+.navigation.mobile {
+    position: relative;
+    left: 0;
+    width: auto;
+}
+
+/* TODO: is there a cleaner way to do this with Semantic */
+.ui.search {
+    line-height: 1.6em !important;
+}
+
+.ui.search .ui.input {
+    width: 90%;
+}
+
+input.search {
+    padding-left: 5vmin;
+}
+
+.datepicker .text {
+    line-height: $unit-small;
+}
+
+.ui.search > .text.default {
+    color: $color-dark-gray !important;
+}
+
+.allVibes {
+    max-width: 70%;
+    font-family: $font-family-public;
+    z-index: 40;
+}
+
+.allVibes .ui.multiple.dropdown >.label {
+    background: #FFFFFF;
+    border-radius: 3em;
+    padding: 0.8em;
+}
+
+.allVibes .label.vibe {
+    padding: 1rem;
+    padding: $unit-tiny;
+    padding-left: $unit-tiny;
+    padding-right: $unit-small;
+    position: relative;
+
+    .delete {
+        position: absolute;
+        right: $unit-tiny;
+    }
+}
+
+.allVibes .ui.label:nth-child(1) {
+  border: solid 1.5px $heatmap_1;  
+}
+
+.allVibes .ui.label:nth-child(2) {
+  border: solid 1.5px $heatmap_2;
+}
+
+.allVibes .ui.label:nth-child(3) {
+  border: solid 1.5px var(--heatmap_3);
+}
+
+.allVibes .ui.label:nth-child(4) {
+  border: solid 1.5px var(--heatmap_4);
+}
+
+.allVibes .ui.label:nth-child(5) {
+  border: solid 1.5px var(--heatmap_5);
+}
+
+.allVibes .ui.label:nth-child(6) {
+  border: solid 1.5px var(--heatmap_6);
+}
+
+.ui .text {
+    font-size: 1.2em;
+}
+
+.mobile .ui.search {
+    width: 60%;
+}
+
+/* Buzzing */
+.dropdown.main_vibe .ui.label.yellow {
+    background: linear-gradient($buzzing_gradient) !important;    
+}
+
+/* Calm */
+.dropdown.main_vibe .ui.label.blue {
+    background: linear-gradient($calm_gradient) !important;
+}
+
+/* Dreamy */
+.dropdown.main_vibe .ui.label.purple {
+    background: linear-gradient($dreamy_gradient) !important;
+}
+
+/* Old School */
+.dropdown.main_vibe .ui.label.red {
+    background: linear-gradient($oldschool_gradient) !important;
+}
+
+/* Playtime */
+.dropdown.main_vibe .ui.label.green {
+    background: linear-gradient($playtime_gradient) !important;
+}
+
+/* Together */
+.dropdown.main_vibe .ui.label.orange {
+    background: linear-gradient($together_gradient) !important;
+}
