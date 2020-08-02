@@ -11,14 +11,13 @@ const Vibe = (props) => {
     const [vibes_to_show, set_vibes_to_show] = useState(4)
 
     const { loading, t } = props
-    let { vibes, description, categories, images, tips } = props.currentItem
+    let { vibes, description, categories, images, offers, tips } = props.currentItem
 
     let image = <Image className='placeImage' src={process.env.PUBLIC_URL + '/images/image.png'} fluid />
     let num_images = images.length
     if (num_images > 0) {
         image = <Image className='placeImage' src={images[num_images - 1]} fluid />
     }
-
 
     if (vibes.length > 0) {
         if (vibes_expanded === false) {
@@ -28,6 +27,8 @@ const Vibe = (props) => {
                 <Label key={vibe} className={'vibe label ' + vibe}>{t(vibe)}</Label>);
         }
     }
+
+    let has_offers = (offers && offers.length > 0) ? true : false
 
     if (categories.length > 0) {
         categories = categories.map((category) => <Label key={category} className={'image label ' + category}>{t(category)}</Label>);
@@ -65,6 +66,16 @@ const Vibe = (props) => {
                 </Placeholder>
             ) : (
                 <div>
+                    { has_offers &&
+                            <Segment vertical>
+                                <h4>{t('FRESH VIBES')}</h4>
+                                <p><strong>{offers[0].name}</strong> {offers[0].description}</p>
+                                {offers[0].link &&
+                                    <a href={offers[0].link} target='_blank'>Check it out</a>
+                                }
+                            </Segment>
+
+                    }
                     <Segment vertical>
                         <h4>{t('Vibe')}</h4>
                         {vibes.length > 0 ? vibes : t('Add the first vibe...')}

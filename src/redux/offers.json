@@ -34,6 +34,100 @@
         "category": "classes",
         "link": "https://www.mondaymixology.com/classes",
         "place_id": "86dc2809-fc71-42b7-ada0-3ae09e61ed7c"
+    },
+    {
+        "name": "Bell Tower Happy Hour",
+        "description": "Happy hour specials on our patio from 3-6pm daily",
+        "category": "happy hour",
+        "place_id": ""
+    },
+    {
+        "name": "Beer and Cider Release",
+        "description": "PRIDE + JOY GRAF // Brewed as a hybrid between Cider & Beer, Graf is made by fermenting together a typical barley wort with cider-apple juice. We made Pride+Joy with apple juice from our good friends at Dominon Cider @dominioncider.",
+        "category": "new_release",
+        "link": "https://www.instagram.com/p/CDUOr1Wgg_-/",
+        "place_id": ""
+    },
+    {
+        "name": "Happy 150th Anniversary",
+        "description": "Golden Gate Park has opened its first-ever “pop-up” welcome center.  Decked out in GGP150 colors, the refurbished freight container features items from the official Golden Gate Park 150th Anniversary collection of merchandise such as locally designed zip hoodies, t-shirts, posters, pins, bison plushies, baseball caps, beanies, scarves, and mugs.  These specially-produced items are being sourced through SF Mercantile, a San Francisco-based retailer which produces high quality local interest gifts and keepsakes from area artists.",
+        "category": "celebration",
+        "link": "https://www.goldengatepark150.com/welcomecenter",
+        "place_id": ""
+    },
+    {
+        "name": "Car-free happy hour",
+        "description": "Enjoy the patio and street life from 4-6pm. Street closed to traffic to give more space for safe dining.",
+        "category": "celebration",
+        "link": "https://www.instagram.com/p/CB1iREBh6MU/",
+        "place_id": ""
+    },
+    {
+        "name": "Car-free happy hour",
+        "description": "Enjoy the patio and street life from 4-6pm. Street closed to traffic to give more space for safe dining.",
+        "category": "celebration",
+        "link": "https://www.instagram.com/p/CB1iREBh6MU/",
+        "place_id": ""
+    },
+    {
+        "name": "Manny's Livestream",
+        "description": "Manny's hosts civic events, conversations, and more weekly.",
+        "category": "events",
+        "link": "https://www.welcometomannys.com/calendar/",
+        "place_id": ""
+    },
+    {
+        "name": "Grand Re-Opening in Yaletown",
+        "description": "Click link for reservation. With our new limited capacity reservations for our dining room are recommended. We welcome walk-in guests on our patio!.",
+        "category": "opening",
+        "link": "https://www.bookenda.com/restaurant-booker?businessName=house-special&idMerchant=14101308&idClientApplication=4510&Language=en",
+        "place_id": ""
+    },
+    {
+        "name": "Supper Club",
+        "description": "Get invited to our Supper Club pre-sale, get Supper Club exclusive perks and join a community of like minded foodies who support the local art + music scene!.",
+        "category": "special",
+        "link": "https://www.paragonseattle.com/",
+        "place_id": ""
+    },
+    {
+        "name": "New Tees, Pins, and Jerlery",
+        "description": "Treat yourself to some new accessaies and visit Oaklandish's free curb-side pickup.",
+        "category": "special",
+        "link": "https://www.oaklandish.com/collections/new-arrivals",
+        "place_id": ""
+    },
+    {
+        "name": "Support Local",
+        "description": "Stop by the shop in Jack London Square and check out the new arrivals.",
+        "category": "special",
+        "link": "https://www.instagram.com/oaksupplyco/",
+        "place_id": ""
+    },
+    {
+        "name": "Get your gift box",
+        "description": "Bay Made is open. Check out all our locally made gifts, art, and more",
+        "category": "special",
+        "link": "https://www.instagram.com/p/CDPh5HCBrIB/",
+        "place_id": ""
+    },
+    {
+        "name": "Order Ahead",
+        "description": "*For curbside pick up in North Vancouver, Fridays & Tuesday, 3-6pm (Thursday 8pm & Monday 8pm deadline for order pickup next day). Contactless payments or e-transfers only. Call 604.839.9337 or email info@mrbannock.com.",
+        "category": "special",
+        "link": "https://www.mrbannock.com/",
+        "place_id": ""
+    },
+
+    {
+        "name": "ThoroughBread Order Ahead",
+        "description": "Please be sure to select your preferred pick up date. Orders must be placed by noon on 2 days prior to the pickup date.",
+        "category": "special",
+        "link": "https://www.thoroughbreadandpastry.com/shop",
+        "place_id": ""
     }
+
+
+    
 
 ]
