@@ -5,7 +5,7 @@
   "scripts": {
     "analyze": "cross-env BUNDLE_ANALYZE=true razzle build",
     "client": "razzle start --type=spa",
-    "dev": "cross-env razzle start --progress --display-error-details",
+    "dev": "cross-env razzle start --progress --display-error-details ----max_old_space_size=8000",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
     "start": "cross-env NODE_ENV=production node build/server.js"
@@ -32,6 +32,7 @@
     "dayjs": "^1.8.29",
     "express": "4.16.2",
     "fs": "^0.0.1-security",
+    "html-react-parser": "^0.13.0",
     "i18next": "^19.6.0",
     "i18next-browser-languagedetector": "^5.0.0",
     "i18next-express-middleware": "^2.0.0",
@@ -46,6 +47,7 @@
     "pure-react-carousel": "^1.27.1",
     "react": "16.8",
     "react-addons-update": "^15.6.2",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-device-detect": "^1.13.1",
     "react-dom": "16.8",
     "react-ga": "^3.1.2",
@@ -61,6 +63,7 @@
     "react-redux": "7.x",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
+    "react-share": "^4.2.1",
     "react-show-more-text": "^1.4.2",
     "react-sizeme": "^2.6.12",
     "react-store-badges": "^1.5.1",
