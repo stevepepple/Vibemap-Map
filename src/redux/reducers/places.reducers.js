@@ -7,13 +7,16 @@ const initialState = {
         address: null,
         categories: [],
         hours: null,
+        id: null,
         instagram: null,
         phone: null,
         location: null,
         reason: null,
         tips: [],
         vibes: [],
-        images: []
+        images: [],
+        saved_places: [],
+        vibemap_images: []
     },
     sections: [
         { key: 'vibe', text: 'Vibe' },
@@ -59,7 +62,7 @@ const places = (state = initialState, action) => {
         case "SET_CURRENT_ITEM":
             return {
                 ...state,
-                currentItem: place
+                currentItem: action.place
             }
 
 
