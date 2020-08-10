@@ -21,6 +21,21 @@
     z-index: 10;
 }
 
+.SocialShare {
+    padding: 1rem;
+
+    .share-buttons, 
+    .ui.button {
+        float: left;
+        margin-right: 1rem;
+
+        .react-share__ShareButton {
+            margin-right: 1rem;
+        }
+    }
+
+}
+
 .name {
     position: relative;
     padding-top: $unit-tiny;

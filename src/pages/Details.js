@@ -9,7 +9,7 @@ import { MediaMatcher } from 'react-media-match'
 import SEO from '../components/seo/'
 import * as Constants from '../constants.js'
 
-import { Placeholder, Segment } from 'semantic-ui-react'
+import { Button, Placeholder, Segment } from 'semantic-ui-react'
 
 import TopMenu from '../components/elements/topMenu.js'
 import Header from '../components/elements/header.js'
@@ -22,6 +22,7 @@ import Plan from '../components/places/plan'
 import Tips from '../components/places/tips'
 import AppLink from '../components/elements/AppLink'
 import AppStoreLink from '../components/elements/AppStoreLink'
+import SocialShare from '../components/elements/SocialShare'
 
 import Map from '../components/map'
 import Selected from '../components/map/selected'
@@ -48,6 +49,7 @@ class Details extends Component {
     super(props)
 
     this.state = {
+      currentSection: 'vibe',
       id: null,
       vibes: [],
       marker_size: 3,
@@ -55,6 +57,7 @@ class Details extends Component {
       vibes_to_show: 8
     }
 
+    this.handleScroll = this.handleScroll.bind(this)
     this.onViewportChange = this.onViewportChange.bind(this)
   }
 
@@ -62,6 +65,56 @@ class Details extends Component {
   getParams() {
     let params = useParams()
   }
+
+  detectSections() {
+    const { sections } = this.props
+
+    let sections_with_bounds = sections
+
+    sections_with_bounds.forEach((item) => {
+      const element = document.getElementById(item.key)
+      const bounds = element.getBoundingClientRect()
+      const offsetTop = element.offsetTop
+      const offsetHeight = element.offsetHeight
+
+      item.top = offsetTop - 200
+      item.bottom = item.top + offsetHeight
+      console.log('tab section bounds (top, bottom): ', item.top, item.bottom)
+
+    })
+
+    this.setState({ sections: sections_with_bounds })
+  }
+
+
+  handleScroll(event) {
+
+    this.detectSections()
+
+    const { clientHeight, scrollHeight, scrollTop } = event.target
+    const { currentSection } = this.state
+    const { sections } = this.props
+
+    let offsetTop = window.pageYOffset;
+    console.log('tab scrolling: ', scrollTop, scrollHeight, offsetTop)
+
+    const scrolledDown = scrollTop > 160
+    let current = null
+
+    sections.forEach((item) => {
+      if (scrollTop >= item.top && scrollTop < item.bottom) {
+        current = item.key
+        console.log('New current tab: ', current)
+      }
+    })
+
+    this.setState({ showTabs: scrolledDown, currentSection: current })
+
+    if (scrollHeight - scrollTop === clientHeight) {
+      console.log('Scrolled to bottom!')
+    }
+  }
+
 
   scrollToTab(tab) {
 
@@ -83,11 +136,10 @@ class Details extends Component {
 
   render() {
 
-    const { loading, currentItem, currentSection, sections } = this.props
+    const { loading, currentItem, currentSection, mapboxToken, sections } = this.props
     const { marker_size, vibes_expanded } = this.state
 
     let { address, reason } = currentItem
-
 
     //console.log('getParams: ', this.getParams())
 
@@ -102,6 +154,7 @@ class Details extends Component {
     const tabs = sections.map((section) => {
       return <a
         className={(section.key === currentSection) ? 'active item' : 'item'}
+        key={section.key}
         onClick={this.scrollToTab.bind(this, section.key)}>
         {section.text}
       </a>
@@ -128,15 +181,14 @@ class Details extends Component {
     let map = <div className='map'>
       {loading === false && currentItem.location !== null &&
         <Fragment>
-          <Segment>
-          </Segment>
           <Map
             loading={loading}
             longitude={currentItem.location.longitude}
             latitude={currentItem.location.latitude}
+            mapboxToken={mapboxToken}
             currentItem={currentItem}
             onViewportChange={this.onViewportChange}
-            height='420px'
+            height='24rem'
             width='100%'
             zoom={15}>
             <Marker
@@ -147,16 +199,15 @@ class Details extends Component {
               <Selected size={marker_size} />
             </Marker>
           </Map>
-          <Segment vertical>
+          <div className='address'>
             {address ? address : t('No location')}
-          </Segment>
+          </div>
+          <SocialShare/>
         </Fragment>
       }
     </div>
 
     let web = <Profile leftPanel={profile} rightPanel={map} />
-
-    console.log('isMobile: ', isMobile, isMobile ? 'mobile' : 'web')
 
     let mobile = <div>
       <AppLink />
@@ -165,7 +216,9 @@ class Details extends Component {
     </div>
 
     return (
-      <div id='details' className={'DetailsPage ' + (isMobile ? 'mobile' : 'web')}>
+      <div id='details' 
+        className={'DetailsPage ' + (isMobile ? 'mobile' : 'web')}
+        onScroll={this.handleScroll}>
         { isMobile == false && 
           <TopMenu />
         }
@@ -189,6 +242,7 @@ const mapStateToProps = state => ({
   currentItem: state.places.currentItem,
   details: state.details,
   loading: state.loading,
+  mapboxToken: state.mapboxToken,
   name: state.name,
   loading: state.places.loading,
   sections: state.places.sections
