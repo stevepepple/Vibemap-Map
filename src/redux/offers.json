@@ -132,6 +132,63 @@
         "link": "https://sightglasscoffee.com/blogs/shops/divisadero",
         "place_id": ""
     },
+    {
+        "name": "Brunch at Dolores",
+        "description": "Order a picnic in Dolore Park",
+        "category": "special",
+        "link": "https://sonsaddition.menu/dolorespark/",
+        "place_id": ""
+    },
+    {
+        "name": "Omakase Outdoords",
+        "description": "Research a seat to a unique outdoor multi-course dining experience",
+        "category": "special",
+        "link": "http://hashirisf.com/reservations",
+        "place_id": ""
+    },
+    {
+        "name": "Grand Re-opening & Take out",
+        "description": "Maison Danel has reopenned for takeout and gifts.",
+        "category": "special",
+        "link": "https://maisondanel.square.site/",
+        "place_id": ""
+    },
+    {
+        "name": "Beer Garden & Brunch",
+        "description": "Outdoor dining + drinking again! Come join us in our new cocktail + beer garden. Brunch also available Sat + Sun noon to 3:30. Hope to see you here soon!",
+        "category": "special",
+        "link": "https://www.instagram.com/p/CDhaMleFjvX/",
+        "place_id": ""
+    },
+    {
+        "name": "Take out & New Releases",
+        "description": "Chekc out the Federatino Brewing Shop for specials and to go item.",
+        "category": "special",
+        "link": "https://www.federationbrewing.com/",
+        "place_id": ""
+    },
+    {
+        "name": "Vegan Pop Up Menu",
+        "description": "During the month of August, we are hosting a special vegan pop up 10-7 Monday-Friday with our friends Quorn!",
+        "category": "special",
+        "link": "https://www.instagram.com/quornucopiakitchen/",
+        "place_id": ""
+    },
+    {
+        "name": "Garden Reservation",
+        "description": "Starting July 2020, garden admissions, including complimentary admissions for garden members, are timed entries and available for purchase online in advance.",
+        "category": "special",
+        "link": "https://shop.lansugarden.org/performancecalendar.aspx",
+        "place_id": ""
+    },
+    {
+        "name": "Park Reservation",
+        "description": "Make a reservation and plan your trip.",
+        "category": "special",
+        "link": "https://sfbg.secure.force.com/ticket/#/events/a0S4P000008n7sEUAQ",
+        "place_id": ""
+    }
+
 
 
 ]
