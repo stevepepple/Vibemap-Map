@@ -1,21 +1,23 @@
-import React, { Fragment } from 'react'
-import { Item, Icon, Label } from 'semantic-ui-react'
+import React, { Fragment, useState } from 'react'
+import { Item, Icon, Label, Button } from 'semantic-ui-react'
+import { withTranslation } from 'react-i18next'
 
 import helpers from '../../helpers';
 
 function cardPLaceLayout(props) {
+    const { properties, t } = props
+    
+    let content = properties
 
-    let content = props.properties
+    const [saved, setSaved] = useState(content.is_saved);
 
-    console.log('Item details: ', content)
-
-    let name = content.name;    
-    let score = Math.round(content.average_score)
-
+    let name = content.name  
+ 
     let categories = null
+    let distance = null
     let venue = null
-    let vibes = null;
-    let openNow = null;
+    let vibes = null
+    let openNow = null
 
     // TODO: Move to server side
     if (name) {
@@ -23,14 +25,20 @@ function cardPLaceLayout(props) {
         name = name[0]
     }
 
-    if (typeof (content.categories) == 'object' && content.categories.length > 0) {        
-        categories = content.categories.map((category) => <span key={category} className={category}>Category</span>)
-    } else {
-        categories = helpers.toTitleCase(content.categories) 
-    }
+    const handleClick = (e, place) => {
+        // Don't click throught parent list item
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation()
 
-    if (content.venue) venue = <span className='venue'>{content.venue}</span>
+        // Callback to Main HOC and Redux
+        const { onSavePlace } = props
+        onSavePlace(e, place)
 
+        // Track saved state in this component
+        setSaved(!saved)
+    } 
+
+    // Format individual fields
     if (typeof content.vibes !== "undefined") {
         let remainder = content.vibes.length - 1
         vibes = null
@@ -38,8 +46,11 @@ function cardPLaceLayout(props) {
         let first_vibe = content.vibes[0]
         let first_vibe_text = helpers.toTitleCase(first_vibe)
 
+        // TODO: Hack to fix empty vibes
+        if (first_vibe === "") first_vibe = content.vibes.shift()
+
         // Handle vibe label layout
-        if (remainder > 0) vibes = <Fragment>
+        if (remainder > 0) vibes = <div className='vibes'>
                 <Label
                     circular 
                     key={content.vibes[0]}
@@ -47,51 +58,63 @@ function cardPLaceLayout(props) {
                     style={helpers.getVibeStyle(first_vibe)}>
                     {first_vibe}
                 </Label>
-                <Label circular title={'See all ' + remainder + 'vibes.'}>+ {remainder}</Label>
-            </Fragment>
-        if (remainder === 0) vibes = <Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe_text}</Label>
+                <Label circular title={'See all ' + remainder + 'vibes.'}>+ {remainder} vibes</Label>
+            </div>
+        if (remainder === 0) vibes = <div className='vibes'><Label key={content.vibes[0]} className={'vibe label ' + content.vibes[0]}>{first_vibe_text}</Label></div>
 
-        // vibes = content.vibes.map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{vibe}</Label>);
     }
 
     // TODO: Make this a component and internationalize it.    
-    let top_icon = <Icon name='heartbeat' />
-    let recommendation = <span className='interested'>{score} Good Vibes</span>
+    let score = Math.round(100 * content.average_score / 5)
 
-    if (content.open_now) openNow = <span className='openNow'>Open now</span>
-    if (content.popular_now) openNow = <span className='popularNow'>Vibe'n now</span>
+    let recommendation = <span className={props.index === 0 ? 'recommendation top_match' : 'recommendation'}>
+        <div className='score'>{score}%</div>
+        <div className='reason'>{t('your vibe')}</div>
+    </span>
 
-
-    switch (props.index) {
-        case 0:
-            recommendation = <span className='interested top_match'>{top_icon} {score} Totally Your Vibe</span>
-            break;
-    
-        default:
-            break;
+    if (typeof (content.categories) == 'object' && content.categories.length > 0) {
+        categories = content.categories.map((category) => <span key={category} className={category}>Category</span>)
+    } else {
+        categories = helpers.toTitleCase(content.categories)
     }
+
+    if (content.venue) venue = <span className='venue'>{content.venue}</span>
+
+    if (content.distance) distance = <span className='distance'>{ content.distance.toFixed(1) + ' mi' }</span>
+
+    openNow = <span className='openNow hoursToday'>{t('Not open')}</span>
+    if (content.hours_today) openNow = <span className='openNow hoursToday'>{content.hours_today}</span>
+    if (content.open_now) openNow = <span className='openNow'>Open now</span>
+    if (content.popular_now) openNow = <span className='openNow popularNow'>Vibe'n now</span>
 
     return (
         <Fragment>
             <Item.Image src={content.images[0]} size='small' />
-            <Item.Content>
-                {categories !== null && categories.length > 0 &&
-                    <Item.Extra className='date'>{categories}</Item.Extra>
-                }
-                            
-                <Item.Header>{name}</Item.Header>
-                <Item.Extra>
-                    <div>
-                        {vibes}
-                    </div>
-                    {venue}
-                    {openNow}
-                    {recommendation}
+            <Item.Content style={{ position: 'relative' }}>
+                <Button 
+                    className='savePlace' 
+                    color={content.is_saved ? 'black' : 'gray'} 
+                    onClick={e => handleClick(e, content)} 
+                    icon='like' circular size='mini'
+                    style={{ position: 'absolute', right: '1rem', zIndex: '10' }} />
 
+
+                {recommendation}
+                {openNow}
+                <Item.Header>{name}</Item.Header>
+                <Item.Extra className='moreInfo'>
+                    {venue}
+                    {categories !== null && categories.length > 0 &&
+                        <Item.Extra>
+                            {categories}
+                            {distance}
+                        </Item.Extra>}
+                    {vibes}
+                    
                 </Item.Extra>
             </Item.Content>
         </Fragment>    
     );
 }
 
-export default cardPLaceLayout
+export default withTranslation()(cardPLaceLayout)

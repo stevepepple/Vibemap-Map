@@ -285,14 +285,15 @@ const helpers = {
         // TODO: Handle case for everyday, i.e. day_of_week == 8.
         if ( dayFound ) {            
            
-            let opens = dayjs(date + ' ' + dayFound.opens) //.format('HH:mm')
-            let closes = dayjs(date + ' ' + dayFound.closes) //.format('HH:mm')
+            let opens = dayjs(date + ' ' + dayFound.opens) //.format('HH:mm a')
+            let closes = dayjs(date + ' ' + dayFound.closes) //.format('HH:mm a')
 
             // Return if open and if it's a popular time
             const openNow = time.isBetween(opens, closes)
             const isPopular = (openNow && dayFound.name === "POPULAR")
+            const hoursToday = opens.format('ha') + ' - ' + closes.format('ha')
 
-            return { 'openNow': openNow, 'openToday': true, 'isPopular': isPopular }
+            return { 'openNow': openNow, 'openToday': true, 'hoursToday': hoursToday,  'isPopular': isPopular }
 
         } else {
             return { 'openNow': false, 'openToday': false, 'isPopular': false }
@@ -318,6 +319,7 @@ const helpers = {
             
             if (listB.includes(word)) {
                 score = listB.length - listB.indexOf(word)
+
             }
             
             return score

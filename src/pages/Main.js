@@ -222,7 +222,7 @@ class Main extends Component {
         // TODO: Set in action dispatch, not here
         if (this.state.timedOut === true) this.setState({ timedOut: false, searching: false })
         
-        let args = [point, distance, bounds, activity, days, vibes, searchTerm, currentTime]
+        let args = [point, distance, bounds, activity, days, vibes, searchTerm, currentTime, refreshResults]
         
         // Important: This fetches the data and update the state in Redux
         const places = this.props.fetchPlaces(...args, refreshResults)

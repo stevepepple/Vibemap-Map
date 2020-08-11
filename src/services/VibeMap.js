@@ -21,7 +21,7 @@ const helpers = require('../helpers.js')
 
 const ApiHeaders = {
     'Authorization': 'Token ' + Constants.SYSTEM_TOKEN
-};
+}
 
 const { MAPBOX_TOKEN } = process.env
 
@@ -29,7 +29,7 @@ const { MAPBOX_TOKEN } = process.env
 //const ApiUrl = 'http://192.168.99.100:8888'
 const ApiUrl = 'https://api.vibemap.com'
 
-const mapbox_url = 'https://api.mapbox.com/datasets/v1/stevepepple/';
+const mapbox_url = 'https://api.mapbox.com/datasets/v1/stevepepple/'
 
 let timedOut = false
 
@@ -203,6 +203,14 @@ module.exports = {
             fetch(ApiUrl + "/v0.3/"+ type + "/" + id)
                 .then(data => data.json())
                 .then(result => {
+                    // Put the id in properties 
+                    result.properties.id = result.id
+
+                    let { openNow, openToday, isPopular } = helpers.default.isOpen(result.properties.opening_hours)
+
+                    // Store in place details
+                    result.properties.open_now = openNow
+                    result.properties.popular_now = isPopular
 
                     clearTimeout(timeout);
                     resolve({ data: result, loading: false, timedOut: false })
@@ -214,7 +222,7 @@ module.exports = {
     },
 
     // TODO: Include a way to query by time of day
-    getPicks: function (point, search_distance, bounds, activity, vibes, search) {
+    getPicks: function (point, search_distance, bounds, activity, days, vibes, search) {
  
         // Don't allow distance to be negative.
         let distanceInMeters = 1
@@ -237,8 +245,10 @@ module.exports = {
                 categories: activity,
                 search: search,
                 vibes: vibes,
-                per_page: 100
+                per_page: 200
             }
+
+            console.log('VIbemap.js get Picks params: ', params, vibes)
 
             if (activity) params["category"] = activity
             
@@ -303,7 +313,7 @@ module.exports = {
                 //end_date_before: day_end,
                 categories: activity,
                 search: search_term,
-                per_page: 100
+                per_page: 350
             }
 
             //if (time !== null) params['is_open_at'] = time
@@ -519,10 +529,14 @@ module.exports = {
 
         const vibe_match_bonus = 10
         const vibe_rank_bonus = 5
-        const distance_factor = 0.6 // Weight distance different than other fields
-        const offer_bonus = 6
+        const offer_bonus = 5
         const open_bonus = 2.5
         const popular_bonus = 5
+
+        // Weight distance & rating different than other fields
+        const vibe_factor = 1.2 
+        const distance_factor = 0.5 
+        const rating_factor = 0.5 
         
         var start = window.performance.now();
 
@@ -530,15 +544,6 @@ module.exports = {
         let places_scored = places.map((place) => {
 
             let fields = place.properties
-
-            if (scoreBy.includes('distance')) {
-                const score_point = point(place.geometry.coordinates)
-                fields['distance'] = turf_distance(center_point, score_point)
-                // Set max distance
-                if (fields['distance'] > max_scores['distance']) {
-                    max_scores['distance'] = fields['distance']
-                }
-            }
 
             if (scoreBy.includes('vibes')) {
                 // Give place a vibe score
@@ -561,6 +566,7 @@ module.exports = {
 
                     fields.vibes_score += vibe_bonus
                 }
+
                 // Set max vibe score
                 if (fields.vibes_score > max_scores['vibes']) {
                     max_scores['vibes'] = fields.vibes_score
@@ -571,6 +577,15 @@ module.exports = {
                 // Set max aggregate score
                 if (fields.likes > max_scores['likes']) {
                     max_scores['likes'] = fields.likes
+                }
+            }
+
+            if (scoreBy.includes('distance')) {
+                const score_point = point(place.geometry.coordinates)
+                fields['distance'] = turf_distance(center_point, score_point)
+                // Set max distance
+                if (fields['distance'] > max_scores['distance']) {
+                    max_scores['distance'] = fields['distance']
                 }
             }
 
@@ -597,23 +612,21 @@ module.exports = {
                 }
 
 
-                let { openNow, openToday, isPopular} = helpers.default.isOpen(fields.opening_hours)
+                let { openNow, openToday, hoursToday, isPopular} = helpers.default.isOpen(fields.opening_hours)
 
                 // Store in place details
                 fields.open_now = openNow
                 fields.popular_now = isPopular
+                fields.hours_today = hoursToday
 
                 // Give bonus if open now
                 if (openToday) fields.hours_score += open_bonus
                 if (openNow) fields.hours_score += open_bonus
                 if (isPopular) fields.hours_score += popular_bonus
-
-                // console.log('Score with hours bonus: ', openNow, isPopular, fields.hours_score)
                 
             }
             var end = window.performance.now();
-            console.log(`places sorted with isOpen execution time: ${end - start} ms`)
-
+            //console.log(`places sorted with isOpen execution time: ${end - start} ms`)
 
             place.properties = fields
             return place
@@ -623,14 +636,19 @@ module.exports = {
         let places_scored_averaged = places_scored.map((place) => {
             let fields = place.properties
 
-            if (scoreBy.includes('vibes')) fields.vibes_score = helpers.default.normalize(fields.vibes_score, 0, max_scores['vibes'])
+            if (scoreBy.includes('vibes')) {
+                fields.vibes_score = helpers.default.normalize(fields.vibes_score, 0, max_scores['vibes'])
+            } 
 
             if (scoreBy.includes('likes')) fields.likes_score = helpers.default.normalize(fields.likes, 0, max_scores['likes'])
 
-            if (scoreBy.includes('aggregate_rating')) fields.aggregate_rating_score = helpers.default.normalize(fields.aggregate_rating, 2, max_scores['aggregate_rating'])
+            // Get average rating and scale it by a factor
+            if (scoreBy.includes('aggregate_rating')) {
+                fields.aggregate_rating_score = helpers.default.normalize(fields.aggregate_rating, 2, max_scores['aggregate_rating'])
+                fields.aggregate_rating_score = fields.aggregate_rating_score * rating_factor
+            } 
             
             // Distance is inverted from max and then normalize 1-10
-            // TODO: There might be something off about this score; should come from backend
             if (scoreBy.includes('distance')) {
                 let max_distance = max_scores['distance']
                 fields.distance_score = helpers.default.normalize(max_distance - fields.distance, 0, max_distance)
@@ -657,7 +675,8 @@ module.exports = {
             return place
         })
 
-        // Resort by average score 
+        // Re-sort by average score 
+        // TODO: Sort by the users preferene relevance or other factors. 
         let places_scored_and_sorted = places_scored_averaged.sort((a, b) => b.properties.average_score - a.properties.average_score)
 
         
@@ -670,6 +689,7 @@ module.exports = {
             console.log(' - reason: ', place.properties.reason)
         })
         */
+        
         
         return places_scored_and_sorted
         
