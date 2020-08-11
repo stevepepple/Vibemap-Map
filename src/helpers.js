@@ -292,7 +292,7 @@ const helpers = {
             const isPopular = (openNow && dayFound.name === "POPULAR")
             const hoursToday = opens.format('ha') + ' - ' + closes.format('ha')
 
-            return { 'openNow': openNow, 'openToday': true, 'hoursToday': hoursToday,  'isPopular': isPopular }
+            return { 'openNow': openNow, 'openToday': true, 'opens': opens, 'closes': closes,  'isPopular': isPopular }
 
         } else {
             return { 'openNow': false, 'openToday': false, 'isPopular': false }
@@ -427,7 +427,17 @@ const helpers = {
 
         return relative_density
     },
-    
+
+    scaleScore: function (score) {
+        let scale = scalePow(1)
+            .domain([0, 5])
+            .range([60, 100])
+        
+        let percentage = Math.round(scale(score))
+
+        return percentage
+    },
+
     scaleSelectedMarker: function (zoom) {
         // TODO: Is this max right?         
 

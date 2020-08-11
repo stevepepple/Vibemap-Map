@@ -137,7 +137,7 @@ class Main extends Component {
         // If they close together, merge the data in fetchPlaces.
         const location_changed = !isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)
         const vibe_changed = !isEqual(prevProps.vibes, this.props.vibes)
-        const search_changed = !isEqual(prevProps.searchTerm, this.props.searchTerm) && this.props.searchTerm.length > 2
+        const search_changed = !isEqual(prevProps.searchTerm, this.props.searchTerm) && (this.props.searchTerm.length === 0 || this.props.searchTerm.length > 2)
         const activity_changed = !isEqual(prevProps.activity, this.props.activity)
         const place_type_changed = !isEqual(prevProps.placeType, this.props.placeType)
         const page_changed = !isEqual(prevProps.currentPage, this.props.currentPage)

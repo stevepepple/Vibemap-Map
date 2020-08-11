@@ -18,6 +18,8 @@ function cardPLaceLayout(props) {
     let venue = null
     let vibes = null
     let openNow = null
+    let openTil = null
+    let hoursToday = null
 
     // TODO: Move to server side
     if (name) {
@@ -65,8 +67,8 @@ function cardPLaceLayout(props) {
     }
 
     // TODO: Make this a component and internationalize it.    
-    let score = Math.round(100 * content.average_score / 5)
-
+    let score = helpers.scaleScore(content.average_score)
+    
     let recommendation = <span className={props.index === 0 ? 'recommendation top_match' : 'recommendation'}>
         <div className='score'>{score}%</div>
         <div className='reason'>{t('your vibe')}</div>
@@ -82,9 +84,12 @@ function cardPLaceLayout(props) {
 
     if (content.distance) distance = <span className='distance'>{ content.distance.toFixed(1) + ' mi' }</span>
 
-    openNow = <span className='openNow hoursToday'>{t('Not open')}</span>
-    if (content.hours_today) openNow = <span className='openNow hoursToday'>{content.hours_today}</span>
-    if (content.open_now) openNow = <span className='openNow'>Open now</span>
+    if (content.opens && content.closes) hoursToday = content.opens.format('ha') + ' - ' + content.closes.format('ha')
+    if (content.open_now) openTil = t('Open til') + ' ' + content.closes.format('ha')
+   
+    openNow = <span className='openNow hoursToday'>{t('Not open')}</span> 
+    if (hoursToday) openNow = <span className='openNow hoursToday'>{hoursToday}</span>
+    if (openTil) openNow = <span className='openNow'>{openTil}</span>
     if (content.popular_now) openNow = <span className='openNow popularNow'>Vibe'n now</span>
 
     return (

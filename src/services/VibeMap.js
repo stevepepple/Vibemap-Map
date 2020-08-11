@@ -605,12 +605,13 @@ module.exports = {
                 }
 
 
-                let { openNow, openToday, hoursToday, isPopular} = helpers.default.isOpen(fields.opening_hours)
+                let { openNow, openToday, opens, closes, isPopular} = helpers.default.isOpen(fields.opening_hours)
 
                 // Store in place details
                 fields.open_now = openNow
                 fields.popular_now = isPopular
-                fields.hours_today = hoursToday
+                fields.opens = opens
+                fields.closes = closes
 
                 // Give bonus if open now
                 if (openToday) fields.hours_score += open_bonus

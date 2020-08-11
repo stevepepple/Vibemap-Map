@@ -42,6 +42,7 @@ class PlacesList extends Component {
     }
     
     onChange = (e, { value }) => {
+        console.log('Search changd: ', value)
         this.props.setSearchTerm(value)
     }
 
