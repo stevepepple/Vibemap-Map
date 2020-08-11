@@ -44,8 +44,6 @@ const chunks = require(process.env.RAZZLE_CHUNKS_MANIFEST);
 
 const server = express();
 
-console.log(process.env.MAPBOX_TOKEN)
-
 i18n
   .use(Backend)
   .use(i18nextMiddleware.LanguageDetector)
