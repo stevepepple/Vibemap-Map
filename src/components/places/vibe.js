@@ -3,25 +3,33 @@ import { withTranslation } from 'react-i18next';
 
 import { Placeholder, Image, Label, Segment, Reveal } from 'semantic-ui-react'
 
+import parse from 'html-react-parser'
 import ShowMoreText from 'react-show-more-text'
+
+import CardCarousel from '../layouts/CardCarousel'
 
 const Vibe = (props) => {
 
     const [vibes_expanded, set_vibes_expanded] = useState(false)
+    // Set the number of vibes to show with default of 4
     const [vibes_to_show, set_vibes_to_show] = useState(4)
 
     const { loading, t } = props
-    let { vibes, description, categories, images, offers, tips } = props.currentItem
+    let { vibes, description, categories, images, offers, tips, vibemap_images } = props.currentItem
 
     let image = <Image className='placeImage' src={process.env.PUBLIC_URL + '/images/image.png'} fluid />
-    let num_images = images.length
+
+    let num_images = vibemap_images.length
+    let all_images = null
     if (num_images > 0) {
-        image = <Image className='placeImage' src={images[num_images - 1]} fluid />
+        all_images = vibemap_images.map((image) => <Image className='placeImage' src={image.original} fluid />)
+        //image = <Image className='placeImage' src={images[num_images - 1]} fluid />
     }
 
     if (vibes.length > 0) {
         if (vibes_expanded === false) {
-            vibes = vibes.slice(0, vibes_to_show).map((vibe) => <Label key={vibe} className={'vibe label ' + vibe}>{t(vibe)}</Label>);
+            vibes = vibes.slice(0, vibes_to_show).map((vibe) => 
+                <Label key={vibe} className={'vibe label ' + vibe}>{t(vibe)}</Label>);
         } else {
             vibes = vibes.map((vibe) =>
                 <Label key={vibe} className={'vibe label ' + vibe}>{t(vibe)}</Label>);
@@ -31,13 +39,12 @@ const Vibe = (props) => {
     let has_offers = (offers && offers.length > 0) ? true : false
 
     if (categories.length > 0) {
-        categories = categories.map((category) => <Label key={category} className={'image label ' + category}>{t(category)}</Label>);
+        categories = categories.map((category) => <Label key={category} className={'label ' + category}>{t(category)}</Label>);
     }
 
     const toggleMoreVibes = function() {
         set_vibes_expanded(!vibes_expanded)
     }
-
 
     let top_tip = null
     if (tips.length > 0) top_tip = tips[0]
@@ -51,7 +58,12 @@ const Vibe = (props) => {
                 <Fragment>
                     <Reveal animated='fade'>
                         <Reveal.Content hidden>
-                            {image}
+                            {num_images > 0 &&
+                                <CardCarousel
+                                    height={'24rem'}
+                                    imageGallery={true}
+                                    items={all_images} />
+                            }                        
                         </Reveal.Content>
                     </Reveal>
                 </Fragment>
@@ -86,11 +98,12 @@ const Vibe = (props) => {
                         <ShowMoreText
                             /* Default options */
                             lines={4}
+                            keepNewLines={true}
                             more={t('Show more')}
                             less={t('Show less')}
                             expanded={false}
                         >
-                            {description ? unescape(description) : t('No description')}
+                        {description ? parse(description) : t('No description')}
                         </ShowMoreText>
 
                     </Segment>
