@@ -56,15 +56,20 @@ class AllVibes extends Component {
 
         this.props.setVibes(value)
         this.setState({ vibes: value })
+        // Minor hack to trigger change
+        this.props.setLayersChanged(true)
 
     }
 
     addVibe = (event, { value }) => {
-        let { vibes } = this.props 
+        let { vibes, setVibes } = this.props 
         // Make strings array
         let new_vibes = vibes
         new_vibes.push(value)
-        this.props.setVibes(new_vibes)
+        
+        console.log('addVibe: ', value, setVibes)
+
+        setVibes(new_vibes)
         this.setState({ vibes: new_vibes })
     }
 
@@ -98,8 +103,6 @@ class AllVibes extends Component {
         let num_vibes = vibes.length
 
         let white = style_variables.color.base.white
-
-        console.log('Got vibes: ', num_vibes, vibes)
 
         const vibeItems = vibes.map((vibe) => {
             return <Label key={vibe} className='vibe' style={{ background: white }} size='large'>

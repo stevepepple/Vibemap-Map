@@ -37,11 +37,11 @@ export const setAllVibes = allVibes => ({ type: 'SET_ALL_VIBES', allVibes })
 export const setActivity = activity => ({ type: 'SET_ACTIVITY', activity })
 export const setCurrentLocation = location => ({ type: 'SET_CURRENT_LOCATION', location })
 export const setCurrentPage = page => ({ type: 'SET_CURRENT_PAGE', page })
-export const setVibes = vibes => ({ type: 'SET_VIBES', vibes })
 export const setDays = days => ({ type: 'SET_DAYS', days })
 export const setMainVibe = vibe => ({ type: 'SET_MAIN_VIBE', vibe })
 export const setPlaceType = (value) => ({ type: 'SET_PLACE_TYPE', value })
 export const setSearchTerm = searchTerm => ({ type: 'SET_SEARCH_TERM', searchTerm })
+export const setVibes = vibes => ({ type: 'SET_VIBES', vibes })
 export const setVibesets = vibesets => ({ type: 'SET_VIBESETS', vibesets })
 export const setTopVibes = top_vibes => ({ type: 'SET_TOP_VIBES', top_vibes })
 export const setTotalPages = pages => ({ type: 'SET_TOTAL_PAGES', pages })
@@ -121,9 +121,10 @@ export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', 
   
   return new Promise(resolve => {
     console.log('Should search: ', should_search)
+    
     // Do a Specific Search
     if (should_search) {
-      // TODO: search for top picks...
+      // Search for top picks...
       VibeMap.getPicks(point, distance, bounds, activity, days, vibes, searchTerm)
         .then(response => {
           const results = response.data
@@ -195,8 +196,6 @@ export const setTopPlaces = (results, refreshResults) => (dispatch, getState) =>
   // TODO: dynamic value for merge top
   dispatch(setTopPicks(top_picks_clustered, refreshResults))
   dispatch(setTotalPages(num_pages))
-
-  console.log('fetchPlaces thunk top_picks_clustered: ', top_picks_clustered)
 
 }
 

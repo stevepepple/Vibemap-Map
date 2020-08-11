@@ -201,7 +201,7 @@ const helpers = {
             scale = vibe_to_scale[vibe]            
         }
 
-        console.log('getHeatmap(colors, vibes): ', colors, vibe, scale)
+        //console.log('getHeatmap(colors, vibes): ', colors, vibe, scale)
 
         if (colors) {            
             let color1 = chroma('#fafa6e')
@@ -282,11 +282,10 @@ const helpers = {
         // If open everyday and no specific hours for current day
         if (openEveryday !== undefined && dayFound === undefined) dayFound = openEveryday
 
-        // TODO: Handle case for everyday, i.e. day_of_week == 8.
         if ( dayFound ) {            
            
-            let opens = dayjs(date + ' ' + dayFound.opens) //.format('HH:mm a')
-            let closes = dayjs(date + ' ' + dayFound.closes) //.format('HH:mm a')
+            let opens = dayjs(date + ' ' + dayFound.opens)
+            let closes = dayjs(date + ' ' + dayFound.closes)
 
             // Return if open and if it's a popular time
             const openNow = time.isBetween(opens, closes)
@@ -387,7 +386,7 @@ const helpers = {
     },
 
     scaleMarker: function(score, min, max, zoom) {
-        // TODO: Is this max right? 
+
         if (!min) { min = 0 }
         if (!max) { max = 100 }
 
@@ -413,7 +412,7 @@ const helpers = {
             .domain([0, 1])
             .range([Constants.HEATMAP_INTENSITY * 2, Constants.HEATMAP_INTENSITY])
 
-        console.log('heatmap: relative density, intensity: ', relative_density, inverted_scale(relative_density))
+        //console.log('heatmap: relative density, intensity: ', relative_density, inverted_scale(relative_density))
 
         return inverted_scale(relative_density)
 
@@ -426,32 +425,6 @@ const helpers = {
         let relative_density = density_scale(density)
 
 
-        return relative_density
-    },
-
-    scaleDensity: function (zoom, density) {        
-
-        // Scale min and max marker size to zoom level
-        // Could also be by area 
-        // From sampling our cities
-        // zoom level 10: min = 0; max = 16
-        // zoom level 12: min = 0; max = 173
-        // zoom level 14: min = 0; max = 800
-        // zoom level 16: min = 0; max = 6870
-
-        let max_density = scalePow(1)
-            .domain([8, 10, 12, 14, 16]) // Zoom size
-            .range([10, 20, 80, 800, 8000]) // Scale of marker size
-
-        // TODO: shoudl this be by area not zoom? 
-        let max_at_zoom = max_density(zoom) 
-        
-        let density_scale = scalePow(1)
-            .domain([0, max_at_zoom])
-            .range([0, 1])
-        
-        let relative_density = density_scale(density)
-        
         return relative_density
     },
     
@@ -503,7 +476,6 @@ const helpers = {
 
         };
 
-        console.log(_this, _arguments)
         return function () {
             _this = this;
             _arguments = arguments;

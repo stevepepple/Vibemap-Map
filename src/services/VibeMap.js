@@ -316,13 +316,7 @@ module.exports = {
                 per_page: 350
             }
 
-            //if (time !== null) params['is_open_at'] = time
-
-            console.log('Search Params: ', params)
-
-            if (activity) {
-                params["category"] = activity
-            }
+            if (activity) params["category"] = activity
 
             // Retry recursively
             fetchAndRetry()
@@ -336,7 +330,6 @@ module.exports = {
                     .then(res => {
                         clearTimeout(timeout);
 
-                        console.log('Places search: ', res, retries)
                         // TODO: Make this a util func and move to the backend
                         const count = res.count                
 
@@ -554,7 +547,7 @@ module.exports = {
                 if (fields.vibes === undefined) fields.vibes = ['chill']
                 if (fields.vibes.length > 0) fields.vibes_score = fields.vibes.length
 
-                // TODO: Don't show markers without photos; this will analyze the vibe and quality of the image
+                // TDon't show markers without photos; this will analyze the vibe and quality of the image
                 if (fields.images.length > 0) vibe_bonus += vibe_match_bonus
                 
                 // Give direct vibe matches bonus points
@@ -603,12 +596,12 @@ module.exports = {
 
             if (scoreBy.includes('offers')) {
                 if (fields.offers.length > 0) {
-                    console.log('Score with offer!!! ', fields.offers[0], fields.opening_hours[0])
+
                     fields.offers_score = offer_bonus
 
                     let currentTime = dayjs()
                     /* TODO: Add or subract and hour from popular times and compare */
-                    console.log('score with currentTime (day, hour): ', currentTime.day(), currentTime.hour())
+                    // console.log('score with currentTime (day, hour): ', currentTime.day(), currentTime.hour())
                 }
 
 

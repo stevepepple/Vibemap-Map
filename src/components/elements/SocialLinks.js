@@ -41,7 +41,6 @@ class SocialLinks extends Component {
     }
 }
 
-// TODO: Add default props
 SocialLinks.defaultProps = {
     link: null,
     facebook: null,

@@ -82,9 +82,8 @@ class Main extends Component {
     }
 
     componentDidMount() {
-        // TODO: Pattern for if data is loaded or errored out
-        console.log("Main component did mount", this.props)
 
+        // TODO: Pattern for if data is loaded or errored out
         const { fetchCities, fetchVibes, fetchCategories, i18n, language, setIsBrowser, setCurrentLocation } = this.props
 
         // Set current language from backend store
@@ -214,8 +213,6 @@ class Main extends Component {
 
         let currentTime = dayjs().toISOString()
 
-        console.log('currentTime: ', currentTime)
-
         const point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
         const { distance, bounds, activity, days, vibes, searchTerm } = this.props
 
@@ -251,8 +248,6 @@ class Main extends Component {
         const { currentPage, placesData, numTopPicks, setTopPicks} = this.props
         const first = currentPage * numTopPicks
         const last = first + numTopPicks
-
-        console.log('pageTopPicks: ', first, last)
 
         let top_picks = placesData.slice(first, last)
         setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
@@ -352,11 +347,13 @@ const mapStateToProps = state => ({
     bounds: state.map.bounds,
     boundsReady: state.map.boundsReady,
     distance: state.map.distance,
+    layersChanged: state.map.layersChanged,
     mapSize: state.map.mapSize,
     mapReady: state.map.mapReady,
     numTopPicks: state.map.numTopPicks,
     pixelDistance: state.map.pixelDistance,
     zoom: state.map.zoom,
+    
     // Navigation
     activity: state.nav.activity,
     cities: state.nav.allCities,
@@ -365,10 +362,12 @@ const mapStateToProps = state => ({
     placeType: state.nav.placeType,
     searchTerm: state.nav.searchTerm,
     vibes: state.nav.vibes,
+    
     // Place
     detailsId: state.places.detailsId,
     placesData: state.placesData,
     placesLoading: state.places.placesLoading,
+    
     // List
     detailsShown: state.detailsShown,
     showList: state.showList,

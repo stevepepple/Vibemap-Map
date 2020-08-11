@@ -89,7 +89,6 @@ class SocialShare extends Component {
     }
 }
 
-// TODO: Add default props
 SocialShare.defaultProps = {
     link: null,
     facebook: true,
