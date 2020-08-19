@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Menu, Dropdown } from 'semantic-ui-react'
 import SVG from 'react-inlinesvg'
-import AppStoreLink from './AppStoreLink';
+import AppStoreLink from './AppStoreLink'
+
+import helpers from '../../helpers.js'
 
 class SocialLinks extends Component {
 
@@ -16,23 +18,27 @@ class SocialLinks extends Component {
     render() {
 
         const { floated, link, instagram, facebook, twitter } = this.props
+
+        // Get fulling formed links regardless of link format
+        const twitter_link = helpers.getFullLink(twitter, 'twitter')
+        const instagram_link = helpers.getFullLink(instagram, 'instagram')
         
         return (
             <div>
                 {link &&
-                    <a href={link}>
+                    <a href={link} target='_blank'>
                         <Button circular color='black' icon='linkify' />
                     </a>
                 }
 
-                {twitter != null &&
-                    <a href={twitter}>
+                {twitter_link != null &&
+                    <a href={twitter_link} target='_blank'>
                         <Button circular color='black' icon='twitter' />
                     </a>
                 }
 
-                {instagram != null &&
-                    <a href={instagram}>
+                {instagram_link != null &&
+                    <a href={instagram_link} target='_blank'>
                         <Button circular color='black' icon='instagram' />
                     </a>
                 }

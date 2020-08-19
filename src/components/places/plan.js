@@ -3,6 +3,7 @@ import { withTranslation } from 'react-i18next';
 
 import { Button, Icon, Label, Placeholder, Segment } from 'semantic-ui-react'
 
+import SocialLinks from '../elements/SocialLinks'
 
 const Plan = (props) => {
 
@@ -47,19 +48,14 @@ const Plan = (props) => {
                                 ? <a href={url}>{url}</a> 
                                 : t('No website')}
                             <div style={{ 'textAlign' : 'right' }}>
+
+                                <SocialLinks 
+                                    link={url}
+                                    instagram={instagram}
+                                    twitter={twitter}
+                                    />
                                 <Button circular color='black' icon='linkify' />
-
-                                {twitter != null &&
-                                    <a href={instagram}>
-                                        <Button circular color='black' icon='instagram' />                                    
-                                    </a>
-                                }
-
-                                {instagram != null &&
-                                    <a href={instagram}>
-                                        <Button circular color='black' icon='instagram' />
-                                    </a>
-                                }
+                                
                             </div>
 
                         </Segment>
