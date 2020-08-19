@@ -47,6 +47,7 @@ export const zoom_levels = {
     20: 'Rooftop ~ 1:1 K'
 }
 
+// TODO: Get from Vibemap constants
 export const main_categories = [
     // Going Out
     { key: 'all', value: 'all', text: 'Categories', label: { icon: 'building', circular: true }, categories: ['art', 'arts', 'books', 'comedy', 'community', 'culture', 'free', 'health', 'local', 'nightlife', 'recurs', 'romance', 'urban'] },
@@ -59,6 +60,7 @@ export const main_categories = [
     { key: 'shopping', value: 'shopping', text: 'Shopping', label: { icon: 'shopping bag', circular: true }, categories: ['shopping'] },    
 ]
 
+// TODO: Get from Vibemap constants
 export const activty_categories = [
     { key: 'arts', value: 'arts', text: 'Arts', label: { icon: 'paint brush', circular: true }, categories: ['art', 'arts', 'craft', 'dance', 'immersive', 'performance'] },
     { key: 'comedy', value: 'comedy', text: 'Comedy & Storyteling', label: { icon: 'microphone', circular: true }, categories: ['community']},

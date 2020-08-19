@@ -527,9 +527,9 @@ module.exports = {
         const popular_bonus = 5
 
         // Weight distance & rating different than other fields
-        const vibe_factor = 1.2 
-        const distance_factor = 0.5 
-        const rating_factor = 0.5 
+        const vibe_factor = 1.0 
+        const distance_factor = 0.3 
+        const rating_factor = 0.3 
         
         var start = window.performance.now();
 

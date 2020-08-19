@@ -194,6 +194,15 @@
         "category": "special",
         "link": "https://www.instagram.com/thevalenciaroom/",
         "place_id": ""
+    },
+    {
+        "name": "Como Chico and Como Mercado Popup",
+        "description": "We hope to be back to Como Taperia as soon as we can, but in the meantime, we are happy to welcome you to our little pop-up. Inspired by many visits to small Tapas Bars and Mercados in Barcelona, Madrid, and all over Spain, we have transformed Como into a whole new space. Our current hours right now are Wednesday-Sunday 2-9 pm.",
+        "category": "popup",
+        "link": "https://www.comotaperia.com/wineandconservas",
+        "place_id": ""
     }
+
+
 
 ]
