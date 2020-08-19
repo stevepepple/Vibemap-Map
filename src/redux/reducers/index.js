@@ -219,6 +219,14 @@ export const placesData = (state = [], action) => {
   return state
 }
 
+export const savedPlaces = (state = [], action) => {
+  
+  if (action.type === 'SET_SAVED_PLACES') {
+    //console.log("SET_PLACE_TYPE", action)
+    state = action.savedPlaces
+  }
+  return state
+}
 
 export const topPicks = (state = [], action) => {
 
@@ -292,6 +300,7 @@ const rootReducer = combineReducers({
   nearby_places,
   placesData,
   placeType,
+  savedPlaces,
   showList,
   topPicks,
   topVibes,

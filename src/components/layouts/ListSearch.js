@@ -36,10 +36,13 @@ class PlacesList extends Component {
         }
 
         this.onClick = this.onClick.bind(this)
+        this.onSavePlace = this.onSavePlace.bind(this)
+
         this.handleDaysChange = this.handleDaysChange.bind(this)
     }
     
     onChange = (e, { value }) => {
+        console.log('Search changd: ', value)
         this.props.setSearchTerm(value)
     }
 
@@ -60,6 +63,14 @@ class PlacesList extends Component {
         this.props.setDetailsShown(true)
     }
 
+    onSavePlace = (event, place) => {
+
+        const { handleSavedPlace } = this.props
+
+        const isSaved = handleSavedPlace(place)
+        
+    }
+
     render() {
         let has_items = this.props.data && this.props.data.length > 0
         let items = null
@@ -70,7 +81,15 @@ class PlacesList extends Component {
             // TODO: @cory, sorting should happen on the server. 
             let max = helpers.getMax(this.props.data, 'score')
             items = this.props.data.map((place, index) => {
-                return <ListItems key={place.id} id={place.id} type={place.properties.place_type} link={place.properties.url} onClick={this.onClick} properties={place.properties} index={index} max={max}/>
+                return <ListItems 
+                        key={place.id} 
+                        id={place.id} 
+                        type={place.properties.place_type} 
+                        link={place.properties.url} 
+                        onClick={this.onClick} 
+                        onSavePlace={this.onSavePlace}
+                        properties={place.properties} 
+                        index={index} max={max}/>
             })
         }
 

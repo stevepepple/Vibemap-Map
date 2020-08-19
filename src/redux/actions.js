@@ -11,6 +11,8 @@ export const addFeature = feature => ({ type: 'ADD_FEATURE', feature })
 export const setIsBrowser = isBrowser => ({ type: 'SET_IS_BROWSER', isBrowser })
 
 export const setDetailsShown = show => ({ type: 'SET_DETAILS_SHOWN', show })
+export const setSavedPlaces = savedPlaces => ({ type: 'SET_SAVED_PLACES', savedPlaces })
+
 export const setShowList = show => ({ type: 'SET_SHOW_LIST', show })
 
 // Map Actions
@@ -35,11 +37,11 @@ export const setAllVibes = allVibes => ({ type: 'SET_ALL_VIBES', allVibes })
 export const setActivity = activity => ({ type: 'SET_ACTIVITY', activity })
 export const setCurrentLocation = location => ({ type: 'SET_CURRENT_LOCATION', location })
 export const setCurrentPage = page => ({ type: 'SET_CURRENT_PAGE', page })
-export const setVibes = vibes => ({ type: 'SET_VIBES', vibes })
 export const setDays = days => ({ type: 'SET_DAYS', days })
 export const setMainVibe = vibe => ({ type: 'SET_MAIN_VIBE', vibe })
 export const setPlaceType = (value) => ({ type: 'SET_PLACE_TYPE', value })
 export const setSearchTerm = searchTerm => ({ type: 'SET_SEARCH_TERM', searchTerm })
+export const setVibes = vibes => ({ type: 'SET_VIBES', vibes })
 export const setVibesets = vibesets => ({ type: 'SET_VIBESETS', vibesets })
 export const setTopVibes = top_vibes => ({ type: 'SET_TOP_VIBES', top_vibes })
 export const setTotalPages = pages => ({ type: 'SET_TOTAL_PAGES', pages })
@@ -109,34 +111,39 @@ export const clearDetails = () => (dispatch, getState) => {
 
 // Dispatch is called in getInitialProps of Details
 // args: 
-export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', days, vibes, searchTerm, refreshResults) => (dispatch, getState) => {
+export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', days, vibes, searchTerm, currentTime, refreshResults) => (dispatch, getState) => {
+
+  const { savedPlaces } = getState()
 
   dispatch(setPlacesLoading(true))
 
   const should_search = vibes.length > 0 || searchTerm !== ""
-  // Do a Specific Search
-  if (should_search) {
-    // TODO: search for top picks...
-    VibeMap.getPicks(point, distance, bounds, activity, vibes, searchTerm)
-      .then(response => {
-        const results = response.data
-
-        // Set Data with minor side effects
-        if (results && results.length > 0) {
-          // Set places in he results
-          console.log('setTopPlaces: ', refreshResults)
-          dispatch(setTopPlaces(results, refreshResults))
-          dispatch(setPlacesLoading(false))
-        } else {
-          // TODO: Add dispatch for API errors
-          console.log('Error or no results. See in Redux state', results)
-        }
-      }, (error) => {
-        console.log(error)
-      })
-  }
   
   return new Promise(resolve => {
+    console.log('Should search: ', should_search)
+    
+    // Do a Specific Search
+    if (should_search) {
+      // Search for top picks...
+      VibeMap.getPicks(point, distance, bounds, activity, days, vibes, searchTerm)
+        .then(response => {
+          const results = response.data
+
+          // Set Data with minor side effects
+          if (results && results.length > 0) {
+            // Set places in he results
+            console.log('setTopPlaces: ', refreshResults)
+            dispatch(setTopPlaces(results, refreshResults))
+            dispatch(setPlacesLoading(false))
+          } else {
+            // TODO: Add dispatch for API errors
+            console.log('Error or no results. See in Redux state', results)
+          }
+        }, (error) => {
+          console.log(error)
+        })
+    }
+
     
     // Vibemap service handles the logic and data wranggling
     // This module shoudl just get and set
@@ -145,8 +152,16 @@ export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', 
         const results = response.data
 
         if (results && results.length > 0) {
+
           // Set Data with minor side effects
-          dispatch(setPlacesData(results, refreshResults))
+          // Like check against local storage for saved places.
+          let withSavedPlaces = results.map((place) => {
+            const foundIndex = savedPlaces.findIndex(obj => obj.id === place.id) 
+            place.properties.is_saved = (foundIndex > -1) ? true : false          
+            return place
+          })
+
+          dispatch(setPlacesData(withSavedPlaces, refreshResults))
           dispatch(setDensityBonus(response.density_bonus))
           dispatch(setPlacesLoading(false))
 
@@ -182,9 +197,48 @@ export const setTopPlaces = (results, refreshResults) => (dispatch, getState) =>
   dispatch(setTopPicks(top_picks_clustered, refreshResults))
   dispatch(setTotalPages(num_pages))
 
-  console.log('fetchPlaces thunk top_picks_clustered: ', top_picks_clustered)
+}
+
+export const handleSavedPlace = (place) => (dispatch, getState) => {
+
+  return new Promise(resolve => {
+    const { savedPlaces, topPicks } = getState()
+    console.log('Save place', place.id, place, savedPlaces)
+
+    const foundIndex = savedPlaces.findIndex(obj => obj.id === place.id)
+    let isSaved = (foundIndex > -1) ? true : false
+
+    let updateSavedPlace = savedPlaces
+    let updateTopPicks = topPicks
+
+    if (isSaved) {
+      updateSavedPlace.splice(foundIndex, 1)
+      console.log('REMOVED item from saved places', savedPlaces)
+    } else {
+      // TODO: update top picks? 
+      console.log('Should update top picks? ', topPicks)      
+      updateSavedPlace.push(place)
+    }
+
+    dispatch(setSavedPlaces(updateSavedPlace))
+
+    const foundInPicks = updateTopPicks.findIndex(obj => obj.id === place.id)
+    if (foundInPicks > -1) {
+      updateTopPicks[foundInPicks].properties.is_saved = !isSaved
+
+      console.log('Found in Top Picks: ', isSaved, updateTopPicks[foundInPicks])
+
+      dispatch(setTopPicks(updateTopPicks))
+
+    }
+
+
+    resolve(isSaved)
+  
+  })
 
 }
+
 
 export const fetchVibes = () => {
   return (dispatch, getState) => {

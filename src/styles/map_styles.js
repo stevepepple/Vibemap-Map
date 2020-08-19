@@ -22,7 +22,8 @@ module.exports = {
         "interpolate",
         ["linear"], ["zoom"],
         8, 0.4,
-        22, 60
+        16, 1,
+        22, 40
       ],
     },
 
@@ -98,7 +99,7 @@ module.exports = {
         "interpolate",
         ["linear"],["zoom"],
         8, 0.4,
-        22, 3
+        22, 2
         // 22, ["get", "icon_size"]
       ],
       "symbol-sort-key": ["get", "average_score"],

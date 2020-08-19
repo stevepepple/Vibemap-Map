@@ -10,7 +10,7 @@ import find from 'lodash.find'
 
 import SEO from '../../components/seo/'
 
-import { Button, Divider, Icon, Image, Label, List, Reveal, Placeholder, Segment } from 'semantic-ui-react'
+import { Button, Divider, Icon, Image, Label, List, Popup } from 'semantic-ui-react'
 import VibeMap from '../../services/VibeMap.js'
 import * as Constants from '../../constants.js'
 
@@ -19,6 +19,7 @@ import Vibe from '../places/vibe'
 import Plan from '../places/plan'
 import Tips from '../places/tips'
 import AppStoreLink from '../elements/AppStoreLink'
+import SocialShare from '../elements/SocialShare'
 
 import '../../styles/place_details.scss'
 
@@ -52,6 +53,7 @@ class PlaceDetails extends Component {
         this.scrollToTab = this.scrollToTab.bind(this)
         this.detectSections = this.detectSections.bind(this)
         this.handleScroll = this.handleScroll.bind(this)
+        this.savePlace = this.savePlace.bind(this)
 
     }
 
@@ -60,13 +62,19 @@ class PlaceDetails extends Component {
         // Do something
     }
 
-    componentDidMount = function() {       
+    componentDidMount = function() { 
+        const { detailsId, savedPlaces } = this.props
         // Fetch guide details and walking path
         if(this.props.detailsType === 'guides') this.getGuideDetails()
 
         if (this.props.detailsType === 'events' || this.props.detailsType === 'places') this.getPlaceDetails()
     
         this.detectSections()
+
+        // Is current item saved?
+        const foundIndex = savedPlaces.findIndex(obj => obj.id === detailsId)
+        this.setState({ isSaved: (foundIndex > -1) ? true : false })
+
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -142,7 +150,8 @@ class PlaceDetails extends Component {
     }
 
     detectSections() {
-        const { sections, offset } = this.state
+        const { offset } = this.state
+        const { sections } = this.props
 
         let sections_with_bounds = sections
 
@@ -208,9 +217,22 @@ class PlaceDetails extends Component {
         //anchorTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    savePlace(id) {
+        let { currentItem, savedPlaces, setCurrentItem, handleSavedPlace } = this.props
+        console.log('Save place', id, currentItem, savedPlaces)
+
+        handleSavedPlace(currentItem).then(isSaved => {
+            // Flip the boolean
+            currentItem.is_saved = !isSaved
+            setCurrentItem(currentItem)
+            this.setState({ isSaved: !isSaved })
+        })
+
+    }
+
     render() {
 
-        const { currentSection, vibes_expanded, vibes_to_show, sections, showTabs } = this.state
+        const { currentSection, isSaved, vibes_expanded, vibes_to_show, sections, showTabs } = this.state
         const { loading, currentItem, detailsId, t } = this.props
         
         if (loading === false && currentItem == null) { return t("No data for the component.") }
@@ -253,11 +275,20 @@ class PlaceDetails extends Component {
                 <div className='header'>
                     <Button basic size='small' onClick={this.props.clearDetails}>{t("Back")}</Button>                    
                     
-                    <Button.Group floated='right'>
-                        <Button basic circular color='white' icon='like' />
-
-                        <Button basic circular color='white' icon='share' />
-                    </Button.Group>
+                    <div style={{ float: 'right' }}>
+                        <Button color={isSaved ? 'black' : 'white'} onClick={this.savePlace.bind(this, detailsId)} circular icon='like' />
+                        
+                        <Popup
+                            //on='click'
+                            on={['click']}
+                            pinned
+                            position='bottom center'
+                            style={{ width: '16rem' }}
+                            trigger={<Button circular color='white' icon='share' />}>
+                            <SocialShare />
+                        </Popup>
+                        
+                    </div>
                     <Header 
                         loading={loading} 
                         currentItem={currentItem} 
@@ -310,8 +341,10 @@ const mapStateToProps = state => {
         zoom: state.map.zoom,
         days: state.nav.days,
         currentDistance: state.currentDistance,
+        savedPlaces: state.savedPlaces,
+        searchTerm: state.nav.searchTerm,
+        sections: state.places.sections,
         vibes: state.nav.vibes,
-        searchTerm: state.nav.searchTerm
     }
 }
 

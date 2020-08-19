@@ -30,6 +30,6 @@ module.exports = {
     'scss', 
     'compression', 
     // TODO: Add back css purge but without breaking teh styles.
-    { func: modify }
+    //{ func: modify }
   ]
 }

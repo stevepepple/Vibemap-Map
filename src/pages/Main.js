@@ -82,9 +82,8 @@ class Main extends Component {
     }
 
     componentDidMount() {
-        // TODO: Pattern for if data is loaded or errored out
-        console.log("Main component did mount", this.props)
 
+        // TODO: Pattern for if data is loaded or errored out
         const { fetchCities, fetchVibes, fetchCategories, i18n, language, setIsBrowser, setCurrentLocation } = this.props
 
         // Set current language from backend store
@@ -138,7 +137,7 @@ class Main extends Component {
         // If they close together, merge the data in fetchPlaces.
         const location_changed = !isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)
         const vibe_changed = !isEqual(prevProps.vibes, this.props.vibes)
-        const search_changed = !isEqual(prevProps.searchTerm, this.props.searchTerm) && this.props.searchTerm.length > 2
+        const search_changed = !isEqual(prevProps.searchTerm, this.props.searchTerm) && (this.props.searchTerm.length === 0 || this.props.searchTerm.length > 2)
         const activity_changed = !isEqual(prevProps.activity, this.props.activity)
         const place_type_changed = !isEqual(prevProps.placeType, this.props.placeType)
         const page_changed = !isEqual(prevProps.currentPage, this.props.currentPage)
@@ -155,6 +154,7 @@ class Main extends Component {
             // Only refresh if it a whole step up or down
             let zoom_diff = Math.abs(this.props.zoom - prevProps.zoom)
             if (zoom_diff <= 0.4) refreshResults = false
+            this.getBounds()
         }
 
         if (page_changed) {
@@ -211,13 +211,15 @@ class Main extends Component {
     // Wrapping a function handled by Thunk calls to the Vibemap service
     fetchPlaces(refreshResults) {
 
+        let currentTime = dayjs().toISOString()
+
         const point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
         const { distance, bounds, activity, days, vibes, searchTerm } = this.props
 
         // TODO: Set in action dispatch, not here
         if (this.state.timedOut === true) this.setState({ timedOut: false, searching: false })
         
-        let args = [point, distance, bounds, activity, days, vibes, searchTerm]
+        let args = [point, distance, bounds, activity, days, vibes, searchTerm, currentTime, refreshResults]
         
         // Important: This fetches the data and update the state in Redux
         const places = this.props.fetchPlaces(...args, refreshResults)
@@ -246,8 +248,6 @@ class Main extends Component {
         const { currentPage, placesData, numTopPicks, setTopPicks} = this.props
         const first = currentPage * numTopPicks
         const last = first + numTopPicks
-
-        console.log('pageTopPicks: ', first, last)
 
         let top_picks = placesData.slice(first, last)
         setTopPicks(top_picks, refreshResults, this.state.mergeTopPicks)
@@ -347,11 +347,13 @@ const mapStateToProps = state => ({
     bounds: state.map.bounds,
     boundsReady: state.map.boundsReady,
     distance: state.map.distance,
+    layersChanged: state.map.layersChanged,
     mapSize: state.map.mapSize,
     mapReady: state.map.mapReady,
     numTopPicks: state.map.numTopPicks,
     pixelDistance: state.map.pixelDistance,
     zoom: state.map.zoom,
+    
     // Navigation
     activity: state.nav.activity,
     cities: state.nav.allCities,
@@ -360,10 +362,12 @@ const mapStateToProps = state => ({
     placeType: state.nav.placeType,
     searchTerm: state.nav.searchTerm,
     vibes: state.nav.vibes,
+    
     // Place
     detailsId: state.places.detailsId,
     placesData: state.placesData,
     placesLoading: state.places.placesLoading,
+    
     // List
     detailsShown: state.detailsShown,
     showList: state.showList,

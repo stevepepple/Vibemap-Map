@@ -23,19 +23,18 @@ const Header = (props) => {
         ) : (
             <div className='name'>
                 <h2>{currentItem.name}</h2>
-
-                {short_description 
-                    ? <span>{short_description}</span> 
-                    : subcategories && subcategories.length > 0
-                        ? <span>{subcategories[0]}</span>
-                        : <span>{t('None')}</span>
-                }
-
-                {recommendation && 
+                {recommendation &&
                     <div className='recommendation'>
                         <span className='score'>{recommendation.score}</span>
-                        <span className='reason'>{t(recommendation.reason)}</span>                    
+                        <span className='reason'>{t(recommendation.reason)}</span>
                     </div>
+                }
+
+                {short_description 
+                    ? <span className='category'>{short_description}</span> 
+                    : subcategories && subcategories.length > 0
+                        ? <span className='category'>{subcategories[0]}</span>
+                        : <span className='category'>{t('None')}</span>
                 }
             </div>
 

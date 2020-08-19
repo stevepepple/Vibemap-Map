@@ -16,12 +16,11 @@ export default class CardCarousel extends React.Component {
     }
 
     render() {
-        const { items, height, isMobile } = this.props 
+        const { items, height, imageGallery, isMobile } = this.props 
         const slides = items.map((item, i) => <Slide key={i} index={i}>{item}</Slide>)
 
-        console.log('slides: ', slides)
         const buttons = slides.map(slide => (
-            <Button size='mini' as={Dot} key={slide.props.index} icon="circle thin small" slide={slide.props.index} />
+            <Button size='mini' as={Dot} key={slide.props.index} icon="circle thin" slide={slide.props.index} />
         ))
 
         return (
@@ -34,7 +33,7 @@ export default class CardCarousel extends React.Component {
                     {slides}
                 </Slider>
 
-                {isMobile && 
+                {isMobile || imageGallery && 
                     <Fragment>
                         <Button circular as={ButtonBack} 
                             icon="arrow left" 
@@ -47,7 +46,7 @@ export default class CardCarousel extends React.Component {
                     </Fragment>
                 }
 
-                {(isMobile === false) &&
+                {(isMobile === false && imageGallery === false) &&
                     <Container textAlign="center">
                         <Button.Group size='mini' basic>
                             <Button as={ButtonBack} icon="arrow left" />
@@ -66,5 +65,6 @@ CardCarousel.defaultProps = {
     index: 1,
     height: '6em',
     isMobile: false,
+    imageGallery: false,
     items: [<div>First Item</div>,<div>Item 2</div>]
 }

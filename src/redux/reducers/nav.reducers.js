@@ -18,6 +18,7 @@ const initialState = {
 }
 
 export const nav = (state = initialState, action) => {
+    //console.log('SET_REDUX_STATE: ', action)
     
     switch (action.type) {
         case 'SET_ACTIVITY': 
@@ -100,6 +101,8 @@ export const nav = (state = initialState, action) => {
             }
 
         case 'SET_VIBES':
+            console.log("SET_VIBES: ", action.vibes)
+
             return {
                 ...state,
                 vibes: action.vibes

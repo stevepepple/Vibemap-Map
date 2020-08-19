@@ -7,11 +7,19 @@ import { Button, Icon, Label, Placeholder, Segment } from 'semantic-ui-react'
 const Plan = (props) => {
 
     const { t } = props
-    let { categories, hours, address, instagram, twitter, url } = props.currentItem
+    let { categories, hours, address, instagram, open_now, popular_now, twitter, url } = props.currentItem
 
     if (props.currentItem.categories.length > 0) {
         categories = props.currentItem.categories.map((category) => <Label key={category} className={'image label ' + category}>{category}</Label>);
     }
+
+    let openNow = null
+
+
+    if (open_now) openNow = <span className='openNow'>Open now</span>
+    if (popular_now) openNow = <span className='popularNow'>Vibe'n now</span>
+
+    console.log('Place details open now: ', open_now, popular_now, openNow)
 
     return <section id='plan' name='plan' >
         {
@@ -25,6 +33,8 @@ const Plan = (props) => {
                     <div>
                         <Segment vertical>
                             <h4>{t('Hours')}</h4>
+                            { openNow }
+                            <br/>
                             {hours ? hours : t('No hours')}
                         </Segment>
                         <Segment vertical>
@@ -36,20 +46,21 @@ const Plan = (props) => {
                             {url 
                                 ? <a href={url}>{url}</a> 
                                 : t('No website')}
-                            <Button.Group floated='right'>
+                            <div style={{ 'textAlign' : 'right' }}>
+                                <Button circular color='black' icon='linkify' />
+
                                 {twitter != null &&
                                     <a href={instagram}>
                                         <Button circular color='black' icon='instagram' />                                    
                                     </a>
                                 }
-                                <Button circular color='black' icon='link' />
 
                                 {instagram != null &&
                                     <a href={instagram}>
                                         <Button circular color='black' icon='instagram' />
                                     </a>
                                 }
-                            </Button.Group>
+                            </div>
 
                         </Segment>
                     </div>

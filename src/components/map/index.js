@@ -6,6 +6,7 @@ import CustomMapController from './map-conroller'
 import { Placeholder, Label, Segment } from 'semantic-ui-react'
 
 import * as Constants from '../../constants.js'
+
 class Map extends Component {
   constructor(props) {
     super(props)
@@ -31,7 +32,7 @@ class Map extends Component {
   }    
 
   render() {
-    const { loading, height, width } = this.props
+    const { loading, height, mapboxToken, width } = this.props
     const { MAPBOX_TOKEN } = process.env
 
     // TODO: Map should require current item
@@ -53,7 +54,7 @@ class Map extends Component {
                 {...this.state.viewport}
                 controller={mapController}
                 transition={{ "duration": 300, "delay": 0 }}
-                mapboxApiAccessToken={MAPBOX_TOKEN}
+                mapboxApiAccessToken={mapboxToken}
                 mapStyle={Constants.MAPBOX_STYLE}
                 ref={this.mapRef}
                 onClick={this._onClick}

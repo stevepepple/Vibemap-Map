@@ -2,7 +2,7 @@
 
 .DetailsPage {
     h2 {
-        font-size: 3em;
+        font-size: 5em;
         line-height: 1em;
         font-family: $font-family-nantes;
         font-weight: 400;
@@ -13,6 +13,18 @@
         position: fixed;
         top: 0;
     }
+
+    .header .ui.menu {
+        font-family: $font-family-public;
+        font-size: 1.4em;
+        padding-top: $unit-tiny;
+
+        .item {
+            margin-right: 4rem;
+        }
+
+    }
+
 }
 
 .DetailsPage.mobile {
@@ -42,30 +54,86 @@
         top: 3rem;
     }
 
+    .leftPanel {
+        top: 17em;
+    }
+    
+    #vibe {
+        .image {
+            min-height: 24rem;
+        }
+
+        h4:first-child {
+            display: none;
+        }
+    }
+
     .header {
         background-color: $color-base-white;
-        padding-top: 4em;
+        padding-top: 3em;
         position: fixed;
         top: 8em;
-        width: 86vw;
+        width: 83vw;
         z-index: 10;
+
+        .name {
+            padding-top: 5rem;
+
+            .category {
+                position: absolute;
+                top: $unit-small;
+            }
+            
+            .recommendation {
+                position: absolute;
+                height: 8rem;
+                width: 10em;
+                bottom: 0;
+                right: 0;
+
+                .score {
+                    bottom: 0;
+                    position: absolute;
+                    right: 0;
+                    size: 5rem;                                
+                }
+
+                .reason {
+                    position: absolute;
+                    top: $unit-small;
+                    right: 0;
+                }
+
+            }
+ 
+        }
+
     }
 
     #content {
 
         .profile {
-            padding-top: 8em;
+            padding-top: 10rem;
             padding-bottom: 10em;
             section {
-                scroll-margin-top: 20rem;
+                scroll-margin-top: 26rem;
             }
         }
 
         .map {
             position: fixed;
-            top: 24rem;
+            top: 27rem;
             padding-bottom: 4rem;
             min-width: 30vw;
+
+            .address {
+                background: $color-base-black;
+                color: $color-base-white;
+                margin-top: -3rem;
+                padding: $unit-tiny;
+                position: relative;
+                z-index: 10;
+            }
         }
 
         h2 {

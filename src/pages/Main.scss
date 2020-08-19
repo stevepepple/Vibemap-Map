@@ -129,6 +129,7 @@ html, body, #root, div.App, div.App > div {
 
 .ui.items .image img {
     height: 12em;
+    min-height: 10rem;
     max-height: 11em;
     width: 12em;
     transform: scale(1);

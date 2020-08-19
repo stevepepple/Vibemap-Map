@@ -14,7 +14,63 @@
 #list .ui.items {
     flex-grow: 1;
     margin: 0.5em;
+    cursor: pointer;
+
+    .content {
+        padding-left: 1rem;
+    }
+
+    .header {
+        line-height: 1.8rem;
+        padding-top: 0.4rem;
+        width: 72%;
+    }
+
+    .item {
+        .recommendation {
+            padding-top: 0.4rem;
+            position: absolute;
+            right: 1rem;
+            top: 2.4rem;
+
+            .score {
+                font-size: 1.4rem;
+            }
+
+            div { 
+                font-size: 0.8em;
+                display: block;
+                line-height: 1rem;
+                text-align: right;
+            }
+        }
+
+        .moreInfo {
+
+        }
+
+        .distance {
+            padding-left: 1rem;
+        }
+    }   
 }
+
+.openNow {
+    display: block;
+    color: $color-base-green-deep;
+    padding-top: $unit-nano;
+    padding-bottom: $unit-nano;
+}
+
+.popularNow {
+    color: $color-base-violet-bright;
+}
+
+.hoursToday {
+    color: $color-base-gray-700;
+}
+
+
 
 #list .listSearch input {
     border-width: 2px;
