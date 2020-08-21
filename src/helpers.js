@@ -10,6 +10,8 @@ dayjs.extend(isBetween)
 import { point } from '@turf/helpers'
 import distance from '@turf/distance'
 
+import url from 'url'
+
 import geoViewport from '@mapbox/geo-viewport'
 
 import * as style_variables from 'vibemap-constants/design-system/build/json/variables.json';
@@ -92,6 +94,28 @@ const helpers = {
 
     },
 
+    // Parse all variety of social links and return a consistent, valid url
+    getFullLink(link, type='instagram') {
+
+        const domains = {
+            'instagram': 'https://instagram.com/',
+            'twitter': 'https://twitter.com/'
+        }
+
+        // Handle things that aren't valid string handles
+        // TODO: add unit tests for link = null; link = '' and other cases
+        if (link === null || link === "") return null        
+
+        const parse_url = url.parse(link)
+        // Only the path handle
+        const path = parse_url.path.replace('/', '')
+        
+        // Combine domain and handle
+        const full_link = domains[type] + path
+        
+        return full_link
+    },
+
     getVibeStyle(vibe) {
         let vibe_styles = style_variables['default']['color']['vibes']
 
@@ -153,6 +177,7 @@ const helpers = {
     },
 
     /* TODO: Only use primary vibe set colors on the second half of the heatmap */
+    /* TODO: Get colors from vibemap-constants */
     getHeatmap(colors, vibe) {
         
         //let colors = color.map((color, i) => choroma(color).alpha(0.2))
@@ -197,9 +222,7 @@ const helpers = {
 
         let scale = [white, light_purple, yellow, orange]
 
-        if (vibe) {
-            scale = vibe_to_scale[vibe]            
-        }
+        if (vibe) scale = vibe_to_scale[vibe]
 
         //console.log('getHeatmap(colors, vibes): ', colors, vibe, scale)
 
