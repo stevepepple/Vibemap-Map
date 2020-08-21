@@ -58,18 +58,19 @@ i18n
         //.use('/locales', express.static(`${appSrc}/locales`))
         .use(compression())
         .use(
-          // TODO: move back to express.static(process.env.RAZZLE_PUBLIC_DIR)
-          express.static('public', { maxAge: '365d' })
+          // TODO: remoe this // express.static('public', { maxAge: '365d' })
+          express.static(process.env.RAZZLE_PUBLIC_DIR)
         )
         .get('/*', async (req, res) => {
           const context = {};
 
           //console.log('req.i18n.language: ', req.i18n.language)
+          //console.log('MAPBOX_TOKEN: ', process.env.RAZZLE_MAPBOX_TOKEN)
           
           // Compile an initial state
           const preloadedState = {
             language: req.i18n.language,
-            mapboxToken: process.env.MAPBOX_TOKEN
+            mapboxToken: process.env.RAZZLE_MAPBOX_TOKEN
           };
 
           // Create a new Redux store instance

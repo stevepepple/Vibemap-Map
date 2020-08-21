@@ -53,6 +53,10 @@ const init = (options = {}) => {
 
     if (isGAEnabled) {
         ReactGA.initialize("UA-144205697-1");
+
+        console.log('Google Analytics is enabled')
+    } else {
+        console.log('Google Analytics is not enabled: ', GoogleAnalytics)        
     }
 
     return isGAEnabled;
