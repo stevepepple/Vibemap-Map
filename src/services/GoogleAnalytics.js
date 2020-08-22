@@ -53,7 +53,10 @@ const init = (options = {}) => {
 
     if (isGAEnabled) {
         ReactGA.initialize("UA-144205697-1");
+<<<<<<< HEAD:src/services/GoogleAnalytics.js
 
+=======
+>>>>>>> Align control buttons; dont' change heatmap colors:client/src/services/GoogleAnalytics.js
         console.log('Google Analytics is enabled')
     } else {
         console.log('Google Analytics is not enabled: ', GoogleAnalytics)        
