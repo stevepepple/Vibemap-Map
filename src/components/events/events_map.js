@@ -121,8 +121,9 @@ class EventsMap extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.mainVibe !== this.props.mainVibe) {
-            console.log('Update heatmap!!!', prevProps.mainVibe, this.props.mainVibe)            
-            this.styleHeatMap()
+            // TODO: Clean up vibeset colors and renable
+            //console.log('Update heatmap!!!', prevProps.mainVibe, this.props.mainVibe)            
+            //this.styleHeatMap()
         }
 
         if (!isEqual(prevProps.allVibes, this.props.allVibes)) {
@@ -428,6 +429,10 @@ class EventsMap extends React.Component {
                     
                         {isMobile === false &&
                             <NavigationControl
+<<<<<<< HEAD:src/components/events/events_map.js
+=======
+                                style={mapStyles.navigateStyle}
+>>>>>>> Align control buttons; dont' change heatmap colors:client/src/components/events/events_map.js
                                 showZoom={true}
                                 showCompass={true}
                             />

@@ -79,7 +79,7 @@ class Navigation extends Component {
         if (params.vibes) {
             let vibes = []
             if (typeof(params.vibes) == "string") {
-                vibes.push(params.vibes)
+                vibes.concat(params.vibes)
             } else {
                 vibes = params.vibes
             }
