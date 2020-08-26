@@ -12,10 +12,7 @@ module.exports = {
     geolocateStyle : {
       position: 'absolute',
       right: 3,
-<<<<<<< HEAD:src/styles/map_styles.js
-=======
       top: 1,
->>>>>>> Align control buttons; dont' change heatmap colors:client/src/styles/map_styles.js
       margin: 10,
       width: 30
     },
