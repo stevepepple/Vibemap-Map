@@ -52,8 +52,6 @@ class MobileList extends Component {
                             position: 'absolute',
                             bottom: '20px',
                             height: '180px',
-                            
-                            
                         },
                         '.mobileList' : {
                             display: 'flex !important',

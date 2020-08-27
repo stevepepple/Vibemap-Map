@@ -3,7 +3,7 @@ import "isomorphic-fetch";
 import store from './configureStore'
 
 // Use Thunks with Vibemap service
-import VibeMap from '../services/VibeMap'
+import VibeMap from '../services/VibeMap' 
 import * as constants from '../constants'
 
 import { isBrowser } from "./reducers";
@@ -271,7 +271,6 @@ export const handleSavedPlace = (place) => (dispatch, getState) => {
       dispatch(setTopPicks(updateTopPicks))
 
     }
-
 
     resolve(isSaved)
   

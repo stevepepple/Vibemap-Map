@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { Menu, Dropdown } from 'semantic-ui-react'
 import SVG from 'react-inlinesvg'
 
-import { isMobile } from 'react-device-detect';
+import { isMobile } from 'react-device-detect'
 import TopMenu from './topMenu.js'
 
 
