@@ -65,7 +65,7 @@ class AllVibes extends Component {
         let { vibes, setVibes } = this.props 
         // Make strings array
         let new_vibes = vibes
-        new_vibes.push(value)
+        new_vibes = vibes.concat(value)
         
         console.log('addVibe: ', value, setVibes)
 
