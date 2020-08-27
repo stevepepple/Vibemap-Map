@@ -41,7 +41,7 @@ export default class CardCarousel extends React.Component {
                             />
                         <Button circular as={ButtonNext} 
                             icon="arrow right" 
-                            style={{ right: '0', bottom: '50%', marginBottom: -16, position: 'absolute' }}
+                            style={{ right: '-4px', bottom: '50%', marginBottom: -16, position: 'absolute' }}
                             />
                     </Fragment>
                 }
