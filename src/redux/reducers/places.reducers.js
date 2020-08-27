@@ -15,6 +15,7 @@ const initialState = {
         tips: [],
         vibes: [],
         images: [],
+        recommendations: [],
         saved_places: [],
         vibemap_images: []
     },

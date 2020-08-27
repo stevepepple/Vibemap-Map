@@ -1,13 +1,17 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from "react-redux"
+import * as actions from '../redux/actions'
+
 import { detailsReceived, getDetails } from '../redux/actions'
 import { withRouter } from "react-router"
 
+import dayjs from 'dayjs'
 import { isMobile } from 'react-device-detect';
 import { MediaMatcher } from 'react-media-match'
 
 import SEO from '../components/seo/'
 import * as Constants from '../constants.js'
+import VibeMap from '../services/VibeMap.js'
 
 import { Button, Placeholder, Segment } from 'semantic-ui-react'
 
@@ -61,9 +65,38 @@ class Details extends Component {
     this.onViewportChange = this.onViewportChange.bind(this)
   }
 
+  componentDidMount() {
+    const { currentItem } = this.props
+    if (currentItem.vibes) this.getRecommendations(currentItem.vibes)
+  }
+
   // Example hook
   getParams() {
     let params = useParams()
+  }
+
+  // Very basic content-based filtering recommendation 
+  getRecommendations(vibes) {
+
+    console.log('Get recommendations for these vibes: ', vibes)
+
+    // TODO: Search for activity/category that is similar but not the same 
+    const { distance, bounds, currentItem, activity, days, searchTerm, setRecommendations } = this.props
+    const point = `${currentItem.location.longitude},${currentItem.location.latitude}`
+    let currentTime = dayjs().toISOString()
+
+    //const places = this.props.fetchPlaces(...args, true)
+
+    VibeMap.getPicks(point, distance, bounds, activity, days, vibes, searchTerm)
+      .then(response => {
+        const results = response.data
+        // Add the top 7 recommendations; 
+        // skip the top which should be selected
+        const recommendations = results.slice(1, 8)
+
+        console.log('Results: ', recommendations)
+        setRecommendations(recommendations)
+      })
   }
 
   detectSections() {
@@ -136,7 +169,7 @@ class Details extends Component {
 
   render() {
 
-    const { loading, currentItem, currentSection, mapboxToken, sections } = this.props
+    const { loading, currentItem, currentSection, mapboxToken, recommendations, sections, setDetails } = this.props
     const { marker_size, vibes_expanded } = this.state
 
     let { address, reason } = currentItem
@@ -161,7 +194,7 @@ class Details extends Component {
     })
 
     let profile = <Fragment>
-      <div className='header'>
+      <div className='header page'>
         <PlaceHeader loading={loading} currentItem={currentItem} recommendation={recommendation} />
         <div className='ui pointing secondary menu'>
           {tabs}
@@ -170,7 +203,11 @@ class Details extends Component {
       <div className='profile'>
         <Vibe loading={loading} currentItem={currentItem} vibes_expanded={vibes_expanded} />
         <Plan loading={loading} currentItem={currentItem} />
-        <Tips loading={loading} currentItem={currentItem} />
+        <Tips 
+          loading={loading} 
+          currentItem={currentItem}
+          handleClick={setDetails}
+          recommendations={recommendations} />
         <section id='more' ref={this.moreRef}>
           <AppStoreLink />
         </section>
@@ -240,12 +277,21 @@ class Details extends Component {
 
 const mapStateToProps = state => ({
   currentItem: state.places.currentItem,
+  currentLocation: state.nav.currentLocation,
   details: state.details,
   loading: state.loading,
   mapboxToken: state.mapboxToken,
   name: state.name,
   loading: state.places.loading,
-  sections: state.places.sections
+  sections: state.places.sections,
+  recommendations: state.recommendations,
+
+  bounds: state.map.bounds,
+  distance: state.map.distance,
+  zoom: state.map.zoom,
+  days: state.nav.days,
+
+
 });
 
-export default connect(mapStateToProps)(withRouter(Details));
+export default connect(mapStateToProps, actions)(withRouter(Details));

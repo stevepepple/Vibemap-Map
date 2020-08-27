@@ -108,7 +108,7 @@ class PlaceDetails extends Component {
         console.log('Get recommendations for these vibes: ', vibes)
         
         // TODO: Search for activity/category that is similar but not the same 
-        const { distance, bounds, currentLocation, activity, days, searchTerm } = this.props
+        const { distance, bounds, currentLocation, activity, days, searchTerm, setRecommendations } = this.props
         const point = `${currentLocation.longitude},${currentLocation.latitude}`
         let currentTime = dayjs().toISOString()
 
@@ -117,9 +117,13 @@ class PlaceDetails extends Component {
         VibeMap.getPicks(point, distance, bounds, activity, days, vibes, searchTerm)
             .then(response => {
                 const results = response.data
-                console.log('Results: ', results)
-            })
+                // Add the top 7 recommendations; 
+                // skip the top which should be selected
+                const recommendations = results.slice(1, 8)
                 
+                console.log('Results: ', recommendations)
+                setRecommendations(recommendations)
+            })                
     }
 
     getGuideDetails = function () {
@@ -256,7 +260,7 @@ class PlaceDetails extends Component {
     render() {
 
         const { currentSection, isSaved, vibes_expanded, vibes_to_show, sections, showTabs } = this.state
-        const { loading, currentItem, detailsId, t } = this.props
+        const { loading, currentItem, detailsId, setDetails, recommendations, t } = this.props
         
         if (loading === false && currentItem == null) { return t("No data for the component.") }
 
@@ -281,7 +285,11 @@ class PlaceDetails extends Component {
         let profile = <Fragment>            
             <Vibe loading={loading} currentItem={currentItem} vibes_expanded={vibes_expanded} />
             <Plan loading={loading} currentItem={currentItem} />
-            <Tips loading={loading} currentItem={currentItem} />
+            <Tips 
+                loading={loading} 
+                currentItem={currentItem}
+                handleClick={setDetails} 
+                recommendations={recommendations} />
         </Fragment>
 
         // Check if there's an image for SEO
@@ -362,6 +370,7 @@ const mapStateToProps = state => {
         currentItem: state.places.currentItem,
         guidesData: state.guidesData,
         guideMarkers: state.guideMarkers,
+        recommendations: state.recommendations,
 
         bounds: state.map.bounds,
         distance: state.map.distance,

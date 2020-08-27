@@ -270,7 +270,7 @@ export const recommendations = ( state = [], action) => {
     
   switch (action.type) {
     case 'SET_RECOMMENDATIONS':
-      return action.recommendation
+      return action.recommendations
     default:
       return state
   }
@@ -310,6 +310,7 @@ const rootReducer = combineReducers({
   nearby_places,
   placesData,
   placeType,
+  recommendations,
   savedPlaces,
   showList,
   topPicks,

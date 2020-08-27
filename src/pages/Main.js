@@ -35,6 +35,7 @@ import './Main.scss';
 // REDUX STUFF
 import { connect } from 'react-redux'
 import * as actions from '../redux/actions'
+import { detailsShown, detailsId } from '../redux/reducers/index.js';
 
 class Main extends Component {
 
@@ -129,6 +130,7 @@ class Main extends Component {
     // Should update and Debounce API Requests
     componentDidUpdate(prevProps, prevState) {
 
+        const { detailsShown, detailsId } = this.props
         // TODO: should be a switch statement? 
         let updateData = false
         let refreshResults = false
@@ -164,7 +166,10 @@ class Main extends Component {
             this.getBounds()
         }
 
-        if (details_changed) this.getBounds()
+        if (details_changed) {
+            this.getBounds()
+            if (detailsShown && detailsId) this
+        } 
 
         if (page_changed) {
             refreshResults = true
