@@ -39,9 +39,9 @@ module.exports = {
       "icon-size": [
         "case",
         [">", ["get", "average_score"], 4.9],
-        1.0,
+        1.4,
         [">", ["get", "average_score"], 3.5],
-        0.8,
+        1.2,
         [">", ["get", "average_score"], 2],
         0.6,
         // Fall back value
