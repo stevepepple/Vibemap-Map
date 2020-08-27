@@ -25,8 +25,7 @@ class MobileList extends Component {
     }
 
     onClick = (event, id) => {
-        this.props.setDetailsId(id)
-        this.props.setDetailsShown(true)
+        this.props.setDetails(id)
     }
 
     render() {

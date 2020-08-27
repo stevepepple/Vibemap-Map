@@ -3,17 +3,39 @@ import "isomorphic-fetch";
 import store from './configureStore'
 
 // Use Thunks with Vibemap service
-import VibeMap from '../services/VibeMap.js'
+import VibeMap from '../services/VibeMap'
+import * as constants from '../constants'
+
 import { isBrowser } from "./reducers";
 
 export const addFeature = feature => ({ type: 'ADD_FEATURE', feature })
-
 export const setIsBrowser = isBrowser => ({ type: 'SET_IS_BROWSER', isBrowser })
-
 export const setDetailsShown = show => ({ type: 'SET_DETAILS_SHOWN', show })
 export const setSavedPlaces = savedPlaces => ({ type: 'SET_SAVED_PLACES', savedPlaces })
-
 export const setShowList = show => ({ type: 'SET_SHOW_LIST', show })
+export const setDetailsId = id => ({ type: 'SET_DETAILS_ID', id })
+export const setDetailsType = place_type => ({ type: 'SET_DETAILS_TYPE', place_type })
+export const setGuideDetails = details => ({ type: 'SET_GUIDE_DETAILS', details })
+export const setGuideMarkers = markers => ({ type: 'SET_GUIDE_MARKERS', markers })
+export const activateGeod = geod => ({ type: 'ACTIVATE_GEOD', geod })
+export const setHeaderSize = size => ({ type: 'SET_HEADER_SIZE', size })
+export const setLayers = layers => ({ type: 'SET_LAYERS', layers })
+export const setEventLocation = location => ({ type: 'SET_EVENT_LOCATION', location })
+export const setEventsData = events_data => ({ type: 'SET_EVENTS_DATA', events_data })
+export const setCities = cities => ({ type: 'SET_CITIES', cities })
+export const setName = name => ({ type: 'SET_NAME', name })
+export const setNearbyPlaces = places => ({ type: 'SET_NEARBY_PLACES', places })
+export const setNeighborhoods = cities => ({ type: 'SET_NEIGHBORHOODS', cities })
+export const setPlacesData = (places_data, refreshResults) => ({ type: 'SET_PLACES_DATA', places_data, refreshResults })
+export const setRecommendations = (recommendations) => ({ type: 'SET_RECOMMENDATIONS', recommendations })
+export const setWindowSize = size => ({ type: 'SET_WINDOW_SIZE', size })
+
+export const setTopPicks = (places_data, refreshResults, mergeTopPicks) => ({
+  type: 'SET_TOP_PICKS_DATA',
+  places_data,
+  refreshResults,
+  mergeTopPicks
+})
 
 // Map Actions
 // Reducers are in map.reducers
@@ -39,7 +61,7 @@ export const setCurrentLocation = location => ({ type: 'SET_CURRENT_LOCATION', l
 export const setCurrentPage = page => ({ type: 'SET_CURRENT_PAGE', page })
 export const setDays = days => ({ type: 'SET_DAYS', days })
 export const setMainVibe = vibe => ({ type: 'SET_MAIN_VIBE', vibe })
-export const setPlaceType = (value) => ({ type: 'SET_PLACE_TYPE', value })
+export const setPlaceType = value => ({ type: 'SET_PLACE_TYPE', value })
 export const setSearchTerm = searchTerm => ({ type: 'SET_SEARCH_TERM', searchTerm })
 export const setVibes = vibes => ({ type: 'SET_VIBES', vibes })
 export const setVibesets = vibesets => ({ type: 'SET_VIBESETS', vibesets })
@@ -87,6 +109,7 @@ export const setPlacesError = error => ({ type: 'SET_PLACES_ERROR', error })
 export const fetchDetails = (id, type) => (dispatch, getState) => {
   return new Promise(resolve => {
     //dispatch(detailsRequest())
+    dispatch(setDetailsLoading(true))
 
     VibeMap.getPlaceDetails(id, type)
       .then(response => response.data)
@@ -103,10 +126,28 @@ export const fetchDetails = (id, type) => (dispatch, getState) => {
   })
 }
 
+// Set the current place or event id and update the map and nav state
+export const setDetails = (id, type) => (dispatch, getState) => {
+    const { zoom } = getState().map
+
+    console.log('Reducer setDetails: ', id, type)
+
+    dispatch(setZoom( zoom + constants.ZOOM_ON_DETAILS ))
+    dispatch(setDetailsId(id))
+    dispatch(setDetailsShown(true))
+
+    if (type) dispatch(setDetailsType(type))
+
+}
+
 export const clearDetails = () => (dispatch, getState) => {
+  const { zoom } = getState().map
+  dispatch(setZoom( zoom - constants.ZOOM_ON_DETAILS ))
+
   dispatch(setDetailsId(null))
   dispatch(setDetailsType(null))
   dispatch(setDetailsShown(false))
+
 }
 
 // Dispatch is called in getInitialProps of Details
@@ -120,7 +161,6 @@ export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', 
   const should_search = vibes.length > 0 || searchTerm !== ""
   
   return new Promise(resolve => {
-    console.log('Should search: ', should_search)
     
     // Do a Specific Search
     if (should_search) {
@@ -236,7 +276,6 @@ export const handleSavedPlace = (place) => (dispatch, getState) => {
     resolve(isSaved)
   
   })
-
 }
 
 
@@ -263,92 +302,3 @@ export const getDetails = (id, type) => {
       .then(details => resolve(details))
   })
 }
-
-
-export const setDetailsId = id => ({ 
-  type: 'SET_DETAILS_ID', 
-  id 
-})
-
-export const setDetailsType = place_type => ({ 
-  type: 'SET_DETAILS_TYPE', 
-  place_type 
-})
-
-export const setGuideDetails = details => ({ 
-  type: 'SET_GUIDE_DETAILS', 
-  details 
-})
-
-export const setGuideMarkers = markers => ({ 
-  type: 'SET_GUIDE_MARKERS', 
-  markers 
-})
-
-export const activateGeod = geod => ({
-  type: 'ACTIVATE_GEOD',
-  geod,
-})
-
-export const setHeaderSize = size => ({
-  type: 'SET_HEADER_SIZE',
-  size,
-})
-
-export const setWindowSize = size => ({  
-  type: 'SET_WINDOW_SIZE',
-  size,
-})
-
-export const setLayers = layers => ({
-  type: 'SET_LAYERS',
-  layers,
-})
-
-
-export const setEventLocation = location => ({
-  type: 'SET_EVENT_LOCATION',
-  location,
-})
-
-export const setEventsData = events_data => ({
-  type: 'SET_EVENTS_DATA',
-  events_data,
-})
-
-export const setCities = cities => ({
-  type: 'SET_CITIES',
-  cities,
-})
-
-export const setNeighborhoods = cities => ({
-  type: 'SET_NEIGHBORHOODS',
-  cities,
-})
-
-export const setPlacesData = (places_data, refreshResults) => ({
-  type: 'SET_PLACES_DATA',
-  places_data,
-  refreshResults
-})
-
-export const setTopPicks = (places_data, refreshResults, mergeTopPicks) => ({
-  type: 'SET_TOP_PICKS_DATA',
-  places_data,
-  refreshResults,
-  mergeTopPicks
-})
-
-export const setNearbyPlaces = places => ({
-  type: 'SET_NEARBY_PLACES',
-  places,
-})
-
-export const setName = name => ({
-  type: 'SET_NAME',
-  name
-})
-
-export const closeGeod = () => ({
-  type: 'CLOSE_GEOD',
-})

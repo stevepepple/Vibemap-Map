@@ -20,8 +20,6 @@ const Plan = (props) => {
     if (open_now) openNow = <span className='openNow'>Open now</span>
     if (popular_now) openNow = <span className='popularNow'>Vibe'n now</span>
 
-    console.log('Place details open now: ', open_now, popular_now, openNow)
-
     return <section id='plan' name='plan' >
         {
             props.loading ? (

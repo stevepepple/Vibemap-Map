@@ -48,7 +48,10 @@ class Main extends Component {
             // Set Redux Store from URL on server so it can be used for SEO
             if (place_type) store.dispatch(setPlaceType(place_type))
 
-            if (latitude && longitude) store.dispatch(setCurrentLocation({ latitude: latitude, longitude: longitude }))
+            if (latitude && longitude) {
+                store.dispatch(setCurrentLocation({ latitude: latitude, longitude: longitude }))
+                this.setState({ hasLocation : true })
+            } 
             if (zoom) store.dispatch(setZoom(zoom))
 
             if (activity) {
@@ -73,6 +76,7 @@ class Main extends Component {
             // TODO: set state form YAML
             event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             place_categories: ['Arts & Entertainment', 'Food'],
+            hasLocation: false,
             intervalIsSet: false,
             loading: true,
             timedOut: false,
@@ -85,6 +89,7 @@ class Main extends Component {
 
         // TODO: Pattern for if data is loaded or errored out
         const { fetchCities, fetchVibes, fetchCategories, i18n, language, setIsBrowser, setCurrentLocation } = this.props
+        const { hasLocation } = this.state
 
         // Set current language from backend store
         i18n.changeLanguage(language);
@@ -105,17 +110,18 @@ class Main extends Component {
         if (isBrowser) {
             window.addEventListener('resize', this.handleWindowSizeChange)
 
-            helpers.getPosition()
-                .then((position) => {
-                    if (position) {
-                        const location = { latitude: position.coords.latitude, longitude: position.coords.longitude }
+            if(hasLocation == false) {
+                helpers.getPosition()
+                    .then((position) => {
+                        if (position) {
+                            const location = { latitude: position.coords.latitude, longitude: position.coords.longitude }
 
-                        //this.props.setCurrentLocation(location)
-                        setCurrentLocation(location)
-                    } else {
-                        // TODO: what if the user disallows location
-                    }
-                })
+                            setCurrentLocation(location)
+                        } else {
+                            // TODO: what if the user disallows location
+                        }
+                    })
+            }
         }
 
     }
@@ -143,6 +149,7 @@ class Main extends Component {
         const page_changed = !isEqual(prevProps.currentPage, this.props.currentPage)
         const pixels_changed = !isEqual(prevProps.pixelDistance, this.props.pixelDistance)
         const zoom_changed = !isEqual(prevProps.zoom, this.props.zoom)
+        const details_changed = !isEqual(prevProps.detailsShown, this.props.detailsShown)
 
         // Conditions for fetch
         if (vibe_changed || search_changed || activity_changed || place_type_changed || location_changed || zoom_changed ) {
@@ -156,6 +163,8 @@ class Main extends Component {
             if (zoom_diff <= 0.4) refreshResults = false
             this.getBounds()
         }
+
+        if (details_changed) this.getBounds()
 
         if (page_changed) {
             refreshResults = true
@@ -206,15 +215,15 @@ class Main extends Component {
                 this.fetchPlaces(refreshResults)
                 break
         }
-    }, 500, { leading: true, trailing: true})
+    }, 500, { leading: false, trailing: true})
 
     // Wrapping a function handled by Thunk calls to the Vibemap service
     fetchPlaces(refreshResults) {
 
         let currentTime = dayjs().toISOString()
 
-        const point = `${this.props.currentLocation.longitude},${this.props.currentLocation.latitude}`
-        const { distance, bounds, activity, days, vibes, searchTerm } = this.props
+        const { distance, bounds, currentLocation, activity, days, vibes, searchTerm } = this.props
+        const point = `${currentLocation.longitude},${currentLocation.latitude}`
 
         // TODO: Set in action dispatch, not here
         if (this.state.timedOut === true) this.setState({ timedOut: false, searching: false })

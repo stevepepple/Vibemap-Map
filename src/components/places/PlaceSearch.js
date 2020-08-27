@@ -62,10 +62,9 @@ class PlaceSearch extends Component {
             console.log('Create NEW AND FILL NAME')
         }
 
-        this.setState({ isLoading: false })        
-        this.props.setDetailsShown(true)
-        this.props.setDetailsId(result.id)
-        this.props.setDetailsType('places')
+        this.setState({ isLoading: false })
+
+        this.props.getDetails(id)
     }
 
     handleSearchChange = (e, { value }) => {

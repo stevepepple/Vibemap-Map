@@ -120,6 +120,9 @@ class EventsMap extends React.Component {
     } 
 
     componentDidUpdate(prevProps, prevState) {
+
+        const { detailsShown, currentItem, setCurrentLocation } = this.props
+        const { viewport } = this.state
         if (prevProps.mainVibe !== this.props.mainVibe) {
             // TODO: Clean up vibeset colors and renable
             //console.log('Update heatmap!!!', prevProps.mainVibe, this.props.mainVibe)            
@@ -135,9 +138,16 @@ class EventsMap extends React.Component {
             this.setState({ vibe_options: vibe_options })
         }
 
+        if (detailsShown && currentItem != prevProps.currentItem) {
+            this.showSelected()
+        }
+
     }
 
     componentDidMount() {
+
+        const { detailsShown } = this.props
+
         let size = {
             height: this.map.current.offsetHeight,
             width: this.map.current.offsetWidth
@@ -147,13 +157,10 @@ class EventsMap extends React.Component {
         this.props.setMapSize(size)
         this.props.setMapReady(true)
         //this.handleMarkers(this.props)
-
     }
 
     mapLoaded() {
         const mapGL = this.mapRef.current.getMap()
-
-        console.log('Map LOADED !!! ', mapGL)
 
         /* TODO: If the left panel is open 
         mapGL.easeTo({
@@ -210,13 +217,27 @@ class EventsMap extends React.Component {
         this.setState({ mapStyles : mapStyles })
     }
 
+    showSelected() {
+        const { detailsShown, currentItem, setCurrentLocation } = this.props
+        const { viewport } = this.state
+
+        let new_viewport = viewport
+
+        new_viewport.latitude = currentItem.location.latitude
+        new_viewport.longitude = currentItem.location.longitude
+
+        console.log('detailsShown for currentItem ', new_viewport)
+        setCurrentLocation({ latitude: new_viewport.latitude, longitude : new_viewport.longitude })
+        this.setState({ new_viewport })   
+
+    }
+
     _onViewportChange = viewport => {
 
         //const mapGL = this.mapRef.current.getMap()
 
         // Keep Redux in sync with current map
-        const { bounds, currentLocation } = this.props
-        console.log('Map updated: ', bounds)
+        const { bounds, currentLocation, currentItem, detailsShown } = this.props
 
         // TODO: how to transtlate greater of viewport width or height to search radius
         this.props.setViewport(viewport)
@@ -233,6 +254,7 @@ class EventsMap extends React.Component {
         // TODO: Need to throttle and take the last, most recent value
         if (viewport.longitude != 0 && viewport.latitude != 0 && distance_changed > 0.25) setLocation = true
 
+
         if (viewport.bearing !== this.props.bearing) this.props.setBearing(viewport.bearing)
     
         if (viewport.zoom > 2 && viewport.zoom !== this.props.zoom) {
@@ -242,9 +264,9 @@ class EventsMap extends React.Component {
 
         // Update Location in one
         if (setLocation) {
-            const location = { latitude: viewport.latitude, longitude: viewport.longitude, distance: distance_changed }
-            
-            // TODO: This is causing the location to be set to zero!!!
+            let location = { latitude: viewport.latitude, longitude: viewport.longitude, distance: distance_changed }
+
+            console.log('Set current location: ', location)
             this.props.setCurrentLocation(location)
         }
     }   
@@ -265,12 +287,7 @@ class EventsMap extends React.Component {
         }
         
         if (id !== null) {
-            this.props.setDetailsId(id)
-            this.props.setDetailsType(place_type)
-            // TODO: there's probably a smart way to do this with browser history
-            this.setState({ prev_zoom : this.props.zoom })
-            this.props.setDetailsShown(true)
-            this.props.setZoom(this.props.zoom + 2)
+            this.props.setDetails(id, place_type)
         }
     }
 
@@ -354,24 +371,24 @@ class EventsMap extends React.Component {
 
     render() {
 
-        const { currentLocation, densityBonus, guideDetails, layers, mapboxToken, isMobile, searchTerm } = this.props
-        const { has_marker_data, has_route_data, marker_data, marker_data_geojson, route_data, score_markers } = this.state
+        const { activity, allVibes, currentItem, currentLocation, densityBonus, detailsShown, eventsData, guideDetails, layers, mapboxToken, placesData, placeType, isMobile, searchTerm, vibes, zoom } = this.props
+        const { has_marker_data, has_route_data, marker_data, marker_data_geojson, popupInfo, route_data, score_markers, viewport } = this.state
         
-        let has_places_data = this.props.placesData.length > 0
-        let has_events_data = this.props.eventsData.length > 0
+        let has_places_data = placesData.length > 0
+        let has_events_data = eventsData.length > 0
 
         const mapController = new CustomMapController()
         const mapStyles = this.state.mapStyles
 
-        let heat_map_filter = [this.props.activity]
-        if (this.props.activity === 'all' || this.props.activity === '') {
+        let heat_map_filter = [activity]
+        if (activity === 'all' || activity === '') {
             heat_map_filter = ["food", "shopping", "outdoors"]
         }
 
         if (densityBonus) {
             /* TODO: Better scalling for low and high densities */
             // Take the mean of density bonus and the default intensity
-            let intensity = this.props.densityBonus
+            let intensity = densityBonus
             mapStyles.places_heatmap['heatmap-intensity'] = intensity
         }
 
@@ -382,7 +399,7 @@ class EventsMap extends React.Component {
             console.log(error, layers)
         }
                 
-        let heat_map_visibility = this.props.layers.heatmap ? 'visible' : 'none'
+        let heat_map_visibility = layers.heatmap ? 'visible' : 'none'
 
         let mapHeight = '100%', mapWidth = '100%'
 
@@ -394,7 +411,7 @@ class EventsMap extends React.Component {
                               
                     {isMobile === false && <Fragment>
                         {/* Floating legend */}
-                        <ZoomLegend zoom={this.props.zoom} />
+                        <ZoomLegend zoom={zoom} />
                         <LayersFilter />
                     </Fragment> 
                     }
@@ -407,12 +424,12 @@ class EventsMap extends React.Component {
                                     style={{ width: '90%' }} value={searchTerm}/>
                             </Link>
                         }
-                        <AllVibes vibes={this.props.allVibes} />
+                        <AllVibes vibes={allVibes} />
                     </div>
 
                     {/* TODO: Move to it's own class <Map> */}
                     <ReactMapGL
-                        {...this.state.viewport}
+                        {...viewport}
                         controller={mapController}
                         ref={this.mapRef}
                         height={mapHeight}
@@ -429,10 +446,7 @@ class EventsMap extends React.Component {
                     
                         {isMobile === false &&
                             <NavigationControl
-<<<<<<< HEAD:src/components/events/events_map.js
-=======
                                 style={mapStyles.navigateStyle}
->>>>>>> Align control buttons; dont' change heatmap colors:client/src/components/events/events_map.js
                                 showZoom={true}
                                 showCompass={true}
                             />
@@ -463,11 +477,11 @@ class EventsMap extends React.Component {
                                     
                                 </Source>
                                 {/* TODO: this state should be synced with the top_picks react state */}
-                                {this.props.layers.photo_markers &&
+                                {layers.photo_markers &&
                                     <Markers
                                         data={marker_data}
-                                        vibes={this.props.vibes}
-                                        zoom={this.props.zoom}
+                                        vibes={vibes}
+                                        zoom={zoom}
                                         onClick={this._onClick}
                                         score_markers={score_markers}
                                         showPopup={this.showPopup} />
@@ -510,14 +524,14 @@ class EventsMap extends React.Component {
                             </Fragment>                          
                         */}
                         
-                        {this.props.detailsShown && this.props.placeType !== 'guides' && this.props.currentItem.location !== null &&
+                        {detailsShown && placeType !== 'guides' && currentItem.location !== null &&
                             /* Current place marker */
                             <Marker
-                                longitude={this.props.currentItem.location.longitude}
-                                latitude={this.props.currentItem.location.latitude}
+                                longitude={currentItem.location.longitude}
+                                latitude={currentItem.location.latitude}
                                 offsetTop={-2}
                                 offsetLeft={-2}>   
-                                <Selected size={helpers.scaleSelectedMarker(this.props.zoom)} />
+                                <Selected size={helpers.scaleSelectedMarker(zoom)} />
                             </Marker>
                         }
                         
@@ -579,17 +593,17 @@ class EventsMap extends React.Component {
                         }
 
                         {/* Only render popup if it's not null */}
-                        {this.state.popupInfo &&
+                        {popupInfo &&
                             <Popup
                                 tipSize={2}
                                 className={'marker-popup'}
                                 offsetTop={-10}
-                                longitude={this.state.popupInfo.longitude}
-                                latitude={this.state.popupInfo.latitude}                                
+                                longitude={popupInfo.longitude}
+                                latitude={popupInfo.latitude}                                
                                 closeOnClick={true}
                                 onClose={() => this.setState({ popupInfo: null })}
                             >
-                                {this.state.popupInfo.name}
+                                {popupInfo.name}
                             </Popup>
                         }
                         
