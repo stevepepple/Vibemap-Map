@@ -98,7 +98,7 @@ function cardPLaceLayout(props) {
             <Item.Content style={{ position: 'relative' }}>
                 <Button 
                     className='savePlace' 
-                    color={content.is_saved ? 'black' : 'gray'} 
+                    color={content.is_saved ? 'black' : 'white'} 
                     onClick={e => handleClick(e, content)} 
                     icon='like' circular size='mini'
                     style={{ position: 'absolute', right: '1rem', zIndex: '10' }} />

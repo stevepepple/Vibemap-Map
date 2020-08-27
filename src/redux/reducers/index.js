@@ -50,7 +50,7 @@ export const detailsId = (state = null, action) => {
   return state
 }
 
-export const detailsType = (state = "place", action) => {
+export const detailsType = (state = "places", action) => {
   if (action.type === 'SET_DETAILS_TYPE') {
     console.log("SET_DETAILS_TYPE: ", action.place_type)
     state = action.place_type
@@ -90,7 +90,7 @@ export const headerSize = (state = { width: 0, height: 0 }, action) => {
 // One of events, places, or guides
 export const placeType = (state = 'places', action) => {
   if (action.type === 'SET_PLACE_TYPE') {
-    //console.log("SET_PLACE_TYPE", action)
+    console.log("SET_PLACE_TYPE", action)
     state = action.value
   }
   return state
@@ -264,6 +264,16 @@ export const topPicks = (state = [], action) => {
   }
 
   return state
+}
+
+export const recommendations = ( state = [], action) => {
+    
+  switch (action.type) {
+    case 'SET_RECOMMENDATIONS':
+      return action.recommendation
+    default:
+      return state
+  }
 }
 
 // TODO: Remove; This is just a test
