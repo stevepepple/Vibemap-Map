@@ -16,9 +16,6 @@ const Header = (props) => {
                     <Placeholder.Line length='very short' />
                     <Placeholder.Line length='medium' />
                 </Placeholder.Header>
-                <Placeholder>
-                    <Placeholder.Image square />
-                </Placeholder>
             </Placeholder>
         ) : (
             <div className='name'>
