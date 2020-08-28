@@ -18,6 +18,8 @@ import Styles from '../../styles/map_styles.js'
 import Markers from '../map/markers'
 import Selected from '../map/selected'
 import VectorTile from '../map/VectorTile'
+import Help from '../map/Help'
+
 import LayersFilter from '../map/LayersFilter'
 import { clusterLayer, clusterCountLayer, unclusteredPointLayer } from '../map/layers'
 //import YouAreHere from '../map/you_are_here.js'
@@ -62,6 +64,7 @@ class EventsMap extends React.Component {
         this._onClick = this._onClick.bind(this)
         this._onHover = this._onHover.bind(this)
         this.mapLoaded = this.mapLoaded.bind(this)
+        this.handleGeoLocate = this.handleGeoLocate.bind(this)
 
         //this._getCursor = this._getCursor.bind(this)
         this.showPopup = this.showPopup.bind(this)
@@ -155,6 +158,7 @@ class EventsMap extends React.Component {
 
         console.log('Map LOADED !!! ', mapGL)
 
+
         /* TODO: If the left panel is open 
         mapGL.easeTo({
             padding: {
@@ -163,6 +167,14 @@ class EventsMap extends React.Component {
         });
         */
 
+    }
+
+
+    handleGeoLocate(position) {
+        const mapGL = this.mapRef.current.getMap()
+
+        this.props.setZoom(16)
+        mapGL.setZoom(16)
     }
 
     /*
@@ -396,6 +408,7 @@ class EventsMap extends React.Component {
                         {/* Floating legend */}
                         <ZoomLegend zoom={this.props.zoom} />
                         <LayersFilter />
+                        <Help />
                     </Fragment> 
                     }
                     <div className={'map_search'} style={{ position: 'absolute', zIndex: '10', padding: '1em', width: '100%'}}>
@@ -437,7 +450,9 @@ class EventsMap extends React.Component {
 
                         <GeolocateControl
                             style={mapStyles.geolocateStyle}
+                            onGeolocate={this.handleGeoLocate}
                             positionOptions={{ enableHighAccuracy: true }}
+                            fitBoundsOptions={{  maxZoom: 15 }}
                             trackUserLocation={true}
                         />
 

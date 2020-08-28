@@ -10,6 +10,16 @@ import SVG from 'react-inlinesvg'
 class LayersFilter extends React.Component {
     state = {}
 
+    style = {
+        backgroundColor: 'white',
+        boxShadow: '0 0 0 2px rgba(0,0,0,.2)',
+        position: 'absolute',
+        right: '1em',
+        bottom: '2em',
+        zIndex: 100
+    }
+
+
     togglePanel = () => this.setState((prevState) => ({ open: !prevState.open }))
 
     toggleLayer = (e, {checked, label}) => {
@@ -45,8 +55,9 @@ class LayersFilter extends React.Component {
             <Popup                
                 trigger={
                     <Button 
+                        circular
                         onClick={this.togglePanel}
-                        style={{ position: 'absolute', right: '1em', bottom: '1em', zIndex: 100 }} icon>
+                        style={this.style} icon>
                         <SVG style={{height: '2em', width: '2em'}} src='/images/layers.svg' />
                     </Button>
                 }

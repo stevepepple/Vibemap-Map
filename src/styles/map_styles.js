@@ -12,7 +12,7 @@ module.exports = {
     geolocateStyle : {
       position: 'absolute',
       right: 3,
-      top: 1,
+      top: 10,
       margin: 10,
       width: 30
     },
