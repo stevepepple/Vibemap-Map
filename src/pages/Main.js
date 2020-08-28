@@ -84,7 +84,8 @@ class Main extends Component {
     componentDidMount() {
 
         // TODO: Pattern for if data is loaded or errored out
-        const { fetchCities, fetchVibes, fetchCategories, i18n, language, setIsBrowser, setCurrentLocation } = this.props
+        const { fetchCities, fetchVibes, fetchCategories, i18n, language, setIsBrowser, setCurrentLocation, setZoom } = this.props
+        const { hasLocation } = this.state
 
         // Set current language from backend store
         i18n.changeLanguage(language);
@@ -105,17 +106,18 @@ class Main extends Component {
         if (isBrowser) {
             window.addEventListener('resize', this.handleWindowSizeChange)
 
-            helpers.getPosition()
-                .then((position) => {
-                    if (position) {
-                        const location = { latitude: position.coords.latitude, longitude: position.coords.longitude }
-
-                        //this.props.setCurrentLocation(location)
-                        setCurrentLocation(location)
-                    } else {
-                        // TODO: what if the user disallows location
-                    }
-                })
+            if(hasLocation == false) {
+                helpers.getPosition()
+                    .then((position) => {
+                        if (position) {
+                            const location = { latitude: position.coords.latitude, longitude: position.coords.longitude }
+                            setZoom(14.6)
+                            setCurrentLocation(location)
+                        } else {
+                            // TODO: what if the user disallows location
+                        }
+                    })
+            }
         }
 
     }
