@@ -527,9 +527,10 @@ module.exports = {
         const popular_bonus = 5
 
         // Weight distance & rating different than other fields
-        const vibe_factor = 1.0 
-        const distance_factor = 0.3 
-        const rating_factor = 0.3 
+        const vibe_factor = 2.0 
+        const distance_factor = 0.2 
+        const rating_factor = 0.2 
+        const hours_factor = 0.2
         
         var start = window.performance.now();
 
@@ -556,7 +557,6 @@ module.exports = {
                     average_rank = helpers.default.rankVibes(vibes, fields.vibes)
 
                     vibe_bonus = vibe_matches * vibe_match_bonus + average_rank * vibe_rank_bonus
-
                     fields.vibes_score += vibe_bonus
                 }
 
@@ -650,10 +650,15 @@ module.exports = {
                 fields.distance_score = fields.distance_score * distance_factor
             }
 
+            if (scoreBy.includes('hours')) {
+                fields.hours_score = fields.hours_score * hours_factor
+            }
+
+
             let reasons = scoreBy
         
             let scores = scoreBy.map((field) => fields[field + '_score'])
-
+            
             let largest_index = scores.indexOf(Math.max.apply(null, scores))
             
             fields.average_score = scores.reduce((a, b) => a + b, 0) / scores.length
