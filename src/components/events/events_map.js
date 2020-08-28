@@ -429,10 +429,7 @@ class EventsMap extends React.Component {
                     
                         {isMobile === false &&
                             <NavigationControl
-<<<<<<< HEAD:src/components/events/events_map.js
-=======
                                 style={mapStyles.navigateStyle}
->>>>>>> Align control buttons; dont' change heatmap colors:client/src/components/events/events_map.js
                                 showZoom={true}
                                 showCompass={true}
                             />
