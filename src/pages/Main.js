@@ -73,6 +73,7 @@ class Main extends Component {
             // TODO: set state form YAML
             event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             place_categories: ['Arts & Entertainment', 'Food'],
+            hasLocation: false,
             intervalIsSet: false,
             loading: true,
             timedOut: false,
@@ -84,7 +85,7 @@ class Main extends Component {
     componentDidMount() {
 
         // TODO: Pattern for if data is loaded or errored out
-        const { fetchCities, fetchVibes, fetchCategories, i18n, language, setIsBrowser, setCurrentLocation, setZoom } = this.props
+        const { cities, fetchCities, fetchVibes, fetchCategories, i18n, language, setIsBrowser, setCurrentLocation, setZoom } = this.props
         const { hasLocation } = this.state
 
         // Set current language from backend store
@@ -109,17 +110,21 @@ class Main extends Component {
             if(hasLocation == false) {
                 helpers.getPosition()
                     .then((position) => {
+                        console.log('Got position? ', position)
                         if (position) {
                             const location = { latitude: position.coords.latitude, longitude: position.coords.longitude }
                             setZoom(14.6)
                             setCurrentLocation(location)
                         } else {
+                            const closest = cities[0]
+                            const location = { latitude: closest.centerpoint[1], longitude: closest.centerpoint[0] }
                             // TODO: what if the user disallows location
+                            console.log('User disallowed location ',   location)
+                            setCurrentLocation(location)
                         }
                     })
             }
         }
-
     }
 
     // Should update and Debounce API Requests

@@ -22,9 +22,24 @@ const helpers = {
     getPosition: function(options) {
         return new Promise(function (resolve, reject) {
 
-            navigator.geolocation.getCurrentPosition(function (position) {
-                resolve(position);
-            });
+            const options = { enableHighAccuracy: true }
+
+            //console.log('Getting position: ', navigator.geolocation, navigator.geolocation.getCurrentPosition)
+
+            if (!navigator.geolocation || !navigator.geolocation.getCurrentPosition) resolve(false)
+
+            function success(position) {
+                console.log('Got position: ', position)
+                resolve(position)                
+            }
+
+            function error(err) {
+                console.log('Error with location: ', err)
+                resolve(false)
+                console.warn(`ERROR(${err.code}): ${err.message}`);
+            }
+
+            navigator.geolocation.getCurrentPosition(success, error, options);
 
         })
     },
