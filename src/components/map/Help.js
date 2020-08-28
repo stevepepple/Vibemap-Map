@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
-import { Button, Icon, Form, Grid, Popup, Section } from 'semantic-ui-react'
+import { Button, Card, Icon, Popup } from 'semantic-ui-react'
 import SVG from 'react-inlinesvg'
 
 //class EventsMap extends React.PureComponent {
@@ -30,7 +30,9 @@ class Help extends React.Component {
         const layers = this.props.layers
         
         return (
-            <Popup                
+            <Popup
+                position='top right'                
+                size='large'
                 trigger={
                     <Button 
                         circular
@@ -43,11 +45,10 @@ class Help extends React.Component {
                 on='click'
                 open={this.state.open}>
 
-                <Grid divided relaxed columns={2} textAlign='left' style={{ width: '12em' }}>
-                    <h3>🖐 Hi there!</h3>
-                    <p>Vibemap is like a weather map to places and experiences that match your vibe.</p>
-                    <a>Read about the vibes</a>                     
-                </Grid>
+                <h3>🖐 Hi there!</h3>
+                <p>Vibemap is like a weather map for places and experiences that match your vibe.</p>
+                <p>The heat map shows you wants happening and updates when you change your vibe.</p>
+                <a>Read about the vibes</a>
             </Popup>
         )
     }
