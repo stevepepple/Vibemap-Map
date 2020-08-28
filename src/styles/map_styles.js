@@ -38,11 +38,11 @@ module.exports = {
       "icon-padding": 4.0,
       "icon-size": [
         "case",
-        [">", ["get", "average_score"], 4.9],
-        1.0,
+        [">", ["get", "average_score"], 4.6],
+        1.2,
         [">", ["get", "average_score"], 3.5],
-        0.8,
-        [">", ["get", "average_score"], 2],
+        1.0,
+        [">", ["get", "average_score"], 1],
         0.6,
         // Fall back value
         0.4
@@ -217,7 +217,7 @@ module.exports = {
         ["zoom"],
           8, 1,
           10, 16,
-          12, 30,
+          12, 24,
           13, 40,
           14, 60,
           20, 200
