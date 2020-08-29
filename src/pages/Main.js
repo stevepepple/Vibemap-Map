@@ -89,7 +89,7 @@ class Main extends Component {
     componentDidMount() {
 
         // TODO: Pattern for if data is loaded or errored out
-        const { fetchCities, fetchVibes, fetchCategories, i18n, language, setIsBrowser, setCurrentLocation } = this.props
+        const { fetchCities, fetchVibes, fetchCategories, i18n, language, setIsBrowser, setCurrentLocation, setZoom } = this.props
         const { hasLocation } = this.state
 
         // Set current language from backend store
