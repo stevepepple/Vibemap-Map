@@ -34,8 +34,10 @@ class Header extends Component {
                 }
                 <Menu id='header' borderless pointing style={{ margin: '0', zIndex: 10 }}>
                     <Menu.Item>
-                        <SVG style={{ width: '12em', padding: '1em' }} src='/images/logo-type.svg' />
-                    </Menu.Item>
+                        <a href="http://www.vibemap.com">
+                            <SVG style={{ width: '12em', padding: '1em' }} src='/images/logo-type.svg' />
+                        </a>
+                    </Menu.Item>                        
 
                     {isMobile === false &&
                         <Menu.Menu className='pageMenu' position='right'>

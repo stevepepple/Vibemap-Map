@@ -116,15 +116,18 @@ class Main extends Component {
                     .then((position) => {
                         if (position) {
                             const location = { latitude: position.coords.latitude, longitude: position.coords.longitude }
-
+                            setZoom(14.6)
                             setCurrentLocation(location)
                         } else {
+                            const closest = cities[0]
+                            const location = { latitude: closest.centerpoint[1], longitude: closest.centerpoint[0] }
                             // TODO: what if the user disallows location
+                            console.log('User disallowed location ',   location)
+                            setCurrentLocation(location)
                         }
                     })
             }
         }
-
     }
 
     // Should update and Debounce API Requests

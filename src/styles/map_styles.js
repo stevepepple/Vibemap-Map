@@ -12,7 +12,7 @@ module.exports = {
     geolocateStyle : {
       position: 'absolute',
       right: 3,
-      top: 1,
+      top: 10,
       margin: 10,
       width: 30
     },
@@ -217,7 +217,7 @@ module.exports = {
         ["zoom"],
           8, 1,
           10, 16,
-          12, 30,
+          12, 24,
           13, 40,
           14, 60,
           20, 200

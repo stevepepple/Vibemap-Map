@@ -133,7 +133,7 @@ class Navigation extends Component {
         // How does this work for SSR
         // store.dispatch(push({ search: string }))
 
-        if (history) history.push({ search: string })
+        if (history) history.replace({ search: string })
 
     }        
     

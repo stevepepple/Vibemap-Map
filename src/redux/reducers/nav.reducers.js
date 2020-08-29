@@ -1,7 +1,7 @@
 import * as Constants from '../../constants.js'
 
 const initialState = {
-    allCities: [],
+    allCities: [{ "id": "6bfe09a3-34c3-489a-8693-c6da18d5a528", "name": "Oakland, CA", "centerpoint": [-122.27113722052206, 37.80438719710896], "zoom_start": 12, "bearing_start": 26.3, "pitch_start": null, "key": "6bfe09a3-34c3-489a-8693-c6da18d5a528", "value": "6bfe09a3-34c3-489a-8693-c6da18d5a528", "text": "Oakland, CA", "distance": 4116.363748935814 }],
     allVibes: [],
     // TODO: Not the best place for this. 
     clusterSize: 200, // meters
