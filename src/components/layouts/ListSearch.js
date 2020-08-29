@@ -58,9 +58,7 @@ class PlacesList extends Component {
     }
 
     onClick = (event, id, type) => { 
-        this.props.setDetailsId(id)
-        this.props.setDetailsType(type)
-        this.props.setDetailsShown(true)
+        this.props.setDetails(id, type)
     }
 
     onSavePlace = (event, place) => {

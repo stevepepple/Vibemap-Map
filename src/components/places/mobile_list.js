@@ -25,8 +25,7 @@ class MobileList extends Component {
     }
 
     onClick = (event, id) => {
-        this.props.setDetailsId(id)
-        this.props.setDetailsShown(true)
+        this.props.setDetails(id)
     }
 
     render() {
@@ -53,8 +52,6 @@ class MobileList extends Component {
                             position: 'absolute',
                             bottom: '20px',
                             height: '180px',
-                            
-                            
                         },
                         '.mobileList' : {
                             display: 'flex !important',

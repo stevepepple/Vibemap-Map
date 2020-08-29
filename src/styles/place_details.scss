@@ -41,20 +41,20 @@
     padding-top: $unit-tiny;
 
     .recommendation {
-        color: $color-base-green-primary;
+        color: $color-base-purple-bright;
         position: absolute;
         right: 0px;
-        bottom: $unit-tiny;
+        top: $unit-small;
         text-align: right;
 
         .score {
             display: block;
             font-size: $unit-small;
             line-height: $unit-small;
+            padding-bottom: $unit-tiny;
         }
 
         .reason {
-            display: reason;
             padding-top: $unit-tiny;
         }
 

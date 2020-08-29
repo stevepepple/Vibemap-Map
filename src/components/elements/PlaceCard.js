@@ -2,7 +2,10 @@ import React, { Fragment, useState } from 'react'
 import { Item, Icon, Label, Button } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 
-import helpers from '../../helpers';
+import helpers from '../../helpers'
+
+import styles from './PlaceCard.scss'
+
 
 function cardPLaceLayout(props) {
     const { properties, t } = props
@@ -75,7 +78,7 @@ function cardPLaceLayout(props) {
     </span>
 
     if (typeof (content.categories) == 'object' && content.categories.length > 0) {
-        categories = content.categories.map((category) => <span key={category} className={category}>Category</span>)
+        categories = content.categories.map((category) => <span key={category} className={category}>{category}</span>)
     } else {
         categories = helpers.toTitleCase(content.categories)
     }
@@ -98,7 +101,7 @@ function cardPLaceLayout(props) {
             <Item.Content style={{ position: 'relative' }}>
                 <Button 
                     className='savePlace' 
-                    color={content.is_saved ? 'black' : 'gray'} 
+                    color={content.is_saved ? 'black' : 'white'} 
                     onClick={e => handleClick(e, content)} 
                     icon='like' circular size='mini'
                     style={{ position: 'absolute', right: '1rem', zIndex: '10' }} />

@@ -49,10 +49,8 @@ class PlacesList extends Component {
         this.updateURL("days", value)
     }    
 
-    onClick = (event, id, type) => { 
-        this.props.setDetailsId(id)
-        this.props.setDetailsType(type)
-        this.props.setDetailsShown(true)
+    onClick = (event, id, type) => {
+        this.props.setDetails(id, type)
     }
 
     render() {

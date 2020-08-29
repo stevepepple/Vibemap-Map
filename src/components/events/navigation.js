@@ -49,22 +49,15 @@ class Navigation extends Component {
     }
 
     componentWillMount() {
-        const { history } = this.props
+        const { history, zoom, setZoom } = this.props
         
         let params = queryString.parse(history.location.search, { ignoreQueryPrefix: true })
 
         this.setState({ params: params })
 
-        // TODO: Move to Details page
+        // If there's a place, show it
         if (params.place) {
-            this.props.setDetailsId(params.place)
-            if(params.type) {
-                this.props.setDetailsType(params.type)
-            }
-            
-            // TODO: Also need to know the type
-            this.props.setDetailsShown(true)
-            this.props.setZoom(this.props.zoom + 2)
+            this.props.setDetails(params.place)
         }
 
         // Set Redux state from Router params
@@ -86,7 +79,7 @@ class Navigation extends Component {
 
             this.setState({ vibes: vibes })
             this.props.setVibes(vibes)
-        }
+        }   
     }
 
     // Sync URL params with React Router history in Redux store
@@ -94,9 +87,9 @@ class Navigation extends Component {
                         
         if (!isEqual(prevProps.activity, this.props.activity)) this.updateURL("activity", this.props.activity)
         if (!isEqual(prevProps.detailsId, this.props.detailsId)) this.updateURL("place", this.props.detailsId)
-        if (!isEqual(prevProps.detailsType, this.props.detailsType)) this.updateURL("type", this.props.detailsType)
+        if (!isEqual(prevProps.placeType, this.props.placeType)) this.updateURL("type", this.props.detailsType)
         if (!isEqual(prevProps.mainVibe, this.props.mainVibe)) this.updateURL("mainVibe", this.props.mainVibe)
-        if (!isEqual(prevProps.placeType, this.props.placeType)) this.updateURL("place_type", this.props.placeType)
+        if (!isEqual(prevProps.detailsType, this.props.detailsType)) this.updateURL("place_type", this.props.detailsType)
         if (!isEqual(prevProps.searchTerm, this.props.searchTerm)) this.updateURL("search", this.props.searchTerm)
         if (!isEqual(prevProps.vibes, this.props.vibes)) this.updateURL("vibes", this.props.vibes)
         if (!isEqual(prevProps.zoom, this.props.zoom)) this.updateURL("zoom", this.props.zoom)        

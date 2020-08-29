@@ -200,7 +200,8 @@ module.exports = {
         // TODO: Handle Guides type
         if(type === null || type === undefined) type = 'places'
         return new Promise(function (resolve, reject) {
-            fetch(ApiUrl + "/v0.3/"+ type + "/" + id)
+            const endpoint = ApiUrl + "/v0.3/"+ type + "/" + id
+            fetch(endpoint)
                 .then(data => data.json())
                 .then(result => {
                     // Put the id in properties 
@@ -216,7 +217,9 @@ module.exports = {
                     resolve({ data: result, loading: false, timedOut: false })
 
                 }, (error) => {
-                    console.log(error)
+                    console.log(endpoint, error)
+                    reject(error)
+
                 })
         })
     },
@@ -527,9 +530,9 @@ module.exports = {
         const popular_bonus = 5
 
         // Weight distance & rating different than other fields
-        const vibe_factor = 2.0 
+        const vibe_factor = 1.0 
         const distance_factor = 0.2 
-        const rating_factor = 0.2 
+        const rating_factor = 0.2
         const hours_factor = 0.2
         
         var start = window.performance.now();

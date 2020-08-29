@@ -120,7 +120,7 @@ class Markers extends Component {
                 */}
 
                 if (feature.id === this.props.detailsId) {
-                    console.log(feature)
+                    //console.log(feature)
                 }
 
                 let selected = (feature.id === this.props.detailsId)

@@ -1,0 +1,30 @@
+@import '../../styles/variables.scss';
+
+.ui.items.recommended {
+    .carousel {
+        position: relative;
+        padding-bottom: $unit-small;
+    }
+    .item {
+        color: $color-base-black;
+        padding: $unit-tiny;
+        border: solid 1px $color-base-gray-300;
+        
+        .content {
+            width: 60%;
+
+            .header {
+                background: none;
+                padding-bottom: $unit-nano;
+            }
+
+            .extra {
+                padding-bottom: $unit-nano;
+            }
+        }
+
+        .ui.small.image {
+            max-width: 40%
+        }
+    } 
+}

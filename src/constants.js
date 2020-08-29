@@ -16,6 +16,8 @@ export const TRUCATE_LENGTH = 18
 
 export const HEATMAP_INTENSITY = 0.1
 
+export const ZOOM_ON_DETAILS = 2.0
+
 export const RECOMMENDATION_REASONS = {
     'events': 'This place is happening',
     'rating' : 'People like this spot',
@@ -57,7 +59,9 @@ export const main_categories = [
     { key: 'drinking', value: 'drinking', text: 'Drinking', label: { icon: 'glass martini', circular: true }, categories: ['drinking', 'drinks'] },
     // Music
     // Shopping
-    { key: 'shopping', value: 'shopping', text: 'Shopping', label: { icon: 'shopping bag', circular: true }, categories: ['shopping'] },    
+    { key: 'shopping', value: 'shopping', text: 'Shopping', label: { icon: 'shopping bag', circular: true }, categories: ['shopping'] },
+    // Visit
+    { key: 'visit', value: 'visit', text: 'Visit & Stay', label: { icon: 'hotel', circular: true }, categories: ['visit'] },
 ]
 
 // TODO: Get from Vibemap constants

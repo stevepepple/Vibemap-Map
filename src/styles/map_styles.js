@@ -38,11 +38,11 @@ module.exports = {
       "icon-padding": 4.0,
       "icon-size": [
         "case",
-        [">", ["get", "average_score"], 4.6],
-        1.2,
+        [">", ["get", "average_score"], 4.9],
+        1.4,
         [">", ["get", "average_score"], 3.5],
-        1.0,
-        [">", ["get", "average_score"], 1],
+        1.2,
+        [">", ["get", "average_score"], 2],
         0.6,
         // Fall back value
         0.4

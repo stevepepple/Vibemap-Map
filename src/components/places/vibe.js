@@ -4,7 +4,10 @@ import { withTranslation } from 'react-i18next';
 import { Placeholder, Image, Label, Segment, Reveal } from 'semantic-ui-react'
 
 import parse from 'html-react-parser'
+import union from 'lodash.union'
+
 import ShowMoreText from 'react-show-more-text'
+
 
 import CardCarousel from '../layouts/CardCarousel'
 
@@ -22,8 +25,9 @@ const Vibe = (props) => {
     let num_images = vibemap_images.length
     let all_images = null
     if (num_images > 0) {
-        all_images = vibemap_images.map((image) => <Image className='placeImage' src={image.original} fluid />)
-        //image = <Image className='placeImage' src={images[num_images - 1]} fluid />
+        // TODO: Temporarily merge both sets of images. 
+        const merged_images = union(images, vibemap_images.map((image)=> image.original))
+        all_images = merged_images.map((image) => <Image className='placeImage' src={image} fluid />)
     }
 
     if (vibes.length > 0) {
