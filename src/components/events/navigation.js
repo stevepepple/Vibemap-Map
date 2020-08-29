@@ -7,6 +7,7 @@ import queryString from 'query-string'
 import * as Constants from '../../constants.js'
 
 import LocationSearchInput from '../map/search'
+import DatePicker from '../elements/DatePicker.js'
 
 import { Translation } from 'react-i18next'
 import { withTranslation } from 'react-i18next';
@@ -38,6 +39,8 @@ class Navigation extends Component {
         }
 
         this.navRef = React.createRef()
+        this.handleDaysChange = this.handleDaysChange.bind(this)
+
     }
 
     componentDidMount() {
@@ -140,7 +143,14 @@ class Navigation extends Component {
     // Event Handlers
     handleActivityChange = (event, { value }) => {
         this.props.setActivity(value)
-    }    
+    }
+    
+    handleDaysChange = (e, { value }) => {
+        console.log("handleDaysChange: ", value)
+        this.props.setDays(value)
+        this.updateURL("days", value)
+    }
+
 
     handlePlaceType = (e, { value }) => {
         console.log("CHANGED PLACE TYPE: ", value)
@@ -176,7 +186,7 @@ class Navigation extends Component {
 
     render() {
         
-        const { activity, isMobile, mainVibe, vibesets, placeType, selected_activity, t } = this.props
+        const { activity, days, date_options, isMobile, mainVibe, vibesets, placeType, selected_activity, t } = this.props
 
         // TODO: Add this from server side
         // Add all options in immutable fashion
@@ -205,7 +215,20 @@ class Navigation extends Component {
                                 <SVG style={{ width: '2em' }} src='/images/logo-mark.svg' />
                                 <LocationSearchInput className='mobile search' />
                             </Menu.Item>
-
+                            <Menu.Item>
+                                <Dropdown
+                                    className={'main_vibe ' + mainVibe}
+                                    clearable
+                                    floating
+                                    //search
+                                    labeled
+                                    placeholder={t('Vibe sets')}
+                                    onChange={this.handleVibesets}
+                                    options={vibeset_options}
+                                    style={{ width: '12em' }}
+                                    value={mainVibe}
+                                />
+                            </Menu.Item>
                             <Menu.Item>
                                 <Dropdown
                                     //icon='map pin'
@@ -250,23 +273,12 @@ class Navigation extends Component {
                                 </Form.Group>
                             </Menu.Item>
                             <Menu.Item>
-                                <Dropdown
-                                    className={'main_vibe ' + mainVibe}
-                                    clearable
-                                    floating
-                                    //search
-                                    labeled
-                                    placeholder={t('Vibe sets')}
-                                    onChange={this.handleVibesets}
-                                    options={vibeset_options}
-                                    style={{ width: '12em' }}
-                                    value={mainVibe}
-                                />
-                            </Menu.Item>
-                            <Menu.Item>
                                 {/* TODO: replace location input with search able dropdown */}
                                 {/* TODO: for some reason the dropdown as a problem with prop changes. */}
-                                
+                                <DatePicker
+                                    handleChange={this.handleDaysChange.bind(this)}
+                                    options={date_options}
+                                    text={(date_options.find(obj => obj.value === days).text)} />
                             </Menu.Item>
                             <Menu.Item position='right'></Menu.Item>
                         </Menu>
@@ -283,6 +295,8 @@ const mapStateToProps = state => {
         allVibes: state.nav.allVibes,
         activity: state.nav.activity,
         currentLocation: state.nav.currentLocation,
+        days: state.nav.days,
+        date_options: state.nav.date_options,
         mainVibe: state.nav.mainVibe,
         placeType: state.nav.placeType,
         searchTerm: state.nav.searchTerm,
