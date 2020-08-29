@@ -307,7 +307,7 @@ class PlaceDetails extends Component {
                     <Button basic size='small' onClick={this.props.clearDetails}>{t("Back")}</Button>                    
                     
                     <div style={{ float: 'right' }}>
-                        <Button color={isSaved ? 'black' : 'white'} onClick={this.savePlace.bind(this, detailsId)} circular icon='like' />
+                        <Button color={isSaved ? 'black' : null} onClick={this.savePlace.bind(this, detailsId)} circular icon='like' />
                         
                         <Popup
                             //on='click'
@@ -315,7 +315,7 @@ class PlaceDetails extends Component {
                             pinned
                             position='bottom center'
                             style={{ width: '16rem' }}
-                            trigger={<Button circular color='white' icon='share' />}>
+                            trigger={<Button circular icon='share' />}>
                             <SocialShare />
                         </Popup>
                         

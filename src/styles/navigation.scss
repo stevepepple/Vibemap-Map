@@ -7,6 +7,14 @@
     font-family: 'Public Sans', sans-serif !important;
 }
 
+.item {
+    .dropdown.default.text  {
+        .text.default {
+            color: $color-dark-gray !important;
+        }
+    }
+}
+
 .navigation.mobile {
     position: relative;
     left: 0;
