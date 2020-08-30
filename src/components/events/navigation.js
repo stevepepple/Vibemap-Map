@@ -64,7 +64,10 @@ class Navigation extends Component {
         }
 
         // Set Redux state from Router params
-        if (params.latitude && params.longitude) this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude, distance_changed: 0 })
+        if (params.latitude && params.longitude) {
+            this.props.setCurrentLocation({ latitude: params.latitude, longitude: params.longitude, distance_changed: 0 })
+            this.props.setHasLocation(true)
+        } 
         if (params.mainVibe) this.props.setMainVibe(params.mainVibe)
         if (params.days) this.props.setDays(params.days)
         //if (params.place_type) this.props.setPlaceType(params.place_type)                    
@@ -74,8 +77,8 @@ class Navigation extends Component {
         
         if (params.vibes) {
             let vibes = []
-            if (typeof(params.vibes) == "string") {
-                vibes.concat(params.vibes)
+            if (typeof(params.vibes) === "string") {
+                vibes.push(params.vibes)
             } else {
                 vibes = params.vibes
             }
@@ -295,6 +298,7 @@ const mapStateToProps = state => {
         allVibes: state.nav.allVibes,
         activity: state.nav.activity,
         currentLocation: state.nav.currentLocation,
+        hasLocation: state.nav.hasLocation,
         days: state.nav.days,
         date_options: state.nav.date_options,
         mainVibe: state.nav.mainVibe,

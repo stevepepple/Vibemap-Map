@@ -123,11 +123,11 @@ class LocationSearchInput extends React.Component {
         // User picked an item from the list
         if (typeof item == 'object') {
             // Set zoom & bearing
+            this.props.setCurrentLocation({ latitude: item.centerpoint[1], longitude: item.centerpoint[0] })
             if (item.zoom_start) this.props.setZoom(item.zoom_start)
             if (item.bearing_start) this.props.setBearing(item.bearing_start)
 
-            this.props.setCurrentLocation({ latitude: item.centerpoint[1], longitude: item.centerpoint[0] })
-            this.props.clearDetails()
+            this.props.clearDetails(false)
         } else {
             geocodeByAddress(value)
                 .then(results => {

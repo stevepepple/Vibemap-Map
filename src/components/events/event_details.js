@@ -47,7 +47,7 @@ class EventDetails extends Component {
 
         return (
             <div className='details'>
-                <Button onClick={this.props.clearDetails}>Back</Button>
+                <Button onClick={this.props.clearDetails.bind(this, true)}>Back</Button>
 
                 <Header>{content.name}</Header>
 
