@@ -5,6 +5,7 @@
 .text {
     //font-family: 'Roboto Condensed', sans-serif !important;
     font-family: 'Public Sans', sans-serif !important;
+    font-size: 1.4rem;
 }
 
 .item {
@@ -38,7 +39,7 @@ input.search {
     line-height: $unit-small;
 }
 
-.ui.search > .text.default {
+.ui.dropdown  > .text.default {
     color: $color-dark-gray !important;
 }
 
@@ -46,6 +47,16 @@ input.search {
     max-width: 70%;
     font-family: $font-family-public;
     z-index: 40;
+
+    .ui.labeled.icon.button {
+        box-shadow: (0, 0, 0, 0.2) 0px 0px 0px 2px;
+        padding-left: 3rem;
+        .icon {
+            background: none;
+            line-height: 1.4rem;
+            padding-left: $unit-nano;
+        }
+    }
 }
 
 .allVibes .ui.multiple.dropdown >.label {
