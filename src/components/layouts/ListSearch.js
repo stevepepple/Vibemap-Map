@@ -1,22 +1,21 @@
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions'
 
 // TODO: Doesn't this even work or can it be done with a smaller library
 import debounce from 'lodash.debounce'
 
-import { connect } from 'react-redux'
-import * as actions from '../../redux/actions'
-
 import helpers from '../../helpers';
 import * as Constants from '../../constants.js'
 
-import { Dimmer, Form, Input, Item, Loader, Pagination, Segment } from 'semantic-ui-react'
-
-import styles from '../../styles/ListItems.scss'
+import { Dimmer, Dropdown, Form, Input, Item, Loader, Pagination, Segment } from 'semantic-ui-react'
 
 import ListItems from '../layouts/ListItems.js'
 import DatePicker from '../elements/DatePicker.js'
 
-import { Translation } from 'react-i18next'
+import styles from '../../styles/ListItems.scss'
+
 
 class PlacesList extends Component {
 
@@ -25,20 +24,12 @@ class PlacesList extends Component {
 
         this.state = {
             category_options: [],
-            date_options: [
-                { key: '1', text: 'Today', value: '1' },
-                { key: '2', text: '2 days', value: '2' },
-                { key: '3', text: '3 days', value: '3' },
-                { key: '7', text: 'Week', value: '5' },
-                { key: '14', text: '2 weeks', value: '14' }
-            ],
             selected_activity: Constants.main_categories[0],
         }
 
         this.onClick = this.onClick.bind(this)
         this.onSavePlace = this.onSavePlace.bind(this)
-
-        this.handleDaysChange = this.handleDaysChange.bind(this)
+        this.handleSortChange = this.handleSortChange.bind(this)
     }
     
     onChange = (e, { value }) => {
@@ -46,10 +37,9 @@ class PlacesList extends Component {
         this.props.setSearchTerm(value)
     }
 
-    handleDaysChange = (e, { value }) => {
-        console.log("handleDaysChange: ", value)
-        this.props.setDays(value)
-        this.updateURL("days", value)
+    handleSortChange = ( value ) => {
+        console.log("handleOrdering: ", value)
+        this.props.setOrdering(value)
     }
     
     handlePage = (e, { activePage }) => {
@@ -73,7 +63,7 @@ class PlacesList extends Component {
         let has_items = this.props.data && this.props.data.length > 0
         let items = null
 
-        const { currentPage, searchTerm, totalPages }  = this.props
+        const { currentPage, ordering, ordering_options, searchTerm, totalPages, t }  = this.props
 
         if (has_items) {
             // TODO: @cory, sorting should happen on the server. 
@@ -91,10 +81,20 @@ class PlacesList extends Component {
             })
         }
 
-        let date = <DatePicker 
-                        handleChange={this.handleDaysChange.bind(this)}
-                        options={this.state.date_options} 
-                        text={(this.state.date_options.find(obj => obj.value === this.props.days).text)} />
+        const sort = <Dropdown
+            className='ordering tiny basic'
+            onChange={this.handleSortChange}
+            text={t(ordering)}>
+            <Dropdown.Menu>
+                {ordering_options.map((value) => (
+                    <Dropdown.Item                          
+                        key={value}
+                        onClick={this.handleSortChange.bind(this, value)} 
+                        text={t(value)} 
+                        value={t(ordering)} />
+                ))}
+            </Dropdown.Menu>
+        </Dropdown>
 
         return (
             <Segment id='list' className={styles.list} compact>
@@ -103,21 +103,19 @@ class PlacesList extends Component {
                 <Segment vertical basic>
                     <Form>                        
                         <Form.Field widths='equal'>
-                            <Translation>{
-                                (t, { i18n }) => <Input
-                                    className='listSearch'
-                                    fluid
-                                    label={date}
-                                    labelPosition='right'
-                                    placeholder={t('Search')}
-                                    icon='search'
-                                    iconPosition='left'
-                                    onChange={debounce(this.onChange, 500, {
-                                        leading: true,
-                                    })}
-                                    size='large'                                
-                                    value={searchTerm} />
-                            }</Translation>                            
+                            <Input
+                                className='listSearch'
+                                fluid
+                                label={sort}
+                                labelPosition='right'
+                                placeholder={t('Search')}
+                                icon='search'
+                                iconPosition='left'
+                                onChange={debounce(this.onChange, 500, {
+                                    leading: true,
+                                })}
+                                size='large'
+                                value={searchTerm} />
                         </Form.Field>                        
                     </Form>
                 </Segment>
@@ -161,6 +159,8 @@ const mapStateToProps = state => {
         allCategories: state.nav.allCategories,
         days: state.nav.days,
         currentPage: state.nav.currentPage,
+        ordering: state.nav.ordering,
+        ordering_options: state.nav.ordering_options,
         searchTerm: state.nav.searchTerm,
         detailsId: state.places.detailsId,
         detailsType: state.detailsType,
@@ -170,4 +170,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, actions)(PlacesList)
+export default connect(mapStateToProps, actions)(withTranslation()(PlacesList))

@@ -104,17 +104,26 @@ class PlaceDetails extends Component {
 
     // Very basic content-based filtering recommendation 
     getRecommendations = function (vibes) {
-
-        console.log('Get recommendations for these vibes: ', vibes)
         
         // TODO: Search for activity/category that is similar but not the same 
-        const { distance, bounds, currentLocation, activity, days, searchTerm, setRecommendations } = this.props
+        const { distance, bounds, currentLocation, activity, days, ordering, searchTerm, setRecommendations } = this.props
         const point = `${currentLocation.longitude},${currentLocation.latitude}`
         let currentTime = dayjs().toISOString()
 
         //const places = this.props.fetchPlaces(...args, true)
+        let options = {
+            activity: activity,
+            bounds: bounds,
+            days: days,
+            distance: distance,
+            ordering: ordering,
+            point: point,
+            search: searchTerm,
+            time: currentTime,
+            vibes: vibes
+        }
 
-        VibeMap.getPicks(point, distance, bounds, activity, days, vibes, searchTerm)
+        VibeMap.getPicks(options)
             .then(response => {
                 const results = response.data
                 // Add the top 7 recommendations; 
@@ -213,7 +222,7 @@ class PlaceDetails extends Component {
         sections.forEach((item) => {
             if (scrollTop >= item.top && scrollTop < item.bottom ) {
                 current = item.key
-                console.log('New current tab: ', current)
+                //console.log('New current tab: ', current)
             } 
         })
 
@@ -304,7 +313,7 @@ class PlaceDetails extends Component {
                     img={preview_image} />
 
                 <div className='header'>
-                    <Button basic size='small' onClick={this.props.clearDetails}>{t("Back")}</Button>                    
+                    <Button basic size='small' onClick={this.props.clearDetails.bind(this, true)}>{t("Back")}</Button>                    
                     
                     <div style={{ float: 'right' }}>
                         <Button color={isSaved ? 'black' : null} onClick={this.savePlace.bind(this, detailsId)} circular icon='like' />
@@ -378,6 +387,7 @@ const mapStateToProps = state => {
         zoom: state.map.zoom,
         days: state.nav.days,
         currentDistance: state.currentDistance,
+        ordering: state.nav.ordering,
         savedPlaces: state.savedPlaces,
         searchTerm: state.nav.searchTerm,
         sections: state.places.sections,

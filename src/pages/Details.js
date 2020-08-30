@@ -39,6 +39,9 @@ class Details extends Component {
 
   static async getInitialProps({ req, res, match, store }) {
 
+    console.log('Get initial props ', req.query)
+
+
     // Match handles any params in the URL
     const id = match.params.id
     let type = 'places'
@@ -81,13 +84,24 @@ class Details extends Component {
     console.log('Get recommendations for these vibes: ', vibes)
 
     // TODO: Search for activity/category that is similar but not the same 
-    const { distance, bounds, currentItem, activity, days, searchTerm, setRecommendations } = this.props
+    const { distance, bounds, currentItem, activity, days, ordering, searchTerm, setRecommendations } = this.props
     const point = `${currentItem.location.longitude},${currentItem.location.latitude}`
     let currentTime = dayjs().toISOString()
 
     //const places = this.props.fetchPlaces(...args, true)
+    let options = {
+      activity: activity,
+      bounds: bounds,
+      days: days,
+      distance: distance,
+      ordering: ordering,
+      point: point,
+      search: searchTerm,
+      time: currentTime,
+      vibes: vibes
+    }
 
-    VibeMap.getPicks(point, distance, bounds, activity, days, vibes, searchTerm)
+    VibeMap.getPicks(options)
       .then(response => {
         const results = response.data
         // Add the top 7 recommendations; 
@@ -288,6 +302,7 @@ const mapStateToProps = state => ({
 
   bounds: state.map.bounds,
   distance: state.map.distance,
+  ordering: state.nav.ordering,
   zoom: state.map.zoom,
   days: state.nav.days,
 

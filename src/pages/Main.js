@@ -3,6 +3,7 @@ import isEqual from 'react-fast-compare'
 import helpers from '../helpers.js'
 
 import debounce from 'lodash.debounce'
+import queryString from 'query-string'
 
 // Router, Mobile, & SEO
 import { MediaMatcher, pickMatch, MediaConsumer } from 'react-media-match';
@@ -40,7 +41,9 @@ import { detailsShown, detailsId } from '../redux/reducers/index.js';
 class Main extends Component {
 
     // Get initial props from server-side
-    static async getInitialProps({ req, res, match, store }) {
+    static async getInitialProps({ req, res, match, store, location }) {
+
+        console.log('Get initial props ', req)
 
         try {
             const params = req.query
@@ -49,9 +52,10 @@ class Main extends Component {
             // Set Redux Store from URL on server so it can be used for SEO
             if (place_type) store.dispatch(setPlaceType(place_type))
 
+            console.log('Has location params? ', params)
             if (latitude && longitude) {
                 store.dispatch(setCurrentLocation({ latitude: latitude, longitude: longitude }))
-                this.setState({ hasLocation : true })
+                store.dispatch(actions.setHasLocation(true))
             } 
             if (zoom) store.dispatch(setZoom(zoom))
 
@@ -77,20 +81,20 @@ class Main extends Component {
             // TODO: set state form YAML
             event_categories: [/.*.*/, 'art', 'arts', 'comedy', 'community', 'food', 'food & drink', 'festive', 'free', 'local', 'other', 'recurs', 'music', 'urban'],
             place_categories: ['Arts & Entertainment', 'Food'],
-            hasLocation: false,
             intervalIsSet: false,
             loading: true,
             timedOut: false,
             mergeTopPicks: false,
             time_of_day: 'morning'
         }
+
+        this.getLocation = this.getLocation.bind(this)
     }
 
     componentDidMount() {
 
         // TODO: Pattern for if data is loaded or errored out
-        const { fetchCities, fetchVibes, fetchCategories, i18n, language, setIsBrowser, setCurrentLocation, setZoom } = this.props
-        const { hasLocation } = this.state
+        const { fetchCities, fetchVibes, fetchCategories, history, i18n, language, setIsBrowser, setCurrentLocation, setZoom } = this.props
 
         // Set current language from backend store
         i18n.changeLanguage(language);
@@ -108,26 +112,8 @@ class Main extends Component {
         const isBrowser = !!((typeof window !== 'undefined' && window.document && window.document.createElement))
         setIsBrowser(isBrowser)
 
-        if (isBrowser) {
-            window.addEventListener('resize', this.handleWindowSizeChange)
-
-            if(hasLocation == false) {
-                helpers.getPosition()
-                    .then((position) => {
-                        if (position) {
-                            const location = { latitude: position.coords.latitude, longitude: position.coords.longitude }
-                            setZoom(14.6)
-                            setCurrentLocation(location)
-                        } else {
-                            const closest = cities[0]
-                            const location = { latitude: closest.centerpoint[1], longitude: closest.centerpoint[0] }
-                            // TODO: what if the user disallows location
-                            console.log('User disallowed location ',   location)
-                            setCurrentLocation(location)
-                        }
-                    })
-            }
-        }
+        // If on brower, check to see if we should get users location
+        this.getLocation(isBrowser)
     }
 
     // Should update and Debounce API Requests
@@ -149,6 +135,7 @@ class Main extends Component {
         const location_changed = !isEqual(prevProps.currentLocation.latitude, this.props.currentLocation.latitude)
         const vibe_changed = !isEqual(prevProps.vibes, this.props.vibes)
         const search_changed = !isEqual(prevProps.searchTerm, this.props.searchTerm) && (this.props.searchTerm.length === 0 || this.props.searchTerm.length > 2)
+        const ordering_changed = !isEqual(prevProps.ordering, this.props.ordering)
         const activity_changed = !isEqual(prevProps.activity, this.props.activity)
         const place_type_changed = !isEqual(prevProps.placeType, this.props.placeType)
         const page_changed = !isEqual(prevProps.currentPage, this.props.currentPage)
@@ -157,7 +144,7 @@ class Main extends Component {
         const details_changed = !isEqual(prevProps.detailsShown, this.props.detailsShown)
 
         // Conditions for fetch
-        if (vibe_changed || search_changed || activity_changed || place_type_changed || location_changed || zoom_changed ) {
+        if (vibe_changed || ordering_changed || search_changed || activity_changed || place_type_changed || location_changed || zoom_changed ) {
             updateData = true
             refreshResults = true 
         }
@@ -199,6 +186,38 @@ class Main extends Component {
         if (updateData === true) this.getPlacesOrEvents(refreshResults)        
     }
 
+    getLocation (isBrowser) {
+        let { hasLocation, history } = this.props
+        let params = queryString.parse(history.location.search, { ignoreQueryPrefix: true })
+
+        if (isBrowser) {
+            window.addEventListener('resize', this.handleWindowSizeChange)
+
+            // Don't ask for location, if coord are in URL
+            if (params.latitude && params.longitude) {
+                hasLocation = true
+                this.props.setHasLocation(hasLocation)
+            }
+
+            if (hasLocation === false) {
+                helpers.getPosition()
+                    .then((position) => {
+                        if (position) {
+                            const location = { latitude: position.coords.latitude, longitude: position.coords.longitude }
+                            setZoom(14.6)
+                            setCurrentLocation(location)
+                        } else {
+                            const closest = cities[0]
+                            const location = { latitude: closest.centerpoint[1], longitude: closest.centerpoint[0] }
+                            // TODO: what if the user disallows location
+                            console.log('User disallowed location ', location)
+                            setCurrentLocation(location)
+                        }
+                    })
+            }
+        }
+    }
+
     getPlacesOrEvents = debounce((refreshResults) => {
         
         // TODO: Add preferece for places or events
@@ -230,20 +249,31 @@ class Main extends Component {
 
         let currentTime = dayjs().toISOString()
 
-        const { distance, bounds, currentLocation, activity, days, vibes, searchTerm } = this.props
+        const { distance, bounds, currentLocation, activity, days, ordering, vibes, searchTerm } = this.props
         const point = `${currentLocation.longitude},${currentLocation.latitude}`
 
-        // TODO: Set in action dispatch, not here
+        // TODO: Make options an object that matches the API
+        // Inlcude a sorting option
+        let options = {
+            activity: activity,
+            bounds: bounds,
+            days: days,
+            distance: distance,
+            ordering: ordering,
+            point: point,
+            search: searchTerm,
+            time: currentTime,
+            vibes: vibes
+        }
+        
+        // State for timeout in HOC        
         if (this.state.timedOut === true) this.setState({ timedOut: false, searching: false })
-        
-        let args = [point, distance, bounds, activity, days, vibes, searchTerm, currentTime, refreshResults]
-        
         // Important: This fetches the data and update the state in Redux
-        const places = this.props.fetchPlaces(...args, refreshResults)
+        const places = this.props.fetchPlaces(options, refreshResults)
     }
 
     fetchEvents(refreshResults) {
-
+        // TODO: Enable event search once events are available
     }
 
     // TODO: MOve to an action getter/setter
@@ -375,7 +405,10 @@ const mapStateToProps = state => ({
     activity: state.nav.activity,
     cities: state.nav.allCities,
     currentLocation: state.nav.currentLocation,
+    hasLocation: state.nav.hasLocation,
     currentPage: state.nav.currentPage,
+    days: state.nav.days,
+    ordering: state.nav.ordering,
     placeType: state.nav.placeType,
     searchTerm: state.nav.searchTerm,
     vibes: state.nav.vibes,

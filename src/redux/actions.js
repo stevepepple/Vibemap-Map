@@ -58,9 +58,11 @@ export const setAllCities = allCities => ({ type: "SET_ALL_CITIES", allCities })
 export const setAllVibes = allVibes => ({ type: 'SET_ALL_VIBES', allVibes })
 export const setActivity = activity => ({ type: 'SET_ACTIVITY', activity })
 export const setCurrentLocation = location => ({ type: 'SET_CURRENT_LOCATION', location })
+export const setHasLocation = hasLocation => ({ type: 'SET_HAS_LOCATION', hasLocation })
 export const setCurrentPage = page => ({ type: 'SET_CURRENT_PAGE', page })
 export const setDays = days => ({ type: 'SET_DAYS', days })
 export const setMainVibe = vibe => ({ type: 'SET_MAIN_VIBE', vibe })
+export const setOrdering = ordering => ({ type: 'SET_ORDERING', ordering })
 export const setPlaceType = value => ({ type: 'SET_PLACE_TYPE', value })
 export const setSearchTerm = searchTerm => ({ type: 'SET_SEARCH_TERM', searchTerm })
 export const setVibes = vibes => ({ type: 'SET_VIBES', vibes })
@@ -140,9 +142,10 @@ export const setDetails = (id, type) => (dispatch, getState) => {
 
 }
 
-export const clearDetails = () => (dispatch, getState) => {
+export const clearDetails = (zoomOut) => (dispatch, getState) => {
   const { zoom } = getState().map
-  dispatch(setZoom( zoom - constants.ZOOM_ON_DETAILS ))
+  
+  if (zoomOut) dispatch(setZoom( zoom - constants.ZOOM_ON_DETAILS ))
 
   dispatch(setDetailsId(null))
   dispatch(setDetailsType(null))
@@ -152,20 +155,24 @@ export const clearDetails = () => (dispatch, getState) => {
 
 // Dispatch is called in getInitialProps of Details
 // args: 
-export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', days, vibes, searchTerm, currentTime, refreshResults) => (dispatch, getState) => {
+export const fetchPlaces = (options, refreshResults) => (dispatch, getState) => {
 
   const { savedPlaces } = getState()
 
+  let { vibes, search } = options
+  
   dispatch(setPlacesLoading(true))
 
-  const should_search = vibes.length > 0 || searchTerm !== ""
+  const should_search = vibes.length > 0 || search !== ""
   
+  // Vibemap service handles the logic and data wranggling
+  // This module shoudl just get and set
   return new Promise(resolve => {
     
-    // Do a Specific Search
+    // Either do a specific Search
     if (should_search) {
       // Search for top picks...
-      VibeMap.getPicks(point, distance, bounds, activity, days, vibes, searchTerm)
+      VibeMap.getPicks(options)
         .then(response => {
           const results = response.data
 
@@ -183,11 +190,9 @@ export const fetchPlaces = (point = [0, 0], distance, bounds, activity = 'all', 
           console.log(error)
         })
     }
-
     
-    // Vibemap service handles the logic and data wranggling
-    // This module shoudl just get and set
-    VibeMap.getPlaces(point, distance, bounds, activity, days, vibes, searchTerm)
+    // Or get general places
+    VibeMap.getPlaces(options)
       .then(response => {
         const results = response.data
 
