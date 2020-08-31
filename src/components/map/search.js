@@ -174,7 +174,7 @@ class LocationSearchInput extends React.Component {
                 options={options}
                 value={this.state.nearest}
                 placeholder={t('Near you')}
-                style={{ width : '12em', marginLeft: '0.6em', zIndex: '100' }}
+                style={{ width : '12em', marginLeft: '0.6em', zIndex: '100', marginRight: '4rem' }}
             />
         );
     }

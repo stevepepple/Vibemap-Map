@@ -224,7 +224,6 @@ class Navigation extends Component {
                                     clearable
                                     floating
                                     //search
-                                    labeled
                                     placeholder={t('Vibe sets')}
                                     onChange={this.handleVibesets}
                                     options={vibeset_options}
@@ -235,7 +234,6 @@ class Navigation extends Component {
                             <Menu.Item>
                                 <Dropdown
                                     //icon='map pin'
-                                    labeled
                                     compact
                                     //className='icon basic small'
                                     style={{ width: '10em', lineHeight: '2.4em', marginLeft: '0.4em' }}
@@ -249,7 +247,7 @@ class Navigation extends Component {
                                     </Dropdown.Menu>
                                 </Dropdown>                            
                             </Menu.Item>
-                            <Menu.Item style={{ width: '16em' }}>
+                            <Menu.Item style={{ width: '14em' }}>
                                 <Form.Group widths='equal'>                     
                                     <Dropdown
                                         //button
