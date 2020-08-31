@@ -17,14 +17,14 @@ class SocialLinks extends Component {
 
     render() {
 
-        const { floated, link, instagram, facebook, twitter } = this.props
+        const { align, floated, link, instagram, facebook, twitter } = this.props
 
         // Get fulling formed links regardless of link format
         const twitter_link = helpers.getFullLink(twitter, 'twitter')
         const instagram_link = helpers.getFullLink(instagram, 'instagram')
         
         return (
-            <div>
+            <div style={{ 'textAlign': align }}>
                 {link &&
                     <a href={link} target='_blank'>
                         <Button circular color='black' icon='linkify' />
@@ -48,6 +48,7 @@ class SocialLinks extends Component {
 }
 
 SocialLinks.defaultProps = {
+    align: 'right',
     link: null,
     facebook: null,
     instagram: null,

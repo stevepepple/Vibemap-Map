@@ -42,20 +42,11 @@ const Plan = (props) => {
                         </Segment>
                         <Segment vertical>
                             <h4>{t('Web & Social')}</h4>
-                            {url 
-                                ? <a href={url}>{url}</a> 
-                                : t('No website')}
-                            <div style={{ 'textAlign' : 'right' }}>
-
-                                <SocialLinks 
-                                    link={url}
-                                    instagram={instagram}
-                                    twitter={twitter}
-                                    />
-                                <Button circular color='black' icon='linkify' />
-                                
-                            </div>
-
+                            <SocialLinks 
+                                link={url}
+                                instagram={instagram}
+                                twitter={twitter} />
+                            
                         </Segment>
                     </div>
                 )
