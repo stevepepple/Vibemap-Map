@@ -48,7 +48,7 @@ class Document extends React.Component {
                 <head>
                     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                     <meta charSet="utf-8" />
-                    <title>Welcome to the Afterparty</title>
+                    <title>Vibemap - Find your Vibe</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                     <link rel="preconnect" href="https://tiles.vibemap.com"/>
                     <link rel="preconnect" href="https://api.vibemap.com"/>
