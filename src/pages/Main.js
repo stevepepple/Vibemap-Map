@@ -187,7 +187,7 @@ class Main extends Component {
     }
 
     getLocation (isBrowser) {
-        let { hasLocation, history } = this.props
+        let { hasLocation, history, setCurrentLocation, setZoom } = this.props
         let params = queryString.parse(history.location.search, { ignoreQueryPrefix: true })
 
         if (isBrowser) {
