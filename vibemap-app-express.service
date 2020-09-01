@@ -1,0 +1,21 @@
+[Unit]
+After=network.target
+Description=Vibemap App Express Server
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+User=vibemapper
+Group=vibemapper
+Environment=PATH=/home/vibemapper/.nvm/versions/node/v12.18.3/bin:/home/vibemapper/.local/bin:/home/vibemapper/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+
+# necessary?
+ExecStartPre=cd /home/vibemapper/vibemap-app
+
+ExecStart=/home/vibemapper/.nvm/versions/node/v12.18.3/bin/node /home/vibemapper/vibemap-app/build/server.js
+Restart=always
+TimeoutSec=10
+StandardOutput=syslog
+StandardError=syslog

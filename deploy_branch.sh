@@ -37,6 +37,7 @@ yarn build
 check_error_exit
 
 sudo rm -r /usr/share/nginx/razzle/images
+check_error_exit
 sudo rm -r /usr/share/nginx/razzle/static
 check_error_exit
 
