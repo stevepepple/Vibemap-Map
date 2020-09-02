@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-HOST=52.151.38.19
+HOST=app.vibemap.com
 
 BRANCH=$1
 
